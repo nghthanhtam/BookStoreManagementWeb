@@ -65,7 +65,7 @@ public class JDBCFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
-        
+         
     HttpServletRequest req = (HttpServletRequest) request;
   
     if (this.needJDBC(req))
@@ -93,35 +93,11 @@ public class JDBCFilter implements Filter {
     }
     else {
  
-       // chain.doFilter(request, response);
+         chain.doFilter(request, response);
         
-       
-       
-        Connection conn = null;
-        try {
-        conn = ConnectionUtils.getConnection();
-        conn.setAutoCommit(false);
-        MyUtils.storeConnection(request, conn);
-  
- 
-        conn.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            ConnectionUtils.rollbackQuietly(conn);
-           
-             
-            request.setAttribute("txtThongBaoLoi","không thể kết nối DB!!!");
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
-            throw new ServletException();
-
-        } finally {
-            
-            ConnectionUtils.closeQuietly(conn);
-            chain.doFilter(request, response);
-        }
-       
-       
     } 
+        
+         
     }
  
     

@@ -5,6 +5,7 @@
  */
 package Utility;
 
+import Model.ThanhVienModel;
 import java.sql.Connection;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -27,16 +28,18 @@ public class MyUtils {
     public static Connection getStoredConnection(ServletRequest request) {
         Connection conn = (Connection) request.getAttribute(ATT_NAME_CONNECTION);
         return conn;
-    }/*
-    public static void storeLoginedUser(HttpSession session, UserAccount loginedUser) {
-          session.setAttribute("loginedUser", loginedUser);
+    }
+    public static void storeLoginedThanhVien(HttpSession session, ThanhVienModel loginedUser) {
+          session.setAttribute("loginedThanhVien", loginedUser);
     }
   
-    public static UserAccount getLoginedUser(HttpSession session) {
-        UserAccount loginedUser = (UserAccount) session.getAttribute("loginedUser");
+    public static ThanhVienModel getLoginedThanhVien(HttpSession session) {
+        ThanhVienModel loginedUser = (ThanhVienModel) session.getAttribute("loginedThanhVien");
         return loginedUser;
     }
     
+    
+    /*
     public static void storeUserCookie(HttpServletResponse response, UserAccount user) {
         System.out.println("Store user cookie");
         Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, user.getUserName());
@@ -44,6 +47,10 @@ public class MyUtils {
         response.addCookie(cookieUserName);
     }
 */
+    
+    
+    
+    /*
     public static String getUserNameInCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -54,7 +61,7 @@ public class MyUtils {
             }
         }
         return null;
-    }
+    }*/
     
     public static void deleteUserCookie(HttpServletResponse response) {
         Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, null);

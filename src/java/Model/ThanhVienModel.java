@@ -5,6 +5,11 @@
  */
 package Model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author MITICC06
@@ -12,6 +17,38 @@ package Model;
 public class ThanhVienModel {
     
     private int MaThanhVien;
+
+    public int getMaThanhVien() {
+        return MaThanhVien;
+    }
+
+    public void setMaThanhVien(int MaThanhVien) {
+        this.MaThanhVien = MaThanhVien;
+    }
+
+    public String getTenDangNhap() {
+        return TenDangNhap;
+    }
+
+    public void setTenDangNhap(String TenDangNhap) {
+        this.TenDangNhap = TenDangNhap;
+    }
+
+    public String getMatKhau() {
+        return MatKhau;
+    }
+
+    public void setMatKhau(String MatKhau) {
+        this.MatKhau = MatKhau;
+    }
+
+    public int getVaiTro() {
+        return VaiTro;
+    }
+
+    public void setVaiTro(int VaiTro) {
+        this.VaiTro = VaiTro;
+    }
     private String TenDangNhap;
     private String MatKhau;
     private int VaiTro;
@@ -28,4 +65,29 @@ public class ThanhVienModel {
     }
     
     
+    public static ThanhVienModel FindByTenDangNhap(Connection conn, String tendangnhap) throws SQLException
+    {
+         String sql = "SELECT * FROM thanhvien WHERE tendangnhap = ?";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, tendangnhap);
+         
+        ResultSet rs = pstm.executeQuery();
+                     
+
+        if (rs.next()) {  
+            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+                    rs.getString("tendangnhap"),
+                    rs.getString("matkhau"),
+                    Integer.parseInt(rs.getString("vaitro"))
+            ); 
+             return thanhvien;
+        }
+        return null;
+        
+    }
+    
+    
 }
+
+ 

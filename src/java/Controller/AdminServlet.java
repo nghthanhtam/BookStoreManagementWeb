@@ -5,84 +5,85 @@
  */
 package Controller;
 
+import Database.ConnectionUtils;
+import Model.ThanhVienModel;
+import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MITICC06
  */
-@WebServlet(name = "AdminServlet", urlPatterns = {"/admin/*"})
+@WebServlet(name = "AdminServlet", urlPatterns = {"/admin/" })
 public class AdminServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException { 
+        
+        HttpSession session = request.getSession();
+        
+        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
+        {
+            request.getRequestDispatcher("/admin/admin-login.jsp").forward(request, response);
+        } 
+        else
+        {  
+            request.setAttribute("txtThongBaoLoi", "Đã được ĐN!");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
+             
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+    
+    
+    
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {  
+        String tendangnhap = req.getParameter("tendangnhap");
+        String matkhau = req.getParameter("matkhau");
+        
+        ThanhVienModel thanhvien = null;
+        
+         if (tendangnhap == null || matkhau == null || tendangnhap.length() == 0 || matkhau.length() == 0) {
+            /*hasError = true;
+            errorString = "Required username and password!";*/
+            
+        } else {
+            Connection conn = MyUtils.getStoredConnection(req);
+            try {
+                thanhvien = ThanhVienModel.FindByTenDangNhap(conn, tendangnhap);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+              
+            if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau()))
+            {
+                System.out.print("ok");
+                MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
+                req.setAttribute("txtThongBao", "Đăng nhập thành công!!!!!");
+                req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp); 
+            }
+            else
+            { 
+                System.out.print("failed");
+                req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
+                req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
+            } 
+         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
