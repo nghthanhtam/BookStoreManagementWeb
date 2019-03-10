@@ -1,6 +1,7 @@
 import Database.ConnectionUtils;
 import Utility.MyUtils;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class JDBCFilter implements Filter {
     for (ServletRegistration sr : values) {
         Collection<String> mappings = sr.getMappings();
         if (mappings.contains(urlPattern)) {
-        return true;
+            return true;
         }
     }
     return false;
@@ -69,26 +70,57 @@ public class JDBCFilter implements Filter {
   
     if (this.needJDBC(req))
     {
-        System.out.println("Open Connection for: " + req.getServletPath());
         Connection conn = null;
         try {
         conn = ConnectionUtils.getConnection();
         conn.setAutoCommit(false);
         MyUtils.storeConnection(request, conn);
- 
+  
         chain.doFilter(request, response);
  
         conn.commit();
         } catch (Exception e) {
-        e.printStackTrace();
-        ConnectionUtils.rollbackQuietly(conn);
-        throw new ServletException();
+            e.printStackTrace();
+            ConnectionUtils.rollbackQuietly(conn);
+            
+            request.setAttribute("txtThongBaoLoi","không thể kết nối DB!!!");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+
+            throw new ServletException();
         } finally {
-        ConnectionUtils.closeQuietly(conn);
+            ConnectionUtils.closeQuietly(conn);
         }
     }
     else {
-        chain.doFilter(request, response);
+ 
+       // chain.doFilter(request, response);
+        
+       
+       
+        Connection conn = null;
+        try {
+        conn = ConnectionUtils.getConnection();
+        conn.setAutoCommit(false);
+        MyUtils.storeConnection(request, conn);
+  
+ 
+        conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ConnectionUtils.rollbackQuietly(conn);
+           
+             
+            request.setAttribute("txtThongBaoLoi","không thể kết nối DB!!!");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            throw new ServletException();
+
+        } finally {
+            
+            ConnectionUtils.closeQuietly(conn);
+            chain.doFilter(request, response);
+        }
+       
+       
     } 
     }
  
