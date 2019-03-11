@@ -21,6 +21,8 @@ import javax.servlet.http.HttpSession;
 public class MyUtils {
     public static final String ATT_NAME_CONNECTION = "ATTRIBUTE_FOR_CONNECTION";
     private static final String ATT_NAME_USER_NAME = "ATTRIBUTE_FOR_STORE_USER_NAME_IN_COOKIE";
+
+    
     public static void storeConnection(ServletRequest request, Connection conn) {
         request.setAttribute(ATT_NAME_CONNECTION, conn);
     }
@@ -32,7 +34,9 @@ public class MyUtils {
     public static void storeLoginedThanhVien(HttpSession session, ThanhVienModel loginedUser) {
           session.setAttribute("loginedThanhVien", loginedUser);
     }
-  
+    public static void LogOutThanhVien(HttpSession session) {
+          session.invalidate();
+    }
     public static ThanhVienModel getLoginedThanhVien(HttpSession session) {
         ThanhVienModel loginedUser = (ThanhVienModel) session.getAttribute("loginedThanhVien");
         return loginedUser;
