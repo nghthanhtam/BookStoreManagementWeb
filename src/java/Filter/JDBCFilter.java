@@ -83,7 +83,7 @@ public class JDBCFilter implements Filter {
             e.printStackTrace();
             ConnectionUtils.rollbackQuietly(conn);
             
-            request.setAttribute("txtThongBaoLoi","không thể kết nối DB!!!");
+            request.setAttribute("txtThongBaoLoi","Có lỗi xảy ra!!!<br>"+e.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
 
             throw new ServletException();

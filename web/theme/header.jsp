@@ -190,8 +190,8 @@
 		<!-- container -->
 		<div class="container">
 			<div id="responsive-nav">
-				<!-- category nav -->
-				<div class="category-nav">
+				<!-- category nav --> 
+				<div class="category-nav ${requestScope['javax.servlet.forward.request_uri'] == '/' ? "" : "show-on-click"}">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
 						<li class="dropdown side-dropdown">

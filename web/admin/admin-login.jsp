@@ -8,7 +8,7 @@
 <!DOCTYPE html> 
 <html lang="vi">
 <head>
-	<title>Login V4</title>
+	<title>Đăng nhập - BookStore</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
