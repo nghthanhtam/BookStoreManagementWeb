@@ -28,8 +28,8 @@ public class LogOutServlet extends HttpServlet {
        HttpSession session = req.getSession();
         MyUtils.LogOutThanhVien(session);
         
-        resp.sendRedirect("/admin/");
-        
+         resp.sendRedirect("/admin/");
+       // req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
     }
 
     

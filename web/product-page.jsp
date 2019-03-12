@@ -429,7 +429,7 @@
 								<span>New</span>
 								<span class="sale">-20%</span>
 							</div>
-							<h2 class="product-name">Product Name Goes Here</h2>
+							<h2 class="product-name">${ txtTenSach }</h2>
 							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
 							<div>
 								<div class="product-rating">
