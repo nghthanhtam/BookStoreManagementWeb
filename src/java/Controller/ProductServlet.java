@@ -35,7 +35,13 @@ public class ProductServlet extends HttpServlet {
             resp.sendRedirect("/");
         }
         else {
-            int masach = Integer.parseInt((String) req.getParameter("masach"));
+            int masach = 0;
+            try {
+                masach = Integer.parseInt((String) req.getParameter("masach"));
+            } catch (Exception ex) {
+                  //throw new IOException("Mã sách không hợp lệ!");
+            }
+            
             Connection conn = MyUtils.getStoredConnection(req);
              
             try {
