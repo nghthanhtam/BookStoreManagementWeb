@@ -23,22 +23,30 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "CreateAccountServlet", urlPatterns = {"/createaccountservlet"})
+@WebServlet(name = "CreateAccountServlet", urlPatterns = {"/admin/createaccount"})
 public class CreateAccountServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String button1 = req.getParameter("Create");
-        if(button1!=null)
-        {
-            String tendangnhap = req.getParameter("tenthanhvien");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        String button = req.getParameter("Create");
+        if(button!=null)
+        { 
+            String tendangnhap = req.getParameter("tendangnhap");
             String matkhau = req.getParameter("matkhau");
+            String matkhauRepeat = req.getParameter("matkhaurepeat");
+
             Integer vaitro=1;
+            
+            
+            ThanhVienModel thanhvien = new ThanhVienModel(0, tendangnhap, matkhau,vaitro );
+            
+            
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                ThanhVienModel.InsertNewThanhVien(conn, tendangnhap, matkhau, vaitro);
+                boolean result = ThanhVienModel.InsertNewThanhVien(conn, thanhvien);
             } catch (SQLException ex) {
                 Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+                throw new IOException(ex.getMessage());
             }
             req.getRequestDispatcher("/admin/create-account.jsp").forward(req, resp); ;
         }

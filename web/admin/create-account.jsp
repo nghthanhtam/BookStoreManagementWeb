@@ -22,15 +22,17 @@
                   </div>
                   <div class="x_content">
                     <br>
-                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="" method="POST" action="${pageContext.request.contextPath}/admin/createaccount">
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" name=="tenthanhvien" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="first-name" required="required" name="tendangnhap" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                        
+                        <!--
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
                         </label>
@@ -64,18 +66,20 @@
                           <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                         </div>
                       </div>
+                        
+                        -->
                          <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Password <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="password" name="matkhau" class="form-control col-md-7 col-xs-12" required="required" type="text">
+                          <input id="password" name="matkhau" class="form-control col-md-7 col-xs-12" required="required" type="password">
                         </div>
                       </div>
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Repeat password <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="password" class="form-control col-md-7 col-xs-12" required="required" type="text">
+                          <input id="password" class="form-control col-md-7 col-xs-12" name="matkhaurepeat" required="required" type="password">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
@@ -83,7 +87,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button class="btn btn-primary" type="button" name="Cancel">Cancel</button>
 						  <button class="btn btn-primary" type="reset" name="Reset">Reset</button>
-                          <button href="/createaccountservlet" type="create" class="btn btn-success" name="Create">Create</button>
+                          <button type="create" class="btn btn-success" name="Create">Create</button>
                         </div>
                       </div>
 

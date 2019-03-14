@@ -86,32 +86,17 @@ public class ThanhVienModel {
         return null;
         
     }
-    public static ThanhVienModel InsertNewThanhVien(Connection conn, String tendangnhap, String matkhau, Integer vaitro) 
+    public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien) 
             throws SQLException
-    {
-        //INSERT INTO thanhvien (mathanhvien,tendangnhap,matkhau,vaitro)
-//VALUES (3,"Trung","1","1");
-         String sql="INSERT INTO thanhvien (mathanhvien, tendangnhap, matkhau, vaitro) VALUES (3,?,?,?)";
+    { 
+        String sql="INSERT INTO thanhvien ( tendangnhap, matkhau, vaitro) VALUES (?,?,?)";
         PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, tendangnhap);
-        pstm.setString(2, matkhau);
-        pstm.setInt(3, vaitro);
-        ResultSet rs = pstm.executeQuery();
-                     
-
-        if (rs.next()) {  
-        //    ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
-         //           rs.getString("tendangnhap"),
-         //           rs.getString("matkhau"),
-         //           Integer.parseInt(rs.getString("vaitro"))
-         //   ); 
-       //      return thanhvien;
-        }
-        return null;
+        pstm.setString(1, thanhvien.getTenDangNhap());
+        pstm.setString(2, thanhvien.getMatKhau());
+        pstm.setInt(3, thanhvien.getVaiTro());
         
-    
-    
-}
+        return pstm.execute();
+    }
 }
 
  
