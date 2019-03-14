@@ -43,6 +43,11 @@ public class ProductServlet extends HttpServlet {
                 if (sach != null) { // tìm thấy theo mã sách
                     
                     req.setAttribute("txtTenSach", sach.getTensach());
+                    req.setAttribute("soLuongTon", sach.getSoluongton());
+                    req.setAttribute("giaBan", sach.getGiaban());
+                    req.setAttribute("txtTenTacGia", sach.getTentacgia());
+                    req.setAttribute("txtTitle", sach.getTensach());
+                    
                     req.getRequestDispatcher("product-page.jsp").forward(req, resp);
                     
                 } else {
