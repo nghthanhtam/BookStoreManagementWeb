@@ -86,8 +86,17 @@ public class ThanhVienModel {
         return null;
         
     }
-    
-    
+    public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien) 
+            throws SQLException
+    { 
+        String sql="INSERT INTO thanhvien ( tendangnhap, matkhau, vaitro) VALUES (?,?,?)";
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, thanhvien.getTenDangNhap());
+        pstm.setString(2, thanhvien.getMatKhau());
+        pstm.setInt(3, thanhvien.getVaiTro());
+        
+        return pstm.execute();
+    }
 }
 
  
