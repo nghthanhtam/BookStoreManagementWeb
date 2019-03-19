@@ -15,55 +15,95 @@ import java.sql.SQLException;
  * @author MITICC06
  */
 public class ThanhVienModel {
-    
-    private int MaThanhVien;
 
-    public int getMaThanhVien() {
-        return MaThanhVien;
+    public ThanhVienModel(int maThanhVien, String tenDangNhap, String matKhau, String hoTen, String diaChi, String soDienThoai, String email, int maPhanQuyen) {
+        this.maThanhVien = maThanhVien;
+        this.tenDangNhap = tenDangNhap;
+        this.matKhau = matKhau;
+        this.hoTen = hoTen;
+        this.diaChi = diaChi;
+        this.soDienThoai = soDienThoai;
+        this.email = email;
+        this.maPhanQuyen = maPhanQuyen;
     }
 
-    public void setMaThanhVien(int MaThanhVien) {
-        this.MaThanhVien = MaThanhVien;
+    public int getMaThanhVien() {
+        return maThanhVien;
+    }
+
+    public void setMaThanhVien(int maThanhVien) {
+        this.maThanhVien = maThanhVien;
     }
 
     public String getTenDangNhap() {
-        return TenDangNhap;
+        return tenDangNhap;
     }
 
-    public void setTenDangNhap(String TenDangNhap) {
-        this.TenDangNhap = TenDangNhap;
+    public void setTenDangNhap(String tenDangNhap) {
+        this.tenDangNhap = tenDangNhap;
     }
 
     public String getMatKhau() {
-        return MatKhau;
+        return matKhau;
     }
 
-    public void setMatKhau(String MatKhau) {
-        this.MatKhau = MatKhau;
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
     }
 
-    public int getVaiTro() {
-        return VaiTro;
+    public String getHoTen() {
+        return hoTen;
     }
 
-    public void setVaiTro(int VaiTro) {
-        this.VaiTro = VaiTro;
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
     }
-    private String TenDangNhap;
-    private String MatKhau;
-    private int VaiTro;
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getSoDienThoai() {
+        return soDienThoai;
+    }
+
+    public void setSoDienThoai(String soDienThoai) {
+        this.soDienThoai = soDienThoai;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getMaPhanQuyen() {
+        return maPhanQuyen;
+    }
+
+    public void setMaPhanQuyen(int maPhanQuyen) {
+        this.maPhanQuyen = maPhanQuyen;
+    }
     
+    private int maThanhVien;
+    private String tenDangNhap;
+    private String matKhau;
+    private String hoTen;
+    private String diaChi;
+    private String soDienThoai;
+    private String email;
+    private int maPhanQuyen;   
+            
     public ThanhVienModel() {
-        this.MaThanhVien = 0;
+        this.maThanhVien = 0;
     }
-    
-    public ThanhVienModel(int maThanhVien, String tenDangNhap, String matKhau, int vaiTro) {
-        this.MaThanhVien = maThanhVien;
-        this.TenDangNhap = tenDangNhap;
-        this.MatKhau = matKhau;
-        this.VaiTro = vaiTro;
-    }
-    
+      
     
     public static ThanhVienModel FindByTenDangNhap(Connection conn, String tendangnhap) throws SQLException
     {
@@ -74,12 +114,17 @@ public class ThanhVienModel {
          
         ResultSet rs = pstm.executeQuery();
                      
-
+  
         if (rs.next()) {  
-            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+            ThanhVienModel thanhvien = new ThanhVienModel
+                    (Integer.parseInt(rs.getString("mathanhvien")),
                     rs.getString("tendangnhap"),
                     rs.getString("matkhau"),
-                    Integer.parseInt(rs.getString("vaitro"))
+                    rs.getString("hoten"),
+                    rs.getString("diachi"),
+                    rs.getString("sodienthoai"),  
+                    rs.getString("email"),  
+                    Integer.parseInt(rs.getString("maphanquyen"))
             ); 
              return thanhvien;
         }
@@ -89,11 +134,15 @@ public class ThanhVienModel {
     public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien) 
             throws SQLException
     { 
-        String sql="INSERT INTO thanhvien ( tendangnhap, matkhau, vaitro) VALUES (?,?,?)";
+        String sql="INSERT INTO thanhvien ( tendangnhap, matkhau, hoten, diachi, sodienthoai, email, maphanquyen) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setString(1, thanhvien.getTenDangNhap());
         pstm.setString(2, thanhvien.getMatKhau());
-        pstm.setInt(3, thanhvien.getVaiTro());
+        pstm.setString(3, thanhvien.getHoTen());
+        pstm.setString(4, thanhvien.getDiaChi());
+        pstm.setString(5, thanhvien.getSoDienThoai());
+        pstm.setString(6, thanhvien.getEmail());  
+        pstm.setInt(7, thanhvien.getMaPhanQuyen());
         
         return pstm.execute();
     }
