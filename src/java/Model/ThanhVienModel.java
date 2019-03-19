@@ -11,7 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
+ *m dang code dung k? 
+ * dan
  * @author MITICC06
  */
 public class ThanhVienModel {

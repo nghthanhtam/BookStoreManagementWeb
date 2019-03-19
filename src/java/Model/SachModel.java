@@ -126,8 +126,7 @@ public class SachModel {
     
     public static SachModel FindByMaSach(Connection conn, int masach) throws SQLException
     {
-        
-        
+              
         
         String sql = "SELECT * FROM sach WHERE masach = ? ";
 

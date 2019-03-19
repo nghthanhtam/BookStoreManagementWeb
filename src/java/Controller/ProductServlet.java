@@ -32,7 +32,7 @@ public class ProductServlet extends HttpServlet {
          
         if (req.getParameter("masach") == null) {
             
-            resp.sendRedirect("/");
+            resp.sendRedirect("/"); //back to home page
         }
         else {
             int masach = 0;
@@ -61,24 +61,12 @@ public class ProductServlet extends HttpServlet {
                     resp.sendRedirect("/");
                     
                 }
-                
-                
-                
-                
-                
-                
+                                
                 
             } catch (SQLException ex) {
                 Logger.getLogger(ProductServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-            
-            
-            
-            
-            
-            
+                                                                             
         }
         
         //req.getRequestDispatcher("product-page.jsp").forward(req, resp);
