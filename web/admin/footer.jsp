@@ -64,5 +64,16 @@
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
 	
-  </body>
+    <script src="../vendors/validator/validator.js"></script>
+<script src="../vendors/parsleyjs/dist/parsley.min.js"></script>  
+
+
+
+    <!-- PNotify -->
+    <script src="../vendors/pnotify/dist/pnotify.js"></script>
+    <script src="../vendors/pnotify/dist/pnotify.buttons.js"></script> 
+
+     
+    
+</body>
 </html>

@@ -45,7 +45,7 @@ public class AdminServlet extends HttpServlet {
         {  
             ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
             request.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-            request.getRequestDispatcher("/admin/admin-logined.jsp").forward(request, response); 
+            request.getRequestDispatcher("/admin/admin-home.jsp").forward(request, response); 
         }
              
     }
@@ -77,10 +77,10 @@ public class AdminServlet extends HttpServlet {
                 System.out.print("ok");
                 MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
                 req.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-                req.getRequestDispatcher("/admin/admin-logined.jsp").forward(req, resp); 
+                req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp); 
             }
             else
-            { 
+            {  
                 System.out.print("failed");
                 req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
                 req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
