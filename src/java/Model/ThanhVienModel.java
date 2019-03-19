@@ -12,7 +12,22 @@ import java.sql.SQLException;
 
 /**
  *m dang code dung k? 
- * dan
+ * m code phi ship xong chua
+ * chua xong
+ * bat dau chua?
+ * roi code dc cai model cua phi ship
+ * t cung k ro nua nhung t biet li do la do m chua commmit len
+ * t so m rebase lai
+ * thi cung phai code lai tu dau a
+ * om t chua commit mà
+ * de commit 
+ * da
+ * commit len xong lo rebase r lay ve
+ * mat code thi sao :v
+ * ma m moi code cai module
+ * nen th k sao dau
+ * :V
+ * 
  * @author MITICC06
  */
 public class ThanhVienModel {

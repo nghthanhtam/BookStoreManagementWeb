@@ -58,6 +58,7 @@ public class PhiShipModel {
                      
 
 //        if (rs.next()) {  
+
 //            SachModel sach = new SachModel(
 //                    Integer.parseInt(rs.getString("masach")), 
 //                    rs.getString("tensach") ,
