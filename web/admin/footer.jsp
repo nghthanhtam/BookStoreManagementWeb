@@ -5,8 +5,13 @@
 --%>
 
 <%@page     contentType="text/html" pageEncoding="UTF-8"%>
-<!-- footer content -->
-            <footer>
+
+
+</div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
 
 
           <div class="pull-right">

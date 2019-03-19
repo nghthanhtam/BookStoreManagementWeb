@@ -8,9 +8,7 @@
 
 <jsp:include page="/admin/header.jsp" />
 
-
-        <!-- page content -->
-        <div class="right_col" role="main">
+ 
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -700,7 +698,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <!-- /page content -->
+       
 
 <jsp:include page="/admin/footer.jsp" />
