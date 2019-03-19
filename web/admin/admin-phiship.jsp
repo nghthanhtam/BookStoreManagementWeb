@@ -8,10 +8,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hello World</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      
     </head>
-    <body>
-        <h1>Hello World!</h1>
+    <body>               
+         <form method="get" action="admin-login.jsp">   
+             <button type="submit" value="Them">Thêm</button>
+         </form>              
     </body>
 </html>
