@@ -82,11 +82,10 @@
 							<p>
                                                             <strong>Hàng tồn: </strong>
                                                                                                                
-                                                            <body>
+                                                             
                                                                <c:if test="${soLuongTon eq 0}">
                                                                  hết hàng<br />
-                                                               </c:if>
-                                                            </body>      
+                                                               </c:if>    
                                                             
                                                         </p>
 							<p><strong>Tác giả</strong> ${ txtTenTacGia }</p>

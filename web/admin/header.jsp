@@ -4,6 +4,7 @@
     Author     : Ha Phuong
 --%>
 
+<%@page import="Model.MessagesModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>Gentelella Alela! | </title>
+    <title>${txtTitle == null ? "" : txtTitle.concat(" - ")}Admin Panel - Book Store</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,9 +36,32 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    
+    <!-- PNotify -->
+    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet"> 
+ 
   </head>
-
-  <body class="nav-md">
+ 
+  
+   
+  
+  
+      
+  <body class="nav-md" <% 
+    
+      MessagesModel messagesModel = (MessagesModel)request.getAttribute(MessagesModel.ATT_STORE);
+    if (messagesModel != null)
+    {
+        out.print("onload=\"new PNotify({"
+                + "title: '"+messagesModel.getTitle()+"',"
+                + "text: '"+messagesModel.getText()+"',"
+                + "type: '"+messagesModel.getType()+"',"
+                + "styling: 'bootstrap3'"
+                + "});\""); 
+    }
+  
+  %>>
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -66,8 +90,7 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Home <span class="
-            <!-- sidebar menu -->fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
                       <li><a href="index2.html">Dashboard2</a></li>
@@ -281,3 +304,7 @@
           </div>
         </div>
         <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+		 
