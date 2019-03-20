@@ -84,6 +84,10 @@ public class PhanQuyenServlet extends HttpServlet {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!",noiDungThongBao,MessagesModel.ATT_TYPE_SUCCESS));         
         }
         
+        Connection conn = MyUtils.getStoredConnection(req);
+        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
+
+        req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
         req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
         
     }

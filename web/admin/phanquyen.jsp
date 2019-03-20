@@ -62,9 +62,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                           
-                             ${listAllPhanQuyen.size()==0?"Chưa có phân quyền nào được tạo!":""}
-                           
+                            
                             
                             <c:forEach items="${listAllPhanQuyen}" var="obj">
                                 <tr>
@@ -80,8 +78,8 @@
                                     <td>${obj.getQlNhaCungCap() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td>${obj.getQlHoaDon() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td> 
-                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                                        <a href="${contextPath}/admin/phanquyen/edit?id=${obj.getMaPhanQuyen()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                                        <a href="${contextPath}/admin/phanquyen/delete?id=${obj.getMaPhanQuyen()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
                                     </td>
                                    
                                     
@@ -93,7 +91,10 @@
                      
                         
                       </tbody>
+                      
                     </table>
+                    
+                                        ${listAllPhanQuyen.size()==0?"Chưa có phân quyền nào được tạo!":""}
                     <!-- end project list -->
 
                   </div>
@@ -119,7 +120,7 @@
                  
                     
                     
-                    <form class="form-horizontal form-label-left " method="POST" action="${pageContext.request.contextPath}/admin/phanquyen">
+                    <form class="form-horizontal form-label-left " method="POST" action="${contextPath}/admin/phanquyen">
 
                         
                       <div class="form-group">

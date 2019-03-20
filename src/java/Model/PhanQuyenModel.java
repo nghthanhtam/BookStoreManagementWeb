@@ -196,4 +196,27 @@ public class PhanQuyenModel {
         
         return listPhanQuyen; 
     }
+    
+    
+    public static boolean DeleteById(Connection conn, int maPhanQuyen) throws SQLException
+    {
+        String sql = "DELETE FROM phanquyen WHERE maPhanQuyen = ?";
+        int count = 0;
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maPhanQuyen);             
+            count = pstm.executeUpdate(); 
+            
+        } catch (SQLException ex) {
+            
+        }
+        
+       
+        System.out.println("count = "+count);
+        
+        return count>0;
+    }
+    
+    
+    
 }
