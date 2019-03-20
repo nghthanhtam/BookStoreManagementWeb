@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *//
 package Controller;
 
 import Model.ThanhVienModel;
@@ -38,7 +38,7 @@ public class CreateAccountServlet extends HttpServlet {
             Integer vaitro=1;
             
             
-            ThanhVienModel thanhvien = new ThanhVienModel(0, tendangnhap, matkhau,vaitro );
+            ThanhVienModel thanhvien = new ThanhVienModel(0, tendangnhap, matkhau,"khach","","","",0);
             
             
             Connection conn = MyUtils.getStoredConnection(req);
