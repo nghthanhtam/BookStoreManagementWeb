@@ -47,30 +47,33 @@
                     <table class="table table-striped projects">
                       <thead>
                         <tr>
-                          <th style="width: 1%">STT</th>
+                          <th style="width: 5%">STT</th>
                           <th style="width: 15%"> Tên tỉnh</th>
                           <th>Phí ship</th>
                          
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
-                      <tbody>
-                          
-                       <c:forEach items="${listAllPhiShip}" var="obj">  
-                           
-                        <tr>
-                          <td style="width: 1%">1</td>
-                          <td style="width: 15%">${ tenTinh }</td>
-                          <th>${ phiShip }</th>
-                         
-                          <td> 
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
-                          </td>
-                        </tr>
                       
-                        </c:forEach>     
-                          
+                      <tbody>
+                          ${listAllPhiShip.size()==0?"Chưa có phí ship nào được tạo!":""}
+                           
+                       
+                            <c:forEach items="${listAllPhiShip}" var="obj">
+                                <tr>
+                                    <td style="width: 5%">${obj.getMaPhiShip()}</td>
+                                    <td style="width: 15%">${obj.getTenTinh()}</td>
+                                    <td style="width: 15%">${obj.getPhiShip()}</td>
+                                     
+                                    <td> 
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                                    </td>
+                                   
+                                    
+                                </tr>
+                            </c:forEach>  
+                                            
                      
                         
                       </tbody>

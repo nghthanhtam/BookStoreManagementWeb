@@ -61,6 +61,7 @@
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
+                      
                       <tbody>
                            
                              ${listAllPhanQuyen.size()==0?"Chưa có phân quyền nào được tạo!":""}

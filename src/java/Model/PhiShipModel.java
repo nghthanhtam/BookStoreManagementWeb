@@ -23,39 +23,39 @@ public class PhiShipModel {
      
     }
       
-    public PhiShipModel(double phiship, String tentinh) {
-    
-        this.phiship=phiship;
-        this.tentinh=tentinh;
-        
+    private int maPhiShip;
+    private String tenTinh;
+    private double phiShip;
+
+    public PhiShipModel(int maPhiShip, String tenTinh, double phiShip) {
+        this.maPhiShip = maPhiShip;
+        this.tenTinh = tenTinh;
+        this.phiShip = phiShip;
     }
 
     public int getMaPhiShip() {
-        return maphiship;
-    }   
-    public void setMaPhiShip(int maphiship){
-        this.maphiship = maphiship;
+        return maPhiShip;
     }
-    
-    
+
+    public void setMaPhiShip(int maPhiShip) {
+        this.maPhiShip = maPhiShip;
+    }
+
     public String getTenTinh() {
-        return tentinh;
-    }   
-    public void setTenTinh(String tentinh){
-        this.tentinh = tentinh;
+        return tenTinh;
     }
-    
-    
-        public double getPhiShip() {
-        return phiship;
-    }   
-    public void setPhiShip(double phiship){
-        this.phiship = phiship;
+
+    public void setTenTinh(String tenTinh) {
+        this.tenTinh = tenTinh;
     }
-    
-    private int maphiship;
-    private String tentinh;
-    private double phiship;
+
+    public double getPhiShip() {
+        return phiShip;
+    }
+
+    public void setPhiShip(double phiShip) {
+        this.phiShip = phiShip;
+    }
              
     
      public static boolean InsertNewPhiShip(Connection conn, PhiShipModel phiship) 
@@ -90,8 +90,9 @@ public class PhiShipModel {
             while(rs.next())
             {
                 PhiShipModel phiShipModel = new PhiShipModel(
-                        Double.parseDouble(rs.getString("phiship")),
-                        rs.getString("tentinh"));
+                        Integer.parseInt(rs.getString("maphiship")),
+                        rs.getString("tentinh"),
+                        Double.parseDouble(rs.getString("phiship")));
              
                 
                 listPhiShip.add(phiShipModel);

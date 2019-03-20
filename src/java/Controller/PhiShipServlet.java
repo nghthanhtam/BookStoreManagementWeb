@@ -37,11 +37,13 @@ public class PhiShipServlet extends HttpServlet {
         
        
         
-        Connection conn = MyUtils.getStoredConnection(request);
-        List<PhiShipModel> listAllPhiShip= PhiShipModel.getAllPhiShip(conn);
-               
-        request.setAttribute("listAllPhiShip", listAllPhiShip);
+        request.setAttribute("txtTitle", "Phí ship"); 
         
+        Connection conn = MyUtils.getStoredConnection(request);
+        List<PhiShipModel> listAllPhiShip = PhiShipModel.getAllPhiShip(conn);
+       
+        request.setAttribute("listAllPhiShip", listAllPhiShip);
+         //System.out.println(listAllPhiShip.get(4).getTenTinh());
         request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);
        
              
@@ -53,30 +55,6 @@ public class PhiShipServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {  
-//        String button = req.getParameter("submit");
-//        
-//        if(button != null && button.equals("them"))
-//        {
-//            String tenTinh = req.getParameter("tentinh");
-//        
-//            Double phiShip = Double.parseDouble(req.getParameter("phiship"));
-//            
-//            req.setAttribute("phiShip", phiShip);
-//            req.setAttribute("txTenTinh", tenTinh);
-//            
-//            PhiShipModel phiship = new PhiShipModel(phiShip, tenTinh);
-//      
-//            
-//            Connection conn = MyUtils.getStoredConnection(req);
-//            try {
-//                boolean result = PhiShipModel.InsertNewPhiShip(conn, phiship);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                throw new IOException(ex.getMessage());
-//            }
-//            req.getRequestDispatcher("/admin/phiship.jsp").forward(req, resp); 
-//        }
-        
 
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
@@ -88,15 +66,14 @@ public class PhiShipServlet extends HttpServlet {
             String tenTinh = (String) req.getParameter("tentinh");
             double phiShip = Double.parseDouble(req.getParameter("phiship"));
                                     
+            
             req.setAttribute("phiShip", phiShip);
             req.setAttribute("tenTinh", tenTinh);
-            List<PhiShipModel> listAllPhiShip = new ArrayList<PhiShipModel>();
-            listAllPhiShip.add(new PhiShipModel(phiShip, tenTinh));
-            req.setAttribute("listAllPhiShip", listAllPhiShip);
+      
 
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                    boolean isOk = PhiShipModel.InsertNewPhiShip(conn, new PhiShipModel(phiShip, tenTinh));
+                    boolean isOk = PhiShipModel.InsertNewPhiShip(conn, new PhiShipModel(0, tenTinh, phiShip));
                     if (isOk)
                     {
                         isFailedRequest = false;

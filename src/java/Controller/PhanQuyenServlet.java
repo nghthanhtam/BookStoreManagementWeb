@@ -94,11 +94,11 @@ public class PhanQuyenServlet extends HttpServlet {
          
         req.setAttribute("txtTitle", "Phân quyền"); 
         
-        Connection conn = MyUtils.getStoredConnection(req);
+          Connection conn = MyUtils.getStoredConnection(req);
         List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
-        
-        
+
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
+        
         
         req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
 
