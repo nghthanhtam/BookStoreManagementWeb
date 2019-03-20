@@ -32,20 +32,9 @@ public class PhiShipServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
-//        HttpSession session = request.getSession();
-//        
-//        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
-//        {
-//            request.getRequestDispatcher("/admin/admin-login.jsp").forward(request, response);
-//        } 
-//       else
-//        {  
-            //ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
-            
-            //request.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-           // request.getRequestDispatcher("/admin/admin-logined.jsp").forward(request, response); 
-            request.getRequestDispatcher("/admin/admin-phiship.jsp").forward(request, response);
-        //}
+      
+            request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);
+       
              
     }
     
@@ -55,36 +44,27 @@ public class PhiShipServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {  
-//        String tendangnhap = req.getParameter("tendangnhap");
-//        String matkhau = req.getParameter("matkhau");
-//        
-//        ThanhVienModel thanhvien = null;
-//        
-//         if (tendangnhap == null || matkhau == null || tendangnhap.length() == 0 || matkhau.length() == 0) {
-//            /*hasError = true;
-//            errorString = "Required username and password!";*/
-//            
-//        } else {
-//            Connection conn = MyUtils.getStoredConnection(req);
-//            try {
-//                thanhvien = ThanhVienModel.FindByTenDangNhap(conn, tendangnhap);
-//            } catch (SQLException ex) {
-//                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//              
-//            if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau()))
-//            {
-//                System.out.print("ok");
-//                MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
-//                req.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-//                req.getRequestDispatcher("/admin/admin-logined.jsp").forward(req, resp); 
-//            }
-//            else
-//            { 
-//                System.out.print("failed");
-//                req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
-//                req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
-//            } 
-//         }
+        String button = req.getParameter("submit");
+        if(button != null && button.equals("them"))
+        {
+            String tenTinh = req.getParameter("tentinh");
+        
+            Double phiShip = Double.parseDouble(req.getParameter("phiship"));
+            
+            req.setAttribute("phiShip", phiShip);
+            req.setAttribute("txTenTinh", tenTinh);
+        }
+        
+        PhiShipModel phiship = new PhiShipModel(1,30000, "Da Nang");
+      
+            
+         Connection conn = MyUtils.getStoredConnection(req);
+            try {
+                boolean result = PhiShipModel.InsertNewPhiShip(conn, phiship);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+                throw new IOException(ex.getMessage());
+            }
+            req.getRequestDispatcher("/admin/phiship.jsp").forward(req, resp); ;
     }
 }

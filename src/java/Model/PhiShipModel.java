@@ -17,6 +17,13 @@ import java.sql.SQLException;
  */
 public class PhiShipModel {
 
+    public PhiShipModel(int maphiship, int phiship, String tentinh) {
+        this.maphiship=maphiship;
+        this.phiship=phiship;
+        this.tentinh=tentinh;
+        
+    }
+
     public int getMaPhiShip() {
         return maphiship;
     }   
@@ -45,36 +52,23 @@ public class PhiShipModel {
     double phiship;
              
     
-     public static PhiShipModel ThemPhiShip(Connection conn, PhiShipModel phiship) throws SQLException
-    {                    
-        //String sql = "INSERT * FROM sach WHERE masach = ? ";
-        String sql = "INSERT INTO phiship (`maphiship`, `tentinh`, `phiship`) VALUES (?,?,?)";
-        
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        //pstm.setInt(1, masach);
-        
-        ResultSet rs = pstm.executeQuery();
-                     
+     public static boolean InsertNewPhiShip(Connection conn, PhiShipModel phiship) 
+            throws SQLException
+    { 
+                   
+        int count = 0;
+        try
+        {
+           String sql="INSERT INTO phiship ( phiship, tentinh) VALUES (?,?)";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setDouble(1, phiship.getPhiShip());
+            pstm.setString(2, phiship.getTenTinh());
 
-//        if (rs.next()) {  
+            count = pstm.executeUpdate(); 
+        } catch (SQLException ex) {
+            count = 0;
+        }
+       return count>0;
 
-//            SachModel sach = new SachModel(
-//                    Integer.parseInt(rs.getString("masach")), 
-//                    rs.getString("tensach") ,
-//                    rs.getString("nhaxuatban"),
-//                    Integer.parseInt(rs.getString("namxuatban")),
-//                    Double.parseDouble(rs.getString("giaban")) , 
-//                    rs.getString("mota"),
-//                    Integer.parseInt(rs.getString("matheloai")), 
-//                    rs.getBlob("hinhanh"),
-//                    Integer.parseInt(rs.getString("soluongton")), 
-//                    rs.getString("tentacgia"));
-//         
-//         
-//             return sach; 
-//        }
-        return null;
-        
     }
 }
