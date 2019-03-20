@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor..
  */
 package Model;
 
@@ -142,7 +142,9 @@ public class PhanQuyenModel {
         int count = 0;
         try
         {
+
             String sql="INSERT INTO phanquyen (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap, qlhoadon) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, obj.getTenQuyen());
