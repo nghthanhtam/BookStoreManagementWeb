@@ -109,7 +109,7 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Employee management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="${pageContext.request.contextPath}/createaccountservlet">Create account</a></li>
+                      <li><a href="${pageContext.request.contextPath}/admin/createaccount">Create account</a></li>
                       <li><a href="media_gallery.html">Media Gallery</a></li>
                       <li><a href="typography.html">Typography</a></li>
                       <li><a href="icons.html">Icons</a></li>
@@ -119,7 +119,7 @@
                       <li><a href="inbox.html">Inbox</a></li>
                       <li><a href="calendar.html">Calendar</a></li>
                     </ul>
-                  </li>`
+                  </li>
                   <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">Tables</a></li>

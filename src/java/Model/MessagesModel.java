@@ -52,6 +52,6 @@ public class MessagesModel {
     public static final String ATT_TYPE_DARK = "dark";
     public static final String ATT_TYPE_NOTICE = "notice";
 
-    ////req.setAttribute("messages", new MessagesModel("Tieu de","noi Dung",MessagesModel.ATT_TYPE_INFO));
+    ////req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Tieu de","noi Dung",MessagesModel.ATT_TYPE_INFO));
 
 }

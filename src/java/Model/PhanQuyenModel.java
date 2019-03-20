@@ -7,7 +7,10 @@ package Model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -95,7 +98,7 @@ public class PhanQuyenModel {
         this.qlNhaCungCap = qlNhaCungCap;
     }
 
-    public PhanQuyenModel(int maPhanQuyen, String tenQuyen, int qlThanhVien, int qlSach, int qlTheLoai, int qlPhiShip, int qlPhanQuyen, int qlPhieuNhap, int qlPhieuChi, int qlNhaCungCap) {
+    public PhanQuyenModel(int maPhanQuyen, String tenQuyen, int qlThanhVien, int qlSach, int qlTheLoai, int qlPhiShip, int qlPhanQuyen, int qlPhieuNhap, int qlPhieuChi, int qlNhaCungCap, int qlHoaDon) {
         this.maPhanQuyen = maPhanQuyen;
         this.tenQuyen = tenQuyen;
         this.qlThanhVien = qlThanhVien;
@@ -106,6 +109,7 @@ public class PhanQuyenModel {
         this.qlPhieuNhap = qlPhieuNhap;
         this.qlPhieuChi = qlPhieuChi;
         this.qlNhaCungCap = qlNhaCungCap;
+        this.qlHoaDon = qlHoaDon;
     }
 
     public PhanQuyenModel() {
@@ -122,14 +126,23 @@ public class PhanQuyenModel {
     private int qlPhieuNhap;
     private int qlPhieuChi;	
     private int qlNhaCungCap;
-    
+    private int qlHoaDon;
+
+    public int getQlHoaDon() {
+        return qlHoaDon;
+    }
+
+    public void setQlHoaDon(int qlHoaDon) {
+        this.qlHoaDon = qlHoaDon;
+    }
+
     public static boolean InsertNewPhanQuyen(Connection conn, PhanQuyenModel obj) 
             throws SQLException
     { 
         int count = 0;
         try
         {
-            String sql="INSERT INTO phanquye1n (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap) VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO phanquyen (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap, qlhoadon) VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, obj.getTenQuyen());
@@ -141,11 +154,46 @@ public class PhanQuyenModel {
             pstm.setInt(7, obj.getQlPhieuNhap());
             pstm.setInt(8, obj.getQlPhieuChi());
             pstm.setInt(9, obj.getQlNhaCungCap()); 
-
+            pstm.setInt(10, obj.getQlHoaDon());  
+            
             count = pstm.executeUpdate(); 
         } catch (SQLException ex) {
             count = 0;
         }
        return count>0;
+    }
+    
+    public static List<PhanQuyenModel> getAllPhanQuyen(Connection conn)
+    {
+        List<PhanQuyenModel> listPhanQuyen = new ArrayList<PhanQuyenModel>();
+        
+        String sql = "SELECT * FROM phanquyen";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+            
+            while(rs.next())
+            {
+                PhanQuyenModel phanQuyenModel = new PhanQuyenModel(
+                        Integer.parseInt(rs.getString("maphanquyen")),
+                        rs.getString("tenquyen"),
+                        Integer.parseInt(rs.getString("qlthanhvien")),
+                        Integer.parseInt(rs.getString("qlsach")),
+                        Integer.parseInt(rs.getString("qltheloai")),
+                        Integer.parseInt(rs.getString("qlphiship")),
+                        Integer.parseInt(rs.getString("qlphanquyen")),
+                        Integer.parseInt(rs.getString("qlphieunhap")),
+                        Integer.parseInt(rs.getString("qlphieuchi")),
+                        Integer.parseInt(rs.getString("qlnhacungcap")),
+                        Integer.parseInt(rs.getString("qlhoadon")) );
+                
+                listPhanQuyen.add(phanQuyenModel);
+            }
+            
+        } catch (SQLException e) {
+           
+        } 
+        
+        return listPhanQuyen; 
     }
 }
