@@ -5,12 +5,14 @@
  */
 package Controller;
 
+import Model.NhaCungCapModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "CreateAccountServlet", urlPatterns = {"/admin/createaccount"})
-public class CreateAccountServlet extends HttpServlet {
+@WebServlet(name = "ThanhVienServlet", urlPatterns = {"/admin/thanhvien"})
+public class ThanhVienServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -38,24 +40,33 @@ public class CreateAccountServlet extends HttpServlet {
             Integer vaitro=1;
             
             
-            ThanhVienModel thanhvien = new ThanhVienModel(0, tendangnhap, matkhau,vaitro );
+          //  ThanhVienModel thanhvien = new ThanhVienModel(0, tendangnhap, matkhau,vaitro );
             
             
             Connection conn = MyUtils.getStoredConnection(req);
-            try {
-                boolean result = ThanhVienModel.InsertNewThanhVien(conn, thanhvien);
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
-                throw new IOException(ex.getMessage());
-            }
-            req.getRequestDispatcher("/admin/create-account.jsp").forward(req, resp); ;
+            //try {
+            //    boolean result = ThanhVienModel.InsertNewThanhVien(conn, thanhvien);
+            //} catch (SQLException ex) {
+             //   Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            //    throw new IOException(ex.getMessage());
+            //}
         }
+            req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp); ;
         
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         req.getRequestDispatcher("/admin/create-account.jsp").forward(req, resp); ;
+        req.setAttribute("txtTitle", "Thành viên"); 
+        
+        Connection conn = MyUtils.getStoredConnection(req);
+        List<ThanhVienModel> listAllThanhVien= ThanhVienModel.getAllThanhVien(conn);
+        System.out.println("NÔNNONOO");
+        
+        req.setAttribute("listAllThanhVien", listAllThanhVien);
+        
+ 
+        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp); ;
     }
 
     

@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.MessagesModel;
+import Model.NhaCungCapModel;
 import Model.PhanQuyenModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -23,52 +24,46 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author MITICC06
+ * @author Admin
  */
-@WebServlet(name = "PhanQuyenServlet", urlPatterns = {"/admin/phanquyen"})
-public class PhanQuyenServlet extends HttpServlet {
+@WebServlet(name = "NhaCungCapServlet", urlPatterns = {"/admin/nhacungcap"})
+public class NhaCungCapServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
         /* Set page */
-        req.setAttribute("txtTitle", "Phân quyền");
+        System.out.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        //req.setAttribute("txtTitle", "Nhà cung cấp");
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
+        //String submitValue = req.getParameter("submit");
+        String button = req.getParameter("submit");
         
-        String submitValue = req.getParameter("submit");
-        System.out.println("AAAAAAAAAAAAAA");
-        if (submitValue !=null && submitValue.equals("them"))
+        if (button !=null && button.equals("them"))
         {
             
-            String tenPhanQuyen = (String) req.getParameter("tenphanquyen");
-            int qlThanhVien = req.getParameter("qlthanhvien") == null ? 0 : 1;
-            int qlSach = req.getParameter("qlsach") == null ? 0 : 1;
-            int qlTheLoai = req.getParameter("qltheloai") == null ? 0 : 1;
-            int qlPhiShip = req.getParameter("qlphiship") == null ? 0 : 1;
-            int qlPhanQuyen = req.getParameter("qlphanquyen") == null ? 0 : 1;
-            int qlPhieuNhap = req.getParameter("qlphieunhap") == null ? 0 : 1;
-            int qlPhieuChi = req.getParameter("qlphieuchi") == null ? 0 : 1;
-            int qlNhaCungCap = req.getParameter("qlnhacungcap") == null ? 0 : 1;
-            int qlHoaDon = req.getParameter("qlhoadon") == null ? 0 : 1;
+            String tenNhaCungCap = (String) req.getParameter("tennhacungcap");            
+            String diaChi = (String) req.getParameter("diachi");
+            String soDienThoai = (String) req.getParameter("sodienthoai");            
+            Double soTienNo = Double.parseDouble(req.getParameter("sotienno"));
             
              
              
             
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                    boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlHoaDon));
+                    boolean isOk = NhaCungCapModel.InsertNewNhaCungCap(conn, new NhaCungCapModel(0, tenNhaCungCap, diaChi, soDienThoai, soTienNo));
                     if (isOk)
                     {
                         isFailedRequest = false;
-                        noiDungThongBao = "Đã thêm phân quyền!";
+                        noiDungThongBao = "Đã thêm nhà cung cấp mới!";
                     }
                     else
                         isFailedRequest = true;
                          
             } catch (SQLException ex) { 
                 isFailedRequest=true; 
-                Logger.getLogger(PhanQuyenServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NhaCungCapServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
              
         }
@@ -85,27 +80,29 @@ public class PhanQuyenServlet extends HttpServlet {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!",noiDungThongBao,MessagesModel.ATT_TYPE_SUCCESS));         
         }
         Connection conn = MyUtils.getStoredConnection(req);
-        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
-        req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
-        req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
+        List<NhaCungCapModel> listAllNhaCungCap= NhaCungCapModel.getAllNhaCungCap(conn);
+        
+        req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
+        req.getRequestDispatcher("/admin/nhacungcap.jsp").forward(req, resp);
         
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-         
-        req.setAttribute("txtTitle", "Phân quyền"); 
+          System.out.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        
+        req.setAttribute("txtTitle", "Nhà cung cấp"); 
         
         Connection conn = MyUtils.getStoredConnection(req);
-        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
+        List<NhaCungCapModel> listAllNhaCungCap= NhaCungCapModel.getAllNhaCungCap(conn);
         
         
-        req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
+        req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
         
-        req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
+        req.getRequestDispatcher("/admin/nhacungcap.jsp").forward(req, resp);
+ }
 
-    }
 
     
+  
 }

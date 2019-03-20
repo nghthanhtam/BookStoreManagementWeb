@@ -1,8 +1,10 @@
 <%-- 
-    Document   : nhacungcap
-    Created on : Mar 20, 2019, 2:55:02 PM
-    Author     : Admin
+    Document   : admin-logined
+    Created on : Mar 11, 2019, 11:55:26 AM
+    Author     : Ha Phuong
 --%>
+
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
  
@@ -11,7 +13,7 @@
 
             <div class="page-title">
               <div class="title_left">
-                <h3>Nhà  cung cấp</h3>
+                <h3>Thành viên</h3>
               </div>
  
             </div>
@@ -22,7 +24,7 @@
              <div class="col-md-8 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Danh sách nhà cung cấp</h2>
+                    <h2>Danh sách thành viên</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -47,29 +49,33 @@
                     <table class="table table-striped projects">
                       <thead>
                         <tr>
-                          <th style="width: 5%">STt</th>
-                          <th style="width: 15%">Tên nhà cung cấp</th>
-                          <th>Địa chỉ</th>
+                          <th style="width: 5%">STT</th>
+                          <th style="width: 15%">Tên đăng nhập</th>
+                          <th>Họ và tên</th>
+                          <th>Đỉa chỉ</th>
                           <th>Số điện thoại</th>
-                          <th>Số tiền nợ</th>
+                          <th>Email</th>
+                          <th>Mã phân quyền</th>
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
                       <tbody>
                            
-                             ${listAllNhaCungCap.size()==0?"Chưa có nhà cung cấp nào được tạo!":""}
+                             ${listAllThanhVien.size()==0?"Chưa có nhà cung cấp nào được tạo!":""}
                            
                             
-                            <c:forEach items="${listAllNhaCungCap}" var="obj">
+                            <c:forEach items="${listAllThanhVien}" var="obj">
                                 <tr>
-                                    <td style="width: 5%">${obj.getMaNhaCungCap()}</td>
-                                    <td style="width: 20%">${obj.getTenNhaCungCap()}</td>
+                                    <td style="width: 5%">${obj.getMaThanhVien()}</td>
+                                    <td style="width: 20%">${obj.getTenDangNhap()}</td>
+                                    <td>${obj.getHoTen()}</td>
                                     <td>${obj.getDiaChi()}</td>
                                     <td>${obj.getSoDienThoai()}</td>
-                                    <td>${obj.getSoTienNo()}</td>
+                                    <td>${obj.getEmail()}</td>
+                                    <td>${obj.getMaPhanQuyen()}</td>
                                     <td> 
-                                        <a href="${contextPath}/admin/nhacungcap/edit?id=${obj.getMaNhaCungCap()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                                        <a href="${contextPath}/admin/nhacungcap/delete?id=${obj.getMaNhaCungCap()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
                                     </td>
                                    
                                     
@@ -94,7 +100,7 @@
               <div class="col-md-4 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Thêm nhà cung cấp</h2>
+                    <h2>Thêm thành viên</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -114,31 +120,33 @@
                   </div>
                   <div class="x_content">
                     <br>
-                    <form class="form-horizontal form-label-left " method="POST" action="${pageContext.request.contextPath}/admin/nhacungcap">
+                    <form class="form-horizontal form-label-left " method="POST" action="${pageContext.request.contextPath}/admin/thanhvien">
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Tên nhà cung cấp</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Tên nhà cung cấp <span class="required">*</span>
+                        </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" name="tennhacungcap" value="${tenNhaCungCap}" pattern="^[a-zA-Z][\sa-zA-Z]*" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="tennhacungcap" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Địa chỉ</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Địa chỉ <span class="required">*</span>
+                        </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" name="diachi" required="required" value="${diaChi}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="diachi" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Số điện thoại</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                                 <input type="text"value="${soDienThoai}" name="sodienthoai" class="form-control col-md-7 col-xs-12" required="required" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></div>
+                            <input class="form-control col-md-7 col-xs-12"required="required" type="text" name="sodienthoai">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Số tiền nợ</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Số tiền nợ<span class="required">*</span>
+                        </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                             <input type="text" name="sotienno" class="form-control col-md-7 col-xs-12" required="required" value="${soTienNo == null ? "0" : "12"}" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></div>
-                       
+                          <input name="sotienno" class="form-control col-md-7 col-xs-12" required="required" type="text">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
