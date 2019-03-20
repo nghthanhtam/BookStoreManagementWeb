@@ -4,7 +4,7 @@
     Author     : Ha Phuong
 --%>
 
-<%@page     contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 </div>

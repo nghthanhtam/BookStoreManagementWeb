@@ -3,9 +3,9 @@
     Created on : Mar 19, 2019, 4:15:43 PM
     Author     : MITICC06
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+ 
 
 <%@include file="header.jsp" %>
 
@@ -47,7 +47,7 @@
                     <table class="table table-striped projects">
                       <thead>
                         <tr>
-                          <th style="width: 1%">STT</th>
+                          <th style="width: 5%">STT</th>
                           <th style="width: 15%">Tên phân quyền</th>
                           <th>QL Thành viên</th>
                           <th>QL sách</th>
@@ -57,32 +57,38 @@
                           <th>QL Phiếu nhập</th>
                           <th>QL Phiếu chi</th>
                           <th>QL Nhà cung cấp</th> 
-
-                          <th style="width: 15%">Thao tác</th>
+                          <th>QL Hóa đơn</th> 
+                          <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
                       <tbody>
-                          
-                          
-                        <tr>
-                          <td style="width: 1%">1</td>
-                          <td style="width: 15%">Tên phân quyền</td>
-                          <td>QL Thành viên</td>
-                          <td>QL sách</td>
-                          <td>QL Thể loại</td>
-                          <td>QL Phí ship</td>
-                          <td>QL Phân quyền</td>
-                          <td>QL Phiếu nhập</td>
-                          <td>QL Phiếu chi</td>
-                          <td>QL Nhà cung cấp</td> 
-
-                          <td> 
-                            <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                            <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
-                          </td>
-                        </tr>
-                          
-                          
+                           
+                             ${listAllPhanQuyen.size()==0?"Chưa có phân quyền nào được tạo!":""}
+                           
+                            
+                            <c:forEach items="${listAllPhanQuyen}" var="obj">
+                                <tr>
+                                    <td style="width: 5%">${obj.getMaPhanQuyen()}</td>
+                                    <td style="width: 20%">${obj.getTenQuyen()}</td>
+                                    <td>${obj.getQlThanhVien() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlSach() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlTheLoai() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlPhiShip() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlPhanQuyen() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlPhieuNhap() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlPhieuChi() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlNhaCungCap() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlHoaDon() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td> 
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                                    </td>
+                                   
+                                    
+                                </tr>
+                            </c:forEach>
+                           
+                       
                           
                      
                         
@@ -178,7 +184,11 @@
                               <input name="qlnhacungcap" value="1" type="checkbox" class="flat"> Quản lí nhà cung cấp
                             </label>
                           </div>                            
-                            
+                          <div class="checkbox">
+                            <label>
+                              <input name="qlhoadon" value="1" type="checkbox" class="flat"> Quản lí hóa đơn
+                            </label>
+                          </div>         
                             
                             
                         </div>

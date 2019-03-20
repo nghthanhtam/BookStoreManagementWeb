@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -48,14 +49,14 @@ public class PhanQuyenServlet extends HttpServlet {
             int qlPhieuNhap = req.getParameter("qlphieunhap") == null ? 0 : 1;
             int qlPhieuChi = req.getParameter("qlphieuchi") == null ? 0 : 1;
             int qlNhaCungCap = req.getParameter("qlnhacungcap") == null ? 0 : 1;
+            int qlHoaDon = req.getParameter("qlhoadon") == null ? 0 : 1;
             
              
              
             
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                    boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap));
-                    System.out.println("yyyyyyy "+ isOk);
+                    boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlHoaDon));
                     if (isOk)
                     {
                         isFailedRequest = false;
@@ -92,6 +93,13 @@ public class PhanQuyenServlet extends HttpServlet {
 
          
         req.setAttribute("txtTitle", "Phân quyền"); 
+        
+        Connection conn = MyUtils.getStoredConnection(req);
+        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
+        
+        
+        req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
+        
         req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
 
     }
