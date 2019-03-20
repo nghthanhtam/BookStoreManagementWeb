@@ -37,7 +37,7 @@ public class DeletePhanQuyenServlet extends HttpServlet {
         try {
             int maPhanQuyen = Integer.parseInt((String) req.getParameter("id"));
             System.out.println(maPhanQuyen);
-            result = PhanQuyenModel.DeleteById(conn, maPhanQuyen);
+            result = PhanQuyenModel.DeleteByMaPhanQuyen(conn, maPhanQuyen);
             
         } catch (Exception ex) {
             result = false;
