@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.NhaCungCapModel;
+import Model.PhanQuyenModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -60,10 +61,12 @@ public class ThanhVienServlet extends HttpServlet {
         req.setAttribute("txtTitle", "Thành viên"); 
         
         Connection conn = MyUtils.getStoredConnection(req);
+        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModel> listAllThanhVien= ThanhVienModel.getAllThanhVien(conn);
         System.out.println("NÔNNONOO");
         
         req.setAttribute("listAllThanhVien", listAllThanhVien);
+        req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
         
  
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp); ;

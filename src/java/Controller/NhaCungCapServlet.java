@@ -42,13 +42,17 @@ public class NhaCungCapServlet extends HttpServlet {
         if (button !=null && button.equals("them"))
         {
             
-            String tenNhaCungCap = (String) req.getParameter("tennhacungcap");            
+            System.out.println("1");    
+            String tenNhaCungCap = (String) req.getParameter("tennhacungcap");  
+            System.out.println("2");              
             String diaChi = (String) req.getParameter("diachi");
-            String soDienThoai = (String) req.getParameter("sodienthoai");            
-            Double soTienNo = Double.parseDouble(req.getParameter("sotienno"));
+            System.out.println("3");    
+            String soDienThoai = (String) req.getParameter("sodienthoai"); 
+            System.out.println("4");               
+            Double soTienNo =200.0;
             
              
-             
+            System.out.println("5");
             
             Connection conn = MyUtils.getStoredConnection(req);
             try {

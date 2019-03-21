@@ -7,12 +7,16 @@ package Controller;
 
 import Model.MessagesModel;
 import Model.NhaCungCapModel;
+import Model.PhanQuyenModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,23 +32,73 @@ public class EditNhaCungCapServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
+         /* Set page */
+        req.setAttribute("txtTitle", "Nhà cung cấp");
+        boolean isFailedRequest = false; // request thất bại
+        String noiDungThongBao = "";
+        
+        Connection conn = MyUtils.getStoredConnection(req);
+        
+        String submitValue = req.getParameter("submit");
+        if (submitValue !=null && submitValue.equals("capnhat"))
+        {
+            
+                    System.out.println("HEHHEHE");
+            String tenNhaCungCap = (String) req.getParameter("tennhacungcap");
+            String diaChi = (String) req.getParameter("diachi");
+            String soDienThoai = (String) req.getParameter("sodienthoai");
+            int maNhaCungCap = Integer.parseInt(req.getParameter("manhacungcap"));
+            Double soTienNo = 0.0;
+            NhaCungCapModel nhaCungCapModel = new NhaCungCapModel(maNhaCungCap, tenNhaCungCap, diaChi, soDienThoai, soTienNo);
+            try {
+                    
+                    boolean isOk = nhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCapModel);
+                    System.out.println(isOk);
+                    if (isOk)
+                    {
+                        isFailedRequest = false;
+                        noiDungThongBao = "Đã cập nhật thành công!";
+                    }
+                    else
+                        isFailedRequest = true;
+                    
+            } catch (SQLException ex) { 
+                isFailedRequest=true; 
+                Logger.getLogger(NhaCungCapModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        else
+            isFailedRequest = true;
+        
+        if (isFailedRequest) // nếu có lỗi thì hiện thông báo
+        { 
+                 req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được xử lý!",MessagesModel.ATT_TYPE_ERROR));         
+       
+               }
+        else
+        {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!",noiDungThongBao,MessagesModel.ATT_TYPE_SUCCESS));         
+    
+          }
+        
+        List<NhaCungCapModel> listAllNhaCungCap = NhaCungCapModel.getAllNhaCungCap(conn);
+        req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
+        req.getRequestDispatcher("/admin/nhacungcap.jsp").forward(req, resp);
+       
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             
          Connection conn = MyUtils.getStoredConnection(req);
+        NhaCungCapModel nhaCungCapModel = null;
         boolean result = false;
         try {
             int maNhaCungCap = Integer.parseInt((String) req.getParameter("id"));
-            NhaCungCapModel  nhaCungCap=NhaCungCapModel.FindByMaNhaCungCap(conn, maNhaCungCap);
-            req.setAttribute("tenNhaCungCap", nhaCungCap.getTenNhaCungCap());
-            req.setAttribute("diaChi", nhaCungCap.getDiaChi());
-            req.setAttribute("soDienThoai", nhaCungCap.getSoDienThoai());
-            req.setAttribute("soTienNo", nhaCungCap.getSoTienNo());
-        
-            if(nhaCungCap!=null)
+            System.out.println(maNhaCungCap);
+            nhaCungCapModel = NhaCungCapModel.FindByMaNhaCungCap(conn, maNhaCungCap);
+            if (nhaCungCapModel != null)
                 result = true;
         } catch (Exception ex) {
             result = false;
@@ -52,19 +106,28 @@ public class EditNhaCungCapServlet extends HttpServlet {
         
         if (result == true)
         {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!","Đã tìm thấy nhà cung cấp theo mã thành công!",MessagesModel.ATT_TYPE_SUCCESS));         
-
-        } else {
             
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Không tìm thấy nhà cung cấp theo mã!",MessagesModel.ATT_TYPE_ERROR));         
- 
-        
+            req.setAttribute("txtTitle", "Sửa thông tin nhà cung cấp");
+            req.setAttribute("nhaCungCapModel", nhaCungCapModel);
+            req.getRequestDispatcher("/admin/nhacungcap-edit.jsp").forward(req, resp);
+
+            
+            
+            
+        } else { // hiển thị view thông báo thất bại
+            
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được thực hiện!",MessagesModel.ATT_TYPE_ERROR));         
+            
+            /* Hiển thị view */
+            req.setAttribute("txtTitle", "Nhà cung cấp"); 
+
+            List<NhaCungCapModel> listAllNhaCungCap= NhaCungCapModel.getAllNhaCungCap(conn);
+            req.setAttribute("listAllPhanQuyen", listAllNhaCungCap);
+            req.getRequestDispatcher("/admin/nhacungcap.jsp").forward(req, resp);
         }
-        //String ten= req.getParameter("tennhacungcap");
-        req.setAttribute("txtTitle", "Nhà cung cấp"); 
-        List<NhaCungCapModel> listAllNhaCungCap= NhaCungCapModel.getAllNhaCungCap(conn);
-        req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
-        req.getRequestDispatcher("/admin/nhacungcap.jsp").forward(req, resp);
+        
+        
+         
     }
 
     
