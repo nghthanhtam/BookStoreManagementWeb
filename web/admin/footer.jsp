@@ -51,7 +51,9 @@
     <!-- Flot -->
     <script src="${contextPath}/vendors/Flot/jquery.flot.js"></script>
     <script src="${contextPath}/vendors/Flot/jquery.flot.pie.js"></script>
-  <script src="${contextPath}/vendors/Flot/jquery.flot.time.js"></script>
+
+    <script src="${contextPath}/vendors/Flot/jquery.flot.time.js"></script>
+
     <script src="${contextPath}/vendors/Flot/jquery.flot.stack.js"></script>
     <script src="${contextPath}/vendors/Flot/jquery.flot.resize.js"></script>
     <!-- Flot plugins -->
@@ -72,6 +74,7 @@
     <script src="${contextPath}/build/js/custom.min.js"></script>
 	
     <script src="${contextPath}/vendors/validator/validator.js"></script>
+
     <script src="${contextPath}/vendors/parsleyjs/dist/parsley.min.js"></script>  
 
 

@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -145,6 +147,36 @@ public class ThanhVienModel {
         pstm.setInt(7, thanhvien.getMaPhanQuyen());
         
         return pstm.execute();
+    }
+      public static List<ThanhVienModel> getAllThanhVien(Connection conn)
+    {
+        List<ThanhVienModel> listThanhVien = new ArrayList<ThanhVienModel>();
+        
+        String sql = "SELECT * FROM thanhvien";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+            
+            while(rs.next())
+            {
+                ThanhVienModel thanhVienModel = new ThanhVienModel(
+                        Integer.parseInt(rs.getString("mathanhvien")),
+                        rs.getString("tendangnhap"),
+                        rs.getString("matkhau"),
+                        rs.getString("hoten"),
+                        rs.getString("diachi"),
+                        rs.getString("sodienthoai"),
+                        rs.getString("email"),
+                        Integer.parseInt(rs.getString("maphanquyen")));
+                
+                listThanhVien.add(thanhVienModel);
+            }
+            
+        } catch (SQLException e) {
+           
+        } 
+        
+        return listThanhVien; 
     }
 }
 
