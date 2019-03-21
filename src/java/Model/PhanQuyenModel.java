@@ -196,4 +196,107 @@ public class PhanQuyenModel {
         
         return listPhanQuyen; 
     }
+    
+    
+    public static boolean DeleteByMaPhanQuyen(Connection conn, int maPhanQuyen) throws SQLException
+    {
+        String sql = "DELETE FROM phanquyen WHERE maPhanQuyen = ?";
+        int count = 0;
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maPhanQuyen);             
+            count = pstm.executeUpdate(); 
+            
+        } catch (SQLException ex) {
+            
+        }
+        
+       
+        System.out.println("count = "+count);
+        
+        return count>0;
+    }
+    
+     public static PhanQuyenModel FindByMaPhanQuyen(Connection conn, int maPhanQuyen) throws SQLException
+    {
+         
+        String sql = "SELECT * FROM phanquyen WHERE maphanquyen = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        
+        pstm.setInt(1, maPhanQuyen);
+        
+        ResultSet rs = pstm.executeQuery();
+                     
+
+        if (rs.next()) {  
+            PhanQuyenModel phanQuyenModel = new PhanQuyenModel(
+                        Integer.parseInt(rs.getString("maphanquyen")),
+                        rs.getString("tenquyen"),
+                        Integer.parseInt(rs.getString("qlthanhvien")),
+                        Integer.parseInt(rs.getString("qlsach")),
+                        Integer.parseInt(rs.getString("qltheloai")),
+                        Integer.parseInt(rs.getString("qlphiship")),
+                        Integer.parseInt(rs.getString("qlphanquyen")),
+                        Integer.parseInt(rs.getString("qlphieunhap")),
+                        Integer.parseInt(rs.getString("qlphieuchi")),
+                        Integer.parseInt(rs.getString("qlnhacungcap")),
+                        Integer.parseInt(rs.getString("qlhoadon")) );
+         
+             return phanQuyenModel; 
+        }
+        return null;
+        
+    }
+     
+     
+     
+     
+    public static boolean UpdatePhanQuyen(Connection conn, PhanQuyenModel obj) 
+            throws SQLException
+    { 
+        int count = 0;
+        try
+        {
+            String sql="UPDATE phanquyen SET tenquyen = ?, qlthanhvien = ?, qlsach = ?, qltheloai = ?, qlphiship = ?, qlphanquyen = ?, qlphieunhap = ?, qlphieuchi = ?, qlnhacungcap = ?, qlhoadon = ? WHERE maphanquyen = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1, obj.getTenQuyen());
+            pstm.setInt(2, obj.getQlThanhVien());
+            pstm.setInt(3, obj.getQlSach());
+            pstm.setInt(4, obj.getQlTheLoai());
+            pstm.setInt(5, obj.getQlPhiShip());
+            pstm.setInt(6, obj.getQlPhanQuyen()); 
+            pstm.setInt(7, obj.getQlPhieuNhap());
+            pstm.setInt(8, obj.getQlPhieuChi());
+            pstm.setInt(9, obj.getQlNhaCungCap()); 
+            pstm.setInt(10, obj.getQlHoaDon());  
+            pstm.setInt(11, obj.getMaPhanQuyen());  
+
+            count = pstm.executeUpdate(); 
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+       return count>0;
+    }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    
 }
