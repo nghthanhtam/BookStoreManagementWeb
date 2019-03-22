@@ -58,10 +58,9 @@ public class PhiShipModel {
     }
              
     
-     public static boolean InsertNewPhiShip(Connection conn, PhiShipModel phiship) 
+    public static boolean InsertNewPhiShip(Connection conn, PhiShipModel phiship) 
             throws SQLException
-    { 
-                   
+    {                   
         int count = 0;
         try
         {
@@ -136,7 +135,7 @@ public class PhiShipModel {
 
             pstm.setString(1, obj.getTenTinh());
             pstm.setDouble(2, obj.getPhiShip());
-            pstm.setDouble(3, obj.getMaPhiShip());
+            pstm.setInt(3, obj.getMaPhiShip());
 
             count = pstm.executeUpdate(); 
 
