@@ -35,6 +35,7 @@ public class MessagesModel {
     public void setType(String type) {
         this.type = type;
     }
+    
 
     public MessagesModel(String title, String text, String type) {
         this.title = title;
