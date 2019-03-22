@@ -60,15 +60,17 @@ public class PhiShipServlet extends HttpServlet {
         
         String submitValue = req.getParameter("submit");
         if (submitValue !=null && submitValue.equals("them"))
-        {
-            
+        {           
             String tenTinh = (String) req.getParameter("tentinh");
             double phiShip = Double.parseDouble(req.getParameter("phiship"));
                                     
-            
+            if(Double.toString(phiShip).matches("-?\\d+(\\.\\d+)?") == true)
+            {
+       
+            }
+        
             req.setAttribute("phiShip", phiShip);
             req.setAttribute("tenTinh", tenTinh);
-      
 
             Connection conn = MyUtils.getStoredConnection(req);
             try {
@@ -80,12 +82,11 @@ public class PhiShipServlet extends HttpServlet {
                    }
                     else
                         isFailedRequest = true;
-                         
+
             } catch (SQLException ex) { 
                 isFailedRequest=true; 
                 Logger.getLogger(PhiShipServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-             
         }
         else
             isFailedRequest = true;
@@ -109,7 +110,6 @@ public class PhiShipServlet extends HttpServlet {
         req.setAttribute("listAllPhiShip", listAllPhiShip);
         req.getRequestDispatcher("/admin/phiship.jsp").forward(req, resp);
         
-        
-       
+ 
     }
 }
