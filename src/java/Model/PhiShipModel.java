@@ -104,4 +104,68 @@ public class PhiShipModel {
         
         return listPhiShip; 
     }
+    
+    public static boolean DeleteByMaPhiShip(Connection conn, int maPhiShip) throws SQLException
+    {
+        String sql= "DELETE FROM phiship WHERE maPhiShip = ?";
+        
+        int count = 0;
+        
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maPhiShip);             
+            count = pstm.executeUpdate(); 
+            
+        } catch (SQLException ex) {
+            
+        }
+            
+        System.out.println("count = "+count);
+        
+        return count>0;
+    }
+    
+    public static boolean UpdatePhiShip(Connection conn, PhiShipModel obj) 
+            throws SQLException
+    { 
+        int count = 0;
+        try
+        {
+            String sql="UPDATE phiship SET tentinh = ?, phiship = ? WHERE maphiship = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, obj.getTenTinh());
+            pstm.setDouble(2, obj.getPhiShip());
+            pstm.setDouble(3, obj.getMaPhiShip());
+
+            count = pstm.executeUpdate(); 
+
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+        
+        return count>0;
+    }
+    
+    public static PhiShipModel FindByMaPhiShip(Connection conn, int maphiship) throws SQLException
+    {
+        String sql="SELECT * FROM phiship WHERE maphiship = ?";
+        PreparedStatement pstm = conn.prepareStatement(sql); //cau lenh sql duoc compile va save trong 1 
+                                                             //doi tuong PreparedStatement                    
+        pstm.setInt(1, maphiship);
+        
+        ResultSet rs = pstm.executeQuery(); //thuc hien truy van
+                     
+        if (rs.next()) {  
+            PhiShipModel phiShipModel = new PhiShipModel(
+                        Integer.parseInt(rs.getString("maphiship")),
+                        rs.getString("tentinh"),
+                        Double.parseDouble(rs.getString("phiship")));
+         
+            return phiShipModel; 
+        }
+        return null;
+        
+    }
 }

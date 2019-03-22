@@ -120,7 +120,7 @@
                  
                     
                     
-                    <form class="form-horizontal form-label-left " method="POST" action="${pageContext.request.contextPath}/admin/phanquyen">
+                   <form class="form-horizontal form-label-left " method="POST" action="${contextPath}/admin/phanquyen">
 
                         
                       <div class="form-group">

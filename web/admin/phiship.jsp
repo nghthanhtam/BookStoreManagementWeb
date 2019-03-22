@@ -56,8 +56,7 @@
                       </thead>
                       
                       <tbody>
-                          ${listAllPhiShip.size()==0?"Chưa có phí ship nào được tạo!":""}
-                           
+                          ${listAllPhiShip.size()==0?"Chưa có phí ship nào được tạo!":""}                         
                        
                             <c:forEach items="${listAllPhiShip}" var="obj">
                                 <tr>
@@ -66,8 +65,8 @@
                                     <td style="width: 15%">${obj.getPhiShip()}</td>
                                      
                                     <td> 
-                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                                        <a href="${contextPath}/admin/phiship/edit?id=${obj.getMaPhiShip()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+                                        <a href="${contextPath}/admin/phiship/delete?id=${obj.getMaPhiShip()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
                                     </td>
                                    
                                     

@@ -34,8 +34,7 @@ public class PhiShipServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
-        
-       
+               
         
         request.setAttribute("txtTitle", "Phí ship"); 
         
@@ -43,7 +42,7 @@ public class PhiShipServlet extends HttpServlet {
         List<PhiShipModel> listAllPhiShip = PhiShipModel.getAllPhiShip(conn);
        
         request.setAttribute("listAllPhiShip", listAllPhiShip);
-         //System.out.println(listAllPhiShip.get(4).getTenTinh());
+        //System.out.println(listAllPhiShip.get(0).getTenTinh());
         request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);
        
              
@@ -101,7 +100,16 @@ public class PhiShipServlet extends HttpServlet {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!",noiDungThongBao,MessagesModel.ATT_TYPE_SUCCESS));         
         }
         
+       
+        req.setAttribute("txtTitle", "Phí ship"); 
+        
+        Connection conn = MyUtils.getStoredConnection(req);
+        List<PhiShipModel> listAllPhiShip = PhiShipModel.getAllPhiShip(conn);
+       
+        req.setAttribute("listAllPhiShip", listAllPhiShip);
         req.getRequestDispatcher("/admin/phiship.jsp").forward(req, resp);
+        
+        
        
     }
 }
