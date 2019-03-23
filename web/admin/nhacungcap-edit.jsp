@@ -73,7 +73,7 @@
                             <a  href="${contextPath}/admin/nhacungcap" class="btn btn-primary">Cancel</a>
                           <button type="submit" class="btn btn-success" name="submit" value="capnhat">Save</button>
                         </div>
-                      </div
+                       </div>
                     </form>
                             
                   </div>

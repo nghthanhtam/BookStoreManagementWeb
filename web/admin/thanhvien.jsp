@@ -63,6 +63,13 @@
                         </div>
                       </div>
                         <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" >Lập lại mật khẩu <span class="required">*</span>
+                        </label>
+                        <div class="col-md-5 col-sm-9 col-xs-12">
+                            <input type="password" name="laplaimatkhau" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                        <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Họ tên</label>
                         <div class="col-md-3 col-sm-9 col-xs-12">
                             <input type="text" name="hoten" required="required"  class="form-control col-md-7 col-xs-12">
@@ -94,9 +101,9 @@
                              ${listAllPhanQuyen.size()==0?"Chưa phân quyền nào!":""}
                            
                             <select id="heard" class="form-control" required="" name="phanquyen">
-                            
+                            <option value="" selected disabled hidden>Choose here</option>
                             <c:forEach items="${listAllPhanQuyen}" var="obj">
-                                          <option >${obj.getTenQuyen()}</option>
+                                          <option value=${obj.getMaPhanQuyen()}>${obj.getTenQuyen()}</option>
                                             
                             </c:forEach>
                           </select>
@@ -156,7 +163,7 @@
                           <th style="width: 45%">Đỉa chỉ</th>
                           <th style="width: 10%">Số điện thoại</th>
                           <th>Email</th>
-                          <th>Mã phân quyền</th>
+                          <th>Tên phân quyền</th>
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
@@ -175,8 +182,8 @@
                                     <td>${obj.getEmail()}</td>
                                     <td>${obj.getMaPhanQuyen()}</td>
                                     <td> 
-                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
-                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
+                                        <a href="${contextPath}/admin/thanhvien/edit?id=${obj.getMaThanhVien()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="${contextPath}/admin/thanhvien/delete?id=${obj.getMaThanhVien()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                                     </td>
                                    
                                     

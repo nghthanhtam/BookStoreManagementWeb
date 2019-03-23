@@ -133,9 +133,13 @@ public class ThanhVienModel {
         return null;
         
     }
+    
     public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien) 
             throws SQLException
     { 
+        int count = 0;
+        try
+        {
         String sql="INSERT INTO thanhvien ( tendangnhap, matkhau, hoten, diachi, sodienthoai, email, maphanquyen) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setString(1, thanhvien.getTenDangNhap());
@@ -145,9 +149,23 @@ public class ThanhVienModel {
         pstm.setString(5, thanhvien.getSoDienThoai());
         pstm.setString(6, thanhvien.getEmail());  
         pstm.setInt(7, thanhvien.getMaPhanQuyen());
-        
-        return pstm.execute();
+            
+        System.out.println(thanhvien.getTenDangNhap());
+        System.out.println(thanhvien.getMatKhau());
+        System.out.println(thanhvien.getHoTen());
+        System.out.println(thanhvien.getDiaChi());
+        System.out.println(thanhvien.getSoDienThoai());
+        System.out.println(thanhvien.getEmail());
+        System.out.println(thanhvien.getMaPhanQuyen());
+            count = pstm.executeUpdate(); 
+        } catch (SQLException ex) {
+            
+            System.out.println(ex);
+            count = 0;
+        }
+       return count>0;
     }
+    
       public static List<ThanhVienModel> getAllThanhVien(Connection conn)
     {
         List<ThanhVienModel> listThanhVien = new ArrayList<ThanhVienModel>();
@@ -178,6 +196,88 @@ public class ThanhVienModel {
         
         return listThanhVien; 
     }
+      
+      
+       public static boolean DeleteThanhVienById(Connection conn, int maThanhVien) throws SQLException
+    {
+        String sql = "DELETE FROM thanhvien WHERE mathanhvien = ?";
+        int count = 0;
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maThanhVien);             
+            count = pstm.executeUpdate(); 
+            
+        } catch (SQLException ex) {
+            
+        }
+        
+       
+        System.out.println("count = "+count);
+        
+        return count>0;
+    }
+       
+        public static ThanhVienModel FindByMaNhaCungCap(Connection conn, int maThanhVien) throws SQLException
+    {
+        
+        
+        
+        String sql = "SELECT * FROM thanhvien WHERE mathanhvien = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        
+        pstm.setInt(1, maThanhVien);
+        
+        ResultSet rs = pstm.executeQuery();
+                     
+
+        if (rs.next()) {  
+            ThanhVienModel thanhVienModel = new ThanhVienModel(
+                    
+                    Integer.parseInt(rs.getString("mathanhvien")), 
+                    rs.getString("tendangnhap") ,
+                    rs.getString("matkhau"),
+                    rs.getString("hoten"),
+                    rs.getString("diachi"),
+                    rs.getString("sodienthoai"),
+                    rs.getString("email"),
+                    Integer.parseInt(rs.getString("maphanquyen")));
+                    
+         
+         
+             return thanhVienModel; 
+        }
+        return null;
+        
+    }
+        
+             public static boolean UpdateThanhVien(Connection conn, ThanhVienModel obj) 
+            throws SQLException
+    { 
+        int count = 0;
+        try
+        {
+            String sql="UPDATE thanhvien SET tendangnhap = ?,matkhau=?,hoten=?, diachi = ?, sodienthoai = ?, email = ?, maphanquyen =? WHERE mathanhvien = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1, obj.getTenDangNhap());
+            pstm.setString(2, obj.getMatKhau());
+            pstm.setString(3, obj.getHoTen());
+            pstm.setString(4, obj.getDiaChi());
+            pstm.setString(5, obj.getSoDienThoai());
+            pstm.setString(6, obj.getEmail());
+            pstm.setInt(7, obj.getMaPhanQuyen());
+            pstm.setInt(8, obj.getMaThanhVien());    
+
+            count = pstm.executeUpdate(); 
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+       return count>0;
+    }
+    
+    
 }
 
  
