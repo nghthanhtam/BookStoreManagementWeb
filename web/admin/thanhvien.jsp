@@ -163,16 +163,16 @@
                           <th style="width: 45%">Đỉa chỉ</th>
                           <th style="width: 10%">Số điện thoại</th>
                           <th>Email</th>
-                          <th>Tên phân quyền</th>
+                          <th style="width: 20%">Tên phân quyền</th>
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
                       <tbody>
                            
-                           ${listAllThanhVien.size()==0?"Chưa có nhà cung cấp nào được tạo!":""}
+                           ${listAllThanhVienWithModel.size()==0?"Chưa có nhà cung cấp nào được tạo!":""}
                            
                             
-                            <c:forEach items="${listAllThanhVien}" var="obj">
+                            <c:forEach items="${listAllThanhVienWithModel}" var="obj">
                                 <tr>
                                     <td >${obj.getMaThanhVien()}</td>
                                     <td >${obj.getTenDangNhap()}</td>
@@ -180,7 +180,7 @@
                                     <td >${obj.getDiaChi()}</td>
                                     <td>${obj.getSoDienThoai()}</td>
                                     <td>${obj.getEmail()}</td>
-                                    <td>${obj.getMaPhanQuyen()}</td>
+                                    <td>${obj.getTenPhanQuyen()}</td>
                                     <td> 
                                         <a href="${contextPath}/admin/thanhvien/edit?id=${obj.getMaThanhVien()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                                         <a href="${contextPath}/admin/thanhvien/delete?id=${obj.getMaThanhVien()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
