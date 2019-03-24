@@ -64,17 +64,17 @@ public class EditThanhVienServlet extends HttpServlet {
             //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
             Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-\\.]{0,14}$");
             //Check pass
-            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,14}$");
+            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,30}$");
             //Check sdt
             Pattern soDienThoaiPattern = Pattern.compile(".*\\D.*");// check so dien thoai co hợp lệ hay không
-            Pattern pattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
+            Pattern soDienThoaiPattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
             //Check email
 
             Pattern emailPattern = Pattern.compile("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$");
 
             Matcher usernameMatch = userNamePattern.matcher(tenDangNhap);
             Matcher passwordMatch = passwordPattern.matcher(matKhau);
-            Matcher soDienThoaiMatch = soDienThoaiPattern.matcher(matKhau);
+            Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
             Matcher emailMatch = emailPattern.matcher(email);
 
             // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
@@ -133,7 +133,7 @@ public class EditThanhVienServlet extends HttpServlet {
                             System.out.println(isOk);
                             if (isOk) {
                                 isFailedRequest = false;
-                                noiDungThongBao = "Đã thêm thành viên mới!";
+                                noiDungThongBao = "Đã cập nhật thông tin thành viên thành công!";
                             } else {
                                 System.out.println("stage cuoi");
                                 isFailedRequest = true;

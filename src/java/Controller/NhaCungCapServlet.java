@@ -58,7 +58,7 @@ public class NhaCungCapServlet extends HttpServlet {
 
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                if (match == false) {
+                if (match == true) {
                     isInvalidNumber = false;
                     boolean isOk = NhaCungCapModel.InsertNewNhaCungCap(conn, new NhaCungCapModel(0, tenNhaCungCap, diaChi, soDienThoai, soTienNo));
                     if (isOk) {

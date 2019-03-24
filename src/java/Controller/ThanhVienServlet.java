@@ -57,23 +57,24 @@ public class ThanhVienServlet extends HttpServlet {
             System.out.println(maTenQuyen);
             Connection conn = MyUtils.getStoredConnection(req);
             //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
-            Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-\\.]{0,14}$");
+            Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-]{0,14}$");
             //Check pass
-            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,14}$");
+            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,30}$");
             //Check sdt
             Pattern soDienThoaiPattern = Pattern.compile(".*\\D.*");// check so dien thoai co hợp lệ hay không
-            Pattern pattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
+            Pattern soDienThoaiPattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
             //Check email
 
             Pattern emailPattern = Pattern.compile("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$");
 
             Matcher usernameMatch = userNamePattern.matcher(tenDangNhap);
             Matcher passwordMatch = passwordPattern.matcher(matKhau);
-            Matcher soDienThoaiMatch = soDienThoaiPattern.matcher(matKhau);
+            Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
             Matcher emailMatch = emailPattern.matcher(email);
 
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
-            // System.out.println(usernameMatch.matches());
+            System.out.println("ZZZZZZZZZZZZZZZZ");
+            System.out.println(soDienThoaiMatch.matches());
+            System.out.println("ZZZZZZZZZZZZZZZZ");
             // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
             // System.out.println(passwordMatch.matches());
             // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");	
@@ -81,7 +82,7 @@ public class ThanhVienServlet extends HttpServlet {
 
                 if (usernameMatch.matches() == true && passwordMatch.matches() == true
                         && soDienThoaiMatch.matches() == true && emailMatch.matches() == true) {
-                    isInvalidEmail=false;
+                    isInvalidEmail = false;
                     isInvalidPassword = false;
                     isInvalidNumber = false;
                     isInvalidUsername = false;
@@ -125,16 +126,20 @@ public class ThanhVienServlet extends HttpServlet {
                 } else {
                     if (usernameMatch.matches() == false) {
                         isInvalidUsername = true;
+                    } else {
+                        if (passwordMatch.matches() == false) {
+                            isInvalidPassword = true;
+                        } else {
+                            if (soDienThoaiMatch.matches() == false) {
+                                isInvalidNumber = true;
+                            } else {
+                                if (emailMatch.matches() == false) {
+                                    isInvalidEmail = true;
+                                }
+                            }
+                        }
                     }
-                    if (passwordMatch.matches() == false) {
-                        isInvalidPassword = true;
-                    }
-                    if (soDienThoaiMatch.matches() == false) {
-                        isInvalidNumber = true;
-                    }
-                    if (emailMatch.matches() == false) {
-                        isInvalidEmail = true;
-                    }
+
                 }
 
             } catch (SQLException ex) {
@@ -149,15 +154,13 @@ public class ThanhVienServlet extends HttpServlet {
         if (isFailedRequest || isWrongPassword || haveUsedName || haveUsedEmail
                 || isInvalidUsername || isInvalidPassword || isInvalidNumber || isInvalidEmail) // nếu có lỗi thì hiện thông báo
         {
-            if (isWrongPassword) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Mật khẩu không khớp!", MessagesModel.ATT_TYPE_ERROR));
-            }
             if (isFailedRequest) {
                 req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
             }
             if (haveUsedName) {
                 req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Tên đăng đã có người dùng!", MessagesModel.ATT_TYPE_ERROR));
             }
+            
             if (haveUsedEmail) {
                 req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Email đã có người dùng!", MessagesModel.ATT_TYPE_ERROR));
             }

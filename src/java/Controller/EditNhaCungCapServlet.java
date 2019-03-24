@@ -52,14 +52,18 @@ public class EditNhaCungCapServlet extends HttpServlet {
             int maNhaCungCap = Integer.parseInt(req.getParameter("manhacungcap"));
             Double soTienNo = 0.0;
 
+            
             Pattern pattern = Pattern.compile(".*\\D.*");// check so dien thoai co hợp lệ hay không
+            Pattern pattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
+
             // Lấy ra đối tượng Matcher
-            Matcher matcher = pattern.matcher(soDienThoai);
+            Matcher matcher = pattern2.matcher(soDienThoai);
+
             boolean match = matcher.matches();
 
             NhaCungCapModel nhaCungCapModel = new NhaCungCapModel(maNhaCungCap, tenNhaCungCap, diaChi, soDienThoai, soTienNo);
             try {
-                if (match == false) {
+                if (match == true) {
                     isInvalidNumber = false;
                     boolean isOk = nhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCapModel);
                     System.out.println(isOk);
@@ -70,7 +74,8 @@ public class EditNhaCungCapServlet extends HttpServlet {
                         isFailedRequest = true;
                     }
                 }
-                isInvalidNumber = true;
+                else
+                    isInvalidNumber = true;
 
             } catch (SQLException ex) {
                 isFailedRequest = true;
