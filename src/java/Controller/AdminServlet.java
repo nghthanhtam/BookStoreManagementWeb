@@ -26,44 +26,37 @@ import javax.servlet.http.HttpSession;
  *
  * @author MITICC06
  */
-@WebServlet(name = "AdminServlet", urlPatterns = {"/admin/" })
+@WebServlet(name = "AdminServlet", urlPatterns = {"/admin/"})
 public class AdminServlet extends HttpServlet {
 
-    
- 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException { 
-        
+            throws ServletException, IOException {
+
         HttpSession session = request.getSession();
-        
+
         if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
         {
             request.getRequestDispatcher("/admin/admin-login.jsp").forward(request, response);
-        } 
-        else
-        {  
+        } else {
             ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
             request.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-            request.getRequestDispatcher("/admin/admin-home.jsp").forward(request, response); 
+            request.getRequestDispatcher("/admin/admin-home.jsp").forward(request, response);
         }
-             
+
     }
-    
-    
-    
-    
+
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {  
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String tendangnhap = req.getParameter("tendangnhap");
         String matkhau = req.getParameter("matkhau");
-        
+
         ThanhVienModel thanhvien = null;
-        
-         if (tendangnhap == null || matkhau == null || tendangnhap.length() == 0 || matkhau.length() == 0) {
+
+        if (tendangnhap == null || matkhau == null || tendangnhap.length() == 0 || matkhau.length() == 0) {
             /*hasError = true;
             errorString = "Required username and password!";*/
-            
+
         } else {
             Connection conn = MyUtils.getStoredConnection(req);
             try {
@@ -71,20 +64,17 @@ public class AdminServlet extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-              
-            if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau()))
-            {
+
+            if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau())) {
                 System.out.print("ok");
                 MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
                 req.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-                req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp); 
-            }
-            else
-            {  
+                req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
+            } else {
                 System.out.print("failed");
                 req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
                 req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
-            } 
-         }
+            }
+        }
     }
 }

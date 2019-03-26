@@ -38,30 +38,27 @@ public class DeletePhanQuyenServlet extends HttpServlet {
             int maPhanQuyen = Integer.parseInt((String) req.getParameter("id"));
             System.out.println(maPhanQuyen);
             result = PhanQuyenModel.DeleteByMaPhanQuyen(conn, maPhanQuyen);
-            
+
         } catch (Exception ex) {
             result = false;
         }
-        
-        if (result == true)
-        {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!","Đã xóa thành công!",MessagesModel.ATT_TYPE_SUCCESS));         
+
+        if (result == true) {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", "Đã xóa thành công!", MessagesModel.ATT_TYPE_SUCCESS));
 
         } else {
-            
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được thực hiện!",MessagesModel.ATT_TYPE_ERROR));         
- 
-        
+
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được thực hiện!", MessagesModel.ATT_TYPE_ERROR));
+
         }
-        
+
         /* Hiển thị view */
-        req.setAttribute("txtTitle", "Phân quyền"); 
-        
-        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
+        req.setAttribute("txtTitle", "Phân quyền");
+
+        List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
         req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
 
     }
 
-    
 }

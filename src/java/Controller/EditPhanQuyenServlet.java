@@ -35,12 +35,11 @@ public class EditPhanQuyenServlet extends HttpServlet {
         req.setAttribute("txtTitle", "Phân quyền");
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
-        
+
         Connection conn = MyUtils.getStoredConnection(req);
-        
+
         String submitValue = req.getParameter("submit");
-        if (submitValue !=null && submitValue.equals("capnhat"))
-        {
+        if (submitValue != null && submitValue.equals("capnhat")) {
             String tenPhanQuyen = (String) req.getParameter("tenphanquyen");
             int qlThanhVien = req.getParameter("qlthanhvien") == null ? 0 : 1;
             int qlSach = req.getParameter("qlsach") == null ? 0 : 1;
@@ -52,49 +51,44 @@ public class EditPhanQuyenServlet extends HttpServlet {
             int qlNhaCungCap = req.getParameter("qlnhacungcap") == null ? 0 : 1;
             int qlHoaDon = req.getParameter("qlhoadon") == null ? 0 : 1;
             int maPhanQuyen = Integer.parseInt(req.getParameter("maphanquyen"));
-            
+
             PhanQuyenModel phanQuyenModel = new PhanQuyenModel(maPhanQuyen, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlHoaDon);
-                    
+
             try {
-                    
-                    boolean isOk = PhanQuyenModel.UpdatePhanQuyen(conn, phanQuyenModel);
-                    if (isOk)
-                    {
-                        isFailedRequest = false;
-                        noiDungThongBao = "Đã cập nhật thành công!";
-                    }
-                    else
-                        isFailedRequest = true;
-                    
-            } catch (SQLException ex) { 
-                isFailedRequest=true; 
+
+                boolean isOk = PhanQuyenModel.UpdatePhanQuyen(conn, phanQuyenModel);
+                if (isOk) {
+                    isFailedRequest = false;
+                    noiDungThongBao = "Đã cập nhật thành công!";
+                } else {
+                    isFailedRequest = true;
+                }
+
+            } catch (SQLException ex) {
+                isFailedRequest = true;
                 Logger.getLogger(PhanQuyenServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-             
-        }
-        else
+
+        } else {
             isFailedRequest = true;
-        
+        }
+
         if (isFailedRequest) // nếu có lỗi thì hiện thông báo
-        { 
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được xử lý!",MessagesModel.ATT_TYPE_ERROR));         
-        }
-        else
         {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!",noiDungThongBao,MessagesModel.ATT_TYPE_SUCCESS));         
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
+        } else {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         }
-        
+
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
         req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
-        
-
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
         Connection conn = MyUtils.getStoredConnection(req);
         PhanQuyenModel phanQuyenModel = null;
         boolean result = false;
@@ -102,33 +96,30 @@ public class EditPhanQuyenServlet extends HttpServlet {
             int maPhanQuyen = Integer.parseInt((String) req.getParameter("id"));
             System.out.println(maPhanQuyen);
             phanQuyenModel = PhanQuyenModel.FindByMaPhanQuyen(conn, maPhanQuyen);
-            if (phanQuyenModel != null)
+            if (phanQuyenModel != null) {
                 result = true;
+            }
         } catch (Exception ex) {
             result = false;
         }
-        
-        if (result == true)
-        {
+
+        if (result == true) {
             req.setAttribute("txtTitle", "Sửa phân quyền");
             req.setAttribute("phanQuyenModel", phanQuyenModel);
             req.getRequestDispatcher("/admin/phanquyen-edit.jsp").forward(req, resp);
 
-            
-            
-            
         } else { // hiển thị view thông báo thất bại
-            
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được thực hiện!",MessagesModel.ATT_TYPE_ERROR));         
-            
-            /* Hiển thị view */
-            req.setAttribute("txtTitle", "Phân quyền"); 
 
-            List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được thực hiện!", MessagesModel.ATT_TYPE_ERROR));
+
+            /* Hiển thị view */
+            req.setAttribute("txtTitle", "Phân quyền");
+
+            List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
             req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
             req.getRequestDispatcher("/admin/phanquyen.jsp").forward(req, resp);
         }
-        
+
     }
- 
+
 }

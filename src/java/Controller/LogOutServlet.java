@@ -5,10 +5,8 @@
  */
 package Controller;
 
-import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,14 +23,11 @@ public class LogOutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       HttpSession session = req.getSession();
+        HttpSession session = req.getSession();
         MyUtils.LogOutThanhVien(session);
-        
-         resp.sendRedirect("/admin/");
-       // req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
-    }
 
-    
-   
+        resp.sendRedirect("/admin/");
+        // req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
+    }
 
 }

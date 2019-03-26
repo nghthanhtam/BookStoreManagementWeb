@@ -80,13 +80,12 @@ public class NhaCungCapModel {
         int count = 0;
         try
         {
-            String sql="INSERT INTO nhacungcap (tennhacungcap, diachi, sodienthoai, sotienno) VALUES (?,?,?,?)";
+            String sql="INSERT INTO nhacungcap (tennhacungcap, diachi, sodienthoai) VALUES (?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, obj.getTenNhaCungCap());
             pstm.setString(2, obj.getDiaChi());
             pstm.setString(3, obj.getSoDienThoai());
-            pstm.setDouble(4, obj.getSoTienNo());
             count = pstm.executeUpdate(); 
         } catch (SQLException ex) {
             count = 0;
@@ -166,6 +165,28 @@ public class NhaCungCapModel {
         }
         return null;
         
+    }
+       
+         public static boolean UpdateNhaCungCap(Connection conn, NhaCungCapModel obj) 
+            throws SQLException
+    { 
+        int count = 0;
+        try
+        {
+            String sql="UPDATE nhacungcap SET tennhacungcap = ?, diachi = ?, sodienthoai = ? WHERE manhacungcap = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1, obj.getTenNhaCungCap());
+            pstm.setString(2, obj.getDiaChi());
+            pstm.setString(3, obj.getSoDienThoai());
+            pstm.setDouble(4, obj.getMaNhaCungCap());  
+
+            count = pstm.executeUpdate(); 
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+       return count>0;
     }
     
     

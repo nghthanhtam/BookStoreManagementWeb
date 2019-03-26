@@ -250,6 +250,39 @@ public class PhanQuyenModel {
     }
      
      
+       public static PhanQuyenModel FindByTenQuyen(Connection conn, String tenQuyen) throws SQLException
+    {
+         
+        String sql = "SELECT * FROM phanquyen WHERE tenquyen = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        
+        pstm.setString(1, tenQuyen);
+        
+        ResultSet rs = pstm.executeQuery();
+                     
+
+        if (rs.next()) {  
+            PhanQuyenModel phanQuyenModel = new PhanQuyenModel(
+                        Integer.parseInt(rs.getString("maphanquyen")),
+                        rs.getString("tenquyen"),
+                        Integer.parseInt(rs.getString("qlthanhvien")),
+                        Integer.parseInt(rs.getString("qlsach")),
+                        Integer.parseInt(rs.getString("qltheloai")),
+                        Integer.parseInt(rs.getString("qlphiship")),
+                        Integer.parseInt(rs.getString("qlphanquyen")),
+                        Integer.parseInt(rs.getString("qlphieunhap")),
+                        Integer.parseInt(rs.getString("qlphieuchi")),
+                        Integer.parseInt(rs.getString("qlnhacungcap")),
+                        Integer.parseInt(rs.getString("qlhoadon")) );
+         
+             return phanQuyenModel; 
+        }
+        return null;
+        
+    }
+     
+     
      
      
     public static boolean UpdatePhanQuyen(Connection conn, PhanQuyenModel obj) 
