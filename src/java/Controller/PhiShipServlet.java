@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,8 +44,7 @@ public class PhiShipServlet extends HttpServlet {
        
         request.setAttribute("listAllPhiShip", listAllPhiShip);
         //System.out.println(listAllPhiShip.get(0).getTenTinh());
-        request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);
-       
+        request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);    
              
     }
     
@@ -62,31 +62,39 @@ public class PhiShipServlet extends HttpServlet {
         if (submitValue !=null && submitValue.equals("them"))
         {           
             String tenTinh = (String) req.getParameter("tentinh");
-            double phiShip = Double.parseDouble(req.getParameter("phiship"));
-                                    
-            if(Double.toString(phiShip).matches("-?\\d+(\\.\\d+)?") == true)
-            {
-       
-            }
-        
-            req.setAttribute("phiShip", phiShip);
-            req.setAttribute("tenTinh", tenTinh);
+            
+            double phiShip = 0; 
+            Pattern phiShipPattern = Pattern.compile("^(?:[1-9]\\d+|\\d)$");
+            if (phiShipPattern.matcher(req.getParameter("phiship")).matches())
+            { 
+                try {
+                phiShip = Double.parseDouble(req.getParameter("phiship"));
+                req.setAttribute("phiShip", phiShip);
+                req.setAttribute("tenTinh", tenTinh);
 
-            Connection conn = MyUtils.getStoredConnection(req);
-            try {
-                    boolean isOk = PhiShipModel.InsertNewPhiShip(conn, new PhiShipModel(0, tenTinh, phiShip));
-                    if (isOk)
-                    {
-                        isFailedRequest = false;
-                        noiDungThongBao = "Đã thêm phí ship!";
-                   }
-                    else
-                        isFailedRequest = true;
+                Connection conn = MyUtils.getStoredConnection(req);
 
-            } catch (SQLException ex) { 
-                isFailedRequest=true; 
-                Logger.getLogger(PhiShipServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        boolean isOk = PhiShipModel.InsertNewPhiShip(conn, new PhiShipModel(0, tenTinh, phiShip));
+                        if (isOk)
+                        {
+                            isFailedRequest = false;
+                            noiDungThongBao = "Đã thêm phí ship!";
+                       }
+                        else
+                            isFailedRequest = true;
+
+                } catch (Exception ex) { 
+                    isFailedRequest=true; 
+                    Logger.getLogger(PhiShipServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }    
             }
+            else
+            { 
+                isFailedRequest = true;
+                noiDungThongBao = "Phí ship không hợp lệ!";
+            } 
+             
+            
         }
         else
             isFailedRequest = true;
@@ -94,7 +102,7 @@ public class PhiShipServlet extends HttpServlet {
         
         if (isFailedRequest) // nếu có lỗi thì hiện thông báo
         { 
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được xử lý!",MessagesModel.ATT_TYPE_ERROR));         
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được xử lý!" + "<br>"+noiDungThongBao,MessagesModel.ATT_TYPE_ERROR));         
         }
         else
         {
