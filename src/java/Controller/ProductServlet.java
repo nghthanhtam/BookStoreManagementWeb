@@ -62,16 +62,12 @@ public class ProductServlet extends HttpServlet {
                     
                     resp.sendRedirect("/");
                     
-                }
-                                
+                }                               
                 
             } catch (SQLException ex) {
                 Logger.getLogger(ProductServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                                                                             
+            }                                                                            
         }
-        
-  
  
     }
  
