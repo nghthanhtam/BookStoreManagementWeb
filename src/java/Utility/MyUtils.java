@@ -6,6 +6,9 @@
 package Utility;
 
 import Model.ThanhVienModel;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -42,7 +45,18 @@ public class MyUtils {
         return loginedUser;
     }
     
-    
+    public static String MD5(String plaintext) throws NoSuchAlgorithmException { 
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.reset();
+        m.update(plaintext.getBytes());
+        byte[] digest = m.digest();
+        BigInteger bigInt = new BigInteger(1,digest);
+        String hashtext = bigInt.toString(16);
+        while(hashtext.length() < 32 ){
+          hashtext = "0"+hashtext;
+        }
+        return hashtext;
+    }
     /*
     public static void storeUserCookie(HttpServletResponse response, UserAccount user) {
         System.out.println("Store user cookie");
