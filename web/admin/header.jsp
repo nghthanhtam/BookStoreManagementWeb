@@ -4,9 +4,13 @@
     Author     : Ha Phuong
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <%@page import="Model.MessagesModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+  
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -110,7 +114,7 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Employee management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="${pageContext.request.contextPath}/admin/createaccount">Create account</a></li>
+                      <li><a href="${pageContext.request.contextPath}/admin/thanhvien">Create account</a></li>
                       <li><a href="media_gallery.html">Media Gallery</a></li>
                       <li><a href="typography.html">Typography</a></li>
                       <li><a href="icons.html">Icons</a></li>

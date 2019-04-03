@@ -6,7 +6,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,5 +26,5 @@ public class HomeServlet extends HttpServlet {
         req.getRequestDispatcher("home.jsp").forward(req, resp);
 
     }
- 
+
 }
