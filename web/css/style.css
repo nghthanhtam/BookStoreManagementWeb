@@ -1728,3 +1728,21 @@ textarea.input {
     width: 100%;
   }
 }
+
+
+.dropdown-toggle-inline{
+    
+    display: inline !important;
+    
+}
+
+.input-form-dangnhap{
+    margin-bottom: 7px;
+    height: 25px;
+}
+
+.btn-form-dangnhap{
+    padding: 5px 10px;
+    float: right;
+    margin-right: 10px;
+}

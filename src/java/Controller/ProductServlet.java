@@ -31,7 +31,7 @@ public class ProductServlet extends HttpServlet {
 
         if (req.getParameter("masach") == null) { 
             resp.sendRedirect("/");
-        } else { 
+        } else {
             int masach = 0;
             try {
                 masach = Integer.parseInt((String) req.getParameter("masach"));
@@ -64,7 +64,7 @@ public class ProductServlet extends HttpServlet {
             } 
         }
 
-        //req.getRequestDispatcher("product-page.jsp").forward(req, resp);
+        req.getRequestDispatcher("product-page.jsp").forward(req, resp);
     }
 
 }
