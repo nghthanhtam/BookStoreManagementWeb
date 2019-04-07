@@ -42,13 +42,11 @@ public class EditPhiShipServlet extends HttpServlet {
         {
             String tenTinh= (String) req.getParameter("tentinh");      
             int maPhiShip = Integer.parseInt(req.getParameter("maphiship"));
-            System.out.println("aaaaaaaaaa");
             double phiShip = Double.parseDouble(req.getParameter("phiship"));
              
             PhiShipModel phiShipModel = new PhiShipModel(maPhiShip, tenTinh, phiShip);
                     
-            try {
-                    
+            try {                   
                     boolean isOk = PhiShipModel.UpdatePhiShip(conn, phiShipModel);
                     if (isOk)
                     {
@@ -91,9 +89,7 @@ public class EditPhiShipServlet extends HttpServlet {
         PhiShipModel phiShipModel = null;
         boolean result = false;
         
-        try {
-//            String tenTinh= (String) req.getParameter("tentinh");                  
-//            double phiShip = Double.parseDouble(req.getParameter("phiship"));            
+        try {           
             int maPhiShip = Integer.parseInt((String) req.getParameter("id"));          
             phiShipModel = PhiShipModel.FindByMaPhiShip(conn, maPhiShip);
             

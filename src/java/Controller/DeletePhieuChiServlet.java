@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.MessagesModel;
-import Model.PhiShipModel;
+import Model.PhieuChiModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MITICC06
  */
-@WebServlet(name = "DeletePhanQuyenServlet", urlPatterns = {"/admin/phiship/delete"})
-public class DeletePhiShipServlet extends HttpServlet {
+@WebServlet(name = "DeletePhieuChiServlet", urlPatterns = {"/admin/phieuchi/delete"})
+public class DeletePhieuChiServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,9 +31,8 @@ public class DeletePhiShipServlet extends HttpServlet {
         boolean result = false;
 
         try {
-            int maPhiShip = Integer.parseInt((String) req.getParameter("id"));
-            System.out.println(maPhiShip);
-            result = PhiShipModel.DeleteByMaPhiShip(conn, maPhiShip);
+            int maPhieuChi = Integer.parseInt((String) req.getParameter("id"));
+            result = PhieuChiModel.DeleteByMaPhieuChi(conn, maPhieuChi);
 
         } catch (Exception ex) {
             result = false;
@@ -50,11 +49,11 @@ public class DeletePhiShipServlet extends HttpServlet {
         }
 
         /* Hiển thị view */
-        req.setAttribute("txtTitle", "Phí Ship");
+        req.setAttribute("txtTitle", "Phiếu Chi");
 
-        List<PhiShipModel> listAllPhiShip = PhiShipModel.getAllPhiShip(conn);
-        req.setAttribute("listAllPhiShip", listAllPhiShip);
-        req.getRequestDispatcher("/admin/phiship.jsp").forward(req, resp);
+        List<PhieuChiModel> listAllPhieuChi = PhieuChiModel.getAllPhieuChi(conn);
+        req.setAttribute("listAllPhieuChi", listAllPhieuChi);
+        req.getRequestDispatcher("/admin/phieuchi.jsp").forward(req, resp);
 
     }
 

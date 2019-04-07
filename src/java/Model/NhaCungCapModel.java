@@ -138,11 +138,10 @@ public class NhaCungCapModel {
         
         return count>0;
     }
-       public static NhaCungCapModel FindByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException
-    {
-        
-        
-        
+    
+    
+    public static NhaCungCapModel FindByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException
+    {    
         String sql = "SELECT * FROM nhacungcap WHERE manhacungcap = ? ";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
@@ -159,15 +158,13 @@ public class NhaCungCapModel {
                     rs.getString("diachi"),
                     rs.getString("sodienthoai"),
                     Double.parseDouble(rs.getString("sotienno")));
-         
-         
+               
              return nhaCungCapModel; 
         }
-        return null;
-        
+        return null;       
     }
        
-         public static boolean UpdateNhaCungCap(Connection conn, NhaCungCapModel obj) 
+    public static boolean UpdateNhaCungCap(Connection conn, NhaCungCapModel obj) 
             throws SQLException
     { 
         int count = 0;
