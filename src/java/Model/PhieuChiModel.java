@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class PhieuChiModel {
 
     public PhieuChiModel() {
     }
-        
+
     public PhieuChiModel(int maPhieuChi, int maNhaCungCap, int maThanhVien, double tongTien, Timestamp ngayLapPhieu, String ghiChu) {
         this.maPhieuChi = maPhieuChi;
         this.maNhaCungCap = maNhaCungCap;
@@ -30,7 +31,7 @@ public class PhieuChiModel {
         this.ngayLapPhieu = ngayLapPhieu;
         this.ghiChu = ghiChu;
     }
-      
+
     public int getMaPhieuChi() {
         return maPhieuChi;
     }
@@ -49,12 +50,12 @@ public class PhieuChiModel {
 
     public Timestamp getNgayLapPhieu() {
         return ngayLapPhieu;
-    }  
-    
+    }
+
     public String getGhiChu() {
         return ghiChu;
     }
-    
+
     public void setMaPhieuChi(int maPhieuChi) {
         this.maPhieuChi = maPhieuChi;
     }
@@ -74,7 +75,7 @@ public class PhieuChiModel {
     public void setNgayLapPhieu(Timestamp ngayLapPhieu) {
         this.ngayLapPhieu = ngayLapPhieu;
     }
-       
+
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
@@ -85,44 +86,38 @@ public class PhieuChiModel {
     private double tongTien;
     private Timestamp ngayLapPhieu;
     private String ghiChu;
-    
-    
-    public static boolean InsertNewPhieuChi(Connection conn, PhieuChiModel phieuChi) 
-            throws SQLException
-    {
+
+    public static boolean InsertNewPhieuChi(Connection conn, PhieuChiModel phieuChi)
+            throws SQLException {
         int count = 0;
-        try
-        {
+        try {
             String sql = "INSERT INTO phieuchi (manhacungcap, mathanhvien, tongtien, ngaylapphieu, ghichu) VALUES (?,?,?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
-                                   
-            pstm.setInt(1, phieuChi.getMaNhaCungCap()); 
+
+            pstm.setInt(1, phieuChi.getMaNhaCungCap());
             pstm.setInt(2, phieuChi.getMaThanhVien());
             pstm.setDouble(3, phieuChi.getTongTien());
             pstm.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             pstm.setString(5, phieuChi.getGhiChu());
-            
-            count = pstm.executeUpdate(); 
-            
-        } catch (SQLException ex) {         
+
+            count = pstm.executeUpdate();
+
+        } catch (SQLException ex) {
             count = 0;
         }
-       
+
         return count > 0;
     }
 
-    
-    public static List<PhieuChiModel> getAllPhieuChi(Connection conn)
-    {
+    public static List<PhieuChiModel> getAllPhieuChi(Connection conn) {
         List<PhieuChiModel> listPhieuChi = new ArrayList<PhieuChiModel>();
-        
+
         String sql = "SELECT * FROM phieuchi";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
-            
-            while(rs.next())
-            {
+
+            while (rs.next()) {
                 PhieuChiModel phieuChiModel = new PhieuChiModel(
                         Integer.parseInt(rs.getString("maphieuchi")),
                         Integer.parseInt(rs.getString("manhacungcap")),
@@ -130,79 +125,79 @@ public class PhieuChiModel {
                         Double.parseDouble(rs.getString("tongtien")),
                         rs.getTimestamp("ngaylapphieu"),
                         rs.getString("ghichu"));
-                            
+
                 listPhieuChi.add(phieuChiModel);
             }
-            
+
         } catch (SQLException e) {
-           
-        }         
-        return listPhieuChi;  
+
+        }
+        return listPhieuChi;
     }
-    
+
     public static boolean DeleteByMaPhieuChi(Connection conn, int maPhieuChi)
-             throws SQLException
-    {        
+            throws SQLException {
         int count = 0;
-        String sql= "DELETE FROM phieuchi WHERE maPhieuChi = ?";
-        
-        try{
+        String sql = "DELETE FROM phieuchi WHERE maPhieuChi = ?";
+
+        try {
             PreparedStatement pstm = conn.prepareCall(sql);
             pstm.setInt(1, maPhieuChi);
             count = pstm.executeUpdate();
-            
-        } catch(SQLException Ex){
-            
+
+        } catch (SQLException Ex) {
+
         }
         return count > 0;
     }
-    
-    public static boolean UpdatePhieuChi(Connection conn, PhieuChiModel phieuChi) 
-            throws SQLException
-    { 
+
+    public static boolean UpdatePhieuChi(Connection conn, PhieuChiModel phieuChi)
+            throws SQLException {
         int count = 0;
-        try
-        {
-            String sql="UPDATE phieuchi SET manhacungcap = ?, mathanhvien = ?, tongtien = ?, ngaylapphieu = ?, ghichu = ? WHERE maphieuchi = ?";
-            
+        try {
+            String sql = "UPDATE phieuchi SET manhacungcap = ?, mathanhvien = ?, tongtien = ?, ngaylapphieu = ?, ghichu = ? WHERE maphieuchi = ?";
+
             PreparedStatement pstm = conn.prepareStatement(sql);
 
-            pstm.setInt(1, phieuChi.getMaNhaCungCap()); 
+            pstm.setInt(1, phieuChi.getMaNhaCungCap());
             pstm.setInt(2, phieuChi.getMaThanhVien());
             pstm.setDouble(3, phieuChi.getTongTien());
             pstm.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             pstm.setString(5, phieuChi.getGhiChu());
             pstm.setInt(6, phieuChi.getMaPhieuChi());
-            
-            count = pstm.executeUpdate(); 
+
+            count = pstm.executeUpdate();
 
         } catch (SQLException ex) {
-            count = 0;           
+            count = 0;
             ex.printStackTrace();
         }
-        
-        return count>0;
+
+        return count > 0;
     }
-    
-    public static PhieuChiModel FindByMaPhieuChi(Connection conn, int maphieuchi) throws SQLException
-    {
-        String sql="SELECT * FROM phieuchi WHERE maphieuchi = ?";
+
+    public static PhieuChiModel FindByMaPhieuChi(Connection conn, int maphieuchi) throws SQLException {
+        String sql = "SELECT * FROM phieuchi WHERE maphieuchi = ?";
         PreparedStatement pstm = conn.prepareStatement(sql); //cau lenh sql duoc compile va save trong 1 
-                                                             //doi tuong PreparedStatement                    
+        //doi tuong PreparedStatement                    
         pstm.setInt(1, maphieuchi);
-        
+        //pstm.setString(1, "t%");
         ResultSet rs = pstm.executeQuery(); //thuc hien truy van
-                     
-        if (rs.next()) {  
+
+        if (rs.next()) {
             PhieuChiModel phieuChiModel = new PhieuChiModel(
-                        Integer.parseInt(rs.getString("maphieuchi")),
-                        Integer.parseInt(rs.getString("manhacungcap")),
-                        Integer.parseInt(rs.getString("mathanhvien")),
-                        Double.parseDouble(rs.getString("tongtien")),
-                        rs.getTimestamp("ngaylapphieu"),
-                        rs.getString("ghichu"));        
-            return phieuChiModel; 
+                    Integer.parseInt(rs.getString("maphieuchi")),
+                    Integer.parseInt(rs.getString("manhacungcap")),
+                    Integer.parseInt(rs.getString("mathanhvien")),
+                    Double.parseDouble(rs.getString("tongtien")),
+                    rs.getTimestamp("ngaylapphieu"),
+                    rs.getString("ghichu"));
+            return phieuChiModel;
         }
-        return null;        
+        return null;
     }
+
+    
+
+   
 }

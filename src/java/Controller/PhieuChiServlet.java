@@ -8,7 +8,6 @@ package Controller;
 import Model.MessagesModel;
 import Model.PhieuChiModel;
 import Utility.MyUtils;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -34,6 +33,12 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "PhieuChiServlet", urlPatterns = {"/admin/phieuchi"})
 public class PhieuChiServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
+	public PhieuChiServlet() {
+		super();
+	}
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,8 +47,6 @@ public class PhieuChiServlet extends HttpServlet {
 
         Connection conn = MyUtils.getStoredConnection(request);
         List<PhieuChiModel> listAllPhieuChi = PhieuChiModel.getAllPhieuChi(conn);
-        
-        System.out.println(listAllPhieuChi.size());
         
         request.setAttribute("listAllPhieuChi", listAllPhieuChi);
 

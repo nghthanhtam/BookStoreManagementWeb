@@ -13,10 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author MITICC06
- */
+
 @WebServlet(name = "DeletePhanQuyenServlet", urlPatterns = {"/admin/phiship/delete"})
 public class DeletePhiShipServlet extends HttpServlet {
 
@@ -37,7 +34,6 @@ public class DeletePhiShipServlet extends HttpServlet {
 
         } catch (Exception ex) {
             result = false;
-
         }
 
         if (result == true) {
@@ -57,5 +53,4 @@ public class DeletePhiShipServlet extends HttpServlet {
         req.getRequestDispatcher("/admin/phiship.jsp").forward(req, resp);
 
     }
-
 }

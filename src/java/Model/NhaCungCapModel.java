@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -186,5 +187,35 @@ public class NhaCungCapModel {
        return count>0;
     }
     
+//    public List<Integer> search(int keyword, List<NhaCungCapModel> nhaCungCaps) {
+//        List<Integer> maNhaCungCaps = new ArrayList<Integer>();
+//              
+//        //Arrays.asList(nhaCungCap.getMaNhaCungCap()).contains(keyword)
+//        for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
+//            if(1==1){
+//                maNhaCungCaps.add(nhaCungCap.getMaNhaCungCap());
+//                   System.out.println("abccc");
+//            }   
+//        }
+//        
+//        return maNhaCungCaps;
+//              
+//            
+//  
+//    }
     
+     public List<String> search(String keyword, List<NhaCungCapModel> nhaCungCaps) {
+           List<String> maNhaCungCaps = new ArrayList<String>();           
+          
+        for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
+            if(nhaCungCap.getTenNhaCungCap().toLowerCase().contains(keyword.toLowerCase())){
+                maNhaCungCaps.add(nhaCungCap.getTenNhaCungCap());
+                   System.out.println("abccc");
+            }   
+        }
+        
+        return maNhaCungCaps;
+              
+            
+     }
 }

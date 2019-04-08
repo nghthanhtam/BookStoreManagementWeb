@@ -43,7 +43,7 @@ public class PhiShipServlet extends HttpServlet {
         List<PhiShipModel> listAllPhiShip = PhiShipModel.getAllPhiShip(conn);
        
         request.setAttribute("listAllPhiShip", listAllPhiShip);
-        //System.out.println(listAllPhiShip.get(0).getTenTinh());
+      
         request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);    
              
     }

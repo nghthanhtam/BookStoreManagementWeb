@@ -1,9 +1,3 @@
-<%-- 
-    Document   : phiship
-    Created on : Mar 19, 2019, 4:15:43 PM
-    Author     : Tam
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -16,6 +10,7 @@
 
 </div>
 <div class="clearfix"></div>
+
 
 <div class="row">
 

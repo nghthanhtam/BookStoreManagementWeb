@@ -5,7 +5,7 @@
 
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>jQuery Autocomplete</title>
 <script src="http://code.jquery.com/jquery-1.7.js"
     type="text/javascript"></script>
@@ -37,7 +37,7 @@ $(document).ready(function() {
         highlight: false,
         source: function(request, response) {
             $.ajax({
-                url: "/JSON/AjaxRequest",
+                url: "/admin/AjaxRequest",
                 dataType: "json",
                 data: request,
                 success: function( data, textStatus, jqXHR) {
@@ -62,9 +62,8 @@ $(document).ready(function() {
         suggestions using autocomplete( url or data, options ) and Ajax
         request.</p>
     <form name="as400samplecode" action="" method="get">
- 
         <table>
- 
+            
             <tr>
                 <td><input id="autoText" maxlength="20" />
                 </td>

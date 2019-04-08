@@ -1,37 +1,38 @@
 package Controller;
-
+import Utility.MyUtils;
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 
-@WebServlet(name = "AjaxRequest", urlPatterns = {"/admin/autocomplete"})
+@WebServlet(name = "AjaxRequest", urlPatterns = {"/admin/ajaxrequest"})
 public class AjaxRequest extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     
     private static final String[] COUNTRIES = new String[] {
-         "30.0", "50.0"   
-        };
- 
+         "abc", "agb"   
+        }; 
  
     public AjaxRequest() {
         super();
     }
  
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+   
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         response.setHeader("Cache-control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "-1");
         
-        JSONArray arrayObj=new JSONArray();
+        JSONArray arrayObj = new JSONArray();
         
         String query = request.getParameter("term");
         System.out.println(query);
@@ -48,6 +49,7 @@ public class AjaxRequest extends HttpServlet {
         
         request.getRequestDispatcher("/admin/autocomplete.jsp").forward(request, response);
         
+        //request.getRequestDispatcher("/admin/phiship.jsp").forward(request, response);       
     }
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
