@@ -74,12 +74,12 @@ public class SachModel {
         this.matheloai = matheloai;
     }
 
-    public Blob getHinhanh() {
-        return hinhanh;
+    public String getAnhDaiDien() {
+        return anhdaidien;
     }
 
-    public void setHinhanh(Blob hinhanh) {
-        this.hinhanh = hinhanh;
+    public void settAnhDaiDien(String anhdaidien) {
+        this.anhdaidien = anhdaidien;
     }
 
     public int getSoluongton() {
@@ -98,7 +98,7 @@ public class SachModel {
         this.tentacgia = tentacgia;
     }
 
-    public SachModel(int masach, String tensach, String nhaxuatban, int namxuatban, double giaban, String mota, int matheloai, Blob hinhanh, int soluongton, String tentacgia) {
+    public SachModel(int masach, String tensach, String nhaxuatban, int namxuatban, double giaban, String mota, int matheloai, String anhdaidien, int soluongton, String tentacgia) {
         this.masach = masach;
         this.tensach = tensach;
         this.nhaxuatban = nhaxuatban;
@@ -106,7 +106,7 @@ public class SachModel {
         this.giaban = giaban;
         this.mota = mota;
         this.matheloai = matheloai;
-        this.hinhanh = hinhanh;
+        this.anhdaidien = anhdaidien;
         this.soluongton = soluongton;
         this.tentacgia = tentacgia;
     }
@@ -118,7 +118,7 @@ public class SachModel {
     private double giaban;
     private String mota;
     private int matheloai;     
-    private Blob hinhanh;     
+    private String anhdaidien;     
     private int soluongton;        
     private String tentacgia;      
              
@@ -146,7 +146,7 @@ public class SachModel {
                     Double.parseDouble(rs.getString("giaban")) , 
                     rs.getString("mota"),
                     Integer.parseInt(rs.getString("matheloai")), 
-                    rs.getBlob("hinhanh"),
+                    rs.getString("anhdaidien"),
                     Integer.parseInt(rs.getString("soluongton")), 
                     rs.getString("tentacgia"));
          

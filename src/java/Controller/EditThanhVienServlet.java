@@ -76,12 +76,7 @@ public class EditThanhVienServlet extends HttpServlet {
             Matcher passwordMatch = passwordPattern.matcher(matKhau);
             Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
             Matcher emailMatch = emailPattern.matcher(email);
-
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
-            // System.out.println(usernameMatch.matches());
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
-            // System.out.println(passwordMatch.matches());
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");	
+ 
             try {
 
                 if (usernameMatch.matches() == true && passwordMatch.matches() == true
@@ -111,8 +106,7 @@ public class EditThanhVienServlet extends HttpServlet {
                         }
 
                     }
-                    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
+ 
                     if (!haveUsedName && !haveUsedEmail) {
                         if (!lapLaiMatKhau.equals("")) {
                             System.out.println("Đổi mật khẩu");
@@ -204,8 +198,7 @@ public class EditThanhVienServlet extends HttpServlet {
 
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-        System.out.println("NÔNNONOO");
-
+ 
         req.setAttribute("listAllThanhVien", listAllThanhVien);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
