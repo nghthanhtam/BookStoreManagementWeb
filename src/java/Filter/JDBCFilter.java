@@ -1,7 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Filter;
+
 import Database.ConnectionUtils;
 import Utility.MyUtils;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.Map;
@@ -12,13 +21,15 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter("/*")
+/**
+ *
+ * @author MITICC06
+ */
 public class JDBCFilter implements Filter {
-
-    public JDBCFilter()
+   
+     public JDBCFilter()
     {
     }
     @Override
@@ -31,23 +42,14 @@ public class JDBCFilter implements Filter {
     }
 
     // Kiểm tra mục tiêu của request hiện tại là 1 Servlet?
-    private boolean needJDBC(HttpServletRequest request) {
-    System.out.println("JDBC Filter");
-    // 
-    // Servlet Url-pattern: /spath/*
-    // 
-    // => /spath
+    public static boolean needJDBC(HttpServletRequest request) { 
     String servletPath = request.getServletPath();
-    // => /abc/mnp
     String pathInfo = request.getPathInfo();
     String urlPattern = servletPath;
-    if (pathInfo != null) {
-        // => /spath/*
+    if (pathInfo != null) { 
         urlPattern = servletPath + "/*";
     }
-
-    // Key: servletName.
-    // Value: ServletRegistration
+ 
     Map<String, ? extends ServletRegistration> servletRegistrations = request.getServletContext()
         .getServletRegistrations();
 
@@ -100,6 +102,4 @@ public class JDBCFilter implements Filter {
          
     }
  
-    
 }
- 
