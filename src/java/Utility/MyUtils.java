@@ -5,6 +5,7 @@
  */
 package Utility;
 
+import Model.PhanQuyenModel;
 import Model.ThanhVienModel;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -35,7 +36,7 @@ public class MyUtils {
         return conn;
     }
     public static void storeLoginedThanhVien(HttpSession session, ThanhVienModel loginedUser) {
-          session.setAttribute("loginedThanhVien", loginedUser);
+          session.setAttribute("loginedThanhVien", loginedUser); 
     }
     public static void LogOutThanhVien(HttpSession session) {
           session.invalidate();
@@ -44,7 +45,7 @@ public class MyUtils {
         ThanhVienModel loginedUser = (ThanhVienModel) session.getAttribute("loginedThanhVien");
         return loginedUser;
     }
-    
+      
     public static String MD5(String plaintext) throws NoSuchAlgorithmException { 
         MessageDigest m = MessageDigest.getInstance("MD5");
         m.reset();
