@@ -4,7 +4,8 @@
     Author     : MITICC06
 --%>
 
- <%@page import="Utility.MyUtils"%>
+ <%@page import="Model.MessagesModel"%>
+<%@page import="Utility.MyUtils"%>
 <%@page import="Model.ThanhVienModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -49,9 +50,31 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+        
+        <!-- PNotify -->
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet"> 
+    
 </head>
 
-<body>
+<body<% 
+    
+      MessagesModel messagesModel = (MessagesModel)request.getAttribute(MessagesModel.ATT_STORE);
+    if (messagesModel != null)
+    {
+        out.print(" onload=\"new PNotify({"
+                + "title: '"+messagesModel.getTitle()+"',"
+                + "text: '"+messagesModel.getText()+"',"
+                + "type: '"+messagesModel.getType()+"'," 
+                + "styling: 'bootstrap3'"
+                + "});\""); 
+    }
+  
+  %>>
+    
+    
+     
+    
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -141,8 +164,7 @@
 								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
 								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
 								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
-								<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+								<li><a href="${contextPath}/logout"><i class="fa fa-sign-out"></i> Logout</a></li> 
 							</ul>
 						</li>
                                                 
@@ -162,7 +184,7 @@
 								<strong class="text-uppercase">Hi, Guess</strong>
 							</div>
                                                     
-                                                    <a href="#" class="dropdown-toggle dropdown-toggle-inline" role="button" data-toggle="dropdown" aria-expanded="true">LOGIN</a> / <a href="#" style="display:inline">JOIN</a>   
+                                                    <a href="#" class="dropdown-toggle dropdown-toggle-inline" role="button" data-toggle="dropdown" aria-expanded="true">LOGIN</a> / <a href="${contextPath}/dangky" style="display:inline">JOIN</a>   
 							<ul class="custom-menu">
                                                             <form action="${contextPath}/login" method="POST">
                                                                 <input class="input input-form-dangnhap" type="text" name="tendangnhap" placeholder="Username">

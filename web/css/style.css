@@ -422,6 +422,10 @@ textarea.input {
   color: #F8694A;
 }
 
+.header-account{
+    min-width: 150px;
+}
+
 /*----------------------------*\
 	Cart header
 \*----------------------------*/
@@ -1745,4 +1749,13 @@ textarea.input {
     padding: 5px 10px;
     float: right;
     margin-right: 10px;
+}
+
+.xacnhandieukhoan-caption{
+    color: green;
+    display: inline-block;
+    background-color: #d4fdd4; 
+    font-weight: 600; 
+    line-height: 30px;
+    padding: 3px 10px;
 }
