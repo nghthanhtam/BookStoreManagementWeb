@@ -12,7 +12,18 @@
         <filter-name>PhanQuyenFilter</filter-name>
         <filter-class>Filter.PhanQuyenFilter</filter-class>
     </filter>
-    
+    <filter>
+        <filter-name>PhiShipFilter</filter-name>
+        <filter-class>Filter.PhiShipFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>ThanhVienFilter</filter-name>
+        <filter-class>Filter.ThanhVienFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>NhaCungCapFilter</filter-name>
+        <filter-class>Filter.NhaCungCapFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -29,7 +40,18 @@
         <filter-name>PhanQuyenFilter</filter-name>
         <url-pattern>/admin/phanquyen/*</url-pattern>
     </filter-mapping>
-    
+    <filter-mapping>
+        <filter-name>PhiShipFilter</filter-name>
+        <url-pattern>/admin/phiship/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ThanhVienFilter</filter-name>
+        <url-pattern>/admin/thanhvien/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NhaCungCapFilter</filter-name>
+        <url-pattern>/admin/nhacungcap/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
