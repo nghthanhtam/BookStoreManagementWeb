@@ -112,6 +112,7 @@
                   <li><a href="${contextPath}/admin/nhacungcap"><i class="fa fa-truck"></i> Nhà cung cấp</a></li>
                   <li><a href="${contextPath}/admin/phiship"><i class="fa fa-money"></i> Phí ship</a></li>
                   <li><a href="${contextPath}/admin/phanquyen"><i class="fa fa-flash"></i> Phân quyền</a></li>
+                  <li><a href="${contextPath}/admin/phieuchi"><i class="fa fa-wpforms"></i> Phiếu chi</a></li>
 
                   
                   

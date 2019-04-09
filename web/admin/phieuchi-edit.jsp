@@ -1,6 +1,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<% request.setAttribute("txtTitle", "Phiếu chi"); %>
 
 <%@include file="header.jsp" %>
 

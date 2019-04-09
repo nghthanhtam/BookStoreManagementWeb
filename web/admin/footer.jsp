@@ -34,7 +34,7 @@
     <script src="${contextPath}/vendors/jquery/dist/jquery.min.js"></script>
     -->
     
-   
+ 
     
     <!-- Bootstrap -->
     <script src="${contextPath}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
