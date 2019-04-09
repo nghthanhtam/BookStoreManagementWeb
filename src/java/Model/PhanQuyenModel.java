@@ -18,6 +18,9 @@ import java.util.List;
  */
 public class PhanQuyenModel {
 
+    public static final int ATT_MAPHANQUYEN_THANHVIEN = 1; // mã phân quyền mặc định của thành viên
+
+    
     public int getQlSach() {
         return qlSach;
     }

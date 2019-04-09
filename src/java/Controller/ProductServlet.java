@@ -30,9 +30,12 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        if (req.getParameter("masach") == null) { 
+        if (req.getParameter("masach") == null)
+        {
             resp.sendRedirect("/");
-        } else { 
+        } 
+        else 
+        {
             int masach = 0;
             try {
                 masach = Integer.parseInt((String) req.getParameter("masach"));
@@ -64,6 +67,8 @@ public class ProductServlet extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(ProductServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+          
     }
 
 }

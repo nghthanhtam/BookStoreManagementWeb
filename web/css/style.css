@@ -422,6 +422,10 @@ textarea.input {
   color: #F8694A;
 }
 
+.header-account{
+    min-width: 150px;
+}
+
 /*----------------------------*\
 	Cart header
 \*----------------------------*/
@@ -1727,4 +1731,31 @@ textarea.input {
   [class*='col-xs'] {
     width: 100%;
   }
+}
+
+
+.dropdown-toggle-inline{
+    
+    display: inline !important;
+    
+}
+
+.input-form-dangnhap{
+    margin-bottom: 7px;
+    height: 25px;
+}
+
+.btn-form-dangnhap{
+    padding: 5px 10px;
+    float: right;
+    margin-right: 10px;
+}
+
+.xacnhandieukhoan-caption{
+    color: green;
+    display: inline-block;
+    background-color: #d4fdd4; 
+    font-weight: 600; 
+    line-height: 30px;
+    padding: 3px 10px;
 }

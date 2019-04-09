@@ -64,27 +64,20 @@ public class EditThanhVienServlet extends HttpServlet {
             //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
             Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-\\.]{0,14}$");
             //Check pass
-            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,30}$");
-            //Check sdt
+             //Check sdt
             Pattern soDienThoaiPattern = Pattern.compile(".*\\D.*");// check so dien thoai co hợp lệ hay không
             Pattern soDienThoaiPattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
             //Check email
 
-            Pattern emailPattern = Pattern.compile("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$");
+            Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
 
             Matcher usernameMatch = userNamePattern.matcher(tenDangNhap);
-            Matcher passwordMatch = passwordPattern.matcher(matKhau);
-            Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
+             Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
             Matcher emailMatch = emailPattern.matcher(email);
-
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
-            // System.out.println(usernameMatch.matches());
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
-            // System.out.println(passwordMatch.matches());
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");	
+ 
             try {
 
-                if (usernameMatch.matches() == true && passwordMatch.matches() == true
+                if (usernameMatch.matches() == true
                         && soDienThoaiMatch.matches() == true && emailMatch.matches() == true) {
                     isInvalidEmail = false;
                     isInvalidPassword = false;
@@ -111,8 +104,7 @@ public class EditThanhVienServlet extends HttpServlet {
                         }
 
                     }
-                    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
+ 
                     if (!haveUsedName && !haveUsedEmail) {
                         if (!lapLaiMatKhau.equals("")) {
                             System.out.println("Đổi mật khẩu");
@@ -144,9 +136,7 @@ public class EditThanhVienServlet extends HttpServlet {
                     if (usernameMatch.matches() == false) {
                         isInvalidUsername = true;
                     }
-                    if (passwordMatch.matches() == false) {
-                        isInvalidPassword = true;
-                    }
+                    
                     if (soDienThoaiMatch.matches() == false) {
                         isInvalidNumber = true;
                     }
@@ -204,8 +194,7 @@ public class EditThanhVienServlet extends HttpServlet {
 
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-        System.out.println("NÔNNONOO");
-
+ 
         req.setAttribute("listAllThanhVien", listAllThanhVien);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;

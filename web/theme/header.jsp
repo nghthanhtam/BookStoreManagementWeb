@@ -4,7 +4,16 @@
     Author     : MITICC06
 --%>
 
+ <%@page import="Model.MessagesModel"%>
+<%@page import="Utility.MyUtils"%>
+<%@page import="Model.ThanhVienModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+<%
+    ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);         
+%>
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -41,9 +50,31 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+        
+        <!-- PNotify -->
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet"> 
+    
 </head>
 
-<body>
+<body<% 
+    
+      MessagesModel messagesModel = (MessagesModel)request.getAttribute(MessagesModel.ATT_STORE);
+    if (messagesModel != null)
+    {
+        out.print(" onload=\"new PNotify({"
+                + "title: '"+messagesModel.getTitle()+"',"
+                + "text: '"+messagesModel.getText()+"',"
+                + "type: '"+messagesModel.getType()+"'," 
+                + "styling: 'bootstrap3'"
+                + "});\""); 
+    }
+  
+  %>>
+    
+    
+     
+    
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -85,7 +116,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="/">
 							<img src="./img/logo.png" alt="">
 						</a>
 					</div>
@@ -108,23 +139,68 @@
 				<div class="pull-right">
 					<ul class="header-btns">
 						<!-- Account -->
+                                                
+                                                
+<%
+    if (thanhvien != null)
+    {
+%>
+                                                
+                                                
 						<li class="header-account dropdown default-dropdown">
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
-								<div class="header-btns-icon">
-									<i class="fa fa-user-o"></i>
-								</div>
+                                                                         
+                                                                        <img class="header-btns-icon" src="<% out.print("https://www.gravatar.com/avatar/"+MyUtils.MD5(thanhvien.getEmail())+"?size=40"); %>" alt="">
+ 
+                                                                      
 								<strong class="text-uppercase">My Account <i class="fa fa-caret-down"></i></strong>
 							</div>
-							<a href="#" class="text-uppercase">Login</a> / <a href="#" class="text-uppercase">Join</a>
+                                                    <% out.print(thanhvien.getHoTen()); %>
+                                                        
+                                                         
+                                                        
 							<ul class="custom-menu">
 								<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
 								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
 								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
 								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
-								<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+								<li><a href="${contextPath}/logout"><i class="fa fa-sign-out"></i> Logout</a></li> 
 							</ul>
 						</li>
+                                                
+                                                
+<%
+    } 
+    else 
+    { 
+%>
+                                                
+                                                
+                                                <li class="header-account dropdown default-dropdown">
+							<div>
+								<div class="header-btns-icon">
+									<i class="fa fa-user-o"></i>
+								</div>
+								<strong class="text-uppercase">Hi, Guess</strong>
+							</div>
+                                                    
+                                                    <a href="#" class="dropdown-toggle dropdown-toggle-inline" role="button" data-toggle="dropdown" aria-expanded="true">LOGIN</a> / <a href="${contextPath}/dangky" style="display:inline">JOIN</a>   
+							<ul class="custom-menu">
+                                                            <form action="${contextPath}/login" method="POST">
+                                                                <input class="input input-form-dangnhap" type="text" name="tendangnhap" placeholder="Username">
+                                                                <input class="input input-form-dangnhap" type="password" name="matkhau" placeholder="Password">
+                                                                
+                                                                <button type="submit" value="login" class="primary-btn btn-form-dangnhap">Login</button>    
+                                                                
+                                                            </form>
+							</ul>
+						</li>
+                                                
+<%
+    }  
+%>                                                
+                                                
+                                                
 						<!-- /Account -->
 
 						<!-- Cart -->

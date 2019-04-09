@@ -69,7 +69,7 @@
                     </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                        <div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-3">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <a  href="${contextPath}/admin/nhacungcap" class="btn btn-primary">Cancel</a>
                             <button type="submit" class="btn btn-success" name="submit" value="capnhat">Save</button>
                         </div>
@@ -77,11 +77,11 @@
                 </form>
 
             </div>
-        </div
+        </div>
 
 
-
-
+</div>
+</div>
 
 
 
