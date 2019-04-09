@@ -186,50 +186,36 @@ public class NhaCungCapModel {
         }
        return count>0;
     }
-    
-//    public List<Integer> search(int keyword, List<NhaCungCapModel> nhaCungCaps) {
-//        List<Integer> maNhaCungCaps = new ArrayList<Integer>();
-//              
-//        //Arrays.asList(nhaCungCap.getMaNhaCungCap()).contains(keyword)
-//        for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
-//            if(1==1){
-//                maNhaCungCaps.add(nhaCungCap.getMaNhaCungCap());
-//                   System.out.println("abccc");
-//            }   
-//        }
-//        
-//        return maNhaCungCaps;
-//              
-//            
-//  
-//    }
-    
-     public List<String> search1(String keyword, List<NhaCungCapModel> nhaCungCaps) {
-           List<String> maNhaCungCaps = new ArrayList<String>();           
-          
-        for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
-            if(nhaCungCap.getTenNhaCungCap().toLowerCase().contains(keyword.toLowerCase())){
-                maNhaCungCaps.add(nhaCungCap.getTenNhaCungCap());
-                   //System.out.println("abccc");
-            }   
-        }     
-        return maNhaCungCaps;
-           
-     }
      
-         public List<NhaCungCapModel> search(String keyword, List<NhaCungCapModel> nhaCungCaps) {
-           List<NhaCungCapModel> maNhaCungCaps = new ArrayList<NhaCungCapModel>();           
-          
-        for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
-            if(nhaCungCap.getTenNhaCungCap().toLowerCase().contains(keyword.toLowerCase())){
-  
-                maNhaCungCaps.add(nhaCungCap);
-                   //System.out.println("abccc");
-            }   
-        }
-        
-        return maNhaCungCaps;
-              
+    public static List<AjaxModel> FindAllByName(Connection conn, String tenNhaCungCap) throws SQLException {
+
+        List<AjaxModel> listNhaCungCap = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT * FROM nhacungcap WHERE manhacungcap = ? OR tennhacungcap LIKE ? ";
+
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
-     }
+            pstm.setString(1 , tenNhaCungCap); // tìm bằng Mã nhà cung cấp
+            pstm.setString(2, "%" + tenNhaCungCap + "%"); // tìm bằng tên nhà cung cấp
+            
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                AjaxModel ajaxNhaCungCapModel = new AjaxModel(
+                        Integer.parseInt(rs.getString("manhacungcap")),
+                        rs.getString("manhacungcap") + " - " +rs.getString("tennhacungcap"));
+
+                listNhaCungCap.add(ajaxNhaCungCapModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listNhaCungCap;
+
+    }
+     
+   
 }

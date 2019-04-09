@@ -103,6 +103,7 @@ public class PhieuChiModel {
             count = pstm.executeUpdate();
 
         } catch (SQLException ex) {
+            System.out.println(ex.toString());
             count = 0;
         }
 

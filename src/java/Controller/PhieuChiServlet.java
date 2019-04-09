@@ -43,7 +43,7 @@ public class PhieuChiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setAttribute("txtTitle", "Phiếu chi");
+        
 
         HttpSession session = request.getSession();
         if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
