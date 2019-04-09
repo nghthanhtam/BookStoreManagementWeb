@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +44,8 @@ public class ProductServlet extends HttpServlet {
             }
 
             Connection conn = MyUtils.getStoredConnection(req);
-
+            
+            
             try {
                 SachModel sach = SachModel.FindByMaSach(conn, masach);
                 if (sach != null) { // tìm thấy theo mã sách
@@ -59,15 +61,15 @@ public class ProductServlet extends HttpServlet {
                 } else {
 
                     resp.sendRedirect("/");
-
-                }
- 
+                    
+                }                               
+                
             } catch (SQLException ex) {
                 Logger.getLogger(ProductServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } 
         }
 
-      
+          
     }
 
 }
+            }                                                                            

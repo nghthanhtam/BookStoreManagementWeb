@@ -43,8 +43,8 @@ public class TheLoaiModel {
             String sql="INSERT INTO theloai (tentheloai) VALUES (?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, theloai.getTenTheLoai());      
-
             count = pstm.executeUpdate(); 
+            
         } catch (SQLException ex) {
             count = 0;
         }
