@@ -52,10 +52,13 @@
     <!-- PNotify -->
     <link href="${contextPath}/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="${contextPath}/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet"> 
- 
+    
+    <script src="${contextPath}/vendors/jquery/dist/jquery.min.js"></script>
+    
+    
   </head>
  
-  
+   
    
   
   
