@@ -29,9 +29,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author MITICC06
  */
-public class PhanQuyenFilter implements Filter {
+public class PhiShipFilter implements Filter {
     
-    public void doFilter(ServletRequest request, ServletResponse response,
+        public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
         
@@ -49,13 +49,13 @@ public class PhanQuyenFilter implements Filter {
             Logger.getLogger(PhanQuyenFilter.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if (phanQuyen!=null && phanQuyen.getQlPhanQuyen() != 0)
+        if (phanQuyen!=null && phanQuyen.getQlPhiShip()!= 0)
         {
             chain.doFilter(request, response);// vượt qua filter
         }
         else
         {            
-            request.setAttribute("tenChucNang","Phân Quyền");
+            request.setAttribute("tenChucNang","Phí ship");
 
             
             request.getRequestDispatcher("/admin/chantruycap.jsp").forward(request, response);
@@ -71,6 +71,4 @@ public class PhanQuyenFilter implements Filter {
     public void init(FilterConfig filterConfig) {        
        
     }
-
-  
 }
