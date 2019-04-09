@@ -204,13 +204,27 @@ public class NhaCungCapModel {
 //  
 //    }
     
-     public List<String> search(String keyword, List<NhaCungCapModel> nhaCungCaps) {
+     public List<String> search1(String keyword, List<NhaCungCapModel> nhaCungCaps) {
            List<String> maNhaCungCaps = new ArrayList<String>();           
           
         for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
             if(nhaCungCap.getTenNhaCungCap().toLowerCase().contains(keyword.toLowerCase())){
                 maNhaCungCaps.add(nhaCungCap.getTenNhaCungCap());
-                   System.out.println("abccc");
+                   //System.out.println("abccc");
+            }   
+        }     
+        return maNhaCungCaps;
+           
+     }
+     
+         public List<NhaCungCapModel> search(String keyword, List<NhaCungCapModel> nhaCungCaps) {
+           List<NhaCungCapModel> maNhaCungCaps = new ArrayList<NhaCungCapModel>();           
+          
+        for (NhaCungCapModel nhaCungCap : nhaCungCaps) {
+            if(nhaCungCap.getTenNhaCungCap().toLowerCase().contains(keyword.toLowerCase())){
+  
+                maNhaCungCaps.add(nhaCungCap);
+                   //System.out.println("abccc");
             }   
         }
         

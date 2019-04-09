@@ -8,16 +8,24 @@
 <head>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>       
- <script type="text/javascript">
-                                $(document).ready(function() {
-                                        $('#search123').autocomplete({
-                                                source: '${pageContext.request.contextPath}/ajax'
-                                        });
-                                });
-                        </script> 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>     
+<script type="text/javascript">
+	$(document).ready(function() {
+
+            $('#search').autocomplete({
+		source: '${pageContext.request.contextPath}/ajax',
+                select: function(event, ui){
+                        this.value = ui.item.label;
+                        $("#nccid").val(ui.item.value);
+                        return false;
+                    }
+            });
+
+	});
+</script>
+
 </head>
 
 
@@ -117,33 +125,30 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br>
-
-
+                
+                
+                
+             
 
                 <form class="form-horizontal form-label-left " method="POST" action="${pageContext.request.contextPath}/admin/phieuchi">
 
-
                     <div class="form-group">
-
-                       
-
-                        
-
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Mã nhà cung cấp <span class="required"></span>
-                        </label>  
-                    
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên nhà cung cấp <span class="required"></span>
+                        </label>               
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="text" id="search123" placeholder="Hãy nhập mã nhà cung cấp">
-                        </div>
-                    </div>
+                            <input id="search" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap1" type="text" placeholder="Hãy nhập mã nhà cung cấp">
+                        </div>                      
+                            <input id="nccid" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden" placeholder="Hãy nhập mã nhà cung cấp">                     
+                    </div>                    
 
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Mã thành viên<span class="required"></span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Người thêm<span class="required"></span>
                         </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input class="form-control col-md-7 col-xs-12" required="required" name="mathanhvien" type="text" placeholder="Hãy nhập mã thành viên">
+                        <div class="col-md-9 col-sm-9 col-xs-12">                          
+                            <input class="form-control col-md-7 col-xs-12" name="mathanhvien1" value="${txtTenThanhVien}" type="text" placeholder="Hãy nhập mã thành viên" disabled>
                         </div>
+                            <input class="form-control col-md-7 col-xs-12" required="required" name="mathanhvien" value="${maThanhVien}" type="hidden" placeholder="Hãy nhập tên thành viên">
+                        
                     </div>
 
                     <div class="form-group">

@@ -40,7 +40,7 @@ public class AjaxServlet extends HttpServlet {
                 List<NhaCungCapModel> listAllNhaCungCap = NhaCungCapModel.getAllNhaCungCap(conn);
              
      
-                out.print(gson.toJson(nhaCungCapModel.search(term, listAllNhaCungCap)));
+                out.print(gson.toJson(nhaCungCapModel.search1(term, listAllNhaCungCap)));
 		out.flush();
 		out.close();
 	}

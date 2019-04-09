@@ -68,9 +68,7 @@ public class PhiShipServlet extends HttpServlet {
             if (phiShipPattern.matcher(req.getParameter("phiship")).matches())
             { 
                 try {
-//                phiShip = Double.parseDouble(req.getParameter("phiship"));
-//                req.setAttribute("phiShip", phiShip);
-//                req.setAttribute("tenTinh", tenTinh);
+                    phiShip = Double.parseDouble(req.getParameter("phiship"));
 
                 Connection conn = MyUtils.getStoredConnection(req);
 
