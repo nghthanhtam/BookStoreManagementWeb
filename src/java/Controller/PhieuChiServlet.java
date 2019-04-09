@@ -70,6 +70,7 @@ public class PhieuChiServlet extends HttpServlet {
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
 
+
         String submitValue = req.getParameter("submit");
         if (submitValue != null && submitValue.equals("them")) {
             
