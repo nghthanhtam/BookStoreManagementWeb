@@ -206,7 +206,8 @@ public class ThanhVienServlet extends HttpServlet {
         {
             System.out.println(listAllThanhVienWithModel.get(i).getTenPhanQuyen());
         }
-        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+        List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel1=null; 
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel1);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
 
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
