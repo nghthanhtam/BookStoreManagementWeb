@@ -1,7 +1,9 @@
 package Controller;
 
 import Model.MessagesModel;
+import Model.NhaCungCapModel;
 import Model.PhieuChiModel;
+import Model.PhieuChiModelWithTenNhaCungCap;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,8 +53,11 @@ public class DeletePhieuChiServlet extends HttpServlet {
         /* Hiển thị view */
         req.setAttribute("txtTitle", "Phiếu Chi");
 
-        List<PhieuChiModel> listAllPhieuChi = PhieuChiModel.getAllPhieuChi(conn);
-        req.setAttribute("listAllPhieuChi", listAllPhieuChi);
+        List<PhieuChiModelWithTenNhaCungCap> listAllPhieuChiWithTenNhaCungCap = PhieuChiModelWithTenNhaCungCap.getAllPhieuChiWithTenNhaCungCap(conn);       
+        List<NhaCungCapModel> listAllNhaCungCap = NhaCungCapModel.getAllNhaCungCap(conn);
+        
+        req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
+        req.setAttribute("listAllPhieuChiWithTenNhaCungCap", listAllPhieuChiWithTenNhaCungCap);
         req.getRequestDispatcher("/admin/phieuchi.jsp").forward(req, resp);
 
     }

@@ -32,6 +32,7 @@ public class PhieuChiModel {
         this.ghiChu = ghiChu;
     }
 
+      
     public int getMaPhieuChi() {
         return maPhieuChi;
     }
@@ -198,5 +199,6 @@ public class PhieuChiModel {
         return null;
     }
 
+   
    
 }

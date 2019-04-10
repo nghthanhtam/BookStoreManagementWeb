@@ -6,7 +6,9 @@
 package Controller;
 
 import Model.MessagesModel;
+import Model.NhaCungCapModel;
 import Model.PhieuChiModel;
+import Model.PhieuChiModelWithTenNhaCungCap;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -43,8 +45,6 @@ public class PhieuChiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
-
         HttpSession session = request.getSession();
         if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
         {
@@ -56,10 +56,10 @@ public class PhieuChiServlet extends HttpServlet {
         }
 
         Connection conn = MyUtils.getStoredConnection(request);
-        List<PhieuChiModel> listAllPhieuChi = PhieuChiModel.getAllPhieuChi(conn);
-
-        request.setAttribute("listAllPhieuChi", listAllPhieuChi);
-
+        List<PhieuChiModelWithTenNhaCungCap> listAllPhieuChiWithTenNhaCungCap = PhieuChiModelWithTenNhaCungCap.getAllPhieuChiWithTenNhaCungCap(conn);       
+        
+        request.setAttribute("listAllPhieuChiWithTenNhaCungCap", listAllPhieuChiWithTenNhaCungCap);
+  
         request.getRequestDispatcher("/admin/phieuchi.jsp").forward(request, response);
     }
 
@@ -70,6 +70,10 @@ public class PhieuChiServlet extends HttpServlet {
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
 
+        //Lấy mã thành viên hiện đang đăng nhập
+        HttpSession session = req.getSession();    
+        ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
+        int maThanhVien = thanhvien.getMaThanhVien();
 
         String submitValue = req.getParameter("submit");
         if (submitValue != null && submitValue.equals("them")) {
@@ -80,7 +84,6 @@ public class PhieuChiServlet extends HttpServlet {
                 try {
 
                     int maNhaCungCap = Integer.parseInt(req.getParameter("manhacungcap"));
-                    int maThanhVien = Integer.parseInt(req.getParameter("mathanhvien"));
                     tongTien = Double.parseDouble(req.getParameter("tongtien"));
                     String ghiChu = (String) req.getParameter("ghichu");
 
@@ -88,10 +91,30 @@ public class PhieuChiServlet extends HttpServlet {
 
                     boolean isOk = PhieuChiModel.InsertNewPhieuChi(conn,
                             new PhieuChiModel(0, maNhaCungCap, maThanhVien, tongTien, null, ghiChu));
-
+        
                     if (isOk) {
                         isFailedRequest = false;
                         noiDungThongBao = "Đã thêm phiếu chi!";
+                        
+                        //<editor-fold defaultstate="collapsed" desc="-- Cap nhat lai tien no --">                  
+                        NhaCungCapModel nhaCungCap = NhaCungCapModel.FindByMaNhaCungCap(conn, maNhaCungCap);
+                        nhaCungCap.setSoTienNo(nhaCungCap.getSoTienNo() - tongTien);
+
+                        try {
+                            boolean isOk1 = NhaCungCapModel.UpdateSoTienNo(conn, nhaCungCap);
+                            if (isOk1) {
+                                isFailedRequest = false;  
+                                //noiDungThongBao = "Đã cập nhật nợ thành công!";
+                            } else {
+                                isFailedRequest = true;
+                            }
+
+                        } catch (SQLException ex) {
+                            isFailedRequest = true;
+                            //Logger.getLogger(NhaCungCapServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }              
+                        //</editor-fold>
+                        
                     } else {
                         isFailedRequest = true;
                     }
@@ -119,8 +142,11 @@ public class PhieuChiServlet extends HttpServlet {
         req.setAttribute("txtTitle", "Phiếu Chi");
 
         Connection conn = MyUtils.getStoredConnection(req);
-        List<PhieuChiModel> listAllPhieuChi = PhieuChiModel.getAllPhieuChi(conn);
-        req.setAttribute("listAllPhieuChi", listAllPhieuChi);
+        List<PhieuChiModelWithTenNhaCungCap> listAllPhieuChiWithTenNhaCungCap = PhieuChiModelWithTenNhaCungCap.getAllPhieuChiWithTenNhaCungCap(conn);       
+        List<NhaCungCapModel> listAllNhaCungCap = NhaCungCapModel.getAllNhaCungCap(conn);
+               
+        req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
+        req.setAttribute("listAllPhieuChiWithTenNhaCungCap", listAllPhieuChiWithTenNhaCungCap);
         
         req.getRequestDispatcher("/admin/phieuchi.jsp").forward(req, resp);
 
