@@ -8,7 +8,6 @@ package Filter;
 import Model.PhanQuyenModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
-import com.sun.jndi.ldap.Connection;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
