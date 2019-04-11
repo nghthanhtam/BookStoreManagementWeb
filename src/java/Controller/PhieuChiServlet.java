@@ -106,6 +106,7 @@ public class PhieuChiServlet extends HttpServlet {
                                 isFailedRequest = false;  
                                 //noiDungThongBao = "Đã cập nhật nợ thành công!";
                             } else {
+                                conn.rollback();
                                 isFailedRequest = true;
                             }
 
