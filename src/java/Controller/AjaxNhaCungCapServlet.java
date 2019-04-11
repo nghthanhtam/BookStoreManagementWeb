@@ -16,7 +16,6 @@ import Utility.MyUtils;
 import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +43,7 @@ public class AjaxNhaCungCapServlet extends HttpServlet {
             out.print(gson.toJson(listAjaxNhaCungCapModel));
         } catch (SQLException ex) {
             Logger.getLogger(AjaxNhaCungCapServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-        
+        }        
         
         out.flush();
         out.close();

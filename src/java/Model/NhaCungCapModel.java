@@ -35,6 +35,8 @@ public class NhaCungCapModel {
         this.soTienNo = soTienNo;
     }
 
+  
+      
     public int getMaNhaCungCap() {
         return maNhaCungCap;
     }
@@ -165,6 +167,26 @@ public class NhaCungCapModel {
         return null;       
     }
        
+    public static String FindTenByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException
+    {    
+        String sql = "SELECT tennhacungcap FROM nhacungcap WHERE manhacungcap = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        
+        pstm.setInt(1, maNhaCungCap);
+        
+        ResultSet rs = pstm.executeQuery();
+                     
+
+        if (rs.next()) {  
+            String tenNhaCungCap = rs.getString("manhacungcap"); 
+                  
+            return tenNhaCungCap; 
+        }
+        return null;       
+    }
+    
+    
     public static boolean UpdateNhaCungCap(Connection conn, NhaCungCapModel obj) 
             throws SQLException
     { 
@@ -187,6 +209,26 @@ public class NhaCungCapModel {
        return count>0;
     }
      
+    public static boolean UpdateSoTienNo(Connection conn, NhaCungCapModel obj) 
+            throws SQLException
+    { 
+        int count = 0;
+        try
+        {
+            String sql="UPDATE nhacungcap SET sotienno = ? WHERE manhacungcap = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setDouble(1, obj.getSoTienNo());  
+            pstm.setInt(2, obj.getMaNhaCungCap());  
+            
+            count = pstm.executeUpdate(); 
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+       return count>0;
+    }
+        
     public static List<AjaxModel> FindAllByName(Connection conn, String tenNhaCungCap) throws SQLException {
 
         List<AjaxModel> listNhaCungCap = new ArrayList<AjaxModel>();
@@ -217,5 +259,4 @@ public class NhaCungCapModel {
 
     }
      
-   
 }

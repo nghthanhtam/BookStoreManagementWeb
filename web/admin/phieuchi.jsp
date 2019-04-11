@@ -71,12 +71,12 @@
                 <table class="table table-striped projects">
                     <thead>
                         <tr>
-                            <th style="width: 4%">STT</th>
-                            <th style="width: 19%">Mã nhà cung cấp</th>
-                            <th style="width: 17%">Mã thành viên</th>                     
-                            <th style="width: 15%">Tổng tiền</th>
-                            <th style="width: 17%">Ngày lập phiếu</th>
-                            <th style="width: 13%">Ghi chú</th>
+                            <th style="width: 2%">STT</th>                     
+                            <th style="width: 25%">Tên nhà cung cấp</th>                    
+                            <th style="width: 24%">Tên thành viên</th>                     
+                            <th style="width: 5%">Tổng tiền</th>
+                            <th style="width: 21%">Ngày lập phiếu</th>
+                            <th style="width: 20%">Ghi chú</th>
 
 
                             <th style="width: 20%">Thao tác</th>
@@ -86,14 +86,14 @@
                     <tbody>
                         ${listAllPhieuChi.size()==0?"Chưa có phiếu chi nào được tạo!":""}                         
 
-                        <c:forEach items="${listAllPhieuChi}" var="obj">
+                        <c:forEach items="${listAllPhieuChiWithTenNhaCungCap}" var="obj">
                             <tr>
-                                <td style="width: 5%" align="center">${obj.getMaPhieuChi()}</td>
-                                <td style="width: 15%" align="center">${obj.getMaNhaCungCap()}</td>
-                                <td style="width: 15%" align="center">${obj.getMaThanhVien()}</td>
-                                <td style="width: 15%" align="center">${obj.getTongTien()}</td>
-                                <td style="width: 15%" align="center">${obj.getNgayLapPhieu()}</td>
-                                <td style="width: 15%" align="center">${obj.getGhiChu()}</td>
+                                <td style="width: 5%" align="center">${obj.getMaPhieuChi()}</td>                         
+                                <td style="width: 15%" align="left">${obj.getTenNhaCungCap()}</td>
+                                <td style="width: 15%" align="left">${obj.getHoTen()}</td>
+                                <td style="width: 15%" align="left">${obj.getTongTien()}</td>
+                                <td style="width: 15%" align="left">${obj.getNgayLapPhieu()}</td>
+                                <td style="width: 15%" align="left">${obj.getGhiChu()}</td>
 
                                 <td> 
                                     <a href="${contextPath}/admin/phieuchi/edit?id=${obj.getMaPhieuChi()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
@@ -136,7 +136,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên nhà cung cấp <span class="required"></span>
                         </label>               
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input id="search" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap1" type="text" placeholder="Hãy nhập mã nhà cung cấp">
+                            <input id="search" class="form-control col-md-7 col-xs-12" required="required" name="tennhacungcap" type="text" placeholder="Hãy nhập mã nhà cung cấp">
                         </div>                      
                             <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden" placeholder="Hãy nhập mã nhà cung cấp">                     
                     </div>                    
