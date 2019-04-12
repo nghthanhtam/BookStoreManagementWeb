@@ -101,10 +101,10 @@ public class PhieuChiServlet extends HttpServlet {
                         nhaCungCap.setSoTienNo(nhaCungCap.getSoTienNo() - tongTien);
 
                         try {
-                            boolean isOk1 = NhaCungCapModel.UpdateSoTienNo(conn, nhaCungCap);
-                            if (isOk1) {
+                            boolean isOkUpdate = NhaCungCapModel.UpdateSoTienNo(conn, nhaCungCap);
+                            if (isOkUpdate) {
                                 isFailedRequest = false;  
-                                //noiDungThongBao = "Đã cập nhật nợ thành công!";
+                                
                             } else {
                                 conn.rollback();
                                 isFailedRequest = true;
@@ -112,7 +112,14 @@ public class PhieuChiServlet extends HttpServlet {
 
                         } catch (SQLException ex) {
                             isFailedRequest = true;
-                            //Logger.getLogger(NhaCungCapServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            try {
+                                conn.rollback();
+                            } catch (Exception ex1) {
+                                // errors that may have occurred
+                                // on the server that would cause the rollback to fail, such as
+                                // a closed connection.
+                                System.out.println("Rollback Failed");
+                            }                
                         }              
                         //</editor-fold>
                         
