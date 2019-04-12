@@ -35,11 +35,11 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "PhieuChiServlet", urlPatterns = {"/admin/phieuchi"})
 public class PhieuChiServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-
-    public PhieuChiServlet() {
-        super();
-    }
+//    private static final long serialVersionUID = 1L;
+//
+//    public PhieuChiServlet() {
+//        super();
+//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -33,7 +33,7 @@ public class EditPhieuChiServlet extends HttpServlet {
         req.setAttribute("txtTitle", "Phiếu Chi");
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
-        PhieuChiModel phieuChiModel1 = null;
+        PhieuChiModel phieuChiModel = null;
         boolean isFailed = false;
         
         Connection conn = MyUtils.getStoredConnection(req);
@@ -45,26 +45,27 @@ public class EditPhieuChiServlet extends HttpServlet {
         String submitValue = req.getParameter("submit");
         if (submitValue != null && submitValue.equals("capnhat")) {
             
-            int maPhieuChi = Integer.parseInt(req.getParameter("maphieuchi"));
-            int maNhaCungCap = Integer.parseInt(req.getParameter("manhacungcap"));
+            int maPhieuChi = Integer.parseInt(req.getParameter("maphieuchi"));          
             String ghiChu = (String) req.getParameter("ghichu");
                   
 
             try {             
-                phieuChiModel1 = PhieuChiModel.FindByMaPhieuChi(conn, maPhieuChi);
+                phieuChiModel = PhieuChiModel.FindByMaPhieuChi(conn, maPhieuChi);
 
-                if (phieuChiModel1 != null) {
-                    isFailed = true;          
+                if (phieuChiModel != null) {
+                    isFailed = false;          
+                } else{
+                    conn.rollback();
                 }
             } catch (Exception ex) {
-                isFailed = false;
+                isFailed = true;
             }
             
             
-            PhieuChiModel phieuChiModel = new PhieuChiModel(maPhieuChi, maNhaCungCap, maThanhVien, phieuChiModel1.getTongTien(), null, ghiChu);
+            PhieuChiModel newPhieuChiModel = new PhieuChiModel(maPhieuChi, phieuChiModel.getMaNhaCungCap(), maThanhVien, phieuChiModel.getTongTien(), null, ghiChu);
 
             try {
-                boolean isOk = PhieuChiModel.UpdatePhieuChi(conn, phieuChiModel);
+                boolean isOk = PhieuChiModel.UpdatePhieuChi(conn, newPhieuChiModel);
                 if (isOk) {
                     isFailedRequest = false;
                     noiDungThongBao = "Đã cập nhật thành công!";
