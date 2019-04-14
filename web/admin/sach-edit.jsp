@@ -41,7 +41,7 @@
             <div class="x_content">
                 <br>
 
-                <form class="form-horizontal form-label-left input_mask" method="POST" action="${pageContext.request.contextPath}/admin/sach/edit">
+                <form class="form-horizontal form-label-left input_mask" enctype="multipart/form-data" method="POST" action="${pageContext.request.contextPath}/admin/sach/edit">
                     <input type="hidden" name="masach" value="${sachModel.getMaSach()}">
                     <div class="form-group">
                         <label class= " control-label col-md-3 col-sm-3 col-xs-12" >Tên sách<span class="required">*</span>
@@ -203,10 +203,11 @@
                             <input type="text" name="giaban" value="${sachModel.getGiaBan()}" required="required"  class="form-control col-md-7 col-xs-12" onkeypress="return event.charCode >= 48 && event.charCode <= 57" >
                         </div>
                     </div>
+                        
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh địa diện</label>
                         <div class="col-md-2 col-sm-9 col-xs-12">
-
+                            <image name="image" src="${sachModel.getHinhAnh()}" width="100" height="100" />
                             <input type="file" name="anhdaidien" accept="image/*" value="select images..."/>
                         </div>
                     </div>
@@ -262,6 +263,13 @@
                             </select>
                         </div>
                     </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Mô tả<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-3 col-sm-9 col-xs-12">
+                                        <textarea type="text" name="mota" required="required" class="form-control" rows="3" placeholder="Mô tả" >${sachModel.getMoTa()}</textarea>
+                                    </div>
+                                </div>
 
                         <div class="ln_solid"></div>
                       <div class="form-group">

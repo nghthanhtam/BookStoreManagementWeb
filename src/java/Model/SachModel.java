@@ -32,7 +32,7 @@ public class SachModel {
     private int namXuatBan;
     private double giaBan;
     private String moTa; 
-    private Blob hinhAnh;     
+    private String hinhAnh;     
     private int soLuongTon;        
     private String tenTacGia; 
     private int phanTramGiamGia;
@@ -96,11 +96,11 @@ public class SachModel {
         this.moTa = moTa;
     }
 
-    public Blob getHinhAnh() {
+    public String getHinhAnh() {
         return hinhAnh;
     }
 
-    public void setHinhAnh(Blob hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
     }
 
@@ -153,7 +153,8 @@ public class SachModel {
     }
 
         
-    public SachModel(int masach, int matheloai, String tensach, String nhaxuatban, int namxuatban, double giaban, String mota, Blob hinhanh, int soluongton, String tentacgia) {
+    public SachModel(int masach, int matheloai, String tensach, String nhaxuatban, int namxuatban, double giaban,
+            String mota, String hinhanh, int soluongton, String tentacgia) {
         this.maSach = masach;
         this.maTheLoai = matheloai;
         this.tenSach = tensach;
@@ -169,7 +170,7 @@ public class SachModel {
     
     public SachModel(int masach, int matheloai, String tensach,
             String nhaxuatban, int namxuatban, double giaban,
-            String mota, Blob hinhanh, int soluongton, 
+            String mota, String hinhanh, int soluongton, 
             String tentacgia,int phantramgiamgia, 
             Date ngaybatdaugiamgia, Date ngayketthucgiamgia, int trangthai) {
         this.maSach = masach;
@@ -211,7 +212,7 @@ public class SachModel {
                     Integer.parseInt(rs.getString("namxuatban")),
                     Double.parseDouble(rs.getString("giaban")) , 
                     rs.getString("mota"),
-                    rs.getBlob("anhdaidien"),
+                    rs.getString("anhdaidien"),
                     Integer.parseInt(rs.getString("soluongton")), 
                     rs.getString("tentacgia"));
          
@@ -245,7 +246,7 @@ public class SachModel {
                         Double.parseDouble(rs.getString("giaban")),
                         rs.getString("mota"),
                         
-                        rs.getBlob("anhdaidien"),
+                        rs.getString("anhdaidien"),
                         Integer.parseInt(rs.getString("soluongton")),
                         rs.getString("tentacgia"),
                         Integer.parseInt(rs.getString("phantramgiamgia")),
@@ -260,7 +261,7 @@ public class SachModel {
     }
     
     
-     public static boolean InsertNewSach(Connection conn, SachModel sach,InputStream hinh )
+     public static boolean InsertNewSach(Connection conn, SachModel sach )
             throws SQLException {
         int count = 0;
         try {
@@ -281,7 +282,7 @@ public class SachModel {
                 //here we're letting the JDBC driver
                 //create a blob object based on the
                 //input stream that contains the data of the file
-                pstm.setBinaryStream(7,hinh);
+                pstm.setString(7,sach.getHinhAnh());
             //}
             
             pstm.setInt(8, sach.getSoLuongTon());
@@ -321,7 +322,7 @@ public class SachModel {
                         Double.parseDouble(rs.getString("giaban")),
                         rs.getString("mota"),
                         
-                        rs.getBlob("anhdaidien"),
+                        rs.getString("anhdaidien"),
                         Integer.parseInt(rs.getString("soluongton")),
                         rs.getString("tentacgia"),
                         Integer.parseInt(rs.getString("phantramgiamgia")),
@@ -338,17 +339,27 @@ public class SachModel {
         return listSach;
     }
 
-     public static boolean UpdateSach(Connection conn,SachModel sach)throws SQLException {
+     public static boolean UpdateSach(Connection conn,SachModel sach, Boolean updateAnh)throws SQLException {
                         
          int count = 0;
         try {
-            String sql = "UPDATE sach SET matheloai = ?,tensach=?,nhaxuatban=?,"
+            String sql;
+            if(updateAnh){
+            sql = "UPDATE sach SET matheloai = ?,tensach=?,nhaxuatban=?,"
                     + "namxuatban=?, giaban = ?, mota = ?, "
                     + "anhdaidien = ?, soluongton =?,"
                     + "tentacgia = ?, phantramgiamgia =?,"
                     + "ngaybatdaugiamgia = ?, ngayketthucgiamgia =?,"
                     + "trangthai = ? WHERE masach = ?";
-            
+            }
+            else{
+                sql = "UPDATE sach SET matheloai = ?,tensach=?,nhaxuatban=?,"
+                    + "namxuatban=?, giaban = ?, mota = ?, "
+                    + "soluongton =?,"
+                    + "tentacgia = ?, phantramgiamgia =?,"
+                    + "ngaybatdaugiamgia = ?, ngayketthucgiamgia =?,"
+                    + "trangthai = ? WHERE masach = ?";
+            }
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, sach.getMaTheLoai());
@@ -357,7 +368,9 @@ public class SachModel {
             pstm.setInt(4, sach.getNamXuatBan());
             pstm.setDouble(5, sach.getGiaBan());
             pstm.setString(6, sach.getMoTa());
-            pstm.setBlob(7, sach.getHinhAnh());
+            if(updateAnh){
+                
+            pstm.setString(7, sach.getHinhAnh());
             pstm.setInt(8, sach.getSoLuongTon());
             pstm.setString(9, sach.getTenTacGia());
             pstm.setInt(10, sach.getPhanTramGiamGia());
@@ -366,6 +379,18 @@ public class SachModel {
             pstm.setInt(13, sach.getTrangThai());
             pstm.setInt(14, sach.getMaSach());
 
+            }
+            else{
+                 pstm.setInt(7, sach.getSoLuongTon());
+            pstm.setString(8, sach.getTenTacGia());
+            pstm.setInt(9, sach.getPhanTramGiamGia());
+            pstm.setDate(10, sach.getNgayBatDauGiamGia());
+            pstm.setDate(11, sach.getNgayKetThucGiamGia());
+            pstm.setInt(12, sach.getTrangThai());
+            pstm.setInt(13, sach.getMaSach());
+            }
+            
+                
             count = pstm.executeUpdate();
         } catch (SQLException ex) {
             count = 0;
@@ -375,26 +400,59 @@ public class SachModel {
     
      }
 
-//     Obatining file
-//      String filepath = "D:/Dev/JavaWorkSpaceNew/FileUploadDatabase/WebContent/FromDb.jpg";
-//            //Obtaining the file from database
-//            //Using a second statement
-//            String sql1 = "SELECT photo FROM contacts WHERE first_name=? AND last_name=?";
-//            PreparedStatement pstmtSelect = conn.prepareStatement(sql1);
-//            pstmtSelect.setString(1, firstName);
-//            pstmtSelect.setString(2, lastName);
-//            ResultSet result = statement1.executeQuery();
-//            if (result.next()) {
-//                Blob blob = result.getBlob("photo");
-//                InputStream inputStream1 = blob.getBinaryStream();
-//                OutputStream outputStream = new FileOutputStream(filepath);
-//                int bytesRead = -1;
-//                byte[] buffer = new byte[BUFFER_SIZE];
-//                while ((bytesRead = inputStream1.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, bytesRead);
-//                }
-//                inputStream1.close();
-//                outputStream.close();
-//                System.out.println("File saved");
-//            }
+     
+     
+      public static List<AjaxModel> FindTenTacGia(Connection conn, String tenTacGia) throws SQLException {
+
+        List<AjaxModel> listTenTacGia = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT DISTINCT tentacgia FROM sach WHERE tentacgia LIKE ? ";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1 , "%"+tenTacGia+"%"); // tìm bằng tên tác giả
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                AjaxModel ajaxSach = new AjaxModel( 0 ,rs.getString("tentacgia") );
+
+                listTenTacGia.add(ajaxSach);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listTenTacGia;
+
+    }
+     
+      
+      public static List<AjaxModel> FindNhaXuatBan(Connection conn, String nhaXuatBan) throws SQLException {
+
+        List<AjaxModel> listTenNhaXuatBan = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT DISTINCT nhaxuatban FROM sach WHERE nhaxuatban LIKE ? ";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1 , "%"+nhaXuatBan+"%"); // tìm bằng tên tác giả
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                AjaxModel ajaxSach = new AjaxModel( 0 ,rs.getString("nhaxuatban") );
+
+                listTenNhaXuatBan.add(ajaxSach);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listTenNhaXuatBan;
+
+    }
+     
 }

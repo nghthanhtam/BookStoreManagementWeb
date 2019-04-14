@@ -41,7 +41,7 @@ public class DeleteSachServlet extends HttpServlet {
             System.out.println(maSach);
             SachModel sach = SachModel.FindByMaSach(conn, maSach);
             sach.setTrangThai(3);
-            boolean x= SachModel.UpdateSach(conn, sach);
+            boolean x= SachModel.UpdateSach(conn, sach,false);
             if (x) {
                 result = true;
             }

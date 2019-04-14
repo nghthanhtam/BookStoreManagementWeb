@@ -11,11 +11,15 @@ import Model.PhanQuyenModel;
 import Model.SachModel;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
+import static com.oracle.jrockit.jfr.ContentType.Bytes;
+import com.sun.xml.bind.v2.util.ByteArrayOutputStreamEx;
+import com.sun.xml.ws.util.StreamUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -26,15 +30,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import sun.misc.IOUtils;
 
 /**
  *
  * @author Admin
  */
+@MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "EditSachServlet", urlPatterns = {"/admin/sach/edit"})
 public class EditSachServlet extends HttpServlet {
 
@@ -42,7 +52,7 @@ public class EditSachServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         FileInputStream input= null;
         Connection conn = MyUtils.getStoredConnection(req);
-        InputStream inputStream = null;
+        InputStream fileContent = null;
         boolean isFailedRequest = false; // request thất bại
         boolean isWrongPicture = false;
         boolean isWrongGiaBan = false;
@@ -51,6 +61,7 @@ public class EditSachServlet extends HttpServlet {
         boolean isWrongPhanTramGiamGia = false;
         boolean isWrongTrangThai = false;
         String noiDungThongBao = "";
+        
         String button = req.getParameter("submit");
 
         
@@ -68,7 +79,11 @@ public class EditSachServlet extends HttpServlet {
             //File anhDaiDienFile= new File (req.getParameter("anhdaidien"));
             //input= new FileInputStream(anhDaiDienFile);
             
-            Blob anhDaiDien = null;
+        Part filePart = req.getPart("anhdaidien"); // Retrieves <input type="file" name="file">
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+        if(!filePart.getSubmittedFileName().equals(""))
+        fileContent = filePart.getInputStream();
+            
             
             String tenTacGia = (String) req.getParameter("tentacgia");
             int phanTramGiamGia = Integer.parseInt(req.getParameter("phantramgiamgia"));
@@ -133,9 +148,21 @@ public class EditSachServlet extends HttpServlet {
           
     
             try {
-                boolean isOk = SachModel.UpdateSach(conn, new SachModel(maSach, maTheLoai, tenSach,
-                        nhaXuatBan,namXuatBan, giaBan, moTa, anhDaiDien,soLuongTon, tenTacGia,
-                        phanTramGiamGia,sqlBatDau,sqlKetThuc,trangThai));
+                boolean isOk=false;
+                if(fileContent==null){
+                    String xa="";
+                isOk = SachModel.UpdateSach(conn, new SachModel(maSach, maTheLoai, tenSach,
+                        nhaXuatBan,namXuatBan, giaBan, moTa, xa,soLuongTon, tenTacGia,
+                        phanTramGiamGia,sqlBatDau,sqlKetThuc,trangThai),false);
+            }
+                else
+                {
+                    String xz="";
+                    isOk = SachModel.UpdateSach(conn, new SachModel(maSach, maTheLoai, tenSach,
+                        nhaXuatBan,namXuatBan, giaBan, moTa, xz,soLuongTon, tenTacGia,
+                        phanTramGiamGia,sqlBatDau,sqlKetThuc,trangThai),true);
+                }
+                    
                                 System.out.println(isOk);
                 if (isOk) {
                                 isFailedRequest = false;
@@ -179,12 +206,24 @@ public class EditSachServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
      Connection conn = MyUtils.getStoredConnection(req);
         SachModel sachModel = null;
+        ServletOutputStream sos=null;
         TheLoaiModel theLoaiModel = null;
+        byte[] image=null;
         boolean result = false;
           boolean          result1 = false;
         try {
             int maSach = Integer.parseInt((String) req.getParameter("id"));
             sachModel = SachModel.FindFullByMaSach(conn, maSach);
+//            sos=resp.getOutputStream();
+//            ByteArrayOutputStreamEx buffer = new ByteArrayOutputStreamEx();
+//        int nRead;
+//        byte[] data = new byte[16384];
+//
+//            while ((nRead = sachModel.getHinhAnh().read(data, 0, data.length)) != -1) {
+//            buffer.write(data, 0, nRead);
+//            }
+//
+//            sos.write( buffer.toByteArray());
             System.out.println("XXXXXXXXXXXXXXXXXX");
             //System.out.println(sachModel.getNgayBatDauGiamGia());
             //System.out.println(sachModel.getNgayKetThucGiamGia());
