@@ -9,6 +9,7 @@ import Model.MessagesModel;
 import Model.NhaCungCapModel;
 import Model.PhanQuyenModel;
 import Model.ThanhVienModel;
+import Model.ThanhVienModelWithTenQuyen;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,7 +41,7 @@ public class EditThanhVienServlet extends HttpServlet {
         boolean isWrongPassword = false;
         boolean haveUsedName = false;
         boolean haveUsedEmail = false;
-
+        boolean updatePass=false;
         boolean isInvalidUsername = false;
         boolean isInvalidPassword = false;
         boolean isInvalidNumber = false;
@@ -77,12 +78,14 @@ public class EditThanhVienServlet extends HttpServlet {
  
             try {
 
+
                 if (usernameMatch.matches() == true
                         && soDienThoaiMatch.matches() == true && emailMatch.matches() == true) {
                     isInvalidEmail = false;
                     isInvalidPassword = false;
                     isInvalidNumber = false;
                     isInvalidUsername = false;
+                    
                     List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
                     for (int j = 0; j < listAllThanhVien.size(); j++) {
                         if (listAllThanhVien.get(j).getMaThanhVien() - maThanhVien == 0) {
@@ -106,23 +109,32 @@ public class EditThanhVienServlet extends HttpServlet {
                     }
  
                     if (!haveUsedName && !haveUsedEmail) {
-                        if (!lapLaiMatKhau.equals("")) {
+                        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                        if (!lapLaiMatKhau.equals("") || !matKhau.equals("")) {
+                            updatePass=true;
                             System.out.println("Đổi mật khẩu");
-                            if (Objects.equals(matKhau, lapLaiMatKhau))//check mat khau co khop voi nhau khong
-                            {
-                                System.out.println("Khớp mật khẩu");
-                                isWrongPassword = false;
-                            } else {
-                                isWrongPassword = true;
-                                System.out.println("Không khớp mật khẩu");
-                            }
+                            if (passwordMatch.matches() == true) {
+                                if (Objects.equals(matKhau, lapLaiMatKhau))//check mat khau co khop voi nhau khong
+                                {
+                                    System.out.println("Khớp mật khẩu");
+                                    isWrongPassword = false;
+                                } else {
+                                    isWrongPassword = true;
+                                    System.out.println("Không khớp mật khẩu");
+                                }
+                            } else
+                                isWrongPassword=true;
                         }
+                        else updatePass=false;
 
-                        System.out.println(maTenQuyen);
                         if (isWrongPassword == false) {
-
-                            boolean isOk = ThanhVienModel.UpdateThanhVien(conn, new ThanhVienModel(maThanhVien, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maTenQuyen));
+                            boolean isOk;
+                            if(updatePass)
+                               isOk  = ThanhVienModel.UpdateThanhVien(conn, new ThanhVienModel(maThanhVien, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maTenQuyen));
+                            else
+                                isOk=ThanhVienModel.UpdateThanhVienWithoutPassword(conn, new ThanhVienModel(maThanhVien, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maTenQuyen) );
                             System.out.println(isOk);
+                            System.out.println("Update pass " +updatePass);
                             if (isOk) {
                                 isFailedRequest = false;
                                 noiDungThongBao = "Đã cập nhật thông tin thành viên thành công!";
@@ -192,13 +204,29 @@ public class EditThanhVienServlet extends HttpServlet {
 
         req.setAttribute("txtTitle", "Thành viên");
 
+     
+        
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
+      
+      
+      
+      /* Conflict*/
+      
+         List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel = ThanhVienModelWithTenQuyen.getAllThanhVienWithTenQuyen(conn);
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+   
+  /*
         List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
- 
         req.setAttribute("listAllThanhVien", listAllThanhVien);
+        
+        */ 
+  
+      /* Conflict*/
+  
+  
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
-        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
 
+        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
     }
 
     @Override

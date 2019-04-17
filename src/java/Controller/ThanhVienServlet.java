@@ -202,8 +202,26 @@ public class ThanhVienServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(req);
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel = ThanhVienModelWithTenQuyen.getAllThanhVienWithTenQuyen(conn);
-       
+
+      
+      /* Conflict*/
+      
+        for(int i=0;i<listAllThanhVienWithModel.size();i++)
+        {
+            System.out.println(listAllThanhVienWithModel.get(i).getTenPhanQuyen());
+        }
+        List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel1=null; 
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel1);
+ 
+       /*
         req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+        */ 
+      
+            /* Conflict*/
+
+      
+      
+      
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
 
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);

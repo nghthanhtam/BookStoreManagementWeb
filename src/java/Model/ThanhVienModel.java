@@ -256,4 +256,27 @@ public class ThanhVienModel {
         }
         return count > 0;
     }
+    public static boolean UpdateThanhVienWithoutPassword(Connection conn, ThanhVienModel obj)
+            throws SQLException {
+        int count = 0;
+        try {
+            String sql = "UPDATE thanhvien SET tendangnhap = ?,"
+                    + "hoten=?, diachi = ?, sodienthoai = ?, email = ?, maphanquyen =? WHERE mathanhvien = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, obj.getTenDangNhap());
+            pstm.setString(2, obj.getHoTen());
+            pstm.setString(3, obj.getDiaChi());
+            pstm.setString(4, obj.getSoDienThoai());
+            pstm.setString(5, obj.getEmail());
+            pstm.setInt(6, obj.getMaPhanQuyen());
+            pstm.setInt(7, obj.getMaThanhVien());
+
+            count = pstm.executeUpdate();
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+        return count > 0;
+    }
 }
