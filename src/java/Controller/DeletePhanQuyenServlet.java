@@ -27,13 +27,14 @@ public class DeletePhanQuyenServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
+        super.doPost(req, resp); 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(req);
         boolean result = false;
+        
         try {
             int maPhanQuyen = Integer.parseInt((String) req.getParameter("id"));
             System.out.println(maPhanQuyen);

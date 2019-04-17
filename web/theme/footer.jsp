@@ -112,7 +112,10 @@
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
-
+        
+        <!-- PNotify -->
+        <script src="/vendors/pnotify/dist/pnotify.js"></script>
+        <script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>
 </body>
 
 </html>

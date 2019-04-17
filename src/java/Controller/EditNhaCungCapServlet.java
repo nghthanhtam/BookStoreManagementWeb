@@ -7,7 +7,6 @@ package Controller;
 
 import Model.MessagesModel;
 import Model.NhaCungCapModel;
-import Model.PhanQuyenModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,7 +44,6 @@ public class EditNhaCungCapServlet extends HttpServlet {
         String submitValue = req.getParameter("submit");
         if (submitValue != null && submitValue.equals("capnhat")) {
 
-            System.out.println("HEHHEHE");
             String tenNhaCungCap = (String) req.getParameter("tennhacungcap");
             String diaChi = (String) req.getParameter("diachi");
             String soDienThoai = (String) req.getParameter("sodienthoai");

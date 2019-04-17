@@ -2,7 +2,9 @@
     Document   : header
     Created on : Mar 12, 2019, 11:07:47 AM
     Author     : Ha Phuong
---%>
+--%> 
+<%@page import="Model.ThanhVienModel"%>
+<%@page import="Utility.MyUtils"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -10,6 +12,11 @@
 <%@page import="Model.MessagesModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+
+<%
+    ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session); 
+    String urlAvatar = "https://www.gravatar.com/avatar/"+MyUtils.MD5(thanhvien.getEmail());             
+%>
   
 <!DOCTYPE html>
 <html lang="en">
@@ -44,12 +51,14 @@
     
     <!-- PNotify -->
     <link href="${contextPath}/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+
     <link href="${contextPath}/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet"> 
     <!-- jQuery -->
+
     <script src="${contextPath}/vendors/jquery/dist/jquery.min.js"></script>
   </head>
  
-  
+   
    
   
   
@@ -81,11 +90,14 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<% out.print(urlAvatar+"?size=200"); %>" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>${txtTenDangNhap}</h2>
+                
+                
+                
+                <h2><% out.print(thanhvien.getHoTen()); %></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -96,13 +108,20 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li>
-                    </ul>
-                  </li>
+                  
+                    
+                  <li><a href="${contextPath}/admin"><i class="fa fa-home"></i> Home</a></li>
+                  <li><a href="${contextPath}/admin/thanhvien"><i class="fa fa-user"></i> Thành viên</a></li>
+                  <li><a href="${contextPath}/admin/nhacungcap"><i class="fa fa-truck"></i> Nhà cung cấp</a></li>
+                  <li><a href="${contextPath}/admin/phiship"><i class="fa fa-money"></i> Phí ship</a></li>
+                  <li><a href="${contextPath}/admin/phanquyen"><i class="fa fa-flash"></i> Phân quyền</a></li>
+                  <li><a href="${contextPath}/admin/phieuchi"><i class="fa fa-wpforms"></i> Phiếu chi</a></li>
+
+                  
+                  
+                  
+                  
+                  
                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">General Form</a></li>
@@ -112,20 +131,7 @@
                       <li><a href="form_upload.html">Form Upload</a></li>
                       <li><a href="form_buttons.html">Form Buttons</a></li>
                     </ul>
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> Employee management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="${pageContext.request.contextPath}/admin/thanhvien">Create account</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      <li><a href="typography.html">Typography</a></li>
-                      <li><a href="icons.html">Icons</a></li>
-                      <li><a href="glyphicons.html">Glyphicons</a></li>
-                      <li><a href="widgets.html">Widgets</a></li>
-                      <li><a href="invoice.html">Invoice</a></li>
-                      <li><a href="inbox.html">Inbox</a></li>
-                      <li><a href="calendar.html">Calendar</a></li>
-                    </ul>
-                  </li>
+                  </li> 
                   <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">Tables</a></li>
@@ -196,6 +202,7 @@
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
+            <!--
             <div class="sidebar-footer hidden-small">
               <a data-toggle="tooltip" data-placement="top" title="Settings">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -210,6 +217,7 @@
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
+            -->
             <!-- /menu footer buttons -->
           </div>
         </div>
@@ -225,7 +233,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">${txtTenDangNhap}
+                    <img src="<% out.print(urlAvatar); %>" alt=""><% out.print(thanhvien.getTenDangNhap()); %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -240,71 +248,7 @@
                     <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
+ 
               </ul>
             </nav>
           </div>

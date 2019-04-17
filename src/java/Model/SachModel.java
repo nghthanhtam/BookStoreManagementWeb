@@ -96,12 +96,13 @@ public class SachModel {
         this.moTa = moTa;
     }
 
-    public String getHinhAnh() {
-        return hinhAnh;
+
+    public String getAnhDaiDien() {
+        return anhdaidien;
     }
 
-    public void setHinhAnh(String hinhAnh) {
-        this.hinhAnh = hinhAnh;
+    public void settAnhDaiDien(String anhdaidien) {
+        this.anhdaidien = anhdaidien;
     }
 
     public int getSoLuongTon() {

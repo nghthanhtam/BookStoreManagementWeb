@@ -10,12 +10,12 @@ package Model;
  * @author MITICC06
  */
 public class AjaxModel {
-    
+
     public AjaxModel(int value, String label) {
         this.value = value;
         this.label = label;
     }
-  
+
     public int getValue() {
         return value;
     }
@@ -24,13 +24,15 @@ public class AjaxModel {
         this.value = value;
     }
 
-    public String getLabel1() {
+ 
+    public String getLabel() {
         return label;
     }
 
-    public void setLabel1(String label1) {
-        this.label = label;
+    public void setLabel(String label) {
+         this.label = label;
     }
     private int value;
     private String label;
+
 }

@@ -25,8 +25,17 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         MyUtils.LogOutThanhVien(session);
-
-        resp.sendRedirect("/admin/");
+        
+        String urlReferer = req.getHeader("referer");
+        if (urlReferer == null)
+        {
+            resp.sendRedirect("/");
+        }
+        else
+        {
+            resp.sendRedirect(urlReferer);
+        }
+        //resp.sendRedirect("/admin/");
         // req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
     }
 

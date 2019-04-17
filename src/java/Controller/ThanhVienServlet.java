@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ThanhVienServlet", urlPatterns = {"/admin/thanhvien"})
 public class ThanhVienServlet extends HttpServlet {
-
+   
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -54,8 +54,8 @@ public class ThanhVienServlet extends HttpServlet {
             String diaChi = (String) req.getParameter("diachi");
             String soDienThoai = (String) req.getParameter("sodienthoai");
             String email = (String) req.getParameter("email");
-            int maTenQuyen = Integer.parseInt(req.getParameter("phanquyen"));
-            System.out.println(maTenQuyen);
+            int maPhanQuyen = Integer.parseInt(req.getParameter("phanquyen"));
+
             Connection conn = MyUtils.getStoredConnection(req);
             //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
             Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-]{0,25}$");
@@ -66,7 +66,7 @@ public class ThanhVienServlet extends HttpServlet {
             Pattern soDienThoaiPattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
             //Check email
 
-            Pattern emailPattern = Pattern.compile("^[a-zA-Z][a-zA-Z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$");
+            Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
 
             Matcher usernameMatch = userNamePattern.matcher(tenDangNhap);
             Matcher passwordMatch = passwordPattern.matcher(matKhau);
@@ -112,7 +112,7 @@ public class ThanhVienServlet extends HttpServlet {
                             System.out.println("Không khớp mật khẩu");
                         }
                         if (isWrongPassword == false) {
-                            boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maTenQuyen));
+                            boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maPhanQuyen));
                             System.out.println(isOk);
                             if (isOk) {
                                 isFailedRequest = false;
@@ -187,11 +187,11 @@ public class ThanhVienServlet extends HttpServlet {
 
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-        System.out.println("NÔNNONOO");
+  
 
         req.setAttribute("listAllThanhVien", listAllThanhVien);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
-        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
+        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);
 
     }
 
@@ -202,15 +202,29 @@ public class ThanhVienServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(req);
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel = ThanhVienModelWithTenQuyen.getAllThanhVienWithTenQuyen(conn);
+
+      
+      /* Conflict*/
+      
         for(int i=0;i<listAllThanhVienWithModel.size();i++)
         {
             System.out.println(listAllThanhVienWithModel.get(i).getTenPhanQuyen());
         }
         List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel1=null; 
         req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel1);
+ 
+       /*
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+        */ 
+      
+            /* Conflict*/
+
+      
+      
+      
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
 
-        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
+        req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);
     }
 
 }

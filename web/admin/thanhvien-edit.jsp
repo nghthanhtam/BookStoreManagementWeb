@@ -115,7 +115,7 @@
                       </div>
                         <div class="ln_solid"></div>
                       <div class="form-group">
-                        <div class="col-md-12 col-sm-6 col-xs-12 col-md-offset-3">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <a  href="${contextPath}/admin/thanhvien" class="btn btn-primary">Cancel</a>
                           <button type="submit" class="btn btn-success" name="submit" value="capnhat">Submit</button>
                         </div>
