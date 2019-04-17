@@ -182,8 +182,9 @@ public class PhieuChiModel {
         String sql = "SELECT * FROM phieuchi WHERE maphieuchi = ?";
         PreparedStatement pstm = conn.prepareStatement(sql); //cau lenh sql duoc compile va save trong 1 
         //doi tuong PreparedStatement                    
+        
         pstm.setInt(1, maphieuchi);
-        //pstm.setString(1, "t%");
+   
         ResultSet rs = pstm.executeQuery(); //thuc hien truy van
 
         if (rs.next()) {
@@ -196,6 +197,7 @@ public class PhieuChiModel {
                     rs.getString("ghichu"));
             return phieuChiModel;
         }
+  
         return null;
     }
 
