@@ -6,23 +6,14 @@
 package Controller;
 
 import Model.MessagesModel;
-import Model.NhaCungCapModel;
-import Model.PhanQuyenModel;
 import Model.SachModel;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
-import static com.oracle.jrockit.jfr.ContentType.Bytes;
-import com.sun.xml.bind.v2.util.ByteArrayOutputStreamEx;
-import com.sun.xml.ws.util.StreamUtils;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +21,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +28,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import sun.misc.IOUtils;
 
 /**
  *

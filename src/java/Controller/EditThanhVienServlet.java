@@ -65,6 +65,8 @@ public class EditThanhVienServlet extends HttpServlet {
             //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
             Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-\\.]{0,14}$");
             //Check pass
+            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,30}$");
+
              //Check sdt
             Pattern soDienThoaiPattern = Pattern.compile(".*\\D.*");// check so dien thoai co hợp lệ hay không
             Pattern soDienThoaiPattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
@@ -75,7 +77,7 @@ public class EditThanhVienServlet extends HttpServlet {
             Matcher usernameMatch = userNamePattern.matcher(tenDangNhap);
              Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
             Matcher emailMatch = emailPattern.matcher(email);
- 
+            Matcher passwordMatch = passwordPattern.matcher(matKhau);
             try {
 
 

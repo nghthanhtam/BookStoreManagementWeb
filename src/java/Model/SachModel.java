@@ -32,7 +32,7 @@ public class SachModel {
     private int namXuatBan;
     private double giaBan;
     private String moTa; 
-    private String hinhAnh;     
+    private String anhDaiDien;     
     private int soLuongTon;        
     private String tenTacGia; 
     private int phanTramGiamGia;
@@ -98,11 +98,11 @@ public class SachModel {
 
 
     public String getAnhDaiDien() {
-        return anhdaidien;
+        return anhDaiDien;
     }
 
     public void settAnhDaiDien(String anhdaidien) {
-        this.anhdaidien = anhdaidien;
+        this.anhDaiDien = anhdaidien;
     }
 
     public int getSoLuongTon() {
@@ -155,7 +155,7 @@ public class SachModel {
 
         
     public SachModel(int masach, int matheloai, String tensach, String nhaxuatban, int namxuatban, double giaban,
-            String mota, String hinhanh, int soluongton, String tentacgia) {
+            String mota, String anhDaiDien, int soluongton, String tentacgia) {
         this.maSach = masach;
         this.maTheLoai = matheloai;
         this.tenSach = tensach;
@@ -163,7 +163,7 @@ public class SachModel {
         this.namXuatBan = namxuatban;
         this.giaBan = giaban;
         this.moTa = mota;
-        this.hinhAnh = hinhanh;
+        this.anhDaiDien = anhDaiDien;
         this.soLuongTon = soluongton;
         this.tenTacGia = tentacgia;
     }
@@ -181,7 +181,7 @@ public class SachModel {
         this.namXuatBan = namxuatban;
         this.giaBan = giaban;
         this.moTa = mota;
-        this.hinhAnh = hinhanh;
+        this.anhDaiDien = anhDaiDien;
         this.soLuongTon = soluongton;
         this.tenTacGia = tentacgia;
         this.phanTramGiamGia=phantramgiamgia;
@@ -283,7 +283,7 @@ public class SachModel {
                 //here we're letting the JDBC driver
                 //create a blob object based on the
                 //input stream that contains the data of the file
-                pstm.setString(7,sach.getHinhAnh());
+                pstm.setString(7,sach.getAnhDaiDien());
             //}
             
             pstm.setInt(8, sach.getSoLuongTon());
@@ -371,7 +371,7 @@ public class SachModel {
             pstm.setString(6, sach.getMoTa());
             if(updateAnh){
                 
-            pstm.setString(7, sach.getHinhAnh());
+            pstm.setString(7, sach.getAnhDaiDien());
             pstm.setInt(8, sach.getSoLuongTon());
             pstm.setString(9, sach.getTenTacGia());
             pstm.setInt(10, sach.getPhanTramGiamGia());

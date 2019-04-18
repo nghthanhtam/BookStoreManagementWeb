@@ -45,7 +45,7 @@ public class AjaxTimTenTacGiaServlet extends HttpServlet {
         try {
             List<AjaxModel> listAjaxTenTacGiaModel  = SachModel.FindTenTacGia(conn, tenTacGia);
             for (AjaxModel x : listAjaxTenTacGiaModel) {
-            System.out.println(x.getLabel1());
+            System.out.println(x.getLabel());
             }
             out.print(gson.toJson(listAjaxTenTacGiaModel));
         } catch (SQLException ex) {
