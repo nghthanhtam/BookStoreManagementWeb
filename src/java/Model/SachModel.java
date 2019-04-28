@@ -35,7 +35,7 @@ public class SachModel {
     private String anhDaiDien;     
     private int soLuongTon;        
     private String tenTacGia; 
-    private int phanTramGiamGia;
+    private double phanTramGiamGia;
     private Date ngayBatDauGiamGia;
     private Date ngayKetThucGiamGia;
     private int trangThai;
@@ -121,11 +121,11 @@ public class SachModel {
         this.tenTacGia = tenTacGia;
     }
 
-    public int getPhanTramGiamGia() {
+    public double getPhanTramGiamGia() {
         return phanTramGiamGia;
     }
 
-    public void setPhanTramGiamGia(int phanTramGiamGia) {
+    public void setPhanTramGiamGia(double phanTramGiamGia) {
         this.phanTramGiamGia = phanTramGiamGia;
     }
 
@@ -153,26 +153,10 @@ public class SachModel {
         this.trangThai = trangThai;
     }
 
-        
-    public SachModel(int masach, int matheloai, String tensach, String nhaxuatban, int namxuatban, double giaban,
-            String mota, String anhDaiDien, int soluongton, String tentacgia) {
-        this.maSach = masach;
-        this.maTheLoai = matheloai;
-        this.tenSach = tensach;
-        this.nhaXuatBan = nhaxuatban;
-        this.namXuatBan = namxuatban;
-        this.giaBan = giaban;
-        this.moTa = mota;
-        this.anhDaiDien = anhDaiDien;
-        this.soLuongTon = soluongton;
-        this.tenTacGia = tentacgia;
-    }
-
-    
     public SachModel(int masach, int matheloai, String tensach,
             String nhaxuatban, int namxuatban, double giaban,
-            String mota, String hinhanh, int soluongton, 
-            String tentacgia,int phantramgiamgia, 
+            String mota, String anhdaidien, int soluongton, 
+            String tentacgia,Double phantramgiamgia, 
             Date ngaybatdaugiamgia, Date ngayketthucgiamgia, int trangthai) {
         this.maSach = masach;
         this.maTheLoai = matheloai;
@@ -181,7 +165,7 @@ public class SachModel {
         this.namXuatBan = namxuatban;
         this.giaBan = giaban;
         this.moTa = mota;
-        this.anhDaiDien = anhDaiDien;
+        this.anhDaiDien = anhdaidien;
         this.soLuongTon = soluongton;
         this.tenTacGia = tentacgia;
         this.phanTramGiamGia=phantramgiamgia;
@@ -215,7 +199,11 @@ public class SachModel {
                     rs.getString("mota"),
                     rs.getString("anhdaidien"),
                     Integer.parseInt(rs.getString("soluongton")), 
-                    rs.getString("tentacgia"));
+                    rs.getString("tentacgia"),
+                    Double.parseDouble(rs.getString("phantramgiamgia")), 
+                    rs.getDate("ngaybatdaugiamgia"),
+                    rs.getDate("ngayketthucgiamgia"),
+                    Integer.parseInt(rs.getString("trangthai")));
          
          
              return sach; 
@@ -250,7 +238,7 @@ public class SachModel {
                         rs.getString("anhdaidien"),
                         Integer.parseInt(rs.getString("soluongton")),
                         rs.getString("tentacgia"),
-                        Integer.parseInt(rs.getString("phantramgiamgia")),
+                        Double.parseDouble(rs.getString("phantramgiamgia")),
                         rs.getDate("ngaybatdaugiamgia"),
                         rs.getDate("ngayketthucgiamgia"), 
                         Integer.parseInt(rs.getString("trangthai")));
@@ -277,18 +265,12 @@ public class SachModel {
             pstm.setString(3, sach.getNhaXuatBan());
             pstm.setInt(4, sach.getNamXuatBan());
             pstm.setDouble(5, sach.getGiaBan());
-            pstm.setString(6, sach.getMoTa());
-              //if (sach.getHinhanh() != null) {
-                //files are treated as BLOB objects in database
-                //here we're letting the JDBC driver
-                //create a blob object based on the
-                //input stream that contains the data of the file
-                pstm.setString(7,sach.getAnhDaiDien());
-            //}
+            pstm.setString(6, sach.getMoTa()); 
+            pstm.setString(7,sach.getAnhDaiDien()); 
             
             pstm.setInt(8, sach.getSoLuongTon());
             pstm.setString(9, sach.getTenTacGia());
-            pstm.setInt(10, sach.getPhanTramGiamGia());
+            pstm.setDouble(10, sach.getPhanTramGiamGia());
             pstm.setDate(11, sach.getNgayBatDauGiamGia());
             pstm.setDate(12, sach.getNgayKetThucGiamGia());
             pstm.setInt(13, sach.getTrangThai());
@@ -326,7 +308,7 @@ public class SachModel {
                         rs.getString("anhdaidien"),
                         Integer.parseInt(rs.getString("soluongton")),
                         rs.getString("tentacgia"),
-                        Integer.parseInt(rs.getString("phantramgiamgia")),
+                        Double.parseDouble(rs.getString("phantramgiamgia")),
                         rs.getDate("ngaybatdaugiamgia"),
                         rs.getDate("ngayketthucgiamgia"), 
                         Integer.parseInt(rs.getString("trangthai")));
@@ -340,27 +322,27 @@ public class SachModel {
         return listSach;
     }
 
-     public static boolean UpdateSach(Connection conn,SachModel sach, Boolean updateAnh)throws SQLException {
-                        
-         int count = 0;
+     public static boolean UpdateSach(Connection conn,SachModel sach)throws SQLException {
+                   
+        int count = 0;
         try {
-            String sql;
-            if(updateAnh){
-            sql = "UPDATE sach SET matheloai = ?,tensach=?,nhaxuatban=?,"
-                    + "namxuatban=?, giaban = ?, mota = ?, "
-                    + "anhdaidien = ?, soluongton =?,"
-                    + "tentacgia = ?, phantramgiamgia =?,"
-                    + "ngaybatdaugiamgia = ?, ngayketthucgiamgia =?,"
-                    + "trangthai = ? WHERE masach = ?";
-            }
-            else{
-                sql = "UPDATE sach SET matheloai = ?,tensach=?,nhaxuatban=?,"
-                    + "namxuatban=?, giaban = ?, mota = ?, "
+            String sql = "UPDATE sach SET "
+                    + "matheloai = ?,"
+                    + "tensach=?,"
+                    + "nhaxuatban=?,"
+                    + "namxuatban=?, "
+                    + "giaban = ?, "
+                    + "mota = ?, "
+                    + "anhdaidien = ?, "
                     + "soluongton =?,"
-                    + "tentacgia = ?, phantramgiamgia =?,"
-                    + "ngaybatdaugiamgia = ?, ngayketthucgiamgia =?,"
-                    + "trangthai = ? WHERE masach = ?";
-            }
+                    + "tentacgia = ?, "
+                    + "phantramgiamgia =?,"
+                    + "ngaybatdaugiamgia = ?, "
+                    + "ngayketthucgiamgia =?,"
+                    + "trangthai = ? "
+                    + "WHERE masach = ?";
+         
+        
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, sach.getMaTheLoai());
@@ -369,36 +351,23 @@ public class SachModel {
             pstm.setInt(4, sach.getNamXuatBan());
             pstm.setDouble(5, sach.getGiaBan());
             pstm.setString(6, sach.getMoTa());
-            if(updateAnh){
-                
             pstm.setString(7, sach.getAnhDaiDien());
             pstm.setInt(8, sach.getSoLuongTon());
             pstm.setString(9, sach.getTenTacGia());
-            pstm.setInt(10, sach.getPhanTramGiamGia());
+            pstm.setDouble(10, sach.getPhanTramGiamGia());
             pstm.setDate(11, sach.getNgayBatDauGiamGia());
             pstm.setDate(12, sach.getNgayKetThucGiamGia());
             pstm.setInt(13, sach.getTrangThai());
             pstm.setInt(14, sach.getMaSach());
 
-            }
-            else{
-                 pstm.setInt(7, sach.getSoLuongTon());
-            pstm.setString(8, sach.getTenTacGia());
-            pstm.setInt(9, sach.getPhanTramGiamGia());
-            pstm.setDate(10, sach.getNgayBatDauGiamGia());
-            pstm.setDate(11, sach.getNgayKetThucGiamGia());
-            pstm.setInt(12, sach.getTrangThai());
-            pstm.setInt(13, sach.getMaSach());
-            }
-            
                 
             count = pstm.executeUpdate();
+            
         } catch (SQLException ex) {
             count = 0;
             ex.printStackTrace();
         }
-        return count > 0;
-    
+        return count > 0; 
      }
 
      

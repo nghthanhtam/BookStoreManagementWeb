@@ -210,8 +210,7 @@ public class ThanhVienServlet extends HttpServlet {
         {
             System.out.println(listAllThanhVienWithModel.get(i).getTenPhanQuyen());
         }
-        List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel1=null; 
-        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel1);
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
  
        /*
         req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);

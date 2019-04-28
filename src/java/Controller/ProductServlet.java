@@ -123,13 +123,7 @@ public class ProductServlet extends HttpServlet {
             try {
                 SachModel sach = SachModel.FindByMaSach(conn, masach);
                 if (sach != null) { // tìm thấy theo mã sách
-
-                    req.setAttribute("txtTenSach", sach.getTenSach());
-                    req.setAttribute("soLuongTon", sach.getSoLuongTon());
-                    req.setAttribute("giaBan", sach.getGiaBan());
-                    req.setAttribute("txtTenTacGia", sach.getTenTacGia());
-                    req.setAttribute("txtTitle", sach.getTenSach());
-
+                    req.setAttribute("sach", sach);  
                     req.getRequestDispatcher("product-page.jsp").forward(req, resp);
 
                 } else {

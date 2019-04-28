@@ -132,7 +132,7 @@
                         </div>
                       </div>
                              <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh địa diện</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh đại diện</label>
                         <div class="col-md-3 col-sm-9 col-xs-12">
                             
                         <input type="file" name="anhdaidien" accept="image/*" value="select images..."/>
@@ -170,7 +170,7 @@
                               <div class="controls">
                                 <div class="input-prepend input-group">
                                   <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                  <input type="text" style="width: 200px" name="khoangthoigian" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016">
+                                  <input type="text" style="width: 200px" name="khoangthoigiangiamgia" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016">
                                 </div>
                               </div>
                             </div>

@@ -94,11 +94,13 @@ public class DangKyThanhVienServlet extends HttpServlet {
                 
                 boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, PhanQuyenModel.ATT_MAPHANQUYEN_THANHVIEN));
                 if (isOk)
+                {
                     noiDungThongBao = "Đăng ký thành viên mới hoàn tất!";
+                    isFailedRequest = false;
+                } 
                 else
                 {
-                    noiDungThongBao = "Yêu cầu của bạn không thể xử lý!";
-                    isFailedRequest = true;
+                    throw new Exception("Yêu cầu của bạn không thể xử lý!");
                 }
                      
             } catch (Exception ex) {

@@ -12,10 +12,10 @@
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
+				<li><a href="${contextPath}/">Trang chủ</a></li>
 				<li><a href="#">Products</a></li>
 				<li><a href="#">Category</a></li>
-				<li class="active">Product Name Goes Here</li>
+				<li class="active">${sach.getTenSach()}</li>
 			</ul>
 		</div>
 	</div>
@@ -32,18 +32,12 @@
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
-								<img src="./img/main-product01.jpg" alt="">
+								<img src="${contextPath}/${sach.getAnhDaiDien()}" alt="">
 							</div>
-							<div class="product-view">
-								<img src="./img/main-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product04.jpg" alt="">
-							</div>
+							 
 						</div>
+                                            
+                                            <!--
 						<div id="product-view">
 							<div class="product-view">
 								<img src="./img/thumb-product01.jpg" alt="">
@@ -57,7 +51,7 @@
 							<div class="product-view">
 								<img src="./img/thumb-product04.jpg" alt="">
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
@@ -65,8 +59,8 @@
 								<span>New</span>
 								<span class="sale">-20%</span>
 							</div>
-							<h2 class="product-name">${ txtTenSach }</h2>
-							<h3 class="product-price">${ giaBan } </h3>
+							<h2 class="product-name">${ sach.getTenSach() }</h2>
+							<h3 class="product-price">${ sach.getGiaBan() } </h3>
                                                         
                                                        <!--<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>-->
 							<div>
@@ -83,12 +77,12 @@
                                                             <strong>Hàng tồn: </strong>
                                                                                                                
                                                              
-                                                               <c:if test="${soLuongTon eq 0}">
+                                                               <c:if test="${sach.getSoLuongTon() eq 0}">
                                                                  hết hàng<br />
                                                                </c:if>    
                                                             
                                                         </p>
-							<p><strong>Tác giả: </strong> ${ txtTenTacGia }</p>
+							<p><strong>Tác giả: </strong> ${ sach.getTenTacGia() }</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
 								dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 							<div class="product-options">
@@ -124,14 +118,13 @@
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab1">Details</a></li>
+								<li class="active"><a data-toggle="tab" href="#tab1">Mô tả sản phẩm</a></li>
+								<!--<li><a data-toggle="tab" href="#tab1">Details</a></li>-->
 								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
 							</ul>
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-										irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+									<p>${ sach.getMoTa() }</p>
 								</div>
 								<div id="tab2" class="tab-pane fade in">
 
