@@ -116,7 +116,13 @@
                   <li><a href="${contextPath}/admin/phiship"><i class="fa fa-money"></i> Phí ship</a></li>
                   <li><a href="${contextPath}/admin/phanquyen"><i class="fa fa-flash"></i> Phân quyền</a></li>
                   <li><a href="${contextPath}/admin/phieuchi"><i class="fa fa-wpforms"></i> Phiếu chi</a></li>
-
+                  
+                  <li><a><i class="fa fa-book"></i> Sách <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="${contextPath}/admin/sach">Danh sách</a></li>
+                      <li><a href="${contextPath}/admin/sach/add">Thêm mới</a></li>
+                    </ul>
+                  </li> 
                   
                   
                   
