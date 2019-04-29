@@ -22,20 +22,17 @@ import java.util.List;
  */
 public class SachModel {
 
-    
-    
-    
     private int maSach;
-    private int maTheLoai;    
+    private int maTheLoai;
     private String tenSach;
     private String nhaXuatBan;
     private int namXuatBan;
     private double giaBan;
-    private String moTa; 
-    private String anhDaiDien;     
-    private int soLuongTon;        
-    private String tenTacGia; 
-    private double phanTramGiamGia;
+    private String moTa;
+    private String anhDaiDien;
+    private int soLuongTon;
+    private String tenTacGia;
+    private Double phanTramGiamGia;
     private Date ngayBatDauGiamGia;
     private Date ngayKetThucGiamGia;
     private int trangThai;
@@ -96,7 +93,6 @@ public class SachModel {
         this.moTa = moTa;
     }
 
-
     public String getAnhDaiDien() {
         return anhDaiDien;
     }
@@ -121,11 +117,11 @@ public class SachModel {
         this.tenTacGia = tenTacGia;
     }
 
-    public double getPhanTramGiamGia() {
+    public Double getPhanTramGiamGia() {
         return phanTramGiamGia;
     }
 
-    public void setPhanTramGiamGia(double phanTramGiamGia) {
+    public void setPhanTramGiamGia(Double phanTramGiamGia) {
         this.phanTramGiamGia = phanTramGiamGia;
     }
 
@@ -155,8 +151,8 @@ public class SachModel {
 
     public SachModel(int masach, int matheloai, String tensach,
             String nhaxuatban, int namxuatban, double giaban,
-            String mota, String anhdaidien, int soluongton, 
-            String tentacgia,Double phantramgiamgia, 
+            String mota, String anhdaidien, int soluongton,
+            String tentacgia, Double phantramgiamgia,
             Date ngaybatdaugiamgia, Date ngayketthucgiamgia, int trangthai) {
         this.maSach = masach;
         this.maTheLoai = matheloai;
@@ -168,89 +164,79 @@ public class SachModel {
         this.anhDaiDien = anhdaidien;
         this.soLuongTon = soluongton;
         this.tenTacGia = tentacgia;
-        this.phanTramGiamGia=phantramgiamgia;
+        this.phanTramGiamGia = phantramgiamgia;
         this.ngayBatDauGiamGia = ngaybatdaugiamgia;
         this.ngayKetThucGiamGia = ngayketthucgiamgia;
-        this.trangThai= trangthai;
+        this.trangThai = trangthai;
     }
 
-    
-    public static SachModel FindByMaSach(Connection conn, int masach) throws SQLException
-    {
-              
-        
+    public static SachModel FindByMaSach(Connection conn, int masach) throws SQLException {
+
         String sql = "SELECT * FROM sach WHERE masach = ? ";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        pstm.setInt(1, masach);
-        
-        ResultSet rs = pstm.executeQuery();
-                     
 
-        if (rs.next()) {  
+        pstm.setInt(1, masach);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
             SachModel sach = new SachModel(
-                    Integer.parseInt(rs.getString("masach")), 
-                    Integer.parseInt(rs.getString("matheloai")), 
-                    rs.getString("tensach") ,
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+            return sach;
+        }
+        return null;
+
+    }
+
+    public static SachModel FindFullByMaSach(Connection conn, int masach) throws SQLException {
+
+        String sql = "SELECT * FROM sach WHERE masach = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+
+        pstm.setInt(1, masach);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            SachModel SachModel = new SachModel(
+                    Integer.parseInt(rs.getString("masach")),
+                    Integer.parseInt(rs.getString("matheloai")),
+                    rs.getString("tensach"),
                     rs.getString("nhaxuatban"),
                     Integer.parseInt(rs.getString("namxuatban")),
-                    Double.parseDouble(rs.getString("giaban")) , 
+                    Double.parseDouble(rs.getString("giaban")),
                     rs.getString("mota"),
                     rs.getString("anhdaidien"),
-                    Integer.parseInt(rs.getString("soluongton")), 
+                    Integer.parseInt(rs.getString("soluongton")),
                     rs.getString("tentacgia"),
-                    Double.parseDouble(rs.getString("phantramgiamgia")), 
+                    Double.parseDouble(rs.getString("phantramgiamgia")),
                     rs.getDate("ngaybatdaugiamgia"),
                     rs.getDate("ngayketthucgiamgia"),
                     Integer.parseInt(rs.getString("trangthai")));
-         
-         
-             return sach; 
+
+            return SachModel;
         }
         return null;
-        
-    }
-    public static SachModel FindFullByMaSach(Connection conn, int masach) throws SQLException
-    {
-              
-        
-        String sql = "SELECT * FROM sach WHERE masach = ? ";
 
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        pstm.setInt(1, masach);
-        
-        ResultSet rs = pstm.executeQuery();
-                     
-
-        if (rs.next()) {  
-             SachModel SachModel = new SachModel(
-    
-                        Integer.parseInt(rs.getString("masach")),
-                        Integer.parseInt(rs.getString("matheloai")),
-                        rs.getString("tensach"),
-                        rs.getString("nhaxuatban"),
-                        Integer.parseInt(rs.getString("namxuatban")),
-                        Double.parseDouble(rs.getString("giaban")),
-                        rs.getString("mota"),
-                        
-                        rs.getString("anhdaidien"),
-                        Integer.parseInt(rs.getString("soluongton")),
-                        rs.getString("tentacgia"),
-                        Double.parseDouble(rs.getString("phantramgiamgia")),
-                        rs.getDate("ngaybatdaugiamgia"),
-                        rs.getDate("ngayketthucgiamgia"), 
-                        Integer.parseInt(rs.getString("trangthai")));
-         
-             return SachModel; 
-        }
-        return null;
-        
     }
-    
-    
-     public static boolean InsertNewSach(Connection conn, SachModel sach )
+
+    public static boolean InsertNewSach(Connection conn, SachModel sach)
             throws SQLException {
         int count = 0;
         try {
@@ -265,17 +251,32 @@ public class SachModel {
             pstm.setString(3, sach.getNhaXuatBan());
             pstm.setInt(4, sach.getNamXuatBan());
             pstm.setDouble(5, sach.getGiaBan());
-            pstm.setString(6, sach.getMoTa()); 
-            pstm.setString(7,sach.getAnhDaiDien()); 
-            
+            pstm.setString(6, sach.getMoTa());
+            pstm.setString(7, sach.getAnhDaiDien());
+
             pstm.setInt(8, sach.getSoLuongTon());
             pstm.setString(9, sach.getTenTacGia());
-            pstm.setDouble(10, sach.getPhanTramGiamGia());
-            pstm.setDate(11, sach.getNgayBatDauGiamGia());
-            pstm.setDate(12, sach.getNgayKetThucGiamGia());
+
+            if (sach.getPhanTramGiamGia() == null) {
+                pstm.setNull(10, java.sql.Types.DOUBLE);
+            } else {
+                pstm.setDouble(10, sach.getPhanTramGiamGia());
+            }
+
+            if (sach.getNgayBatDauGiamGia() == null) {
+                pstm.setNull(11, java.sql.Types.DATE);
+            } else {
+                pstm.setDate(11, sach.getNgayBatDauGiamGia());
+            }
+
+            if (sach.getNgayKetThucGiamGia() == null) {
+                pstm.setNull(12, java.sql.Types.DATE);
+            } else {
+                pstm.setDate(12, sach.getNgayKetThucGiamGia());
+            }
+
             pstm.setInt(13, sach.getTrangThai());
 
-            
             count = pstm.executeUpdate();
         } catch (SQLException ex) {
 
@@ -284,8 +285,8 @@ public class SachModel {
         }
         return count > 0;
     }
-     
-     public static List<SachModel>getAllSach(Connection conn) {
+
+    public static List<SachModel> getAllSach(Connection conn) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
         String sql = "SELECT * FROM sach";
@@ -294,25 +295,23 @@ public class SachModel {
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
-                        
-                        SachModel SachModel = new SachModel(
-    
-                        Integer.parseInt(rs.getString("masach")),
-                        Integer.parseInt(rs.getString("matheloai")),
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
                         rs.getString("tensach"),
                         rs.getString("nhaxuatban"),
-                        Integer.parseInt(rs.getString("namxuatban")),
-                        Double.parseDouble(rs.getString("giaban")),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
                         rs.getString("mota"),
-                        
                         rs.getString("anhdaidien"),
-                        Integer.parseInt(rs.getString("soluongton")),
+                        rs.getInt("soluongton"),
                         rs.getString("tentacgia"),
-                        Double.parseDouble(rs.getString("phantramgiamgia")),
+                        rs.getDouble("phantramgiamgia"),
                         rs.getDate("ngaybatdaugiamgia"),
-                        rs.getDate("ngayketthucgiamgia"), 
-                        Integer.parseInt(rs.getString("trangthai")));
-                      
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
                 listSach.add(SachModel);
             }
 
@@ -322,8 +321,8 @@ public class SachModel {
         return listSach;
     }
 
-     public static boolean UpdateSach(Connection conn,SachModel sach)throws SQLException {
-                   
+    public static boolean UpdateSach(Connection conn, SachModel sach) throws SQLException {
+
         int count = 0;
         try {
             String sql = "UPDATE sach SET "
@@ -341,8 +340,7 @@ public class SachModel {
                     + "ngayketthucgiamgia =?,"
                     + "trangthai = ? "
                     + "WHERE masach = ?";
-         
-        
+
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, sach.getMaTheLoai());
@@ -360,19 +358,16 @@ public class SachModel {
             pstm.setInt(13, sach.getTrangThai());
             pstm.setInt(14, sach.getMaSach());
 
-                
             count = pstm.executeUpdate();
-            
+
         } catch (SQLException ex) {
             count = 0;
             ex.printStackTrace();
         }
-        return count > 0; 
-     }
+        return count > 0;
+    }
 
-     
-     
-      public static List<AjaxModel> FindTenTacGia(Connection conn, String tenTacGia) throws SQLException {
+    public static List<AjaxModel> FindTenTacGia(Connection conn, String tenTacGia) throws SQLException {
 
         List<AjaxModel> listTenTacGia = new ArrayList<AjaxModel>();
 
@@ -380,12 +375,12 @@ public class SachModel {
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
-            pstm.setString(1 , "%"+tenTacGia+"%"); // tìm bằng tên tác giả
+            pstm.setString(1, "%" + tenTacGia + "%"); // tìm bằng tên tác giả
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
-                AjaxModel ajaxSach = new AjaxModel( 0 ,rs.getString("tentacgia") );
+                AjaxModel ajaxSach = new AjaxModel(0, rs.getString("tentacgia"));
 
                 listTenTacGia.add(ajaxSach);
             }
@@ -397,9 +392,8 @@ public class SachModel {
         return listTenTacGia;
 
     }
-     
-      
-      public static List<AjaxModel> FindNhaXuatBan(Connection conn, String nhaXuatBan) throws SQLException {
+
+    public static List<AjaxModel> FindNhaXuatBan(Connection conn, String nhaXuatBan) throws SQLException {
 
         List<AjaxModel> listTenNhaXuatBan = new ArrayList<AjaxModel>();
 
@@ -407,12 +401,12 @@ public class SachModel {
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
-            pstm.setString(1 , "%"+nhaXuatBan+"%"); // tìm bằng tên tác giả
+            pstm.setString(1, "%" + nhaXuatBan + "%"); // tìm bằng tên tác giả
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
-                AjaxModel ajaxSach = new AjaxModel( 0 ,rs.getString("nhaxuatban") );
+                AjaxModel ajaxSach = new AjaxModel(0, rs.getString("nhaxuatban"));
 
                 listTenNhaXuatBan.add(ajaxSach);
             }
@@ -424,5 +418,5 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
-     
+
 }

@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AjaxTimNhaXuatBanServlet", urlPatterns = {"/admin/sach/add/ajaxtimnhaxuatbansach"})
 public class AjaxTimNhaXuatBanServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-
     public AjaxTimNhaXuatBanServlet() {
         super();
     }

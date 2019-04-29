@@ -32,11 +32,11 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 @WebServlet(name = "AddSachServlet", urlPatterns = {"/admin/sach/add"})
 public class AddSachServlet extends HttpServlet {
-  
+
     public AddSachServlet() {
         super();
     }
- 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -57,14 +57,19 @@ public class AddSachServlet extends HttpServlet {
                 String moTa = (String) req.getParameter("mota");
                 String dirImage = MyUtils.uploadFile(req, "anhdaidien");
                 String tenTacGia = (String) req.getParameter("tentacgia");
-                Double phanTramGiamGia = Double.parseDouble(req.getParameter("phantramgiamgia"));
-                String khoangThoiGianGiamGia = (String) req.getParameter("khoangthoigiangiamgia");
                 int trangThai = Integer.parseInt(req.getParameter("trangthai"));
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-                java.sql.Date ngayBatDauGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(0, 10)).getTime());
-                java.sql.Date ngayKetThucGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(13)).getTime());
+                Double phanTramGiamGia = null;
+                java.sql.Date ngayBatDauGiamGia = null;
+                java.sql.Date ngayKetThucGiamGia = null;
+                
+                if (req.getParameter("phantramgiamgia") != null && !req.getParameter("phantramgiamgia").equals("")) {
+                    phanTramGiamGia = Double.parseDouble(req.getParameter("phantramgiamgia"));
+                    String khoangThoiGianGiamGia = (String) req.getParameter("khoangthoigiangiamgia");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    ngayBatDauGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(0, 10)).getTime());
+                    ngayKetThucGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(13)).getTime());
+                }
 
                 boolean isOk = SachModel.InsertNewSach(conn, new SachModel(0, maTheLoai, tenSach,
                         nhaXuatBan, namXuatBan, giaBan, moTa, dirImage, 0, tenTacGia,

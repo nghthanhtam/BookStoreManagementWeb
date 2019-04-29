@@ -32,7 +32,6 @@ public class DeleteNhaCungCapServlet extends HttpServlet {
         boolean result = false;
         try {
             int maNhaCungCap = Integer.parseInt((String) req.getParameter("id"));
-            System.out.println("XA^XAXAXAXAXAX");
             result = NhaCungCapModel.DeleteNhaCungCapById(conn, maNhaCungCap);
 
         } catch (Exception ex) {
@@ -50,7 +49,6 @@ public class DeleteNhaCungCapServlet extends HttpServlet {
 
         /* Hiển thị view */
         req.setAttribute("txtTitle", "Nhà cung cấp");
-        System.out.println("XA^xázd");
         List<NhaCungCapModel> listAllNhaCungCap = NhaCungCapModel.getAllNhaCungCap(conn);
         req.setAttribute("listAllNhaCungCap", listAllNhaCungCap);
         req.getRequestDispatcher("/admin/nhacungcap.jsp").forward(req, resp);

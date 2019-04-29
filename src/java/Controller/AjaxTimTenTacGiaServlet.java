@@ -30,8 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/admin/sach/add/ajaxtimtacgiasach"})
 public class AjaxTimTenTacGiaServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-
     public AjaxTimTenTacGiaServlet() {
         super();
     }
