@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;;
 import javax.servlet.ServletException;  
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,8 @@ public class MyUtils {
     public static final String ATT_NAME_CONNECTION = "ATTRIBUTE_FOR_CONNECTION";
     private static final String ATT_NAME_USER_NAME = "ATTRIBUTE_FOR_STORE_USER_NAME_IN_COOKIE";
     private static final String ATT_NAME_UPLOAD_DIR = "Upload";
-    
+    public static final String ATT_NAME_AUTO_REDIRECT = "autoRedirect";
+
     public static void storeConnection(ServletRequest request, Connection conn) {
         request.setAttribute(ATT_NAME_CONNECTION, conn);
     }
@@ -103,7 +105,8 @@ public class MyUtils {
         String fileName="";
         try{
             Part filePart = request.getPart(inputName);
-            fileName = (String) getFileName(filePart);
+            Date date= new Date(); 
+            fileName = date.getTime()+ "_" + getFileName(filePart);
             String applicationPath = request.getServletContext().getRealPath("");
             String basePath = applicationPath + File.separator + ATT_NAME_UPLOAD_DIR + File.separator;
             InputStream inputStream = null;

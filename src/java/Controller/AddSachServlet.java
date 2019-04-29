@@ -29,13 +29,11 @@ import javax.servlet.http.Part;
  *
  * @author Trung
  */
-@MultipartConfig(maxFileSize = 16177215)
+@MultipartConfig(maxFileSize = 100000000)
+
 @WebServlet(name = "AddSachServlet", urlPatterns = {"/admin/sach/add"})
 public class AddSachServlet extends HttpServlet {
-
-    public AddSachServlet() {
-        super();
-    }
+ 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -63,7 +61,11 @@ public class AddSachServlet extends HttpServlet {
                 java.sql.Date ngayBatDauGiamGia = null;
                 java.sql.Date ngayKetThucGiamGia = null;
                 
-                if (req.getParameter("phantramgiamgia") != null && !req.getParameter("phantramgiamgia").equals("")) {
+                if (req.getParameter("phantramgiamgia") != null &&
+                        (!req.getParameter("phantramgiamgia").equals("") &&
+                        Double.parseDouble(req.getParameter("phantramgiamgia")) > 0 // phần trăm giảm giá lớn hơn 0                        
+                        
+                        )) {
                     phanTramGiamGia = Double.parseDouble(req.getParameter("phantramgiamgia"));
                     String khoangThoiGianGiamGia = (String) req.getParameter("khoangthoigiangiamgia");
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -95,11 +97,11 @@ public class AddSachServlet extends HttpServlet {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         }
 
-        req.setAttribute("txtTitle", "Sách");
+        req.setAttribute("txtTitle", "sách");
         List<SachModel> listAllSach = SachModel.getAllSach(conn);
         req.setAttribute("listAllSach", listAllSach);
 
-        req.getRequestDispatcher("/admin/sach.jsp").forward(req, resp);;
+        req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);
 
     }
 
@@ -109,8 +111,8 @@ public class AddSachServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(req);
         List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
         req.setAttribute("listAllTheLoai", listAllTheLoai);
-
-        req.getRequestDispatcher("/admin/themsach.jsp").forward(req, resp);
+    req.setAttribute("txtTitle", "Thêm sách");
+        req.getRequestDispatcher("/admin/sach.jsp").forward(req, resp);
     }
 
 }

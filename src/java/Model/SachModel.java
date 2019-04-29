@@ -343,6 +343,7 @@ public class SachModel {
 
             PreparedStatement pstm = conn.prepareStatement(sql);
 
+            
             pstm.setInt(1, sach.getMaTheLoai());
             pstm.setString(2, sach.getTenSach());
             pstm.setString(3, sach.getNhaXuatBan());
@@ -352,11 +353,28 @@ public class SachModel {
             pstm.setString(7, sach.getAnhDaiDien());
             pstm.setInt(8, sach.getSoLuongTon());
             pstm.setString(9, sach.getTenTacGia());
-            pstm.setDouble(10, sach.getPhanTramGiamGia());
-            pstm.setDate(11, sach.getNgayBatDauGiamGia());
-            pstm.setDate(12, sach.getNgayKetThucGiamGia());
+
+            if (sach.getPhanTramGiamGia() == null) {
+                pstm.setNull(10, java.sql.Types.DOUBLE);
+            } else {
+                pstm.setDouble(10, sach.getPhanTramGiamGia());
+            }
+
+            if (sach.getNgayBatDauGiamGia() == null) {
+                pstm.setNull(11, java.sql.Types.DATE);
+            } else {
+                pstm.setDate(11, sach.getNgayBatDauGiamGia());
+            }
+            
+            if (sach.getNgayKetThucGiamGia() == null) {
+                pstm.setNull(12, java.sql.Types.DATE);
+            } else {
+                pstm.setDate(12, sach.getNgayKetThucGiamGia());
+            }
+            
             pstm.setInt(13, sach.getTrangThai());
             pstm.setInt(14, sach.getMaSach());
+           
 
             count = pstm.executeUpdate();
 

@@ -31,6 +31,8 @@ import javax.servlet.http.HttpSession;
  */
 public class AdminFilter implements Filter{
 
+   
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -59,26 +61,19 @@ public class AdminFilter implements Filter{
         ThanhVienModel thanhVien = MyUtils.getLoginedThanhVien(session);
         if (thanhVien != null) // đã đăng nhập
         {
-            /*
-            if (MyUtils.getStoredPhanQuyen(request) == null)
-            {
-                try {
-                        PhanQuyenModel phanQuyenModel = PhanQuyenModel.FindByMaPhanQuyen(conn, thanhVien.getMaPhanQuyen());
-                        MyUtils.storePhanQuyen(session, phanQuyenModel);
-                } catch (SQLException ex) {
-                    Logger.getLogger(AdminFilter.class.getName()).log(Level.SEVERE, null, ex);
-                }   
-            }
-             */
             chain.doFilter(request, response);// vượt qua filter
         }
         else
         {
+            String queryString = "?"+((HttpServletRequest) request).getQueryString();
+            if (queryString.equals("?null"))
+                queryString = "";
+            session.setAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT, uri+queryString);
             ((HttpServletResponse) response).sendRedirect("/admin");
-        }
-
+        } 
     }
 
+    
     @Override
     public void destroy() {
     }
