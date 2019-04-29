@@ -66,12 +66,22 @@ public class AdminServlet extends HttpServlet {
             }
 
             if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau())) {
-                System.out.print("ok");
                 MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
-                req.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-                req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
-            } else {
-                System.out.print("failed");
+                
+ 
+                //String referrer = req.getHeader("referer");
+                
+                
+                HttpSession session = ((HttpServletRequest) req).getSession();
+                String autoRedirect = (String) session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
+                if (autoRedirect!=null)
+                    resp.sendRedirect(autoRedirect);
+                else
+                    req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
+                
+                
+                
+            } else { 
                 req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
                 req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
             }

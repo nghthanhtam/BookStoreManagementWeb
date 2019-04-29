@@ -39,7 +39,7 @@ public class SachServlet extends HttpServlet {
         System.out.println(listAllSach.size());
         req.setAttribute("listAllSach", listAllSach);
 
-        req.getRequestDispatcher("/admin/sach.jsp").forward(req, resp);;
+        req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);;
     }
 
    
