@@ -46,7 +46,7 @@ public class DeleteSachServlet extends HttpServlet {
                 throw new Exception("Yêu cầu của bạn không thể xử lý!");
             }
         } catch (Exception ex) {
-            isFailed = false;
+            isFailed = true;
             noiDungThongBao = ex.getMessage();
             ex.printStackTrace();
         }
