@@ -57,8 +57,14 @@ public class EditSachServlet extends HttpServlet {
                 int namXuatBan = Integer.parseInt(req.getParameter("namxuatban"));
                 Double giaBan = Double.parseDouble(req.getParameter("giaban"));
                 String moTa = (String) req.getParameter("mota");
+                
+                String dirImage = null;
+                Part anhDaiDien = req.getPart("anhdaidien");
 
-                String dirImage = MyUtils.uploadFile(req, "anhdaidien");
+                if (anhDaiDien !=null && anhDaiDien.getSize()>0)
+                {
+                    dirImage = MyUtils.uploadFile(req, "anhdaidien");
+                }   
 
                 String tenTacGia = (String) req.getParameter("tentacgia");
                 int trangThai = Integer.parseInt(req.getParameter("trangthai"));
@@ -77,11 +83,26 @@ public class EditSachServlet extends HttpServlet {
                     ngayBatDauGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(0, 10)).getTime());
                     ngayKetThucGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(13)).getTime());
                 }
-
-                sach = new SachModel(maSach, maTheLoai, tenSach,
+                
+                sach = SachModel.FindByMaSach(conn, maSach);
+                sach.setMaTheLoai(maTheLoai);
+                sach.setTenSach(tenSach);
+                sach.setNhaXuatBan(nhaXuatBan);
+                sach.setNamXuatBan(namXuatBan);
+                sach.setGiaBan(giaBan);
+                sach.setMoTa(moTa);
+                if (dirImage != null && !dirImage.equals(""))
+                    sach.settAnhDaiDien(dirImage);
+                sach.setTenTacGia(tenTacGia);
+                sach.setPhanTramGiamGia(phanTramGiamGia);
+                sach.setNgayBatDauGiamGia(ngayBatDauGiamGia);
+                sach.setNgayKetThucGiamGia(ngayKetThucGiamGia);
+                sach.setTrangThai(trangThai);
+                
+                /*sach = new SachModel(maSach, maTheLoai, tenSach,
                         nhaXuatBan, namXuatBan, giaBan, moTa, dirImage, 0, tenTacGia,
                         phanTramGiamGia, ngayBatDauGiamGia, ngayKetThucGiamGia, trangThai);
-
+*/
                 boolean isOk = SachModel.UpdateSach(conn, sach);
 
                 if (isOk) {
