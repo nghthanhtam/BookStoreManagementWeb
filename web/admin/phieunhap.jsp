@@ -27,31 +27,28 @@
     <script type="text/javascript" src="${contextPath}/admin/appendGrid/jquery.appendGrid-development.js"></script>
 
 
-<!--
-        .appendGrid {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
-        }-->
+    <!--
+            .appendGrid {
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+            }-->
     <style>
 
-.appendGrid-tieu-de-muc-first {
+        .appendGrid-tieu-de-muc-first {
             color: #495057;
             background-color: #e9ecef;
             border-color: #dee2e6;
             vertical-align: bottom;
             border-bottom: 2px solid #dee2e6;
             border-top: 1px solid #dee2e6;
-            padding: 10px;
-            font-weight: bold;
-            font-size: 1.3rem;
-
-
+            padding: 10px; 
+            min-width: 30px;
         } 
-        
-        
+
+
         .appendGrid-tieu-de-muc {
             color: #495057;
             background-color: #e9ecef;
@@ -66,6 +63,46 @@
 
         } 
 
+
+
+        #tblAppendGrid_footer_td button {
+
+            font-family: FontAwesome;
+
+            font-style: normal;
+            font-weight: 400;
+        }
+
+
+        .ui-widget-content input {
+            border-radius: 0;
+            width: 100%;
+            outline: 0;
+            padding: 6px 12px;
+            display: block;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 0px;
+        }
+
+
+        .appendGrid-ui-widget-content-first {
+
+            text-align: center;
+
+        }
+
+
+        .appendGrid-button-last {
+            font-family: FontAwesome !important;
+            font-style: normal;
+            font-weight: 400;
+        }
 
     </style>
 
@@ -118,7 +155,7 @@
         $('#tblAppendGrid').appendGrid('init', {
             //caption: 'My CD Collections',
             //captionTooltip: 'This is my CD collection list!',
-            initRows: 1,
+            initRows: 2,
 
             columns: [
                 {
@@ -168,35 +205,37 @@
                         min: 1
                     }
                 }
-            ],
+            ]
+                    /*
+                     ,
+                     
+                     initData: []
+                     
+                     columns: [
+                     {
+                     name: 'Album', 
+                     display: 'Album', 
+                     type: 'text', 
+                     ctrlAttr: { maxlength: 100 },
+                     
+                     // Make the column resizable
+                     resizable: true, 
+                     ctrlCss: { width: '100%' }, 
+                     displayCss: { 'min-width': '160px' },
+                     
+                     // Customize UI tooltip
+                     displayTooltip: { items: 'td', content: 'You can resize this column!' }
+                     },
+                     { name: 'Artist', display: 'Artist', type: 'ui-autocomplete', ctrlAttr: { maxlength: 100 }, ctrlCss: { width: '100px' }, uiOption: { source: ['Theresa Fu', 'Arashi', 'Show Luo', 'Wonder Girls', 'Kelly Chen']} },
+                     { name: 'Year', display: 'Year', type: 'ui-spinner', ctrlAttr: { maxlength: 4 }, ctrlCss: { width: '40px' }, uiOption: { min: 2000, max: new Date().getFullYear()} },
+                     { name: 'Origin', display: 'Origin', type: 'ui-selectmenu', ctrlOptions: ['Hong Kong', 'Taiwan', 'Japan', 'Korea', 'US', 'Others'] },
+                     { name: 'StockIn', display: 'Stock In', type: 'ui-datepicker', ctrlAttr: { maxlength: 10 }, ctrlCss: { width: '80px' }, uiOption: { dateFormat: 'yy/mm/dd'} },
+                     { name: 'Price', display: 'Price', type: 'text', ctrlAttr: { maxlength: 10, title: 'Please fill in the price!' }, ctrlCss: { width: '50px', 'text-align': 'right' }, value: 0, uiTooltip: { show: true } }
+                     ],
+                     
+                     
+                     */
 
-            /*
-             columns: [
-             {
-             name: 'Album', 
-             display: 'Album', 
-             type: 'text', 
-             ctrlAttr: { maxlength: 100 },
-             
-             // Make the column resizable
-             resizable: true, 
-             ctrlCss: { width: '100%' }, 
-             displayCss: { 'min-width': '160px' },
-             
-             // Customize UI tooltip
-             displayTooltip: { items: 'td', content: 'You can resize this column!' }
-             },
-             { name: 'Artist', display: 'Artist', type: 'ui-autocomplete', ctrlAttr: { maxlength: 100 }, ctrlCss: { width: '100px' }, uiOption: { source: ['Theresa Fu', 'Arashi', 'Show Luo', 'Wonder Girls', 'Kelly Chen']} },
-             { name: 'Year', display: 'Year', type: 'ui-spinner', ctrlAttr: { maxlength: 4 }, ctrlCss: { width: '40px' }, uiOption: { min: 2000, max: new Date().getFullYear()} },
-             { name: 'Origin', display: 'Origin', type: 'ui-selectmenu', ctrlOptions: ['Hong Kong', 'Taiwan', 'Japan', 'Korea', 'US', 'Others'] },
-             { name: 'StockIn', display: 'Stock In', type: 'ui-datepicker', ctrlAttr: { maxlength: 10 }, ctrlCss: { width: '80px' }, uiOption: { dateFormat: 'yy/mm/dd'} },
-             { name: 'Price', display: 'Price', type: 'text', ctrlAttr: { maxlength: 10, title: 'Please fill in the price!' }, ctrlCss: { width: '50px', 'text-align': 'right' }, value: 0, uiTooltip: { show: true } }
-             ],
-             
-             
-             */
-
-            initData: []
         });
     });
 </script>

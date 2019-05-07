@@ -141,12 +141,12 @@
         notSupportMethod: 'Method is not supported by `appendGrid`: '
     };
     var _defaultTextResources = {
-        append: 'Append Row',
-        removeLast: 'Remove Last Row',
-        insert: 'Insert Row Above',
-        remove: 'Remove Current Row',
-        moveUp: 'Move Up',
-        moveDown: 'Move Down',
+        append: 'Thêm',
+        removeLast: 'Xóa dòng cuối',
+        insert: 'Thêm vào ở trên',
+        remove: 'Xóa dòng hiện tại',
+        moveUp: 'Di chuyển lên',
+        moveDown: 'Di chuyển xuống',
         rowDrag: 'Sort Row',
         rowEmpty: 'This Grid Is Empty'
     };
@@ -262,7 +262,7 @@
                 }
                 if (!settings.hideRowNumColumn) {
                     tbRow.appendChild(tbHeadCellRowNum = document.createElement('td'));
-                    tbHeadCellRowNum.className = 'ui-widget-header first';
+                    tbHeadCellRowNum.className = 'appendGrid-tieu-de-muc-first';
                     // Add column group for scrolling
                     tbColGp.appendChild(document.createElement('col'));
                 }
@@ -390,7 +390,7 @@
                 } else {
                     if (!settings.hideButtons.append) {
                         var button = createGridButton(settings.customGridButtons.append, 'ui-icon-plusthick')
-						.attr({ title: settings._i18n.append }).addClass('append')
+						.attr({ title: settings._i18n.append }).addClass('fa fa-plus')
                         .click(function (evt) {
                             insertRow(tbWhole, 1, null, null);
                             if (evt && evt.preventDefault) evt.preventDefault();
@@ -400,7 +400,7 @@
                     }
                     if (!settings.hideButtons.removeLast) {
                         var button = createGridButton(settings.customGridButtons.removeLast, 'ui-icon-closethick')
-						.attr({ title: settings._i18n.removeLast }).addClass('removeLast')
+						.attr({ title: settings._i18n.removeLast }).addClass('fa fa-minus')
 						.click(function (evt) {
 						    removeRow(tbWhole, null, this.value, false);
 						    if (evt && evt.preventDefault) evt.preventDefault();
@@ -967,7 +967,7 @@
             // Add row number
             if (!settings.hideRowNumColumn) {
                 tbRow.appendChild(tbCell = document.createElement('td'));
-                $(tbCell).addClass('ui-widget-content first').text(settings._rowOrder.length);
+                $(tbCell).addClass('ui-widget-content first appendGrid-ui-widget-content-first').text(settings._rowOrder.length);
                 if (settings.useSubPanel) tbCell.rowSpan = 2;
             }
             // Process on each columns
@@ -1153,7 +1153,7 @@
                 if (!settings.hideButtons.insert) {
                     var button = createGridButton(settings.customGridButtons.insert, 'ui-icon-arrowreturnthick-1-w')
 						.attr({ id: settings.idPrefix + '_Insert_' + uniqueIndex, title: settings._i18n.insert, tabindex: -1 })
-						.addClass('insert').data('appendGrid', { uniqueIndex: uniqueIndex })
+						.addClass('fa fa-plus appendGrid-button-last').data('appendGrid', { uniqueIndex: uniqueIndex })
 						.click(function (evt) {
 						    var rowUniqueIndex = $(this).data('appendGrid').uniqueIndex;
 						    $(tbWhole).appendGrid('insertRow', 1, null, rowUniqueIndex);
@@ -1165,7 +1165,7 @@
                 if (!settings.hideButtons.remove) {
                     var button = createGridButton(settings.customGridButtons.remove, 'ui-icon-trash')
 						.attr({ id: settings.idPrefix + '_Delete_' + uniqueIndex, title: settings._i18n.remove, tabindex: -1 })
-						.addClass('remove').data('appendGrid', { uniqueIndex: uniqueIndex })
+						.addClass('fa fa-minus appendGrid-button-last').data('appendGrid', { uniqueIndex: uniqueIndex })
                         .click(function (evt) {
                             var rowUniqueIndex = $(this).data('appendGrid').uniqueIndex;
                             removeRow(tbWhole, null, rowUniqueIndex, false);
@@ -1177,7 +1177,7 @@
                 if (!settings.hideButtons.moveUp) {
                     var button = createGridButton(settings.customGridButtons.moveUp, 'ui-icon-arrowthick-1-n')
 						.attr({ id: settings.idPrefix + '_MoveUp_' + uniqueIndex, title: settings._i18n.moveUp, tabindex: -1 })
-						.addClass('moveUp').data('appendGrid', { uniqueIndex: uniqueIndex })
+						.addClass('fa fa-arrow-up appendGrid-button-last').data('appendGrid', { uniqueIndex: uniqueIndex })
 						.click(function (evt) {
 						    var rowUniqueIndex = $(this).data('appendGrid').uniqueIndex;
 						    $(tbWhole).appendGrid('moveUpRow', null, rowUniqueIndex);
@@ -1189,7 +1189,7 @@
                 if (!settings.hideButtons.moveDown) {
                     var button = createGridButton(settings.customGridButtons.moveDown, 'ui-icon-arrowthick-1-s')
 						.attr({ id: settings.idPrefix + '_MoveDown_' + uniqueIndex, title: settings._i18n.moveDown, tabindex: -1 })
-						.addClass('moveDown').data('appendGrid', { uniqueIndex: uniqueIndex })
+						.addClass('fa fa-arrow-down appendGrid-button-last').data('appendGrid', { uniqueIndex: uniqueIndex })
 						.click(function (evt) {
 						    var rowUniqueIndex = $(this).data('appendGrid').uniqueIndex;
 						    $(tbWhole).appendGrid('moveDownRow', null, rowUniqueIndex);
