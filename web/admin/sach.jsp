@@ -1,10 +1,3 @@
-<%-- 
-    Document   : sach
-    Created on : Mar 29, 2019, 2:45:44 PM
-    Author     : Trung
---%>
-
-
 <%@page import="java.lang.String"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.SachModel"%>
@@ -22,17 +15,17 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
-    <script src="<%= request.getContextPath()%>/admin/ckeditor/ckeditor.js"></script>     
+    <script src="${contextPath}/admin/ckeditor/ckeditor.js"></script>     
     <script type="text/javascript">
         $(document).ready(function () {
             $('#tentacgia').autocomplete({
-                source: '${pageContext.request.contextPath}/admin/sach/add/ajaxtimtacgiasach'
+                source: '${contextPath}/admin/sach/add/ajaxtimtacgiasach'
 
             });
         });
         $(document).ready(function () {
             $('#nhaxuatban').autocomplete({
-                source: '${pageContext.request.contextPath}/admin/sach/add/ajaxtimnhaxuatbansach'
+                source: '${contextPath}/admin/sach/add/ajaxtimnhaxuatbansach'
 
             });
         });
@@ -74,7 +67,7 @@
 
                     <c:set var="urlEditCurrent" value="edit?id=${sach.getMaSach()}" />
 
-                    <form  class="form-horizontal form-label-left input_mask" method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/admin/sach/${sach==null ? "add" : urlEditCurrent}">
+                    <form  class="form-horizontal form-label-left input_mask" method="POST" enctype="multipart/form-data" action="${contextPath}/admin/sach/${sach==null ? "add" : urlEditCurrent}">
 
                         <c:if test = "${sach != null}">
 

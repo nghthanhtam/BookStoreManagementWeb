@@ -124,7 +124,12 @@
                     </ul>
                   </li> 
                   
-                  
+                  <li><a><i class="fa fa-list"></i> Phiếu nhập sách <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="${contextPath}/admin/phieunhap">Danh sách</a></li>
+                      <li><a href="${contextPath}/admin/phieunhap/add">Thêm mới</a></li>
+                    </ul>
+                  </li> 
                   
                   
                   
