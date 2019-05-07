@@ -169,7 +169,7 @@
                     //       ctrlCss: { width: "200px" }, 
                     type: "ui-autocomplete",
                     uiOption: {
-                        source: 'http://localhost/admin/nhacungcap/ajaxtimnhacungcap',
+                        source: '${contextPath}/admin/phieunhap/ajax/sach',
                         //[{"value":28,"label":"28 - Nguyá»…n TĂ¢y Trung"},{"value":32,"label":"32 - NXB Tiáº¿n"}], 
                         select: function (event, ui) {
                             this.value = ui.item.label;
@@ -331,7 +331,7 @@
                             <div class="col-md-3 col-sm-9 col-xs-12">
                                 <input id="searchNhaCungCap" class="form-control col-md-7 col-xs-12" required="required" name="tennhacungcap" type="text" placeholder="Hãy nhập tên nhà cung cấp">
                             </div>                      
-                            <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden" placeholder="Hãy nhập mã nhà cung cấp">                     
+                            <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden">                     
                         </div>    
 
 
