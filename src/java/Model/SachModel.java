@@ -436,5 +436,47 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
+    
+    public static List<SachModel> FindAllByTuKhoa(Connection conn, String tuKhoa) throws SQLException {
+
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT DISTINCT * FROM sach WHERE "
+                + "( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?)";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                 SachModel sach = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+                listSach.add(sach);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listSach;
+
+    }
 
 }
