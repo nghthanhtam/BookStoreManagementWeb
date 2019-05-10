@@ -89,12 +89,10 @@
                                                                 
                                                                 <%  
                                                         String tuKhoa = (String)request.getAttribute("tukhoa");
-                                                        Integer maTheLoai = Integer.parseInt((String)request.getAttribute("numofpage"));
+                                                        Integer maTheLoai = Integer.parseInt(request.getAttribute("numofpage").toString());
                                                         
-                                                        //out.print(tuKhoa);
-                                                        out.print(maTheLoai);
                                                         //${page==2 ? "class=\"active\"":""}
-                                                        for(int i=0; i< 10;i++ ){
+                                                        for(int i=0; i< maTheLoai;i++ ){
                                                             out.print("<li><a href=\"/search?tukhoa="+request.getAttribute("tukhoa")+"&matheloai="+request.getAttribute("matheloai")+"&page="+(i+1)+"\">"+(i+1)+"</a></li>");  
                                      
                                                         }
@@ -114,6 +112,8 @@
 						<!-- row -->
 						<div class="row">
                                                <tbody>
+                                                     ${listSach.size()==0?"Không tìm thấy sách theo yêu cầu của khách hàng!":""}                         
+
                                                  <c:forEach items="${listSach}" var="obj">
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
@@ -180,21 +180,26 @@
 							</div>
 						</div>
 						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
-							</div>
+							
 							<ul class="store-pages">
 								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
+                                                                <li class="active"></li>
+                                                                
+                                                                <%  
+                                                        
+                                                        
+                                                        //${page==2 ? "class=\"active\"":""}
+                                                        for(int i=0; i< maTheLoai;i++ ){
+                                                            out.print("<li><a href=\"/search?tukhoa="+request.getAttribute("tukhoa")+"&matheloai="+request.getAttribute("matheloai")+"&page="+(i+1)+"\">"+(i+1)+"</a></li>");  
+                                     
+                                                        }
+                                                           
+                                                        
+                                                        
+                                     %>
+								
+								
+								</ul>
 						</div>
 					</div>
 					<!-- /store bottom filter -->

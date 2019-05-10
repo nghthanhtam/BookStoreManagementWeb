@@ -39,7 +39,7 @@ public class SearchSachServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             
-        Integer numberOfBookInOnePage =1;
+        Integer numberOfBookInOnePage =9;
             
         try {
             String tuKhoa = req.getParameter("tukhoa");
