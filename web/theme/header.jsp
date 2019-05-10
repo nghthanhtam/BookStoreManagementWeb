@@ -14,6 +14,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="abc" value="29081998"/>
+
 <%
     ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
 %>
@@ -22,6 +25,7 @@
 <html lang="vi">
 
     <head>
+    
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,8 +62,28 @@
         <!-- PNotify -->
         <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
         <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet"> 
+        
+        
+        
+        
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
+
+
+       
+
+
 
     </head>
+    
+
+    
+    
+    
+    
+    
 
     <body<%
         MessagesModel messagesModel = (MessagesModel) request.getAttribute(MessagesModel.ATT_STORE);
@@ -127,25 +151,38 @@
                         <!-- Search -->
                         <div class="header-search">
                             <form class="form-horizontal form-label-left" method="GET" action="${contextPath}/search">
-                                <input class="input search-input" type="text" placeholder="Enter your keyword" name="search">
-                                <select  name="theloai" id="heard" class="input search-categories">
+                                <input class="input search-input" type="text" required="required" placeholder="Enter your keyword" value="${tukhoa == null ?"":tukhoa}" id="search" name="tukhoa">
+                                <select  name="matheloai" id="theloai" class="input search-categories">
                                     <option value="" disabled hidden>Chọn thể loại</option>
                                     <option value="0" selected="selected">Tất cả</option>
-                                    <%                                        
-                                        Connection conn = MyUtils.getStoredConnection(request);
-                                        
+                                    <%                                        Connection conn = MyUtils.getStoredConnection(request);
+
                                         List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
+                                        String temp= request.getParameter("matheloai");
+                                        int maTheLoai;
+                                        if(temp!=null)
+                                            maTheLoai= Integer.parseInt(temp);
+                                        else
+                                            maTheLoai=0;
+                                                        
+                                                        
                                         
-                                        for (TheLoaiModel obj : listAllTheLoai)
-                                        {
-                                            out.print("<option value=\""+obj.getMaTheLoai()+"\">"+obj.getTenTheLoai()+"</option>");
-                                        } 
                                         
                                         
+                                        
+                                        for (TheLoaiModel obj : listAllTheLoai) {
+                                            if(obj.getMaTheLoai()== maTheLoai)
+                                            out.print("<option selected=\"selected\"  value=\"" + obj.getMaTheLoai() + "\">" + obj.getTenTheLoai() + "</option>");
+                                            else
+                                                
+                                            out.print("<option  value=\"" + obj.getMaTheLoai() + "\">" + obj.getTenTheLoai() + "</option>");
+                                        }
+
+
                                     %> 
 
-                                        
- 
+
+
                                 </select>
 
                                 <button class="search-btn"><i class="fa fa-search"></i></button>
@@ -158,8 +195,7 @@
                             <!-- Account -->
 
 
-                            <%
-                                if (thanhvien != null) {
+                            <%                                if (thanhvien != null) {
                             %>
 
 

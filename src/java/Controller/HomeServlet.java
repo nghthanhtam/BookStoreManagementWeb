@@ -30,7 +30,6 @@ public class HomeServlet extends HttpServlet {
 
         Connection conn = MyUtils.getStoredConnection(req);
         
-        
         req.getRequestDispatcher("home.jsp").forward(req, resp);
 
     }

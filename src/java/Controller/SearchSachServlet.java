@@ -38,17 +38,54 @@ public class SearchSachServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            
+        Integer numberOfBookInOnePage =1;
+            
         try {
-
-            String tuKhoa = req.getParameter("search");
+            String tuKhoa = req.getParameter("tukhoa");
+            Integer currentPage;
+            Integer maTheLoai;
+            int numOfPage;
+            String temp =req.getParameter("page");
+            if(req.getParameter("page")!=null){
+                currentPage = Integer.parseInt(temp);
+            }
+            else
+                currentPage=1;
+            temp=req.getParameter("matheloai");
+            if(req.getParameter("matheloai")!=null){
+                maTheLoai = Integer.parseInt(temp);
+            }
+            else
+                maTheLoai = 0;
             req.setAttribute("txtTitle", "Tìm kiếm sách");
-
+            System.out.println(currentPage);
             Connection conn = MyUtils.getStoredConnection(req);
-
-            List<SachModel> listSach = SachModel.FindAllByTuKhoa(conn, tuKhoa);
             
+            int numOfBookFound = SachModel.CountAllByTuKhoa(conn, tuKhoa, maTheLoai);
             
+            if(numOfBookFound%numberOfBookInOnePage==0)
+                numOfPage = numOfBookFound/numberOfBookInOnePage;
+            else
+                numOfPage = numOfBookFound/numberOfBookInOnePage+1;
+            
+            List<SachModel> listSach = SachModel.FindAllByTuKhoa(conn, tuKhoa, maTheLoai,currentPage,numberOfBookInOnePage);
+            
+            for(int i=0;i<listSach.size();i++){
+                System.out.println(listSach.get(i).getTenSach());
+            }
+                System.out.println(numberOfBookInOnePage);//7
+                System.out.println(numOfPage);//0
+                System.out.println(listSach.size());//0
+                System.out.println(numOfBookFound);//0
+            
+               
+            
+            req.setAttribute("numofpage", numOfPage);
             req.setAttribute("listSach", listSach);
+            req.setAttribute("tukhoa", tuKhoa);
+            req.setAttribute("matheloai", maTheLoai);
+            req.setAttribute("page", currentPage);
             req.getRequestDispatcher("search.jsp").forward(req, resp);
 
         } catch (SQLException ex) {

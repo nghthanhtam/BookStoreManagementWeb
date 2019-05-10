@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.AjaxModel;
 import Model.AjaxSachModel;
 import Utility.MyUtils;
 import com.google.gson.Gson;
@@ -29,6 +30,12 @@ import Model.SachModel;
 @WebServlet(name = "AjaxTimSachServlet", urlPatterns = {"/ajax/sach"})
 public class AjaxTimSachServlet extends HttpServlet {
 
+        private static final long serialVersionUID = 1L;
+
+    public AjaxTimSachServlet() {
+        super();
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +46,7 @@ public class AjaxTimSachServlet extends HttpServlet {
         
         Connection conn = MyUtils.getStoredConnection(req);
         try{
-            List<SachModel> listSach = SachModel.FindAllByTuKhoa(conn, tuKhoa);
+            List<AjaxModel> listSach = SachModel.FindAllByTuKhoaAjax(conn, tuKhoa);
             out.print(gson.toJson(listSach));
         } catch(SQLException ex){
             Logger.getLogger(AjaxTimSachServlet.class.getName()).log(Level.SEVERE, null, ex);
