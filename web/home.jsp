@@ -21,7 +21,7 @@
 					<div class="banner banner-1">
 						<img src="./img/banner01.jpg" alt="">
 						<div class="banner-caption text-center">
-							<h1>Bags sale</h1>
+							<h1>${txtTitle}</h1>
 							<h3 class="white-color font-weak">Up to 50% Discount</h3>
 							<button class="primary-btn">Shop Now</button>
 						</div>

@@ -20,6 +20,7 @@ import java.util.List;
  *
  * @author MITICC06
  */
+
 public class SachModel {
 
     private int maSach;
@@ -37,6 +38,9 @@ public class SachModel {
     private Date ngayKetThucGiamGia;
     private int trangThai;
 
+    public SachModel(){
+    
+    }
     public int getMaSach() {
         return maSach;
     }
@@ -437,4 +441,110 @@ public class SachModel {
 
     }
 
+   
+    public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach WHERE matheloai = ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);           
+            pstm.setInt(1, maTheLoai);    
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
+    
+    public static List<SachModel> getlistSachMoiNhat(Connection conn) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach ORDER BY namxuatban DESC LIMIT 4";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);              
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
+    
+    public static SachModel sachGiamGia(Connection conn) {
+        SachModel sachGiamGia = new SachModel();
+
+        String sql = "SELECT * FROM sach WHERE//////////";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);              
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+                //listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return sachGiamGia;
+    }
 }
