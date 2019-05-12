@@ -32,7 +32,11 @@ public class HomeServlet extends HttpServlet {
             
         List<SachModel> listSachMoiNhat = SachModel.getlistSachMoiNhat(conn);
         req.setAttribute("listSachMoiNhat", listSachMoiNhat);
-           
+        
+        List<SachModel> listSachGiamGia = SachModel.getListSachGiamGia(conn);
+        req.setAttribute("listSachGiamGia", listSachGiamGia);
+
+        
         req.getRequestDispatcher("home.jsp").forward(req, resp);
         //req.getRequestDispatcher("htmltest.html").forward(req, resp);
     }

@@ -513,10 +513,12 @@ public class SachModel {
         return listSach;
     }
     
-    public static SachModel sachGiamGia(Connection conn) {
-        SachModel sachGiamGia = new SachModel();
+    public static List<SachModel> getListSachGiamGia(Connection conn) {
+        List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
 
-        String sql = "SELECT * FROM sach WHERE//////////";
+        String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL "
+                + "ORDER BY TIMESTAMPDIFF(MINUTE,ngayketthucgiamgia,ngaybatdaugiamgia) ASC LIMIT 2";
+        
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);              
             ResultSet rs = pstm.executeQuery();
@@ -539,12 +541,12 @@ public class SachModel {
                         rs.getDate("ngayketthucgiamgia"),
                         rs.getInt("trangthai"));
 
-                //listSach.add(SachModel);
+                listSachGiamGia.add(SachModel);
             }
 
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return sachGiamGia;
+        return listSachGiamGia;
     }
 }

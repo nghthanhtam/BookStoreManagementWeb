@@ -210,20 +210,29 @@
 						<!-- /Account -->
 
 						<!-- Cart -->
-						<li class="header-cart dropdown default-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-								<div class="header-btns-icon">
-									<i class="fa fa-shopping-cart"></i>
-									<span class="qty">3</span>
-								</div>
-								<strong class="text-uppercase">My Cart:</strong>
-								<br>
-								<span>35.20$</span>
-							</a>
+                                          
+						<li class="header-cart empty dropdown default-dropdown">                                       
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">						              
+                                                        <div class="header-btns-icon"> 
+                                                            <i class="fa fa-shopping-cart"></i> 
+                                                            <ul class="qty"> <!-- cart items count -->
+                                                                <li>0</li>
+                                                                <li>0</li>
+                                                            </ul> <!-- .count -->
+                                                        </div>
+                                                                                                                                           
+                                                        <strong class="text-uppercase">My Cart:</strong>
+                                                        <br>
+                                                        <div class="total"><span>0</span></div>
+                                                            
+                                                    </a>
+                                              
+                                    
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-										<div class="product product-widget">
+                                                                            <ul>
+										<!--<div class="product product-widget">
 											<div class="product-thumb">
 												<img src="./img/thumb-product01.jpg" alt="">
 											</div>
@@ -242,7 +251,8 @@
 												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
 											</div>
 											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
+										</div>-->
+                                                                            </ul>
 									</div>
 									<div class="shopping-cart-btns">
 										<button class="main-btn">View Cart</button>
@@ -251,6 +261,7 @@
 								</div>
 							</div>
 						</li>
+                                    
 						<!-- /Cart -->
 
 						<!-- Mobile nav toggle-->
@@ -451,3 +462,11 @@
 		<!-- /container -->
 	</div>
 	<!-- /NAVIGATION -->
+        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+	if( !window.jQuery ) document.write('<script src="js/jquery-1.4.2.min.js"><\/script>');
+</script>
+<script src="js/maintest.js"></script> <!-- Resource jQuery -->
+</body>
+</html>
