@@ -65,9 +65,21 @@
                                     <td >${obj.getMaSach()}</td>
                                     <td >${obj.getTenSach()}</td>
                                     <td >${obj.getTenTacGia()}</td>
-                                    <td >${obj.getMaTheLoai()}</td>
+                                    <td >${obj.getTenTheLoai()}</td>
                                     <td>${obj.getSoLuongTon()}</td>
-                                    <td>${obj.getTrangThai()}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${obj.getTrangThai()=='1'}">
+                                                Đang bán
+                                            </c:when> 
+                                            <c:otherwise>
+                                                ${obj.getTrangThai()=='2'? "Đã xóa" : "Ngưng kinh doanh" }
+                                                
+                                            </c:otherwise>
+                                        </c:choose>
+                                        
+                                        
+                                    </td>
                                     <td> 
                                         <a href="${contextPath}/admin/sach/edit?id=${obj.getMaSach()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                                         <a href="${contextPath}/admin/sach/delete?id=${obj.getMaSach()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>

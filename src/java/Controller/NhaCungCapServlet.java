@@ -32,7 +32,6 @@ public class NhaCungCapServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /* Set page */
-        System.out.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         //req.setAttribute("txtTitle", "Nhà cung cấp");
         boolean isFailedRequest = false; // request thất bại
         boolean isInvalidNumber = false; // request thất bại
@@ -103,8 +102,7 @@ public class NhaCungCapServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
+       
         req.setAttribute("txtTitle", "Nhà cung cấp");
 
         Connection conn = MyUtils.getStoredConnection(req);
