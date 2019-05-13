@@ -440,9 +440,9 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
-
-   
-    public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
+  
+  
+  public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
         String sql = "SELECT * FROM sach WHERE matheloai = ?";
@@ -468,7 +468,6 @@ public class SachModel {
                         rs.getDate("ngaybatdaugiamgia"),
                         rs.getDate("ngayketthucgiamgia"),
                         rs.getInt("trangthai"));
-
                 listSach.add(SachModel);
             }
 
@@ -548,5 +547,135 @@ public class SachModel {
             System.out.println(e);
         }
         return listSachGiamGia;
+    }              
+              
+              
+              
+              
+              
+              
+    public static List<SachModel> FindAllByTuKhoa(Connection conn, String tuKhoa, Integer maTheLoai, Integer page, Integer numOfBookInOnePage) throws SQLException {
+
+        List<SachModel> listSach = new ArrayList<SachModel>();
+        
+            Integer x=0;
+          //  (SELECT  DISTINCT *  FROM sach WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2)
+            String sql = "SELECT DISTINCT * FROM sach "
+                    + "WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2 LIMIT ? , ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
+            if(maTheLoai!=0)
+            {
+                pstm.setInt(4, maTheLoai); // tìm từ khóa
+                System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXx");
+            }
+            else
+            {
+                System.out.println("0000000000000000000000000");
+                pstm.setString(4, "%%");
+            }
+         
+            pstm.setInt(5, (page-1)*numOfBookInOnePage);
+            pstm.setInt(6, numOfBookInOnePage);
+            ResultSet rs = pstm.executeQuery();
+            
+            while (rs.next()) {
+                 SachModel sach = new SachModel(
+
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+                listSach.add(sach);
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception: ");
+            System.out.println(e.toString());
+        }
+
+        return listSach;
+
     }
+    
+    public static int CountAllByTuKhoa(Connection conn, String tuKhoa, Integer maTheLoai) throws SQLException {
+
+        int counter=0;
+        int x=0;
+            
+            String sql ="SELECT COUNT(*) AS TOTAL FROM ((SELECT  DISTINCT *  FROM sach"
+                    + " WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2) AS T)";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
+            if(maTheLoai!=0)
+            {
+                pstm.setInt(4, maTheLoai); // tìm từ khóa
+            }
+            else
+            {
+                pstm.setString(4, "%%");
+            }
+            
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next())
+                counter=rs.getInt("TOTAL");
+            
+
+        } catch (SQLException e) {
+            System.out.println("Exception: ");
+            System.out.println(e.toString());
+        }
+
+        return counter;
+
+    }
+  
+     
+    public static List<AjaxModel> FindAllByTuKhoaAjax(Connection conn, String tuKhoa) throws SQLException {
+
+        List<AjaxModel> listSach = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT DISTINCT * FROM sach WHERE "
+                + "( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND trangthai <> 2";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
+            
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                 AjaxModel mode = new AjaxModel(
+                        rs.getInt("masach"),
+                        rs.getString("tensach") + " - " + rs.getString("tentacgia"));
+                listSach.add(mode);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listSach;
+
+    }
+    
 }

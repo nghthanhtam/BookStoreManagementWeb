@@ -5,10 +5,8 @@
  */
 package Controller;
 
-import Model.PhanQuyenModel;
-import Model.SachModel;
-import Model.SachModelWithTheLoaiAndTrangThai;
-import Model.ThanhVienModelWithTenQuyen;
+import Model.PhieuChiModelWithTenNhaCungCap;
+import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,29 +17,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Admin
+ * @author MITICC06
  */
-@WebServlet(name = "SachServlet", urlPatterns = {"/admin/sach"})
-public class SachServlet extends HttpServlet {
+@WebServlet(name = "PhieuNhapServlet", urlPatterns = {"/admin/phieunhap"})
+public class PhieuNhapServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         req.setAttribute("txtTitle", "Sách");
-        Connection conn = MyUtils.getStoredConnection(req);
-         List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
-        System.out.println(listAllSach.size());
-        req.setAttribute("listAllSach", listAllSach);
+  
+                req.getRequestDispatcher("/admin/list-phieunhap.jsp").forward(req, resp);
 
-        req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);;
+
     }
-
-   
+ 
 }

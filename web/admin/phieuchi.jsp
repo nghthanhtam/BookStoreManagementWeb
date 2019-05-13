@@ -136,7 +136,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên nhà cung cấp <span class="required"></span>
                         </label>               
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input id="search" class="form-control col-md-7 col-xs-12" required="required" name="tennhacungcap" type="text" placeholder="Hãy nhập mã nhà cung cấp">
+                            <input id="search" class="form-control col-md-7 col-xs-12" required="required" name="tennhacungcap" type="text" placeholder="Hãy nhập tên nhà cung cấp">
                         </div>                      
                             <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden" placeholder="Hãy nhập mã nhà cung cấp">                     
                     </div>                    

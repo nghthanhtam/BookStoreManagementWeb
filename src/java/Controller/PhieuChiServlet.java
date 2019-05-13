@@ -34,26 +34,12 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "PhieuChiServlet", urlPatterns = {"/admin/phieuchi"})
 public class PhieuChiServlet extends HttpServlet {
-
-//    private static final long serialVersionUID = 1L;
-//
-//    public PhieuChiServlet() {
-//        super();
-//    }
-
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
-        {
-            request.getRequestDispatcher("/admin/admin-login.jsp").forward(request, response);
-        } else {
-            ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
-            request.setAttribute("txtTenThanhVien", thanhvien.getTenDangNhap());
-            request.setAttribute("maThanhVien", thanhvien.getMaThanhVien());
-        }
+ 
 
         Connection conn = MyUtils.getStoredConnection(request);
         List<PhieuChiModelWithTenNhaCungCap> listAllPhieuChiWithTenNhaCungCap = PhieuChiModelWithTenNhaCungCap.getAllPhieuChiWithTenNhaCungCap(conn);       

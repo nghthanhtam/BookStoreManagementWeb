@@ -9,7 +9,6 @@
 
 <jsp:include page="theme/header.jsp" />
 
-
 	<!-- HOME -->
 	<div id="home">
 		<!-- container -->

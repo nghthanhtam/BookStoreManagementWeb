@@ -33,7 +33,6 @@ import javax.servlet.http.Part;
 
 @WebServlet(name = "AddSachServlet", urlPatterns = {"/admin/sach/add"})
 public class AddSachServlet extends HttpServlet {
- 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,11 +59,10 @@ public class AddSachServlet extends HttpServlet {
                 Double phanTramGiamGia = null;
                 java.sql.Date ngayBatDauGiamGia = null;
                 java.sql.Date ngayKetThucGiamGia = null;
-                
-                if (req.getParameter("phantramgiamgia") != null &&
-                        (!req.getParameter("phantramgiamgia").equals("") &&
-                        Double.parseDouble(req.getParameter("phantramgiamgia")) > 0 // phần trăm giảm giá lớn hơn 0                        
-                        
+
+                if (req.getParameter("phantramgiamgia") != null
+                        && (!req.getParameter("phantramgiamgia").equals("")
+                        && Double.parseDouble(req.getParameter("phantramgiamgia")) > 0 // phần trăm giảm giá lớn hơn 0                        
                         )) {
                     phanTramGiamGia = Double.parseDouble(req.getParameter("phantramgiamgia"));
                     String khoangThoiGianGiamGia = (String) req.getParameter("khoangthoigiangiamgia");
@@ -111,7 +109,7 @@ public class AddSachServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(req);
         List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
         req.setAttribute("listAllTheLoai", listAllTheLoai);
-    req.setAttribute("txtTitle", "Thêm sách");
+        req.setAttribute("txtTitle", "Thêm sách");
         req.getRequestDispatcher("/admin/sach.jsp").forward(req, resp);
     }
 

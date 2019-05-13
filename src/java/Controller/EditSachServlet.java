@@ -60,7 +60,7 @@ public class EditSachServlet extends HttpServlet {
                 
                 String dirImage = null;
                 Part anhDaiDien = req.getPart("anhdaidien");
-
+                
                 if (anhDaiDien !=null && anhDaiDien.getSize()>0)
                 {
                     dirImage = MyUtils.uploadFile(req, "anhdaidien");
@@ -99,10 +99,7 @@ public class EditSachServlet extends HttpServlet {
                 sach.setNgayKetThucGiamGia(ngayKetThucGiamGia);
                 sach.setTrangThai(trangThai);
                 
-                /*sach = new SachModel(maSach, maTheLoai, tenSach,
-                        nhaXuatBan, namXuatBan, giaBan, moTa, dirImage, 0, tenTacGia,
-                        phanTramGiamGia, ngayBatDauGiamGia, ngayKetThucGiamGia, trangThai);
-*/
+                
                 boolean isOk = SachModel.UpdateSach(conn, sach);
 
                 if (isOk) {

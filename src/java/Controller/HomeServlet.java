@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.SachModel;
+import Model.TheLoaiModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.sql.Connection;
@@ -35,6 +36,7 @@ public class HomeServlet extends HttpServlet {
         
         List<SachModel> listSachGiamGia = SachModel.getListSachGiamGia(conn);
         req.setAttribute("listSachGiamGia", listSachGiamGia);
+
 
         
         req.getRequestDispatcher("home.jsp").forward(req, resp);
