@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.SachModel;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -27,11 +28,19 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.setAttribute("txtTitle", "Trang chủ - Book Store");
-
+             
         Connection conn = MyUtils.getStoredConnection(req);
+            
+        List<SachModel> listSachMoiNhat = SachModel.getlistSachMoiNhat(conn);
+        req.setAttribute("listSachMoiNhat", listSachMoiNhat);
+        
+        List<SachModel> listSachGiamGia = SachModel.getListSachGiamGia(conn);
+        req.setAttribute("listSachGiamGia", listSachGiamGia);
+
+
         
         req.getRequestDispatcher("home.jsp").forward(req, resp);
-
+        //req.getRequestDispatcher("htmltest.html").forward(req, resp);
     }
 
 }

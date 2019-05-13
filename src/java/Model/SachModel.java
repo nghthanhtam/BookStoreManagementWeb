@@ -20,6 +20,7 @@ import java.util.List;
  *
  * @author MITICC06
  */
+
 public class SachModel {
 
     private int maSach;
@@ -37,6 +38,9 @@ public class SachModel {
     private Date ngayKetThucGiamGia;
     private int trangThai;
 
+    public SachModel(){
+    
+    }
     public int getMaSach() {
         return maSach;
     }
@@ -436,7 +440,120 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
+  
+  
+  public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach WHERE matheloai = ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);           
+            pstm.setInt(1, maTheLoai);    
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
     
+    public static List<SachModel> getlistSachMoiNhat(Connection conn) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach ORDER BY namxuatban DESC LIMIT 4";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);              
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
+    
+    public static List<SachModel> getListSachGiamGia(Connection conn) {
+        List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL "
+                + "ORDER BY TIMESTAMPDIFF(MINUTE,ngayketthucgiamgia,ngaybatdaugiamgia) ASC LIMIT 2";
+        
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);              
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+                listSachGiamGia.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSachGiamGia;
+    }              
+              
+              
+              
+              
+              
+              
     public static List<SachModel> FindAllByTuKhoa(Connection conn, String tuKhoa, Integer maTheLoai, Integer page, Integer numOfBookInOnePage) throws SQLException {
 
         List<SachModel> listSach = new ArrayList<SachModel>();
@@ -461,35 +578,14 @@ public class SachModel {
                 System.out.println("0000000000000000000000000");
                 pstm.setString(4, "%%");
             }
-            
-            /*
-            0->8
-            9-17
-            
-            PAGE =1 
-            1   0-8
-            2   9-17
-            3   18-26
-            4   27-35
-            
-            
-            (page-1)*numOfBookInOnePage
-            (page)*numOfBookInOnePage
-                    2*(9-1)-9+1
-            min = page*numOfBookInOnePage-1
-            max = page*(numOfBookInOnePage-1)
-            
-            for (int i = 0; i < page; i++) {
-                x = x + numOfBookInOnePage;
-            }
-*/
-            
+         
             pstm.setInt(5, (page-1)*numOfBookInOnePage);
             pstm.setInt(6, numOfBookInOnePage);
             ResultSet rs = pstm.executeQuery();
             
             while (rs.next()) {
                  SachModel sach = new SachModel(
+
                         rs.getInt("masach"),
                         rs.getInt("matheloai"),
                         rs.getString("tensach"),

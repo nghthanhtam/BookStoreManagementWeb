@@ -10,6 +10,8 @@
 <%@page import="Model.MessagesModel"%>
 <%@page import="Utility.MyUtils"%>
 <%@page import="Model.ThanhVienModel"%>
+<%@page import="java.util.List"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,7 +20,9 @@
 <c:set var="abc" value="29081998"/>
 
 <%
-    ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
+    ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);     
+    Connection conn = MyUtils.getStoredConnection(request);
+    List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
 %>
 
 <!DOCTYPE html>
@@ -172,17 +176,12 @@
                                         
                                         for (TheLoaiModel obj : listAllTheLoai) {
                                             if(obj.getMaTheLoai()== maTheLoai)
-                                            out.print("<option selected=\"selected\"  value=\"" + obj.getMaTheLoai() + "\">" + obj.getTenTheLoai() + "</option>");
-                                            else
-                                                
-                                            out.print("<option  value=\"" + obj.getMaTheLoai() + "\">" + obj.getTenTheLoai() + "</option>");
-                                        }
-
-
+                                              out.print("<option selected=\"selected\"  value=\"" + obj.getMaTheLoai() + "\">" + obj.getTenTheLoai() + "</option>");
+                                            else   
+                                              out.print("<option  value=\"" + obj.getMaTheLoai() + "\">" + obj.getTenTheLoai() + "</option>");
+                                        } 
                                     %> 
-
-
-
+  
                                 </select>
 
                                 <button class="search-btn"><i class="fa fa-search"></i></button>
@@ -231,7 +230,7 @@
                                     <div class="header-btns-icon">
                                         <i class="fa fa-user-o"></i>
                                     </div>
-                                    <strong class="text-uppercase">Hi, Guess</strong>
+                                    <strong class="text-uppercase">Hi, Guest</strong>
                                 </div>
 
                                 <a href="#" class="dropdown-toggle dropdown-toggle-inline" role="button" data-toggle="dropdown" aria-expanded="true">LOGIN</a> / <a href="${contextPath}/dangky" style="display:inline">JOIN</a>   
@@ -254,48 +253,59 @@
                             <!-- /Account -->
 
                             <!-- Cart -->
-                            <li class="header-cart dropdown default-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                    <div class="header-btns-icon">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span class="qty">3</span>
-                                    </div>
-                                    <strong class="text-uppercase">My Cart:</strong>
-                                    <br>
-                                    <span>35.20$</span>
-                                </a>
-                                <div class="custom-menu">
-                                    <div id="shopping-cart">
-                                        <div class="shopping-cart-list">
-                                            <div class="product product-widget">
-                                                <div class="product-thumb">
-                                                    <img src="./img/thumb-product01.jpg" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-                                                    <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                                                </div>
-                                                <button class="cancel-btn"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                            <div class="product product-widget">
-                                                <div class="product-thumb">
-                                                    <img src="./img/thumb-product01.jpg" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-                                                    <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                                                </div>
-                                                <button class="cancel-btn"><i class="fa fa-trash"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="shopping-cart-btns">
-                                            <button class="main-btn">View Cart</button>
-                                            <button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- /Cart -->
+                                          
+						<li class="header-cart empty dropdown default-dropdown">                                       
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">						              
+                                                        <div class="header-btns-icon"> 
+                                                            <i class="fa fa-shopping-cart"></i> 
+                                                            <ul class="qty"> <!-- cart items count -->
+                                                                <li>0</li>
+                                                                <li>0</li>
+                                                            </ul> <!-- .count -->
+                                                        </div>
+                                                                                                                                           
+                                                        <strong class="text-uppercase">My Cart:</strong>
+                                                        <br>
+                                                        <div class="total"><span>0</span></div>
+                                                            
+                                                    </a>
+                                              
+                                    
+							<div class="custom-menu">
+								<div id="shopping-cart">
+									<div class="shopping-cart-list">
+                                                                            <ul>
+										<!--<div class="product product-widget">
+											<div class="product-thumb">
+												<img src="./img/thumb-product01.jpg" alt="">
+											</div>
+											<div class="product-body">
+												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
+												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+											</div>
+											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+										</div>
+										<div class="product product-widget">
+											<div class="product-thumb">
+												<img src="./img/thumb-product01.jpg" alt="">
+											</div>
+											<div class="product-body">
+												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
+												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+											</div>
+											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+										</div>-->
+                                                                            </ul>
+									</div>
+									<div class="shopping-cart-btns">
+										<button class="main-btn">View Cart</button>
+										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+									</div>
+								</div>
+							</div>
+						</li>
+                                    
+						<!-- /Cart -->
 
                             <!-- Mobile nav toggle-->
                             <li class="nav-toggle">
@@ -310,8 +320,8 @@
             <!-- container -->
         </header>
         <!-- /HEADER -->
-
-        <!-- NAVIGATION -->
+		
+<!-- NAVIGATION -->
         <div id="navigation">
             <!-- container -->
             <div class="container">
@@ -320,197 +330,16 @@
                     <div class="category-nav ${requestScope['javax.servlet.forward.request_uri'] == '/' ? "" : "show-on-click"}">
                         <span class="category-header">Categories <i class="fa fa-list"></i></span>
                         <ul class="category-list">
-                            <li class="dropdown side-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women’s Clothing <i class="fa fa-angle-right"></i></a>
-                                <div class="custom-menu">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="row hidden-sm hidden-xs">
-                                        <div class="col-md-12">
-                                            <hr>
-                                            <a class="banner banner-1" href="#">
-                                                <img src="./img/banner05.jpg" alt="">
-                                                <div class="banner-caption text-center">
-                                                    <h2 class="white-color">NEW COLLECTION</h2>
-                                                    <h3 class="white-color font-weak">HOT DEAL</h3>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li class="dropdown side-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Phones & Accessories <i class="fa fa-angle-right"></i></a>
-                                <div class="custom-menu">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr>
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr>
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-4 hidden-sm hidden-xs">
-                                            <a class="banner banner-2" href="#">
-                                                <img src="./img/banner04.jpg" alt="">
-                                                <div class="banner-caption">
-                                                    <h3 class="white-color">NEW<br>COLLECTION</h3>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Computer & Office</a></li>
-                            <li><a href="#">Consumer Electronics</a></li>
-                            <li class="dropdown side-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Jewelry & Watches <i class="fa fa-angle-right"></i></a>
-                                <div class="custom-menu">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr>
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr>
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr class="hidden-md hidden-lg">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                            <hr>
-                                            <ul class="list-links">
-                                                <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
-                                                <li><a href="#">Women’s Clothing</a></li>
-                                                <li><a href="#">Men’s Clothing</a></li>
-                                                <li><a href="#">Phones & Accessories</a></li>
-                                                <li><a href="#">Jewelry & Watches</a></li>
-                                                <li><a href="#">Bags & Shoes</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Bags & Shoes</a></li>
-                            <li><a href="#">View All</a></li>
-                        </ul>
-                    </div>
-                    <!-- /category nav -->
+<%
+    for(TheLoaiModel obj : listAllTheLoai)
+    {
+        out.println("<li><a href=\"/categories?id="+obj.getMaTheLoai()+"\">"+obj.getTenTheLoai()+"</a></li>");
+    }
+%>   
+						
+					</ul>
+				</div>
+				<!-- /category nav -->
 
                     <!-- menu nav -->
                     <div class="menu-nav">
@@ -674,3 +503,11 @@
             <!-- /container -->
         </div>
         <!-- /NAVIGATION -->
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script>
+			if( !window.jQuery ) document.write('<script src="js/jquery-1.4.2.min.js"><\/script>');
+		</script>
+		<script src="js/maintest.js"></script> <!-- Resource jQuery -->
+</body>
+</html>
