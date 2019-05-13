@@ -105,7 +105,8 @@
                                         {
                                             //out.print("<option value=\""+obj.getMaTheLoai()+"\">"+obj.getTenTheLoai()+"</option>");
                                             out.println("<li><a href=\"/categories?id="+obj.getMaTheLoai()+"\">"+obj.getTenTheLoai()+"</a></li>");
-                                        }               
+                                            
+                                        }             
                                      %>
 							
 						</ul>
