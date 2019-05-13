@@ -11,6 +11,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="theme/header.jsp" />
 <body>
@@ -120,18 +121,33 @@
 								<div class="product product-single">
 									<div class="product-thumb">
 										<div class="product-label">
-                                                                                    <%
-                                                        
-                                                                                    out.print("<span>Sale</span>");
-											out.print("<span class=\"sale\">");
-                                                                                    %>
+                                                                                    <c:if test="${obj.getPhanTramGiamGia()!=0}">
+                                                                                        <span>Sale</span>
+                                                                                        <span class="sale">
+                                                                                            <fmt:formatNumber var="lamtron"
+                                                                                            value="${obj.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="0" />
+                                                                                            
+                                                                                            <fmt:formatNumber var="khonglamtron"
+                                                                                            value="${obj.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="10" />
+                                                                                            
+                                                                                            <c:choose>
+                                                                                                <c:when test="${lamtron != khonglamtron}">
+                                                                                                    
+                                                                                                    ${khonglamtron}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    
+                                                                                                    ${lamtron}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                                                                   %
+                                                                                            </span>
+                                                                                    </c:if>
                                                                                     
-                                                                                    ${obj.getPhanTramGiamGia()}
-                                                                                    %
-                                                                                    <%
-                                                                                    out.print("</span>");
-                                                                                    %>
-										</div>
+                                                                                    	</div>
 										<a href="${contextPath}/product?masach=${obj.getMaSach()}"  class="main-btn quick-view"><i  class="fa fa-search-plus"></i> Quick view</a>
 										<img src="${contextPath}/${obj.getAnhDaiDien()}" alt="">
 									</div>
