@@ -161,7 +161,7 @@
 								<li><span>00 M</span></li>
 								<li><span>00 S</span></li>
 							</ul>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<a href="${contextPath}/product?masach=${sachMoiNhat.getMaSach()}" class="main-btn quick-view"><i  class="fa fa-search-plus"></i> Quick view</a>
 							<img src="${sachMoiNhat.getAnhDaiDien()}" alt="">
 						</div>
 						<div class="product-body">
@@ -202,7 +202,7 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="#">${sachMoiNhat.getTenSach()}</a></h2>
+							<h2 class="product-name"><a href="${contextPath}/product?masach=${sachMoiNhat.getMaSach()}">${sachMoiNhat.getTenSach()}</a></h2>
 							<div class="product-btns">
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -256,7 +256,7 @@
 										<li><span>00 M</span></li>
 										<li><span>00 S</span></li>
 									</ul>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
 									<img src="${obj.getAnhDaiDien()}" alt="">
 								</div>
 								<div class="product-body">
@@ -296,7 +296,7 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="#">${obj.getTenSach()}</a></h2>
+									<h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -305,7 +305,7 @@
 								</div>
 							</div>
 							<!-- /Product Single -->
-
+                                                            
                                                     </c:forEach>
 						</div>
 					</div>
@@ -367,7 +367,7 @@
 								<li><span>00 M</span></li>
 								<li><span>00 S</span></li>
 							</ul>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<a href="${contextPath}/product?masach=${sachGiamGiaNhat.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
 							<img src="${sachGiamGiaNhat.getAnhDaiDien()}" alt="">
 						</div>
 						<div class="product-body">
@@ -407,7 +407,7 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="#">${sachGiamGiaNhat.getTenSach()}</a></h2>
+							<h2 class="product-name"><a href="${contextPath}/product?masach=${sachGiamGiaNhat.getMaSach()}">${sachGiamGiaNhat.getTenSach()}</a></h2>
 							<div class="product-btns">
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -462,7 +462,7 @@
 										<li><span>00 M</span></li>
 										<li><span>00 S</span></li>
 									</ul>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
 									<img src="${obj.getAnhDaiDien()}" alt="">
 								</div>
 								<div class="product-body">
@@ -471,7 +471,7 @@
                                                                               value="${obj.getGiaBan()}"
                                                                               maxFractionDigits="0" 
                                                                               groupingUsed="true" />
-                                                            <fmt:formatNumber var="giagocsaugiamgia"
+                                                                            <fmt:formatNumber var="giagocsaugiamgia"
                                                                               value="${(100-sachMoiNhat.getPhanTramGiamGia())*0.01*obj.getGiaBan()}"
                                                                               maxFractionDigits="0" 
                                                                               groupingUsed="true"/>
@@ -502,7 +502,7 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="#">${obj.getTenSach()}</a></h2>
+									<h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
