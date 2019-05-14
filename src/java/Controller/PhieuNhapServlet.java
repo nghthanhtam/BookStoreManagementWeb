@@ -5,13 +5,23 @@
  */
 package Controller;
 
+import Model.MessagesModel;
 import Model.PhieuChiModelWithTenNhaCungCap;
+import Model.PhieuNhapModel;
+import Model.SachModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +43,12 @@ public class PhieuNhapServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-  
-                req.getRequestDispatcher("/admin/list-phieunhap.jsp").forward(req, resp);
 
+        Connection conn = MyUtils.getStoredConnection(req);
+        List<PhieuNhapModel> listPhieuNhap = PhieuNhapModel.getAllPhieuNhap(conn);
+        req.setAttribute("listPhieuNhap", listPhieuNhap);
 
+        req.getRequestDispatcher("/admin/list-phieunhap.jsp").forward(req, resp);
     }
- 
+
 }
