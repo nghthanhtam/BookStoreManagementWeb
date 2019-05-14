@@ -7,6 +7,7 @@ package Controller;
 
 import Model.MessagesModel;
 import Model.SachModel;
+import Model.SachModelWithTheLoaiAndTrangThai;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -96,7 +97,7 @@ public class AddSachServlet extends HttpServlet {
         }
 
         req.setAttribute("txtTitle", "sách");
-        List<SachModel> listAllSach = SachModel.getAllSach(conn);
+        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
         req.setAttribute("listAllSach", listAllSach);
 
         req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);

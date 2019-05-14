@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Utility.MyUtils;
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -200,7 +201,6 @@ public class SachModel {
                         rs.getDate("ngaybatdaugiamgia"),
                         rs.getDate("ngayketthucgiamgia"),
                         rs.getInt("trangthai"));
-
             return sach;
         }
         return null;
@@ -477,10 +477,10 @@ public class SachModel {
         return listSach;
     }
     
-    public static List<SachModel> getlistSachMoiNhat(Connection conn) {
+    public static List<SachModel> getListSachMoiNhatTop7(Connection conn) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
-        String sql = "SELECT * FROM sach ORDER BY namxuatban DESC LIMIT 4";
+        String sql = "SELECT * FROM sach ORDER BY masach DESC LIMIT 7";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);              
             ResultSet rs = pstm.executeQuery();
@@ -512,11 +512,10 @@ public class SachModel {
         return listSach;
     }
     
-    public static List<SachModel> getListSachGiamGia(Connection conn) {
+    public static List<SachModel> getListSachGiamGiaTop7(Connection conn) {
         List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
 
-        String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL "
-                + "ORDER BY TIMESTAMPDIFF(MINUTE,ngayketthucgiamgia,ngaybatdaugiamgia) ASC LIMIT 2";
+        String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL ORDER BY (NOW()-ngayketthucgiamgia) ASC LIMIT 7";
         
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);              
