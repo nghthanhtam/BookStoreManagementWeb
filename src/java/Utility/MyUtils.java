@@ -152,5 +152,12 @@ public class MyUtils {
 
         return null;
     }
+    public  static Boolean checkFileExistence(HttpServletRequest request, String fileName){
+        
+        String applicationPath = request.getServletContext().getRealPath("");
+        String basePath = applicationPath + File.separator ;
+        File tempFile = new File(basePath+fileName);
+        return tempFile.exists();
+    }
 
 }

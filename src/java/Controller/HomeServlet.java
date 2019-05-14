@@ -31,10 +31,18 @@ public class HomeServlet extends HttpServlet {
              
         Connection conn = MyUtils.getStoredConnection(req);
             
-        List<SachModel> listSachMoiNhat = SachModel.getlistSachMoiNhat(conn);
+        List<SachModel> listSachMoiNhat = SachModel.getListSachMoiNhatTop7(conn);
+        SachModel objectOne = listSachMoiNhat.get(0);
+        listSachMoiNhat.remove(0);
         req.setAttribute("listSachMoiNhat", listSachMoiNhat);
-        
-        List<SachModel> listSachGiamGia = SachModel.getListSachGiamGia(conn);
+        req.setAttribute("sachMoiNhat", objectOne);
+        List<SachModel> listSachGiamGia = SachModel.getListSachGiamGiaTop7(conn);
+        for(int i=0;i<listSachGiamGia.size();i++){
+            System.out.println(listSachGiamGia.get(i).getTenSach());
+        }
+        SachModel objectGiamGiaNhat = listSachGiamGia.get(0);
+        listSachGiamGia.remove(0);
+        req.setAttribute("sachGiamGiaNhat", objectGiamGiaNhat);
         req.setAttribute("listSachGiamGia", listSachGiamGia);
 
 

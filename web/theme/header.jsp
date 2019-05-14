@@ -14,6 +14,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -21,8 +22,6 @@
 
 <%
     ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);     
-    Connection conn = MyUtils.getStoredConnection(request);
-    List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
 %>
 
 <!DOCTYPE html>

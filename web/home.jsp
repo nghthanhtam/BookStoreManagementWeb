@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+    
 
 <jsp:include page="theme/header.jsp" />
 
@@ -124,7 +126,35 @@
 					<div class="product product-single product-hot">
 						<div class="product-thumb">
 							<div class="product-label">
-								<span class="sale">-20%</span>
+                                                            	<span class="new">NEW</span>
+                                                                <c:if test="${sachMoiNhat.getPhanTramGiamGia()!=0}">
+                                                                                        <span class="sale">
+                                                                                            <fmt:formatNumber var="lamtron"
+                                                                                            value="${sachMoiNhat.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="0"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <fmt:formatNumber var="khonglamtron"
+                                                                                            value="${sachMoiNhat.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="10"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <c:choose>
+                                                                                                <c:when test="${lamtron != khonglamtron}">
+                                                                                                    
+                                                                                                    ${khonglamtron}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    
+                                                                                                    ${lamtron}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                                                                   %
+                                                                                            </span>
+                                                                                    </c:if>
+                                                                                    
+							                                                                                    
 							</div>
 							<ul class="product-countdown">
 								<li><span>00 H</span></li>
@@ -132,10 +162,39 @@
 								<li><span>00 S</span></li>
 							</ul>
 							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="${listSachMoiNhat[0].getAnhDaiDien()}" alt="">
+							<img src="${sachMoiNhat.getAnhDaiDien()}" alt="">
 						</div>
 						<div class="product-body">
-							<h3 class="product-price">${listSachMoiNhat[0].getGiaBan()} <del class="product-old-price">$45.00</del></h3>
+                                                    
+							<h3 class="product-price">
+                                                            <fmt:formatNumber var="giagoc"
+                                                                              value="${sachMoiNhat.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true" />
+                                                            <fmt:formatNumber var="giagocsaugiamgia"
+                                                                              value="${(100-sachMoiNhat.getPhanTramGiamGia())*0.01*sachMoiNhat.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true"/>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            <c:choose>
+                                                                                                <c:when test="${sachMoiNhat.getPhanTramGiamGia()==0}">
+                                                                                                    ${giagoc}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    ${giagocsaugiamgia}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                            <del class="product-old-price">
+                                                                <c:if test="${sachMoiNhat.getPhanTramGiamGia()!=0}">
+                                                                                        ${giagoc}
+                                                                                    </c:if>
+                                                                
+                                                            </del>
+                                                        </h3>
 							<div class="product-rating">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -143,11 +202,11 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="#">${listSachMoiNhat[0].getTenSach()}</a></h2>
+							<h2 class="product-name"><a href="#">${sachMoiNhat.getTenSach()}</a></h2>
 							<div class="product-btns">
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart" data-id="${listSachMoiNhat[0].getMaSach()}" data-name="${listSachMoiNhat[0].getTenSach()}" data-price="${listSachMoiNhat[0].getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}" data-name="${sachMoiNhat.getTenSach()}" data-price="${sachMoiNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 							</div>
 						</div>
 					</div>
@@ -164,8 +223,33 @@
 							<div class="product product-single">
 								<div class="product-thumb">
 									<div class="product-label">
-										<span>New</span>
-										<span class="sale">-20%</span>
+										<span class="new">NEW</span>
+                                                                <c:if test="${obj.getPhanTramGiamGia()!=0}">
+                                                                                        <span class="sale">
+                                                                                            <fmt:formatNumber var="lamtron"
+                                                                                            value="${obj.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="0"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <fmt:formatNumber var="khonglamtron"
+                                                                                            value="${obj.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="10"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <c:choose>
+                                                                                                <c:when test="${lamtron != khonglamtron}">
+                                                                                                    
+                                                                                                    ${khonglamtron}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    
+                                                                                                    ${lamtron}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                                                                   %
+                                                                                            </span>
+                                                                                    </c:if>
 									</div>
 									<ul class="product-countdown">
 										<li><span>00 H</span></li>
@@ -176,7 +260,35 @@
 									<img src="${obj.getAnhDaiDien()}" alt="">
 								</div>
 								<div class="product-body">
-									<h3 class="product-price">${obj.getGiaBan()} <del class="product-old-price">$45.00</del></h3>
+									<h3 class="product-price">
+                                                                            <fmt:formatNumber var="giagoc"
+                                                                              value="${obj.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true" />
+                                                            <fmt:formatNumber var="giagocsaugiamgia"
+                                                                              value="${(100-sachMoiNhat.getPhanTramGiamGia())*0.01*obj.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true"/>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            <c:choose>
+                                                                                                <c:when test="${obj.getPhanTramGiamGia()==0}">
+                                                                                                    ${giagoc}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    ${giagocsaugiamgia}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                            <del class="product-old-price">
+                                                                <c:if test="${obj.getPhanTramGiamGia()!=0}">
+                                                                                        ${giagoc}
+                                                                                    </c:if>
+                                                                
+                                                            </del>
+                                                                        </h3>
 									<div class="product-rating">
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
@@ -221,7 +333,34 @@
 					<div class="product product-single product-hot">
 						<div class="product-thumb">
 							<div class="product-label">
-								<span class="sale">-20%</span>
+                                                            <c:if test="${sachGiamGiaNhat.getPhanTramGiamGia()!=0}">
+                                                                
+                                                                                        <span >SALE</span>
+                                                                                        <span class="sale">
+                                                                                            <fmt:formatNumber var="lamtron"
+                                                                                            value="${sachGiamGiaNhat.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="0"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <fmt:formatNumber var="khonglamtron"
+                                                                                            value="${sachGiamGiaNhat.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="10"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <c:choose>
+                                                                                                <c:when test="${lamtron != khonglamtron}">
+                                                                                                    
+                                                                                                    ${khonglamtron}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    
+                                                                                                    ${lamtron}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                                                                   %
+                                                                                            </span>
+                                                                                    </c:if>
 							</div>
 							<ul class="product-countdown">
 								<li><span>00 H</span></li>
@@ -229,10 +368,38 @@
 								<li><span>00 S</span></li>
 							</ul>
 							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="${listSachMoiNhat[1].getAnhDaiDien()}" alt="">
+							<img src="${sachGiamGiaNhat.getAnhDaiDien()}" alt="">
 						</div>
 						<div class="product-body">
-							<h3 class="product-price">${listSachMoiNhat[1].getGiaBan()} <del class="product-old-price">$45.00</del></h3>
+							<h3 class="product-price">
+                                                            <fmt:formatNumber var="giagoc"
+                                                                              value="${sachGiamGiaNhat.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true" />
+                                                            <fmt:formatNumber var="giagocsaugiamgia"
+                                                                              value="${(100-sachGiamGiaNhat.getPhanTramGiamGia())*0.01*sachGiamGiaNhat.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true"/>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            <c:choose>
+                                                                                                <c:when test="${sachGiamGiaNhat.getPhanTramGiamGia()==0}">
+                                                                                                    ${giagoc}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    ${giagocsaugiamgia}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                            <del class="product-old-price">
+                                                                <c:if test="${sachGiamGiaNhat.getPhanTramGiamGia()!=0}">
+                                                                                        ${giagoc}
+                                                                                    </c:if>
+                                                                
+                                                            </del>
+                                                        </h3>
 							<div class="product-rating">
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
@@ -240,11 +407,11 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="#">${listSachMoiNhat[1].getTenSach()}</a></h2>
+							<h2 class="product-name"><a href="#">${sachGiamGiaNhat.getTenSach()}</a></h2>
 							<div class="product-btns">
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart" data-name="${listSachMoiNhat[1].getTenSach()}" data-price="${listSachMoiNhat[1].getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 							</div>
 						</div>
 					</div>
@@ -255,42 +422,79 @@
 				<div class="col-md-9 col-sm-6 col-xs-6">
 					<div class="row">
 						<div id="product-slick-2" class="product-slick">
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="./img/product06.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50</h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
+							
+                                                        <c:forEach items="${listSachGiamGia}" var="obj">
+                                
 							<!-- Product Single -->
 							<div class="product product-single">
 								<div class="product-thumb">
 									<div class="product-label">
-										<span class="sale">-20%</span>
+                                                                <c:if test="${obj.getPhanTramGiamGia()!=0}">
+										<span class="new">SALE</span>
+                                                                                        <span class="sale">
+                                                                                            <fmt:formatNumber var="lamtron"
+                                                                                            value="${obj.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="0"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <fmt:formatNumber var="khonglamtron"
+                                                                                            value="${obj.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="10"
+                                                                                            groupingUsed="false"/>
+                                                                                            
+                                                                                            <c:choose>
+                                                                                                <c:when test="${lamtron != khonglamtron}">
+                                                                                                    
+                                                                                                    ${khonglamtron}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    
+                                                                                                    ${lamtron}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                                                                   %
+                                                                                            </span>
+                                                                                    </c:if>
 									</div>
+									<ul class="product-countdown">
+										<li><span>00 H</span></li>
+										<li><span>00 M</span></li>
+										<li><span>00 S</span></li>
+									</ul>
 									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="./img/product05.jpg" alt="">
+									<img src="${obj.getAnhDaiDien()}" alt="">
 								</div>
 								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<h3 class="product-price">
+                                                                            <fmt:formatNumber var="giagoc"
+                                                                              value="${obj.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true" />
+                                                            <fmt:formatNumber var="giagocsaugiamgia"
+                                                                              value="${(100-sachMoiNhat.getPhanTramGiamGia())*0.01*obj.getGiaBan()}"
+                                                                              maxFractionDigits="0" 
+                                                                              groupingUsed="true"/>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            <c:choose>
+                                                                                                <c:when test="${obj.getPhanTramGiamGia()==0}">
+                                                                                                    ${giagoc}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    ${giagocsaugiamgia}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                            <del class="product-old-price">
+                                                                <c:if test="${obj.getPhanTramGiamGia()!=0}">
+                                                                                        ${giagoc}
+                                                                                    </c:if>
+                                                                
+                                                            </del>
+                                                                        </h3>
 									<div class="product-rating">
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star"></i>
@@ -298,69 +502,17 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<h2 class="product-name"><a href="#">${obj.getTenSach()}</a></h2>
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+										<button class="primary-btn add-to-cart" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 									</div>
 								</div>
 							</div>
 							<!-- /Product Single -->
 
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="./img/product04.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50</h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<!-- Product Single -->
-							<div class="product product-single">
-								<div class="product-thumb">
-									<div class="product-label">
-										<span>New</span>
-										<span class="sale">-20%</span>
-									</div>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="./img/product03.jpg" alt="">
-								</div>
-								<div class="product-body">
-									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-									<div class="product-rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o empty"></i>
-									</div>
-									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
+                                                    </c:forEach>
 
 						</div>
 					</div>

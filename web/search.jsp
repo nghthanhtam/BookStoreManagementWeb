@@ -126,11 +126,13 @@
                                                                                         <span class="sale">
                                                                                             <fmt:formatNumber var="lamtron"
                                                                                             value="${obj.getPhanTramGiamGia()}"
-                                                                                            maxFractionDigits="0" />
+                                                                                            maxFractionDigits="0" 
+                                                                                            groupingUsed="false"/>
                                                                                             
                                                                                             <fmt:formatNumber var="khonglamtron"
                                                                                             value="${obj.getPhanTramGiamGia()}"
-                                                                                            maxFractionDigits="10" />
+                                                                                            maxFractionDigits="10" 
+                                                                                            groupingUsed="false" />
                                                                                             
                                                                                             <c:choose>
                                                                                                 <c:when test="${lamtron != khonglamtron}">
