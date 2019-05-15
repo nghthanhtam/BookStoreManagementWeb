@@ -515,8 +515,10 @@ public class SachModel {
     public static List<SachModel> getListSachGiamGiaTop7(Connection conn) {
         List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
 
+
+        //select top 2 sach dang giam gia (sách có hạn giảm giá gần nhất nằm trên đầu)
         String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL ORDER BY (NOW()-ngayketthucgiamgia) ASC LIMIT 7";
-        
+   
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);              
             ResultSet rs = pstm.executeQuery();

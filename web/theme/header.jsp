@@ -159,7 +159,6 @@
                                     <option value="" disabled hidden>Chọn thể loại</option>
                                     <option value="0" selected="selected">Tất cả</option>
                                     <%                                        Connection conn = MyUtils.getStoredConnection(request);
-
                                         List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
                                         String temp= request.getParameter("matheloai");
                                         int maTheLoai;
