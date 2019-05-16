@@ -141,7 +141,7 @@
                             <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden" placeholder="Hãy nhập mã nhà cung cấp">                     
                     </div>                    
 
-                     
+                    
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tổng tiền<span class="required"></span>
                         </label>
