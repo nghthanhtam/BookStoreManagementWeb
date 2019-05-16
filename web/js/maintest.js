@@ -1,12 +1,14 @@
 jQuery(document).ready(function ($) {
- 
-//    localStorage.setItem('obj',[]);
-//    localStorage.setItem('cartCount',0);
-//    localStorage.setItem('cartTotal',0);
+
+//        localStorage.setItem('obj', []);
+//        localStorage.setItem('cartCount', 0);
+//        localStorage.setItem('cartTotal', 0);
     var cartWrapper = $('.header-cart');
 
     if( cartWrapper.length > 0 ) {
       
+
+
         var cartBody = cartWrapper.find('.shopping-cart-list');
 
         var cartList = cartBody.find('ul').eq(0);
@@ -19,37 +21,24 @@ jQuery(document).ready(function ($) {
 
         var undo = cartWrapper.find('.undo');
         var undoTimeoutId;
-
+        var obj = [];
 
         cartCount.find('li').text(localStorage.getItem('cartCount'));
         cartTotal.text(localStorage.getItem('cartTotal'));
-//        if(localStorage.getItem('cartTotal') === null)
-//            localStorage.setItem('cartTotal',0);
-//        else 
-//            cartTotal.text(localStorage.getItem('cartTotal'));
+
         
-        var obj = [];
-                   /*[ 
-	{
-            id:'id1',
-		price:'12',
-		qty:'2'
-            },
-	{
-            id:'id2',
-		price:'10',
-		qty:'3'
-            }
-        ];*/
-        var reObj = JSON.parse(localStorage.getItem('obj'));
+      
+ 
+        //var reObj = JSON.parse(localStorage.getItem('obj'));
+        
         if (localStorage.getItem('obj') !== "") {
-            reObj.forEach(function (f) {
+                 
+            JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
                 var productAdded = $('<li class="product product-widget"><div class="product-thumb"><img src="./img/thumb-product01.jpg" alt=""></div><div class="product-body"><h3 class="product-price">' + f.price + ' x<span class="quantity" id="qty-' + f.id + '">0</span></h3><h2 class="product-name"><a href="#">' + f.name + '</a></h2></div><button class="cancel-btn" data-id="' + f.id + '" data-price="' + f.price + '"><i class="fa fa-trash"></i></button></li>');
-                if((f.delete === 0))
-                {
-                    cartList.prepend(productAdded);
-                    document.getElementById('qty-'+f.id).innerHTML = String(Number(document.getElementById('qty-'+f.id).innerHTML) + 1);
-                }
+         
+                cartList.prepend(productAdded);
+                document.getElementById('qty-'+f.id).innerHTML = String(Number(document.getElementById('qty-'+f.id).innerHTML) + 1);
+                
             });
         }
 
@@ -116,7 +105,7 @@ jQuery(document).ready(function ($) {
     }
 
     function addToCart(trigger) {
-
+    
         var cartIsEmpty = cartWrapper.hasClass('empty');
         //update cart product list
         addProduct(trigger.data('price'), trigger.data('name'), trigger.data('id'));
@@ -142,8 +131,7 @@ jQuery(document).ready(function ($) {
                 id: id, 
                 price: price, 
                 qty: document.getElementById('qty-' + id).innerHTML,
-                name: name,
-                delete: 0});
+                name: name});
             localStorage.setItem('obj', JSON.stringify(obj));
         } else {
 
@@ -170,11 +158,14 @@ jQuery(document).ready(function ($) {
         updateCartCount(true, -productQuantity);
         cartList.find('.deleted').remove();
         
-        JSON.parse(localStorage.getItem('obj')).forEach(function(f){
-            if(f.id === trigger.data('id'))
-                f.delete=1;               
-        });
+        obj.forEach(function (f, index) {
+            if (f.id === trigger.data('id')) {
+                obj.splice(index, 1);                
+              
 
+            }
+        });
+        localStorage.setItem('obj', JSON.stringify(obj));
          
 //        undo.addClass('visible');
 //        //wait 8sec before completely remove the item
