@@ -6,6 +6,7 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class PhieuChiModel {
     public PhieuChiModel() {
     }
 
-    public PhieuChiModel(int maPhieuChi, int maNhaCungCap, int maThanhVien, double tongTien, Timestamp ngayLapPhieu, String ghiChu) {
+    public PhieuChiModel(int maPhieuChi, int maNhaCungCap, int maThanhVien, double tongTien, Date ngayLapPhieu, String ghiChu) {
         this.maPhieuChi = maPhieuChi;
         this.maNhaCungCap = maNhaCungCap;
         this.maThanhVien = maThanhVien;
@@ -49,7 +50,7 @@ public class PhieuChiModel {
         return tongTien;
     }
 
-    public Timestamp getNgayLapPhieu() {
+    public Date getNgayLapPhieu() {
         return ngayLapPhieu;
     }
 
@@ -73,7 +74,7 @@ public class PhieuChiModel {
         this.tongTien = tongTien;
     }
 
-    public void setNgayLapPhieu(Timestamp ngayLapPhieu) {
+    public void setNgayLapPhieu(Date ngayLapPhieu) {
         this.ngayLapPhieu = ngayLapPhieu;
     }
 
@@ -85,7 +86,7 @@ public class PhieuChiModel {
     private int maNhaCungCap;
     private int maThanhVien;
     private double tongTien;
-    private Timestamp ngayLapPhieu;
+    private Date ngayLapPhieu;
     private String ghiChu;
 
     public static boolean InsertNewPhieuChi(Connection conn, PhieuChiModel phieuChi)
@@ -125,7 +126,7 @@ public class PhieuChiModel {
                         Integer.parseInt(rs.getString("manhacungcap")),
                         Integer.parseInt(rs.getString("mathanhvien")),
                         Double.parseDouble(rs.getString("tongtien")),
-                        rs.getTimestamp("ngaylapphieu"),
+                        rs.getDate("ngaylapphieu"),
                         rs.getString("ghichu"));
 
                 listPhieuChi.add(phieuChiModel);
@@ -193,7 +194,7 @@ public class PhieuChiModel {
                     Integer.parseInt(rs.getString("manhacungcap")),
                     Integer.parseInt(rs.getString("mathanhvien")),
                     Double.parseDouble(rs.getString("tongtien")),
-                    rs.getTimestamp("ngaylapphieu"),
+                    rs.getDate("ngaylapphieu"),
                     rs.getString("ghichu"));
             return phieuChiModel;
         }

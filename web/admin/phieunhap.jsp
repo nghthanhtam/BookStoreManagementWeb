@@ -112,6 +112,7 @@
         $(document).ready(function () {
             $('#searchNhaCungCap').autocomplete({
                 source: '${pageContext.request.contextPath}/admin/phieunhap/ajax/nhacungcap',
+                delay: 0,
                 select: function (event, ui) {
                     this.value = ui.item.label;
                     $("#manhacungcap").val(ui.item.value);
@@ -155,13 +156,13 @@
         $('#tblAppendGrid').appendGrid('init', {
             //caption: 'My CD Collections',
             //captionTooltip: 'This is my CD collection list!',
-            initRows: 2,
+            initRows: 10,
 
             columns: [
                 {
                     name: "masach",
                     display: "Mã sách",
-                    value: "0"
+                    value: ""
                 },
                 {
                     name: "tensach",
@@ -169,7 +170,7 @@
                     //       ctrlCss: { width: "200px" }, 
                     type: "ui-autocomplete",
                     uiOption: {
-                        source: 'http://localhost/admin/nhacungcap/ajaxtimnhacungcap',
+                        source: '${contextPath}/admin/phieunhap/ajax/sach',
                         //[{"value":28,"label":"28 - Nguyá»…n TĂ¢y Trung"},{"value":32,"label":"32 - NXB Tiáº¿n"}], 
                         select: function (event, ui) {
                             this.value = ui.item.label;
@@ -238,6 +239,14 @@
 
         });
     });
+
+
+
+    function getJsonTable() {
+        var output = document.getElementById("jsonDataTable");
+        output.value = JSON.stringify($('#tblAppendGrid').appendGrid('getAllValue'), null, "  ");
+    }
+
 </script>
 
 
@@ -298,7 +307,7 @@
 
                     <c:set var="urlEditCurrent" value="edit?id=${phieunhap.getMaPhieuNhap()}" />
 
-                    <form  class="form-horizontal form-label-left input_mask" method="POST" enctype="multipart/form-data" action="${contextPath}/admin/phieunhap/${phieunhap==null ? "add" : urlEditCurrent}">
+                    <form class="form-horizontal form-label-left input_mask" method="POST" action="/admin/phieunhap/${phieunhap==null ? "add" : urlEditCurrent}">
 
                         <c:if test = "${phieunhap != null}">
 
@@ -326,12 +335,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhà cung cấp <span class="required"></span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhà cung cấp <span class="required">*</span>
                             </label>               
                             <div class="col-md-3 col-sm-9 col-xs-12">
                                 <input id="searchNhaCungCap" class="form-control col-md-7 col-xs-12" required="required" name="tennhacungcap" type="text" placeholder="Hãy nhập tên nhà cung cấp">
                             </div>                      
-                            <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden" placeholder="Hãy nhập mã nhà cung cấp">                     
+                            <input id="manhacungcap" class="form-control col-md-7 col-xs-12" required="required" name="manhacungcap" type="hidden">                     
                         </div>    
 
 
@@ -371,32 +380,34 @@
                             <div class="col-md-12 col-sm-3 col-xs-12">
 
 
-                                <table id="tblAppendGrid"></table>
+                                <table id="tblAppendGrid" onkeyup="getJsonTable()"></table>
+
+                                <!--
+                                                                <button id="get" type="button" class="btn btn-success">getAllValue(), JSON</button>
+                                                                <button id="load" type="button" class="btn btn-primary">Load Data</button>
+                                
+                                    <pre class="p-2 bg-light"><code id="output" class="d-none"></code></pre>
+                                -->
 
 
-                                <button id="get" type="button" class="btn btn-success">getAllValue(), JSON</button>
-                                <button id="load" type="button" class="btn btn-primary">Load Data</button>
-
-                                <pre class="p-2 bg-light"><code id="output" class="d-none"></code></pre>
-
-
+                                <input type="hidden" name="jsonDataTable" id="jsonDataTable" />
 
                             </div>
                         </div>     
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+
+
+
+
+
+
+
+
 
 
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <a class="btn btn-primary" href="${contextPath}/admin/sach">Cancel</a>
+                                <a class="btn btn-primary" href="${contextPath}/admin/nhapsach">Cancel</a>
                                 <button class="btn btn-primary" type="reset">Reset</button>
                                 <button type="submit" class="btn btn-success" name="submit" value="${nhapsach==null ? "them":"sua"}" >Submit</button>
                             </div>
@@ -413,19 +424,9 @@
 
 
 <script>
+ 
 
-
-
-
-
-
-
-
-    document.getElementById("get").addEventListener("click", function () {
-        var output = document.getElementById("output");
-        output.classList.remove("d-none");
-        output.innerText = JSON.stringify($('#tblAppendGrid').appendGrid('getAllValue'), null, "  ");
-    });
+    //  document.getElementById("get").addEventListener("click", getJsonTable);
 
 
 
@@ -459,28 +460,7 @@
             }
         ]);
     });
-
-
-
-
-    /*
-     $('tblAppendGrid').appendGrid({
-     columns: [
-     {
-     name: 'tensach',
-     
-     // name: 'AutoCompleteColumn',
-     type: 'ui-autocomplete',
-     uiOption: {
-     // Define the custom options for initalize jQuery UI Autocomplete here
-     source: 'http://localhost/admin/sach/add/ajaxtimnhaxuatbansach'
-     }
-     }
-     ]
-     });
-     */
-
-
+ 
 
 </script>
 

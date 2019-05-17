@@ -87,7 +87,7 @@ public class PhieuChiServlet extends HttpServlet {
                         nhaCungCap.setSoTienNo(nhaCungCap.getSoTienNo() - tongTien);
 
                         try {
-                            boolean isOkUpdate = NhaCungCapModel.UpdateSoTienNo(conn, nhaCungCap);
+                            boolean isOkUpdate = NhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCap);
                             if (isOkUpdate) {
                                 isFailedRequest = false;  
                                 

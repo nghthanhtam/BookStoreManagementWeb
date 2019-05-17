@@ -440,8 +440,7 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
-  
-  
+ 
   public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
@@ -515,8 +514,10 @@ public class SachModel {
     public static List<SachModel> getListSachGiamGiaTop7(Connection conn) {
         List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
 
+
+        //select top 2 sach dang giam gia (sách có hạn giảm giá gần nhất nằm trên đầu)
         String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL ORDER BY (NOW()-ngayketthucgiamgia) ASC LIMIT 7";
-        
+   
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);              
             ResultSet rs = pstm.executeQuery();
@@ -548,7 +549,36 @@ public class SachModel {
         return listSachGiamGia;
     }              
               
-              
+  
+public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) throws SQLException {
+
+        List<AjaxModel> listSach = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT * FROM sach WHERE masach = ? OR tensach LIKE ? ";
+
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1 , tenSach); // tìm bằng Mã sách
+            pstm.setString(2, "%" + tenSach + "%"); // tìm bằng tên sách
+            
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                AjaxModel ajaxModel = new AjaxModel(
+                        Integer.parseInt(rs.getString("masach")),
+                        rs.getString("masach") + " - " +rs.getString("tensach"));
+
+                listSach.add(ajaxModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listSach;
+
+    }              
               
               
               

@@ -28,15 +28,13 @@ public class NhaCungCapModel {
     private Double soTienNo;
 
     public NhaCungCapModel(int maNhaCungCap, String tenNhaCungCap, String diaChi, String soDienThoai, Double soTienNo) {
-        this.maNhaCungCap=maNhaCungCap;
+        this.maNhaCungCap = maNhaCungCap;
         this.tenNhaCungCap = tenNhaCungCap;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
         this.soTienNo = soTienNo;
     }
 
-  
-      
     public int getMaNhaCungCap() {
         return maNhaCungCap;
     }
@@ -76,159 +74,128 @@ public class NhaCungCapModel {
     public void setSoTienNo(Double soTienNo) {
         this.soTienNo = soTienNo;
     }
-    
-    public static boolean InsertNewNhaCungCap(Connection conn, NhaCungCapModel obj) 
-            throws SQLException
-    { 
+
+    public static boolean InsertNewNhaCungCap(Connection conn, NhaCungCapModel obj)
+            throws SQLException {
         int count = 0;
-        try
-        {
-            String sql="INSERT INTO nhacungcap (tennhacungcap, diachi, sodienthoai) VALUES (?,?,?)";
+        try {
+            String sql = "INSERT INTO nhacungcap (tennhacungcap, diachi, sodienthoai) VALUES (?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
-            
+
             pstm.setString(1, obj.getTenNhaCungCap());
             pstm.setString(2, obj.getDiaChi());
             pstm.setString(3, obj.getSoDienThoai());
-            count = pstm.executeUpdate(); 
+            count = pstm.executeUpdate();
         } catch (SQLException ex) {
             count = 0;
         }
-       return count>0;
+        return count > 0;
     }
-    
-    public static List<NhaCungCapModel> getAllNhaCungCap(Connection conn)
-    {
+
+    public static List<NhaCungCapModel> getAllNhaCungCap(Connection conn) {
         List<NhaCungCapModel> listNhaCungCap = new ArrayList<NhaCungCapModel>();
-        
+
         String sql = "SELECT * FROM nhacungcap";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
-            
-            while(rs.next())
-            {
+
+            while (rs.next()) {
                 NhaCungCapModel nhaCungCapModel = new NhaCungCapModel(
                         Integer.parseInt(rs.getString("manhacungcap")),
                         rs.getString("tennhacungcap"),
                         rs.getString("diachi"),
                         rs.getString("sodienthoai"),
                         Double.parseDouble(rs.getString("sotienno")));
-                
+
                 listNhaCungCap.add(nhaCungCapModel);
             }
-            
+
         } catch (SQLException e) {
-           
-        } 
-        
-        return listNhaCungCap; 
+
+        }
+
+        return listNhaCungCap;
     }
-    public static boolean DeleteNhaCungCapById(Connection conn, int maNhaCungCap) throws SQLException
-    {
+
+    public static boolean DeleteNhaCungCapById(Connection conn, int maNhaCungCap) throws SQLException {
         String sql = "DELETE FROM nhacungcap WHERE manhacungcap = ?";
         int count = 0;
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, maNhaCungCap);             
-            count = pstm.executeUpdate(); 
-            
+            pstm.setInt(1, maNhaCungCap);
+            count = pstm.executeUpdate();
+
         } catch (SQLException ex) {
-            
+
         }
-        
-       
-        System.out.println("count = "+count);
-        
-        return count>0;
+
+        System.out.println("count = " + count);
+
+        return count > 0;
     }
-    
-    
-    public static NhaCungCapModel FindByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException
-    {    
+
+    public static NhaCungCapModel FindByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException {
         String sql = "SELECT * FROM nhacungcap WHERE manhacungcap = ? ";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        pstm.setInt(1, maNhaCungCap);
-        
-        ResultSet rs = pstm.executeQuery();
-                     
 
-        if (rs.next()) {  
+        pstm.setInt(1, maNhaCungCap);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
             NhaCungCapModel nhaCungCapModel = new NhaCungCapModel(
-                    Integer.parseInt(rs.getString("manhacungcap")), 
-                    rs.getString("tennhacungcap") ,
+                    Integer.parseInt(rs.getString("manhacungcap")),
+                    rs.getString("tennhacungcap"),
                     rs.getString("diachi"),
                     rs.getString("sodienthoai"),
                     Double.parseDouble(rs.getString("sotienno")));
-               
-             return nhaCungCapModel; 
+
+            return nhaCungCapModel;
         }
-        return null;       
+        return null;
     }
-       
-    public static String FindTenByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException
-    {    
+
+    public static String FindTenByMaNhaCungCap(Connection conn, int maNhaCungCap) throws SQLException {
         String sql = "SELECT tennhacungcap FROM nhacungcap WHERE manhacungcap = ? ";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
-        
-        pstm.setInt(1, maNhaCungCap);
-        
-        ResultSet rs = pstm.executeQuery();
-                     
 
-        if (rs.next()) {  
-            String tenNhaCungCap = rs.getString("manhacungcap"); 
-                  
-            return tenNhaCungCap; 
+        pstm.setInt(1, maNhaCungCap);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            String tenNhaCungCap = rs.getString("manhacungcap");
+
+            return tenNhaCungCap;
         }
-        return null;       
+        return null;
     }
-    
-    
-    public static boolean UpdateNhaCungCap(Connection conn, NhaCungCapModel obj) 
-            throws SQLException
-    { 
+
+    public static boolean UpdateNhaCungCap(Connection conn, NhaCungCapModel obj)
+            throws SQLException {
         int count = 0;
-        try
-        {
-            String sql="UPDATE nhacungcap SET tennhacungcap = ?, diachi = ?, sodienthoai = ? WHERE manhacungcap = ?";
+        try {
+            String sql = "UPDATE nhacungcap SET tennhacungcap = ?, diachi = ?, sodienthoai = ?, sotienno = ? WHERE manhacungcap = ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
-            
+
             pstm.setString(1, obj.getTenNhaCungCap());
             pstm.setString(2, obj.getDiaChi());
             pstm.setString(3, obj.getSoDienThoai());
-            pstm.setDouble(4, obj.getMaNhaCungCap());  
+            pstm.setDouble(4, obj.getSoTienNo());
+            pstm.setDouble(5, obj.getMaNhaCungCap());
 
-            count = pstm.executeUpdate(); 
+            count = pstm.executeUpdate();
         } catch (SQLException ex) {
             count = 0;
             ex.printStackTrace();
         }
-       return count>0;
+        return count > 0;
     }
-     
-    public static boolean UpdateSoTienNo(Connection conn, NhaCungCapModel obj) 
-            throws SQLException
-    { 
-        int count = 0;
-        try
-        {
-            String sql="UPDATE nhacungcap SET sotienno = ? WHERE manhacungcap = ?";
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            pstm.setDouble(1, obj.getSoTienNo());  
-            pstm.setInt(2, obj.getMaNhaCungCap());  
-            
-            count = pstm.executeUpdate(); 
-        } catch (SQLException ex) {
-            count = 0;
-            ex.printStackTrace();
-        }
-       return count>0;
-    }
-        
+
+  
     public static List<AjaxModel> FindAllByName(Connection conn, String tenNhaCungCap) throws SQLException {
 
         List<AjaxModel> listNhaCungCap = new ArrayList<AjaxModel>();
@@ -237,16 +204,16 @@ public class NhaCungCapModel {
 
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            pstm.setString(1 , tenNhaCungCap); // tìm bằng Mã nhà cung cấp
+
+            pstm.setString(1, tenNhaCungCap); // tìm bằng Mã nhà cung cấp
             pstm.setString(2, "%" + tenNhaCungCap + "%"); // tìm bằng tên nhà cung cấp
-            
+
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 AjaxModel ajaxNhaCungCapModel = new AjaxModel(
                         Integer.parseInt(rs.getString("manhacungcap")),
-                        rs.getString("manhacungcap") + " - " +rs.getString("tennhacungcap"));
+                        rs.getString("manhacungcap") + " - " + rs.getString("tennhacungcap"));
 
                 listNhaCungCap.add(ajaxNhaCungCapModel);
             }
@@ -258,5 +225,5 @@ public class NhaCungCapModel {
         return listNhaCungCap;
 
     }
-     
+
 }

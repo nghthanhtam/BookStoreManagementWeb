@@ -44,12 +44,10 @@ public class DeletePhieuChiServlet extends HttpServlet {
             if (phieuChiModel != null) {
                 isFailed = false;
             } else {
-                conn.rollback();
-                System.out.println("abccc1");
+                conn.rollback(); 
                 isFailed = true;
             }
-        } catch (Exception ex) {
-            System.out.println("exxxxx");
+        } catch (Exception ex) { 
             ex.toString();
             isFailed = true;
         }
@@ -67,8 +65,7 @@ public class DeletePhieuChiServlet extends HttpServlet {
         try {
             NhaCungCapModel nhaCungCap = NhaCungCapModel.FindByMaNhaCungCap(conn, phieuChiModel.getMaNhaCungCap());
             nhaCungCap.setSoTienNo(nhaCungCap.getSoTienNo() + phieuChiModel.getTongTien());
-            
-            boolean isOk1 = NhaCungCapModel.UpdateSoTienNo(conn, nhaCungCap);
+            boolean isOk1 = NhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCap);
             if (isOk1) {
                 isFailedRequest = false;
             } else {
