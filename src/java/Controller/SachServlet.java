@@ -7,6 +7,7 @@ package Controller;
 
 import Model.PhanQuyenModel;
 import Model.SachModel;
+import Model.SachModelWithTheLoaiAndTrangThai;
 import Model.ThanhVienModelWithTenQuyen;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class SachServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
          req.setAttribute("txtTitle", "Sách");
         Connection conn = MyUtils.getStoredConnection(req);
-         List<SachModel> listAllSach = SachModel.getAllSach(conn);
+         List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
         System.out.println(listAllSach.size());
         req.setAttribute("listAllSach", listAllSach);
 

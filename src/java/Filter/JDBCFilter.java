@@ -46,6 +46,11 @@ public class JDBCFilter implements Filter {
     String servletPath = request.getServletPath();
     String pathInfo = request.getPathInfo();
     String urlPattern = servletPath;
+    
+    if (urlPattern.equals(""))
+        return true;
+
+    
     if (pathInfo != null) { 
         urlPattern = servletPath + "/*";
     }

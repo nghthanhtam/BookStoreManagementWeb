@@ -99,10 +99,7 @@ public class EditSachServlet extends HttpServlet {
                 sach.setNgayKetThucGiamGia(ngayKetThucGiamGia);
                 sach.setTrangThai(trangThai);
                 
-                /*sach = new SachModel(maSach, maTheLoai, tenSach,
-                        nhaXuatBan, namXuatBan, giaBan, moTa, dirImage, 0, tenTacGia,
-                        phanTramGiamGia, ngayBatDauGiamGia, ngayKetThucGiamGia, trangThai);
-*/
+                
                 boolean isOk = SachModel.UpdateSach(conn, sach);
 
                 if (isOk) {

@@ -6,6 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <jsp:include page="/theme/header.jsp" />
  
 	<!-- BREADCRUMB -->
@@ -56,8 +59,32 @@
 					<div class="col-md-6">
 						<div class="product-body">
 							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
+                                                           <c:if test="${sach.getPhanTramGiamGia()!=0}">
+                                                                                        <span>SALE</span>
+                                                                                        <span class="sale">
+                                                                                            <fmt:formatNumber var="lamtron"
+                                                                                            value="${sach.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="0" />
+                                                                                            
+                                                                                            <fmt:formatNumber var="khonglamtron"
+                                                                                            value="${sach.getPhanTramGiamGia()}"
+                                                                                            maxFractionDigits="10" />
+                                                                                            
+                                                                                            <c:choose>
+                                                                                                <c:when test="${lamtron != khonglamtron}">
+                                                                                                    
+                                                                                                    ${khonglamtron}
+                                                                                                </c:when> 
+                                                                                                <c:otherwise>
+                                                                                                    
+                                                                                                    ${lamtron}
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+
+                                                                                                   %
+                                                                                            </span>
+                                                                                    </c:if>
+                                                                          
 							</div>
 							<h2 class="product-name">${ sach.getTenSach() }</h2>
 							<h3 class="product-price">${ sach.getGiaBan() } </h3>
