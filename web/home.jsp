@@ -300,7 +300,7 @@
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 									</div>
 								</div>
 							</div>
@@ -411,7 +411,9 @@
 							<div class="product-btns">
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+
+								<button class="primary-btn add-to-cart" data-id="${listSachMoiNhat[1].getMaSach()}" data-name="${listSachMoiNhat[1].getTenSach()}" data-price="${listSachMoiNhat[1].getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+
 							</div>
 						</div>
 					</div>
