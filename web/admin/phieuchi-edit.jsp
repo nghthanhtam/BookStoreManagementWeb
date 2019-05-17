@@ -15,7 +15,7 @@
 	$(document).ready(function() {
 
             $('#search').autocomplete({
-		source: '${pageContext.request.contextPath}/admin/nhacungcap/ajaxtimnhacungcap',
+		source: '${pageContext.request.contextPath}/admin/nhacungcap/ajax/nhacungcap',
                 select: function(event, ui){
                         this.value = ui.item.label;
                         $("#manhacungcap").val(ui.item.value);

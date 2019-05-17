@@ -440,8 +440,7 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
-  
-  
+ 
   public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
@@ -548,7 +547,36 @@ public class SachModel {
         return listSachGiamGia;
     }              
               
-              
+  
+public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) throws SQLException {
+
+        List<AjaxModel> listSach = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT * FROM sach WHERE masach = ? OR tensach LIKE ? ";
+
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1 , tenSach); // tìm bằng Mã sách
+            pstm.setString(2, "%" + tenSach + "%"); // tìm bằng tên sách
+            
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                AjaxModel ajaxModel = new AjaxModel(
+                        Integer.parseInt(rs.getString("masach")),
+                        rs.getString("masach") + " - " +rs.getString("tensach"));
+
+                listSach.add(ajaxModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listSach;
+
+    }              
               
               
               

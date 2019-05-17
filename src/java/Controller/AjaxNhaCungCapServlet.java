@@ -19,13 +19,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-@WebServlet("/admin/nhacungcap/ajaxtimnhacungcap")
-
+ 
+@WebServlet(name = "AjaxNhaCungCapServlet", urlPatterns = {
+    "/admin/nhacungcap/ajax/nhacungcap",
+    "/admin/phieunhap/ajax/nhacungcap"})
 public class AjaxNhaCungCapServlet extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-
+ 
     public AjaxNhaCungCapServlet() {
         super();
     }
