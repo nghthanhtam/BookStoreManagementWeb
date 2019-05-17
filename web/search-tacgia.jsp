@@ -46,22 +46,23 @@
                                                     <li><a href="/search?tukhoa=${tukhoa}&matheloai=0">Tất cả</a></li>
                                                                                   
                                                     <%   Connection conn = MyUtils.getStoredConnection(request);
-                                        
-                                        List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);           
+                                                    
+                                                        List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);           
                                                         for (TheLoaiModel obj : listAllTheLoai)
-                                        {
-                                            out.print("<li><a href=\"/search?tukhoa="+request.getAttribute("tukhoa")+"&matheloai="+obj.getMaTheLoai()+"&page=1 \">"+obj.getTenTheLoai()+"</a></li>");
-                                        }               
-                                                        
-                                                        
-                                                        
-                                                        
-                                     %>
-						</ul>
+                                                        {
+                                                        out.print("<li><a href=\"/search?tukhoa="+request.getAttribute("tukhoa")+"&matheloai="+obj.getMaTheLoai()+"&page=1 \">"+obj.getTenTheLoai()+"</a></li>");
+                                                        }               
+					
+
+
+
+                                                     %>
+                                                </ul>
 					</div>
 					<!-- /aside widget -->
 				</div>
 				<!-- /ASIDE -->
+
 
 				<!-- MAIN -->
 				<div id="main" class="col-md-9">
@@ -89,16 +90,15 @@
                                                                 <li class="active"></li>
                                                                 
                                                                 <%  
-                                                        String tuKhoa = (String)request.getAttribute("tukhoa");
+                                                        String tenTacGia = (String)request.getAttribute("tentacgia");
                                                         Integer maTheLoai = Integer.parseInt(request.getAttribute("numofpage").toString());
                                                         
                                                         //${page==2 ? "class=\"active\"":""}
                                                         for(int i=0; i< maTheLoai;i++ ){
-                                                            out.print("<li><a href=\"/search?tukhoa="+request.getAttribute("tukhoa")+"&matheloai="+request.getAttribute("matheloai")+"&page="+(i+1)+"\">"+(i+1)+"</a></li>");  
+                                                            out.print("<li><a href=\"/tacgia?tentacgia="+request.getAttribute("tentacgia")+"&page="+(i+1)+"\">"+(i+1)+"</a></li>");  
                                      
                                                         }
                                                            
-                                                        
                                                         
                                      %>
 								
@@ -113,9 +113,9 @@
 						<!-- row -->
 						<div class="row">
                                                <tbody>
-                                                     ${listSach.size()==0?"Không tìm thấy sách theo yêu cầu của khách hàng!":""}                         
-
-                                                 <c:forEach items="${listSach}" var="obj">
+                                                    ${listSachTheoTacGia.size()==0?"Không tìm thấy sách theo yêu cầu của khách hàng!":""}                         
+                                                     
+                                                        <c:forEach items="${listSachTheoTacGia}" var="obj">
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
@@ -177,10 +177,9 @@
                                                                                             </c:choose>
                                                                                     <del class="product-old-price">
                                                                                         <c:if test="${obj.getPhanTramGiamGia()!=0}">
-                                                                                            ${giagoc}
+                                                                                        ${giagoc}
                                                                                     </c:if>
-                                                                
-                                                            </del>
+                                                                                    </del>
                                                                                 </h3>   
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
@@ -235,7 +234,7 @@
                                                         
                                                         //${page==2 ? "class=\"active\"":""}
                                                         for(int i=0; i< maTheLoai;i++ ){
-                                                            out.print("<li><a href=\"/search?tukhoa="+request.getAttribute("tukhoa")+"&matheloai="+request.getAttribute("matheloai")+"&page="+(i+1)+"\">"+(i+1)+"</a></li>");  
+                                                            out.print("<li><a href=\"/tacgia?tentacgia="+request.getAttribute("tentacgia")+"&page="+(i+1)+"\">"+(i+1)+"</a></li>");  
                                      
                                                         }
                                                            

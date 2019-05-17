@@ -71,15 +71,7 @@ public class SearchSachServlet extends HttpServlet {
             
             List<SachModel> listSach = SachModel.FindAllByTuKhoa(conn, tuKhoa, maTheLoai,currentPage,numberOfBookInOnePage);
             
-            for(int i=0;i<listSach.size();i++){
-                System.out.println(listSach.get(i).getTenSach());
-            }
-                System.out.println(numberOfBookInOnePage);//7
-                System.out.println(numOfPage);//0
-                System.out.println(listSach.size());//0
-                System.out.println(numOfBookFound);//0
             
-               
             
             req.setAttribute("numofpage", numOfPage);
             req.setAttribute("listSach", listSach);
