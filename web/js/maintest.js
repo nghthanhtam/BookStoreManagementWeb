@@ -26,11 +26,8 @@ jQuery(document).ready(function ($) {
         cartCount.find('li').text(localStorage.getItem('cartCount'));
         cartTotal.text(localStorage.getItem('cartTotal'));
 
-        
-      
- 
-        //var reObj = JSON.parse(localStorage.getItem('obj'));
-        
+        //JSON: dạng object
+        //stringify: dạng chuỗi để lưu vào localStorage
         if (localStorage.getItem('obj') !== "") {
                  
             JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
@@ -161,8 +158,6 @@ jQuery(document).ready(function ($) {
         obj.forEach(function (f, index) {
             if (f.id === trigger.data('id')) {
                 obj.splice(index, 1);                
-              
-
             }
         });
         localStorage.setItem('obj', JSON.stringify(obj));
