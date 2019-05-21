@@ -8,6 +8,7 @@ package Controller;
 import Model.CTDonHangModel;
 import Model.DonHangModel;
 import Model.MessagesModel;
+import Model.PhiShipModel;
 import Model.SachModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -65,8 +66,8 @@ public class CheckoutServlet extends HttpServlet {
         List<CTDonHangModel> listCTDonHang = new ArrayList<>();
         HttpSession session = ((HttpServletRequest) req).getSession();
         
-        //int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();      
-        int maThanhVien = 45;
+        int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();      
+        //int maThanhVien = 45;
                 
         if (button != null && button.equals("them")) {
             try {
@@ -78,9 +79,13 @@ public class CheckoutServlet extends HttpServlet {
                 String diaChi = (String) req.getParameter("address");
                 String soDienThoai = (String) req.getParameter("tel");
                 String ghiChu = (String) req.getParameter("comment");
+                Integer maPhiShip = Integer.parseInt(req.getParameter("maphiship"));               
+                PhiShipModel phishipModel = PhiShipModel.FindByMaPhiShip(conn, maPhiShip);
+                Double phiShip = phishipModel.getPhiShip();
+                        
                 String listCT = (String) req.getParameter("listctdonhang");
       
-                System.out.print(listCT);
+              
                 Double tongTien=0.0;
                 
                try {
@@ -90,11 +95,9 @@ public class CheckoutServlet extends HttpServlet {
                         JSONObject jsonObj = jsonArr.getJSONObject(i);
                         listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),Double.parseDouble(jsonObj.getString("price")),0));
                         
-                        System.out.println(jsonObj);
-                        System.out.println(jsonObj.getString("id"));
-                        System.out.println(jsonObj.getString("price"));
-                        System.out.println(Double.parseDouble(jsonObj.getString("price"))+1.0);
-                        
+//                        System.out.println(jsonObj);
+//                        System.out.println(jsonObj.getString("id"));
+
                         tongTien+= Double.parseDouble(jsonObj.getString("price"))*Integer.parseInt(jsonObj.getString("qty"));
                     }
     
@@ -110,10 +113,11 @@ public class CheckoutServlet extends HttpServlet {
                         0,
                         maThanhVien,
                         new java.sql.Date(date.getTime()),
-                        tongTien,
+                        tongTien+phiShip,
                         1,
                         diaChi,
-                        70,
+                        maPhiShip,
+                        phiShip,
                         soDienThoai,
                         ghiChu        
                 ));

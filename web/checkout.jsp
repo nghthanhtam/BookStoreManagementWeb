@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="theme/header.jsp" />
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,15 +93,18 @@
 							<div class="form-group">
 								<input class="input" type="text" name="address" placeholder="Address">
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" placeholder="City">
+                                                        <div class="form-group">
+                                                            <select id="heard" class="form-control" required="" name="maphiship">
+                                                                <option value="" >Tỉnh/Thành phố</option>
+                                                                <c:forEach items="${listPhiShip}" var="obj">
+                                                                   
+                                                                    <option value="${obj.getMaPhiShip()}">${obj.getTenTinh()}</option>
+                                                                    
+                                                                </c:forEach>
+                                                            </select>
+								
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" placeholder="ZIP Code">
-							</div>
+							
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone">
 							</div>

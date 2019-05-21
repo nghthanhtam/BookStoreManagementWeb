@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
                 cartList.prepend(productAdded);
 
                 //giỏ hàng chi tiết
-                var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.name + '</a><ul><li><span>Size: XL</span></li><li><span>Color: Camelot</span></li></ul></td><td class="price text-center"><strong>' + f.price + '</strong><br><del class="font-weak"><small>$40.00</small></del></td><td class="qty text-center"><input class="input" data-id="' + f.id + '" type="number" value=' + f.qty + '></td><td class="total text-center"><strong class="primary-color">' + f.price * f.qty + '</strong></td><td class="text-right"><button class="main-btn icon-btn" data-id="' + f.id + '"><i class="fa fa-close"></i></button></td></tr>');
+                var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.name + '</a><ul><li><span>Size: XL</span></li><li><span>Color: Camelot</span></li></ul></td><td class="price text-center"><strong>' + f.price + '</strong></td><td class="qty text-center"><input class="input" id="input-'+f.id+'" data-id="' + f.id + '" type="number" value=' + f.qty + '></td><td class="total text-center"><strong class="primary-color">' + f.price * f.qty + '</strong></td><td class="text-right"><button class="main-btn icon-btn" data-id="' + f.id + '"><i class="fa fa-close"></i></button></td></tr>');
                 giohang.prepend(cartDetails);
 
                 //document.getElementById('qty-'+f.id).innerHTML = String(Number(document.getElementById('qty-'+f.id).innerHTML) + 1);              
@@ -106,20 +106,43 @@ jQuery(document).ready(function ($) {
         });
 
         function quickUpdateCartDetails(trigger) {
-
+            //alert(trigger.data('id'));
             obj.forEach(function (f) {
+               
                 if (f.id === String(trigger.data('id'))) {
-                    updateCartCount(true, -f.qty);
-                    updateCartTotal(f.price * f.qty, false);
-                    
-                    f.qty = Number(giohang.find('.input').val());
-                    updateCartCount(true, f.qty);
-
-                    updateCartTotal(f.price * f.qty, true);
+                  // alert(f.id);
+                   //alert(f.qty);
+                   //alert(Number(document.getElementById('input-68').value));
+                   
+                    var inputQty=Number(document.getElementById('input-'+f.id).value);
+                    if(f.qty < inputQty)
+                    {
+                        //alert(f.qty);
+                       // alert(inputQty);
+                        updateCartCount(true, inputQty - Number(f.qty));
+                        updateCartTotal(Number(f.price) * (inputQty -Number(f.qty)), true);
+                        f.qty = String(inputQty);
+                    } else {
+                        //alert('else');
+                        updateCartCount(true, -(Number(f.qty)-inputQty));
+                        updateCartTotal(Number(f.price) * (Number(f.qty)-inputQty), false);
+                        f.qty = String(inputQty);
+                    }
+                  
+//                    alert('abc');
+//                    updateCartCount(true, -f.qty);
+//                    updateCartTotal(f.price * f.qty, false);
+//                    
+//                    f.qty = Number(giohang.find('.input').val());
+//                    updateCartCount(true, f.qty);
+//
+//                    updateCartTotal(f.price * f.qty, true);
 
                 }
             });
-            localStorage.setItem('obj', JSON.stringify(obj));
+            //alert('upd');
+             localStorage.setItem('obj', JSON.stringify(obj));
+                    window.location.reload();
 
 //            cartTotal.text(price.toFixed(2));
 //            cartCount.find('li').eq(0).text(quantity);
@@ -169,7 +192,7 @@ jQuery(document).ready(function ($) {
 
         var cartIsEmpty = cartWrapper.hasClass('empty');
         //update cart product list
-        addProduct(trigger.data('price'), trigger.data('name'), trigger.data('id'));
+        addProduct(trigger.data('price'), trigger.data('name'), trigger.data('id'),trigger.data('linkanh'));
         //update number of items 
         updateCartCount(cartIsEmpty);
         //update total price
@@ -178,7 +201,7 @@ jQuery(document).ready(function ($) {
         cartWrapper.removeClass('empty');
     }
 
-    function addProduct(price, name, id) {
+    function addProduct(price, name, id, linkanh) {
         //this is just a product placeholder
         //you should insert an item with the selected product info
         //replace productId, productName, price and url with your real product info
@@ -193,7 +216,8 @@ jQuery(document).ready(function ($) {
                 id: String(id),
                 price: price,
                 qty: String(Number(document.getElementById('qty-' + id).innerHTML) + 1),
-                name: name});
+                name: name
+               });
             localStorage.setItem('obj', JSON.stringify(obj));
 
         } else {

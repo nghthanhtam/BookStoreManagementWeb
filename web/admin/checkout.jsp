@@ -578,15 +578,8 @@
 							<div class="form-group">
 								<input class="input" type="text" name="address" placeholder="Address">
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
+							
+							
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone">
 							</div>

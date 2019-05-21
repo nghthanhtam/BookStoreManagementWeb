@@ -91,7 +91,17 @@ public class DonHangModel {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
-    
+
+    public double getPhiShip() {
+        return phiShip;
+    }
+
+    public void setPhiShip(double phiShip) {
+        this.phiShip = phiShip;
+    }
+     
+    private String soDienThoai;
+    private String ghiChu;
     private int maDonHang;
     private int maThanhVien;
     private Date ngayLap;
@@ -99,11 +109,10 @@ public class DonHangModel {
     private int trangThai;
     private String diaChiGiaoHang;
     private int maPhiShip;
-    private String soDienThoai;
-    private String ghiChu;
+    private double phiShip;
+
     
-    
-    public DonHangModel(int maDonHang, int maThanhVien, Date ngayLap, double tongTien, int trangThai, String diaChiGiaoHang, int maPhiShip, String soDienThoai, String ghiChu) {
+    public DonHangModel(int maDonHang, int maThanhVien, Date ngayLap, double tongTien, int trangThai, String diaChiGiaoHang, int maPhiShip, double phiship, String soDienThoai, String ghiChu) {
         this.maDonHang = maDonHang;
         this.maThanhVien = maThanhVien;
         this.ngayLap = ngayLap;
@@ -111,6 +120,7 @@ public class DonHangModel {
         this.trangThai = trangThai;
         this.diaChiGiaoHang = diaChiGiaoHang;
         this.maPhiShip = maPhiShip;
+        this.phiShip = phiship;
         this.soDienThoai = soDienThoai;
         this.ghiChu = ghiChu;
     }
@@ -122,7 +132,7 @@ public class DonHangModel {
             throws SQLException {
         int count = 0;
         try {
-            String sql = "INSERT INTO donhang (mathanhvien, ngaylap, tongtien ,trangthai, diachigiaohang, maphiship, sodienthoai, ghichu) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO donhang (mathanhvien, ngaylap, tongtien ,trangthai, diachigiaohang, maphiship, phiship, sodienthoai, ghichu) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, donHang.getMaThanhVien());
@@ -131,8 +141,9 @@ public class DonHangModel {
             pstm.setInt(4, donHang.getTrangThai());
             pstm.setString(5, donHang.getDiaChiGiaoHang());
             pstm.setInt(6, donHang.getMaPhiShip());
-            pstm.setString(7, donHang.getSoDienThoai());
-            pstm.setString(8, donHang.getGhiChu());
+            pstm.setDouble(7, donHang.getPhiShip());
+            pstm.setString(8, donHang.getSoDienThoai());
+            pstm.setString(9, donHang.getGhiChu());
 
             count = pstm.executeUpdate();
 
@@ -177,6 +188,7 @@ public class DonHangModel {
                         rs.getInt("trangthai"),
                         rs.getString("diachigiaohang"),
                         rs.getInt("maphiship"),
+                        rs.getDouble("phiship"),
                         rs.getString("sodienthoai"),
                         rs.getString("ghichu"));
                 list.add(obj);

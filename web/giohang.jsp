@@ -78,9 +78,9 @@
 									<tr>
 										<th>Product</th>
 										<th></th>
-										<th class="text-center">Price</th>
-										<th class="text-center">Quantity</th>
-										<th class="text-center">Total</th>
+										<th class="text-center">Giá</th>
+										<th class="text-center">Số lượng</th>
+										<th class="text-center">Tổng tiền</th>
 										<th class="text-right"></th>
 									</tr>
 								</thead>
