@@ -296,8 +296,8 @@
                                                                             </ul>
 									</div>
 									<div class="shopping-cart-btns">
-										<button class="main-btn">View Cart</button>
-										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+										<button class="main-btn"><a href="${contextPath}/giohang">View Cart</a></button>
+										<button class="main-btn-checkout">Checkout <i class="fa fa-arrow-circle-right"></i></button>
 									</div>
 								</div>
 							</div>
@@ -501,11 +501,3 @@
             <!-- /container -->
         </div>
         <!-- /NAVIGATION -->
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script>
-			if( !window.jQuery ) document.write('<script src="js/jquery-1.4.2.min.js"><\/script>');
-		</script>
-		<script src="js/maintest.js"></script> <!-- Resource jQuery -->
-</body>
-</html>

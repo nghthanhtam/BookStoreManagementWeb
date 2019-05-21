@@ -58,6 +58,7 @@ public class AjaxTimTenTacGiaServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.print("abcc");
     }
 
 }

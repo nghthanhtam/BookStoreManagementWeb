@@ -130,7 +130,7 @@
                 
              
 
-                <form class="form-horizontal form-label-left " method="POST" action="${pageContext.request.contextPath}/admin/phieuchi">
+                <form class="form-horizontal form-label-left" method="POST" action="${pageContext.request.contextPath}/admin/phieuchi">
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tên nhà cung cấp <span class="required"></span>

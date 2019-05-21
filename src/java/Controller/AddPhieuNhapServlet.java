@@ -102,7 +102,7 @@ public class AddPhieuNhapServlet extends HttpServlet {
                 }.getType();
 
                 List<CTPhieuNhapModel> listCTPhieuNhap = gson.fromJson(jsonDataTable, collectionType);
-
+               
                 conn.setAutoCommit(false);
 
                 int maPhieuNhap = PhieuNhapModel.getMaPhieuNhapCurrent(conn);
