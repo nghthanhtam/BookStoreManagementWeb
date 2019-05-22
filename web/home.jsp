@@ -296,11 +296,11 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
+									<h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}aaaaa</a></h2>
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 									</div>
 								</div>
 							</div>
@@ -412,7 +412,7 @@
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 
-								<button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}" data-linkanh="${sachGiamGiaNhat.getAnhDaiDien()}" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}" data-linkanh="${sachGiamGiaNhat.getAnhDaiDien()}" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()-sachGiamGiaNhat.getGiaBan()*sachGiamGiaNhat.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 
 							</div>
 						</div>
@@ -508,7 +508,7 @@
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 									</div>
 								</div>
 							</div>

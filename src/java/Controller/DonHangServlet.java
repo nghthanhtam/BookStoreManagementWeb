@@ -20,6 +20,7 @@ import Model.PhiShipModel;
 import Model.SachModel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,9 +31,7 @@ public class DonHangServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-      
-   
+ 
     }
 
     @Override
@@ -41,7 +40,10 @@ public class DonHangServlet extends HttpServlet {
 
         Connection conn = MyUtils.getStoredConnection(req);
 
-        List<DonHangModel> listDonHang = DonHangModel.getAllDonHang(conn);
+        HttpSession session = ((HttpServletRequest) req).getSession();       
+        int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();   
+        
+        List<DonHangModel> listDonHang = DonHangModel.getAllDonHangByMaThanhVien(conn, maThanhVien);
         req.setAttribute("listDonHang", listDonHang);
         
         List<CTDonHangModel> listCTDonHang = CTDonHangModel.getAllCTDonHang(conn);

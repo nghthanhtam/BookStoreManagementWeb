@@ -200,4 +200,35 @@ public class DonHangModel {
 
         return list;
     }
+    
+     public static List<DonHangModel> getAllDonHangByMaThanhVien(Connection conn, int maThanhVien) {
+        List<DonHangModel> list = new ArrayList<DonHangModel>();
+
+        String sql = "SELECT * FROM donhang WHERE mathanhvien = ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maThanhVien);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                DonHangModel obj = new DonHangModel(
+                        rs.getInt("madonhang"),
+                        rs.getInt("mathanhvien"),
+                        rs.getDate("ngaylap"),
+                        rs.getDouble("tongtien"),
+                        rs.getInt("trangthai"),
+                        rs.getString("diachigiaohang"),
+                        rs.getInt("maphiship"),
+                        rs.getDouble("phiship"),
+                        rs.getString("sodienthoai"),
+                        rs.getString("ghichu"));
+                list.add(obj);
+            }
+
+        } catch (SQLException e) {
+            
+        }
+
+        return list;
+    }
 }

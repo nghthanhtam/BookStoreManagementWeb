@@ -67,7 +67,7 @@ public class CheckoutServlet extends HttpServlet {
         HttpSession session = ((HttpServletRequest) req).getSession();
         
         int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();      
-        //int maThanhVien = 45;
+     
                 
         if (button != null && button.equals("them")) {
             try {
@@ -88,17 +88,22 @@ public class CheckoutServlet extends HttpServlet {
               
                 Double tongTien=0.0;
                 
-               try {
+                try {
                     //JSONArray jsonArr = new JSONArray("[{\"id\":\"61\",\"price\":\"15700.0\",\"qty\":\"1\",\"name\":\"Kẻ may mắn\"},{\"id\":\"52\",\"price\":\"25000.0\",\"qty\":\"1\",\"name\":\"Sách số 123\"}]");
                     JSONArray jsonArr = new JSONArray(listCT);
                     for (int i = 0; i < jsonArr.length(); i++) {
                         JSONObject jsonObj = jsonArr.getJSONObject(i);
-                        listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),Double.parseDouble(jsonObj.getString("price")),0));
                         
-//                        System.out.println(jsonObj);
-//                        System.out.println(jsonObj.getString("id"));
+                        SachModel sachModel = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
+                        listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),sachModel.getGiaBan(),
+                                        sachModel.getGiaBan()-sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100,sachModel.getPhanTramGiamGia()));                       
+                        
+                        //listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),Double.parseDouble(jsonObj.getString("price")),0));                       
+//                      System.out.println(jsonObj);
+//                      System.out.println(jsonObj.getString("id"));
 
-                        tongTien+= Double.parseDouble(jsonObj.getString("price"))*Integer.parseInt(jsonObj.getString("qty"));
+                        //tongTien+= Double.parseDouble(jsonObj.getString("price"))*Integer.parseInt(jsonObj.getString("qty"));
+                        tongTien+= ( sachModel.getGiaBan()-  sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100 )*Integer.parseInt(jsonObj.getString("qty"));
                     }
     
                 } catch (JSONException ex) {
