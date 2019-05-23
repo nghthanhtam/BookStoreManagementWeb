@@ -5,10 +5,10 @@
  */
 package Controller;
 
-import Model.PhanQuyenModel;
-import Model.SachModel;
+import Model.DonHangModel;
+import Model.DonHangModelWithTenThanhVienAndTenDangNhap;
+import Model.PhiShipModel;
 import Model.SachModelWithTheLoaiAndTrangThai;
-import Model.ThanhVienModelWithTenQuyen;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,25 +22,29 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Admin
+ * @author Dell
  */
-@WebServlet(name = "SachServlet", urlPatterns = {"/admin/sach"})
-public class SachServlet extends HttpServlet {
+@WebServlet(name = "DonDatHangServlet", urlPatterns = {"/admin/donhang"})
+public class DonHangServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("txtTitle", "Sách");
+        req.setAttribute("txtTitle", "Đơn hàng");
         Connection conn = MyUtils.getStoredConnection(req);
-        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
-        System.out.println(listAllSach.size());
-        req.setAttribute("listAllSach", listAllSach);
+        List<DonHangModelWithTenThanhVienAndTenDangNhap> listDonHang = DonHangModelWithTenThanhVienAndTenDangNhap.getAllDonHang(conn);
+        
+        
+        
+        
+        
+        req.setAttribute("listDonHang", listDonHang);
 
-        req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);;
+        req.getRequestDispatcher("/admin/list-donhang.jsp").forward(req, resp);;
     }
 
 }
