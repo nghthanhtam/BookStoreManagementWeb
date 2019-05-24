@@ -8,12 +8,16 @@ package Controller;
 import Model.DonHangModel;
 import Model.DonHangModelWithTenThanhVienAndTenDangNhap;
 import Model.PhiShipModel;
+import Model.SachModel;
 import Model.SachModelWithTheLoaiAndTrangThai;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,13 +39,38 @@ public class DonHangServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("txtTitle", "Đơn hàng");
+
+        Integer numOfDonHangInOnePage = 20;
+
+        Integer currentPage;
+        int numOfPage = 0;
+        String temp = req.getParameter("page");
+        if (req.getParameter("page") != null) {
+            currentPage = Integer.parseInt(temp);
+        } else {
+            currentPage = 1;
+        }
+
         Connection conn = MyUtils.getStoredConnection(req);
-        List<DonHangModelWithTenThanhVienAndTenDangNhap> listDonHang = DonHangModelWithTenThanhVienAndTenDangNhap.getAllDonHang(conn);
+        List<DonHangModelWithTenThanhVienAndTenDangNhap> listDonHang = DonHangModelWithTenThanhVienAndTenDangNhap.getAllDonHang(conn, currentPage, numOfDonHangInOnePage);
+
+        int numOfBookFound;
+
+        try {
+            numOfBookFound = DonHangModelWithTenThanhVienAndTenDangNhap.CountAllDonHang(conn);
+
+            if (numOfBookFound % numOfDonHangInOnePage == 0) {
+                numOfPage = numOfBookFound / numOfDonHangInOnePage;
+            } else {
+                numOfPage = numOfBookFound / numOfDonHangInOnePage + 1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DonHangServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         
-        
-        
-        
-        
+        req.setAttribute("numofpage", numOfPage);
+        req.setAttribute("currentpage", currentPage);
         req.setAttribute("listDonHang", listDonHang);
 
         req.getRequestDispatcher("/admin/list-donhang.jsp").forward(req, resp);;

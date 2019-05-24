@@ -37,34 +37,33 @@ public class EditDonHangServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
         //Connection
         Connection conn = MyUtils.getStoredConnection(req);
         boolean isFailed = false; // request thất bại
         String noiDungThongBao = "";
-        
+
         //Button
         String button = req.getParameter("submit");
-        
+
         DonHangModelWithTenThanhVienAndTenDangNhap donHang = null;
-        
+
         List<PhiShipModel> listPhiShip = null;
-        
+
         if (button != null && button.equals("sua")) {
 
             System.out.println("AAAAAAAAAAAAAAAA");
             try {
-                
+
                 //Get MaDonHang
                 int maDonHang = Integer.parseInt(req.getParameter("madonhang"));
                 //Get DonHang
                 DonHangModel donHangTemp = DonHangModel.FindByMaDonHang(conn, maDonHang);
-                
-                
-                if(donHangTemp.getTrangThai()==3)
+
+                if (donHangTemp.getTrangThai() == 3) {
                     throw new Exception("Không thể cập nhật đơn hàng đã xóa!");
-                
-                
+                }
+
                 String diaChi = (String) req.getParameter("diachigiaohang");
                 int maPhiShip = Integer.parseInt(req.getParameter("maphiship"));
                 int trangthai = Integer.parseInt(req.getParameter("trangthai"));
@@ -81,6 +80,15 @@ public class EditDonHangServlet extends HttpServlet {
                 donHangTemp.setMaPhiShip(maPhiShip);
 
                 boolean isOk = DonHangModel.UpdateDonHang(conn, donHangTemp);
+
+                Boolean updateSoLuongTonSach = null;
+                List<CTDonHangModelWithTenSach> listCTDHHuy = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
+                for (int i = 0; i < listCTDHHuy.size(); i++) {
+                    updateSoLuongTonSach = SachModel.UpdateSoLuongTonSach(conn, listCTDHHuy.get(i).getSoLuong(), listCTDHHuy.get(i).getMaSach());
+                    if (updateSoLuongTonSach == false) {
+                        System.out.println("Update sách: " + listCTDHHuy.get(i).getMaSach());
+                    }
+                }
 
                 if (isOk) {
                     isFailed = false;
@@ -124,7 +132,6 @@ public class EditDonHangServlet extends HttpServlet {
         req.setAttribute("txtTitle", "Sửa đơn hàng");
         boolean result = false;
         List<CTDonHangModelWithTenSach> listSanPham = null;
-        
         DonHangModelWithTenThanhVienAndTenDangNhap donHang = null;
 
         List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
@@ -148,6 +155,7 @@ public class EditDonHangServlet extends HttpServlet {
 
         if (result == true) {
             req.setAttribute("donHang", donHang);
+            
             req.setAttribute("listPhiShip", listPhiShip);
             req.setAttribute("listSanPham", listSanPham);
             req.getRequestDispatcher("/admin/donhang.jsp").forward(req, resp);
@@ -155,7 +163,7 @@ public class EditDonHangServlet extends HttpServlet {
 
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được thực hiện!", MessagesModel.ATT_TYPE_ERROR));
 
-            List<DonHangModelWithTenThanhVienAndTenDangNhap> listDonHang = DonHangModelWithTenThanhVienAndTenDangNhap.getAllDonHang(conn);
+            List<DonHangModelWithTenThanhVienAndTenDangNhap> listDonHang = DonHangModelWithTenThanhVienAndTenDangNhap.getAllDonHang(conn,1,20);
             req.setAttribute("listDonHang", listDonHang);
             req.getRequestDispatcher("/admin/list-donhang.jsp").forward(req, resp);;
         }

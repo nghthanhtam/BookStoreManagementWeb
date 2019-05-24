@@ -125,15 +125,18 @@ public class DonHangModelWithTenThanhVienAndTenDangNhap {
         this.tenDangNhap= tenDangNhap;
     }
     
-    public static List<DonHangModelWithTenThanhVienAndTenDangNhap> getAllDonHang(Connection conn) {
+    public static List<DonHangModelWithTenThanhVienAndTenDangNhap> getAllDonHang(Connection conn,Integer page, Integer numOfBookInOnePage) {
         List<DonHangModelWithTenThanhVienAndTenDangNhap> list = new ArrayList<DonHangModelWithTenThanhVienAndTenDangNhap>();
 
         String sql = "SELECT madonhang, hoten,tendangnhap, ngaylap,tongtien,trangthai,diachigiaohang, maphiship,donhang.sodienthoai,ghichu "
-                + "FROM donhang, thanhvien WHERE thanhvien.mathanhvien = donhang.mathanhvien";
+                + "FROM donhang, thanhvien WHERE thanhvien.mathanhvien = donhang.mathanhvien LIMIT ?,?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            pstm.setInt(1, (page-1)*numOfBookInOnePage);
+            pstm.setInt(2, numOfBookInOnePage);
             ResultSet rs = pstm.executeQuery();
-
+            
             while (rs.next()) {
                 DonHangModelWithTenThanhVienAndTenDangNhap obj = new DonHangModelWithTenThanhVienAndTenDangNhap(
                         rs.getInt("madonhang"),
@@ -155,6 +158,32 @@ public class DonHangModelWithTenThanhVienAndTenDangNhap {
 
         return list;
     }
+    
+    public static int CountAllDonHang(Connection conn) throws SQLException {
+
+        int counter=0;
+        int x=0;
+            
+            String sql ="SELECT COUNT(*) AS TOTAL FROM (SELECT madonhang, hoten,tendangnhap, ngaylap,tongtien,trangthai,diachigiaohang, maphiship,donhang.sodienthoai,ghichu" +
+"                               FROM donhang, thanhvien WHERE thanhvien.mathanhvien = donhang.mathanhvien) AS T";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next())
+                counter=rs.getInt("TOTAL");
+            
+
+        } catch (SQLException e) {
+            System.out.println("Exception: ");
+            System.out.println(e.toString());
+        }
+
+        return counter;
+
+    }
+  
+    
     
      public static DonHangModelWithTenThanhVienAndTenDangNhap FindByMaDonHang(Connection conn, int madonhang) throws SQLException {
 

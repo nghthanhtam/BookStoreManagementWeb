@@ -36,6 +36,28 @@
                 <div class="x_content">
 
 
+                    <div class="x_content">
+							
+							<ul class="">
+								<li><span class="text-uppercase">Page:</span></li>
+                                                                <li class="active"></li>
+                                                                
+                                                                <%  
+                                                        Integer currentPage = Integer.parseInt(request.getAttribute("currentpage").toString());
+                                                        Integer numOfPage = Integer.parseInt(request.getAttribute("numofpage").toString());
+                                                        
+                                                        for(int i=0; i< numOfPage;i++ ){
+                                                            out.print("<li><a href=\"donhang?page="+(i+1)+"\">"+(i+1)+"</a></li>");  
+                                     
+                                                        }
+                                                           
+                                                        
+                                                        
+                                     %>
+								
+								
+								</ul>
+						</div>
                     <!-- start project list -->
                     <table class="table table-striped projects">
                         <thead>
@@ -65,8 +87,8 @@
                                     <td >
                                         <c:choose>
                                             <c:when test="${obj.getTrangThai()==-1}">
-                                                <a href="${contextPath}/admin/donhang/updatetrangthai?id=${obj.getMaDonHang()}&trangthai=1" style="height: 21px;width: 78px"  class="btn btn-success btn-xs"><i class="fa fa-check-circle-o"></i> Tiếp nhận</a>
-                                                <a href="${contextPath}/admin/donhang/updatetrangthai?id=${obj.getMaDonHang()}&trangthai=0" style="height: 21px;width: 78px" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Hủy </a>
+                                                <a href="${contextPath}/admin/donhang/updatetrangthai?id=${obj.getMaDonHang()}&trangthai=1&page=<% out.print(currentPage); %>" style="height: 21px;width: 78px"  class="btn btn-success btn-xs"><i class="fa fa-check-circle-o"></i> Tiếp nhận</a>
+                                                <a href="${contextPath}/admin/donhang/updatetrangthai?id=${obj.getMaDonHang()}&trangthai=0&page=<% out.print(currentPage); %>" style="height: 21px;width: 78px" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Hủy </a>
                                                 </form>
                                             </c:when> 
                                             <c:when test="${obj.getTrangThai()==1}">

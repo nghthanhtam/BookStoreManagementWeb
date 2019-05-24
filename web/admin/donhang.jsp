@@ -29,6 +29,8 @@
 
             });
         });
+        
+        
     </script>
 
 
@@ -63,7 +65,8 @@
                 </div>
                 <div class="x_content">
                     <br>
-
+                    
+                    
 
                     <c:set var="urlEditCurrent" value="edit?id=${donHang.getMaDonHang()}" />
 
@@ -113,7 +116,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Trạng thái<span class="required">*</span>
                             </label>
                             <div class="col-md-3 col-sm-9 col-xs-12">
-                                 <select id="heard" class="form-control" ${donHang.getTrangThai()==0 ? "disabled":""}  name="trangthai">
+                                 <select id="method" class="form-control" ${donHang.getTrangThai()==0 ? "disabled":""}  name="trangthai">
                                     <option value="" selected disabled hidden>Chọn trạng thái</option>
                                     <option value="-1" ${donHang != null && donHang.getTrangThai() == -1 ? "selected=\"selected\"" : ""}>Đang chờ</option>
                                     <option value="1" ${donHang != null && donHang.getTrangThai() == 1 ? "selected=\"selected\"" : ""}>Đang tiếp nhận</option>
@@ -122,6 +125,7 @@
                                     <option value="0" ${donHang != null && donHang.getTrangThai() == 0 ? "selected=\"selected\"" : ""}>Bị hủy</option>
 
                                 </select>
+                                    
                             </div>
                         </div>
                         <div class="form-group">
