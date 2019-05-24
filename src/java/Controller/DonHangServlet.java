@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.DonHangModel;
+import Model.MessagesModel;
 import Model.PhiShipModel;
 import Model.SachModel;
 import java.util.ArrayList;
@@ -31,30 +32,39 @@ public class DonHangServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
- 
+        
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("txtTitle", "Đơn hàng của tôi");
 
-        Connection conn = MyUtils.getStoredConnection(req);
+        HttpSession session = req.getSession();
+        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
+        {
 
-        HttpSession session = ((HttpServletRequest) req).getSession();       
-        int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();   
-        
-        List<DonHangModel> listDonHang = DonHangModel.getAllDonHangByMaThanhVien(conn, maThanhVien);
-        req.setAttribute("listDonHang", listDonHang);
-        
-        List<CTDonHangModel> listCTDonHang = CTDonHangModel.getAllCTDonHang(conn);
-        req.setAttribute("listCTDonHang", listCTDonHang);
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để xem đơn hàng!", MessagesModel.ATT_TYPE_ERROR));
+            req.getRequestDispatcher("home.jsp").forward(req, resp);
+        } else {
+            
+            Connection conn = MyUtils.getStoredConnection(req);
 
-        List<SachModel> listSach = SachModel.getAllSach(conn);
-        req.setAttribute("listSach", listSach);
-        
-        req.getRequestDispatcher("list-donhang.jsp").forward(req, resp);
-        
-    
+            //HttpSession session = ((HttpServletRequest) req).getSession();       
+            int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();
+
+            List<DonHangModel> listDonHang = DonHangModel.getAllDonHangByMaThanhVien(conn, maThanhVien);
+            req.setAttribute("listDonHang", listDonHang);
+
+            List<CTDonHangModel> listCTDonHang = CTDonHangModel.getAllCTDonHang(conn);
+            req.setAttribute("listCTDonHang", listCTDonHang);
+
+            List<SachModel> listSach = SachModel.getAllSach(conn);
+            req.setAttribute("listSach", listSach);
+
+            req.getRequestDispatcher("list-donhang.jsp").forward(req, resp);
+
+        }
+
     }
 
 }

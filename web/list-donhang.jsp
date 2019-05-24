@@ -99,7 +99,7 @@
 
                                                                                                     <c:forEach items="${listSach}" var="sach">
                                                                                                         <c:if test="${objdh.getMaSach()== sach.getMaSach()}">
-                                                                                                            <li><span>${sach.getTenSach()}</span></li>
+                                                                                                                <li><span>${sach.getTenSach()}</span></li>
                                                                                                         </c:if>
                                                                                                     </c:forEach>
                                                                                                

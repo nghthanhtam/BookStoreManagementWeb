@@ -23,15 +23,8 @@ public class CTDonHangModel {
     private int maSach;
     private int soLuong;
     private double donGia;
-    private double donGiaGiam;
 
-    public double getDonGiaGiam() {
-        return donGiaGiam;
-    }
 
-    public void setDonGiaGiam(double donGiaGiam) {
-        this.donGiaGiam = donGiaGiam;
-    }
     private double phanTramGiamGia;
 
     public int getMaCTDonHang() {
@@ -82,13 +75,12 @@ public class CTDonHangModel {
         this.phanTramGiamGia = phanTramGiamGia;
     }
 
-    public CTDonHangModel(int maCTDonHang, int maDonHang, int maSach, int soLuong, double donGia, double donGiaGiam, double phanTramGiamGia) {
+    public CTDonHangModel(int maCTDonHang, int maDonHang, int maSach, int soLuong, double donGia, double phanTramGiamGia) {
         this.maCTDonHang = maCTDonHang;
         this.maDonHang = maDonHang;
         this.maSach = maSach;
         this.soLuong = soLuong;
         this.donGia = donGia;
-        this.donGiaGiam = donGiaGiam;
         this.phanTramGiamGia = phanTramGiamGia;
     }
     
@@ -98,7 +90,7 @@ public class CTDonHangModel {
         int count = 0;
 
         try {
-            String sql = "INSERT INTO ctdonhang(madonhang, masach, soluong, dongia, dongiagiam, phantramgiamgia) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO ctdonhang(madonhang, masach, soluong, dongia, phantramgiamgia) VALUES (?,?,?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             for (CTDonHangModel obj : listCTDonHang) {
@@ -106,9 +98,8 @@ public class CTDonHangModel {
                 pstm.setInt(2, obj.getMaSach());
                 pstm.setInt(3, obj.getSoLuong());
                 pstm.setDouble(4, obj.getDonGia());
-                pstm.setDouble(5, obj.getDonGiaGiam());
-                pstm.setDouble(6, obj.getPhanTramGiamGia());
-
+                pstm.setDouble(5, obj.getPhanTramGiamGia());
+     
                 pstm.addBatch();
             }
             
@@ -136,7 +127,6 @@ public class CTDonHangModel {
                         rs.getInt("masach"),
                         rs.getInt("soluong"),
                         rs.getDouble("dongia"),
-                        rs.getDouble("dongiagiam"),
                         rs.getDouble("phantramgiamgia"));
                 list.add(obj);
             }

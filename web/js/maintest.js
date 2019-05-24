@@ -1,5 +1,29 @@
-jQuery(document).ready(function ($) {
+function resetLocalStorage()
+{
+    localStorage.setItem('obj', []);
+        localStorage.setItem('cartCount', 0);
+        localStorage.setItem('cartTotal', 0);
+}
 
+$('#selectphiship').on('change', function (f) {
+
+    var options = this.getElementsByTagName('option');
+    var optionHTML = options[this.selectedIndex].innerHTML;
+    
+    if(optionHTML.split('-')[1] == null){
+        document.getElementById('phiship').innerHTML = "";
+    }
+    else{
+        document.getElementById('phiship').innerHTML = optionHTML.split('-')[1]; 
+        //dữ liệu dc lưu là tên + phí ship
+        //tách chuỗi bằng dấu "-" và lấy phần tử thứ 2
+    }
+
+});
+    
+jQuery(document).ready(function ($) {
+    
+//        
 //        localStorage.setItem('obj', []);
 //        localStorage.setItem('cartCount', 0);
 //        localStorage.setItem('cartTotal', 0);
@@ -13,8 +37,10 @@ jQuery(document).ready(function ($) {
         var obj = [];
     }
 
+    
+    
     if (cartWrapper.length > 0) {
-
+     
         var cartBody = cartWrapper.find('.shopping-cart-list');
         var cartList = cartBody.find('ul').eq(0);
         var addToCartBtn = $('.add-to-cart');
@@ -51,7 +77,7 @@ jQuery(document).ready(function ($) {
             });
         }
 
-
+       
 
         //add product to cart
         addToCartBtn.on('click', function (event) {

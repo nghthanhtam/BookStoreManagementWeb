@@ -76,7 +76,7 @@
 							<table class="shopping-cart-table table">
 								<thead>
 									<tr>
-										<th>Product</th>
+										<th>Sản phẩm</th>
 										<th></th>
 										<th class="text-center">Giá</th>
 										<th class="text-center">Số lượng</th>
@@ -93,21 +93,18 @@
 								<tfoot>
 									<tr>
 										<th class="empty" colspan="3"></th>
-										<th>SUBTOTAL</th>
-										<th colspan="2" class="sub-total">0</th>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>SHIPING</th>
+										<th>PHÍ SHIP</th>
 										<td colspan="2">Free Shipping</td>
 									</tr>
 									<tr>
 										<th class="empty" colspan="3"></th>
-										<th>TOTAL</th>
+										<th>TỔNG TIỀN</th>
                                                                                 <th colspan="2" class="total"><span>0</span></th>
 									</tr>
 								</tfoot>
 							</table>
+                                                    
+                                                        
 							<div class="pull-right">
 								<button class="primary-btn-dathang">ĐẶT HÀNG</button>
 							</div>
