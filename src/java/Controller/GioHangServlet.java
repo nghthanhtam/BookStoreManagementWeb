@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -29,29 +32,37 @@ public class GioHangServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        HttpSession session = req.getSession();
-//        
-//        Connection conn = MyUtils.getStoredConnection(req);
-//        List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
-//        req.setAttribute("listPhiShip", listPhiShip);
-//        //System.out.print(listPhiShip.get(0).getMaPhiShip());
-//        
-//        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
-//        {
-//
-//            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để tiếp tục mua hàng!", MessagesModel.ATT_TYPE_ERROR));
-//            req.getRequestDispatcher("giohang.jsp").forward(req, resp);
-//        } else {
-//
-//            req.getRequestDispatcher("checkout.jsp").forward(req, resp);
-//        }
+ 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("txtTitle", "Giỏ hàng");
 
-        req.getRequestDispatcher("giohang.jsp").forward(req, resp);
+//        String listCT = (String) req.getParameter("listctdonhang");
+//        System.out.print(listCT);
+//
+//        JSONArray jsonListCT = null;
+//
+//        try {
+//            jsonListCT = new JSONArray(listCT);
+//
+//        } catch (JSONException ex) {
+//
+//            ex.printStackTrace();
+//        };
+//
+//        
+//        if (jsonListCT.length() <= 0) {
+//            System.out.print("abcccccccc");
+//            req.getRequestDispatcher("giohang-empty.jsp").forward(req, resp);
+//        } else {
+            req.getRequestDispatcher("giohang.jsp").forward(req, resp);
+        //}
+
+        //req.setAttribute("listCT", listCT);
+      
+       
 
     }
 

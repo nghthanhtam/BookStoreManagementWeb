@@ -23,8 +23,6 @@ public class CTDonHangModel {
     private int maSach;
     private int soLuong;
     private double donGia;
-
-
     private double phanTramGiamGia;
 
     public int getMaCTDonHang() {

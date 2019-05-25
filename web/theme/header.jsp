@@ -295,10 +295,23 @@
 										</div>-->
                                                                             </ul>
 									</div>
-									<div class="shopping-cart-btns">
-										<button class="main-btn"><a href="${contextPath}/giohang">View Cart</a></button>
-										<button class="main-btn-checkout">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+                                                                    
+                      
+                                                                   <!--<form method="GET" action="/giohang">                                                                     
+<!--<script type="text/javascript">
+  <div class="form-group">
+   <input class="input" type="hidden" name="listctdonhang" id="listctdonhang">
+</div>
+    var listCTDonHang = (localStorage.getItem("obj"));
+    document.getElementById("listctdonhang").value = listCTDonHang;
+</script>
+        </form>	-->
+                                                                        <div class="shopping-cart-btns">
+                                                                            <button class="main-btn"><a href="${contextPath}/giohang">View Cart</a></button>
+
+                                                                            <button class="main-btn-checkout"> <a href="${contextPath}/checkout" >Checkout <i class="fa fa-arrow-circle-right"></i></a></button>
 									</div>
+                                                           
 								</div>
 							</div>
 						</li>

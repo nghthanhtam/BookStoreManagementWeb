@@ -36,9 +36,7 @@ jQuery(document).ready(function ($) {
     } else {
         var obj = [];
     }
-
-    
-    
+  
     if (cartWrapper.length > 0) {
      
         var cartBody = cartWrapper.find('.shopping-cart-list');
@@ -51,13 +49,29 @@ jQuery(document).ready(function ($) {
         var undo = cartWrapper.find('.undo');
         var undoTimeoutId;
 
-
-        updateFromLocalStorage();
-
         cartCount.find('li').text(localStorage.getItem('cartCount'));
         cartTotal.text(localStorage.getItem('cartTotal'));
         tableTotal.find('.total').find('span').text(localStorage.getItem('cartTotal'));
 
+  
+        if (localStorage.getItem('obj') !== "") {
+
+            JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
+
+                if (f.qty == 0) {
+                    return;
+                }
+                //giỏ hàng dropdown
+                var productAdded = $('<li class="product product-widget"><div class="product-thumb"><img src="./img/thumb-product01.jpg" alt=""></div><div class="product-body"><h3 class="product-price">' + f.price + ' x<span class="quantity" id="qty-' + f.id + '">' + f.qty + '</span></h3><h2 class="product-name"><a href="#">' + f.name + '</a></h2></div><button class="cancel-btn" data-id="' + f.id + '" data-price="' + f.price + '"><i class="fa fa-trash"></i></button></li>');
+                cartList.prepend(productAdded);
+
+                //giỏ hàng chi tiết
+                var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.name + '</a><ul><li><span>Size: XL</span></li></ul></td><td class="price text-center"><strong>' + f.price + '</strong></td><td class="qty text-center"><input class="input" id="input-' + f.id + '" data-id="' + f.id + '" type="number" value=' + f.qty + '></td><td class="total text-center"><strong class="primary-color">' + f.price * f.qty + '</strong></td><td class="text-right"><a class="main-btn icon-btn delete-cart-details" data-id="' + f.id + '"><i class="fa fa-close"></i></a></td></tr>');
+                giohang.prepend(cartDetails);
+
+            });
+        }
+  
   
         //add product to cart
         addToCartBtn.on('click', function (event) {
@@ -119,7 +133,7 @@ jQuery(document).ready(function ($) {
 //        }, 0);
         }
         
-        giohang.on('.delete-cart-details', function (event) {
+        giohang.on('click','.delete-cart-details', function (event) {
            
             event.preventDefault();
             removeCartDetails($(this));
@@ -341,26 +355,10 @@ jQuery(document).ready(function ($) {
 
     }
     
-    function updateFromLocalStorage() {
-
-        //JSON: dạng object
-        //stringify: dạng chuỗi để lưu vào localStorage
-        if (localStorage.getItem('obj') !== "") {
-       
-            JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
-                
-                if(f.qty == 0) {
-                    return;
-                }
-                //giỏ hàng dropdown
-                var productAdded = $('<li class="product product-widget"><div class="product-thumb"><img src="./img/thumb-product01.jpg" alt=""></div><div class="product-body"><h3 class="product-price">' + f.price + ' x<span class="quantity" id="qty-' + f.id + '">' + f.qty + '</span></h3><h2 class="product-name"><a href="#">' + f.name + '</a></h2></div><button class="cancel-btn" data-id="' + f.id + '" data-price="' + f.price + '"><i class="fa fa-trash"></i></button></li>');
-                cartList.prepend(productAdded);
-
-                //giỏ hàng chi tiết
-                var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.name + '</a><ul><li><span>Size: XL</span></li></ul></td><td class="price text-center"><strong>' + f.price + '</strong></td><td class="qty text-center"><input class="input" id="input-' + f.id + '" data-id="' + f.id + '" type="number" value=' + f.qty + '></td><td class="total text-center"><strong class="primary-color">' + f.price * f.qty + '</strong></td><td class="text-right"><button class="main-btn icon-btn delete-cart-details" data-id="' + f.id + '"><i class="fa fa-close"></i></button></td></tr>');
-                giohang.prepend(cartDetails);
-
-            });
-        }
-    }
+//    function updateFromLocalStorage() {
+//
+//        //JSON: dạng object
+//        //stringify: dạng chuỗi để lưu vào localStorage
+//        
+//    }
 });

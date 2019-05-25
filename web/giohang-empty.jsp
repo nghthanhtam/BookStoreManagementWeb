@@ -73,44 +73,18 @@
 							<div class="section-title">
 								<h3 class="title">Giỏ hàng của tôi</h3>
 							</div>
-							<table class="shopping-cart-table table">
-								<thead>
-									<tr>
-										<th>Sản phẩm</th>
-										<th></th>
-										<th class="text-center">Giá</th>
-										<th class="text-center">Số lượng</th>
-										<th class="text-center">Tổng tiền</th>
-										<th class="text-right"></th>
-									</tr>
-								</thead>
-								
-                                                                <tbody class="giohang">
-                                                                
-								<!--cart details here-->
-                                                             
-								</tbody>
-                                                          
-                                                                
-								<tfoot>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>PHÍ SHIP</th>
-										<td colspan="2">Free Shipping</td>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>TỔNG TIỀN</th>
-                                                                                <th colspan="2" class="total"><span>0</span></th>
-									</tr>
-								</tfoot>
-							</table>                                        
-                                                 
-                                                        <div class="pull-right">  
-                                                         
-                                                            <button class="primary-btn-dathang"><a href="${contextPath}/checkout">ĐẶT HÀNG</a></button>
-                                                        </div>
+
+                                                            <div>
+
+                                                                <p> Không có sản phẩm nào trong giỏ hàng của bạn! </p>
+
+                                                            </div>
+                                                  
+                                                            <div class="pull-left">   
+                                                                <a class="primary-btn" href="${contextPath}/">Tiếp tục mua sắm!</a>
+                                                            </div>
                                                
+                                                   
 						</div>
 
 					</div>

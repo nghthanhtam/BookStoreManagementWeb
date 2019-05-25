@@ -10,40 +10,24 @@ import Model.DonHangModel;
 import Model.MessagesModel;
 import Model.PhiShipModel;
 import Model.SachModel;
+import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.json.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -73,7 +57,8 @@ public class CheckoutServlet extends HttpServlet {
                 
         if (button != null && button.equals("them")) {
             try {
-            
+                conn.setAutoCommit(false);
+                
                 int maDonHang = DonHangModel.getMaDonHangCurrent(conn);
                 
                 String diaChi = (String) req.getParameter("address");
@@ -84,36 +69,37 @@ public class CheckoutServlet extends HttpServlet {
                 Double phiShip = phishipModel.getPhiShip();
                         
                 String listCT = (String) req.getParameter("listctdonhang");
-                JSONArray jsonListCT = new JSONArray(listCT);
-              
-                Double tongTien=0.0;
+                JSONArray jsonListCT =null;
                 
+             
+                Double tongTien=0.0;
+               
                 try {
+                     jsonListCT = new JSONArray(listCT);
                     //JSONArray jsonArr = new JSONArray("[{\"id\":\"61\",\"price\":\"15700.0\",\"qty\":\"1\",\"name\":\"Kẻ may mắn\"},{\"id\":\"52\",\"price\":\"25000.0\",\"qty\":\"1\",\"name\":\"Sách số 123\"}]");
                     
+                   if(jsonListCT.length() <= 0){
+                        req.getRequestDispatcher("giohang-empty.jsp").forward(req, resp);
+                   }
+                                         
                     for (int i = 0; i < jsonListCT.length(); i++) {
                         JSONObject jsonObj = jsonListCT.getJSONObject(i);
                         
                         SachModel sachModel = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
-                        listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),
-                                            sachModel.getGiaBan(), sachModel.getPhanTramGiamGia()));                       
+                        listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),sachModel.getGiaBan(), sachModel.getPhanTramGiamGia()));                       
                         
-                        //listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),Double.parseDouble(jsonObj.getString("price")),0));                       
-//                      System.out.println(jsonObj);
-//                      System.out.println(jsonObj.getString("id"));
-
-                        //tongTien+= Double.parseDouble(jsonObj.getString("price"))*Integer.parseInt(jsonObj.getString("qty"));
+                       
                         tongTien+= ( sachModel.getGiaBan()-  sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100 )*Integer.parseInt(jsonObj.getString("qty"));
                     }
     
                 } catch (JSONException ex) {
                    
+                    req.getRequestDispatcher("giohang-empty.jsp").forward(req, resp);
                     ex.printStackTrace();
                 };
                 
                 Date date = new Date(); //lấy ngày hiện tại
-                
-                conn.setAutoCommit(false);
+              
                 
                 boolean isOKDonHang = DonHangModel.InsertDonHang(conn, new DonHangModel(
                         0,
@@ -127,7 +113,7 @@ public class CheckoutServlet extends HttpServlet {
                         soDienThoai,
                         ghiChu        
                 ));
-                // conn.commit();
+        
                 if (isOKDonHang == false) {
                     throw new Exception("Thêm đơn hàng thất bại!");
                 }
@@ -138,7 +124,7 @@ public class CheckoutServlet extends HttpServlet {
 
                     SachModel sach = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
                     if ((sach.getSoLuongTon() - Integer.parseInt(jsonObj.getString("qty"))) < 1) {
-                        System.out.print("abccccccccccc");
+           
                         listSachHetHang.add(sach);
                         isValidDonHang = false;
                     } else {
@@ -186,6 +172,7 @@ public class CheckoutServlet extends HttpServlet {
             } finally {
                 try {
                     conn.setAutoCommit(true);
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -193,9 +180,11 @@ public class CheckoutServlet extends HttpServlet {
         }
 
         if (isFailed) {
+          
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
-            
+            req.getRequestDispatcher("checkout.jsp").forward(req, resp);
         } else {
+ 
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
             req.getRequestDispatcher("trangthaisaudathang.jsp").forward(req, resp);
             
@@ -225,19 +214,30 @@ public class CheckoutServlet extends HttpServlet {
          
         List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
         req.setAttribute("listPhiShip", listPhiShip);
-        
-        
         HttpSession session = req.getSession();
-        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
-        {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để tiếp tục mua hàng!", MessagesModel.ATT_TYPE_ERROR));
-            req.getRequestDispatcher("giohang.jsp").forward(req, resp);
-        } else {
-
-            req.getRequestDispatcher("checkout.jsp").forward(req, resp);
-        }
-        //req.getRequestDispatcher("checkout.jsp").forward(req, resp);
+              
         
+       if (MyUtils.getLoginedThanhVien(session) == null) { // chưa đăng nhập
+
+           req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để tiếp tục mua hàng!", MessagesModel.ATT_TYPE_ERROR));
+           req.getRequestDispatcher("giohang.jsp").forward(req, resp);
+       } else {
+
+            int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();  
+             
+            try {
+                ThanhVienModel tvModel = ThanhVienModel.FindByMaThanhVien(conn, maThanhVien);
+                req.setAttribute("tvModel", tvModel);
+
+            } catch (SQLException ex) {
+
+               
+            }             
+          
+            
+            req.getRequestDispatcher("checkout.jsp").forward(req, resp);
+          
+       }
 
     }
 

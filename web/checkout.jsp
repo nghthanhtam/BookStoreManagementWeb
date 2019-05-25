@@ -74,6 +74,31 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
+                            <div class="order-summary clearfix">
+                            <div class="section-title">
+                                <h3 class="title">Đơn đặt hàng</h3>
+                            </div>
+                            <table class="shopping-cart-table table">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th></th>
+                                        <th class="text-center">Đơn giá</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-center">Tổng tiền</th>
+                                        <th class="text-right"></th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody class="giohang">
+
+                                <!--cart details here-->
+
+                                </tbody>
+                                
+                            </table>
+                           
+                            </div>
 				<form id="checkout-form" class="clearfix" method="POST" action="/checkout">
 					<div class="col-md-6">
 						<div class="billing-details">
@@ -82,29 +107,29 @@
 								<h3 class="title">Địa chỉ giao hàng</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="Họ tên">
+								<input class="input" type="text" name="first-name" value="${tvModel.getHoTen()}" placeholder="Họ tên">
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
+								<input class="input" type="email" name="email" value="${tvModel.getEmail()}" placeholder="Email">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Địa chỉ">
+								<input class="input" type="text" name="address" value="${tvModel.getDiaChi()}" placeholder="Địa chỉ">
 							</div>
                                                         
                                                         <div class="form-group">
                                                             <select id="selectphiship" class="form-control" required="" name="maphiship">
                                                                 
                                                                 <c:forEach items="${listPhiShip}" var="obj">                                                                  
-                                                                    <option value="${obj.getMaPhiShip()}" selected>${obj.getTenTinh()} - ${obj.getPhiShip()}</option>                      
+                                                                    <option value="${obj.getMaPhiShip()}">${obj.getTenTinh()} - ${obj.getPhiShip()}</option>                      
                                                                 </c:forEach>
-                                                                    
-                                                                <option value="">Tỉnh/Thành phố</option>
+                                                                <option value="" selected>Tỉnh/Thành phố</option>    
+                                                                
                                                             </select>
 							
                                                         </div>
 
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Điện thoại">
+								<input class="input" type="tel" name="tel" value="${tvModel.getSoDienThoai()}" placeholder="Điện thoại">
 							</div>
                                                         <div class="form-group">
                                                             <input class="input" type="text" name="comment" placeholder="Ghi chú">
@@ -182,25 +207,16 @@
 
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
-							<div class="section-title">
-								<h3 class="title">Đơn đặt hàng</h3>
-							</div>
+							
 							<table class="shopping-cart-table table">
 								<thead>
 									<tr>
-										<th>Sản phẩm</th>
-										<th></th>
-										<th class="text-center">Đơn giá</th>
-										<th class="text-center">Số lượng</th>
-										<th class="text-center">Tổng tiền</th>
-										<th class="text-right"></th>
+										<th> TỔNG CỘNG </th>
+										
 									</tr>
 								</thead>
-								<tbody class="giohang">
-                                                                
-								<!--cart details here-->
-                                                  
-								</tbody>
+								
+                                                             
                                                                 
 								<tfoot>
                                                                     
@@ -227,10 +243,12 @@
                                                                 </c:if>   
 							</table>
                                 
-							<div class="pull-right">
-                                                            <button type="submit" class="primary-btn-dathang" name="submit" value="them">ĐẶT MUA</button>
-                                                           
-							</div>
+                                                   
+                                                        <div class="pull-right">
+                                                            <button type="submit" class="primary-btn-datmua" name="submit" value="them">ĐẶT MUA</button>
+
+                                                        </div>
+                                                   
 						</div>
 
 					</div>
