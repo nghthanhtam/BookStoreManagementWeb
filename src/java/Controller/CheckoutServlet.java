@@ -111,8 +111,9 @@ public class CheckoutServlet extends HttpServlet {
                     ex.printStackTrace();
                 };
                 
-                Date date = new Date();
-                //Date ngayLap = dateFormat.format(date);
+                Date date = new Date(); //lấy ngày hiện tại
+                
+                conn.setAutoCommit(false);
                 
                 boolean isOKDonHang = DonHangModel.InsertDonHang(conn, new DonHangModel(
                         0,
@@ -166,6 +167,9 @@ public class CheckoutServlet extends HttpServlet {
                 if (isOkCTDonHang == false) {
                     throw new Exception("Thêm chi tiết đơn hàng thất bại!");
                 }
+                
+                conn.commit();
+                
                 isFailed = false;
                 noiDungThongBao = "Đã thêm đơn hàng mới!";
                 
@@ -222,7 +226,17 @@ public class CheckoutServlet extends HttpServlet {
         List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
         req.setAttribute("listPhiShip", listPhiShip);
         
-        req.getRequestDispatcher("checkout.jsp").forward(req, resp);
+        
+        HttpSession session = req.getSession();
+        if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
+        {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để tiếp tục mua hàng!", MessagesModel.ATT_TYPE_ERROR));
+            req.getRequestDispatcher("giohang.jsp").forward(req, resp);
+        } else {
+
+            req.getRequestDispatcher("checkout.jsp").forward(req, resp);
+        }
+        //req.getRequestDispatcher("checkout.jsp").forward(req, resp);
         
 
     }

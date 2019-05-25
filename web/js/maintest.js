@@ -1,11 +1,12 @@
 function resetLocalStorage()
 {
     localStorage.setItem('obj', []);
-        localStorage.setItem('cartCount', 0);
-        localStorage.setItem('cartTotal', 0);
+    localStorage.setItem('cartCount', 0);
+    localStorage.setItem('cartTotal', 0);
 }
 
 $('#selectphiship').on('change', function (f) {
+
 
     var options = this.getElementsByTagName('option');
     var optionHTML = options[this.selectedIndex].innerHTML;
@@ -23,7 +24,6 @@ $('#selectphiship').on('change', function (f) {
     
 jQuery(document).ready(function ($) {
     
-//        
 //        localStorage.setItem('obj', []);
 //        localStorage.setItem('cartCount', 0);
 //        localStorage.setItem('cartTotal', 0);
@@ -52,33 +52,13 @@ jQuery(document).ready(function ($) {
         var undoTimeoutId;
 
 
-
+        updateFromLocalStorage();
 
         cartCount.find('li').text(localStorage.getItem('cartCount'));
         cartTotal.text(localStorage.getItem('cartTotal'));
         tableTotal.find('.total').find('span').text(localStorage.getItem('cartTotal'));
 
-        //JSON: dạng object
-        //stringify: dạng chuỗi để lưu vào localStorage
-        if (localStorage.getItem('obj') !== "") {
-
-            JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
-                //giỏ hàng dropdown
-         
-                var productAdded = $('<li class="product product-widget"><div class="product-thumb"><img src="./img/thumb-product01.jpg" alt=""></div><div class="product-body"><h3 class="product-price">' + f.price + ' x<span class="quantity" id="qty-' + f.id + '">' + f.qty + '</span></h3><h2 class="product-name"><a href="#">' + f.name + '</a></h2></div><button class="cancel-btn" data-id="' + f.id + '" data-price="' + f.price + '"><i class="fa fa-trash"></i></button></li>');
-                cartList.prepend(productAdded);
-
-                //giỏ hàng chi tiết
-                var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.name + '</a><ul><li><span>Size: XL</span></li><li><span>Color: Camelot</span></li></ul></td><td class="price text-center"><strong>' + f.price + '</strong></td><td class="qty text-center"><input class="input" id="input-'+f.id+'" data-id="' + f.id + '" type="number" value=' + f.qty + '></td><td class="total text-center"><strong class="primary-color">' + f.price * f.qty + '</strong></td><td class="text-right"><button class="main-btn icon-btn" data-id="' + f.id + '"><i class="fa fa-close"></i></button></td></tr>');
-                giohang.prepend(cartDetails);
-
-                //document.getElementById('qty-'+f.id).innerHTML = String(Number(document.getElementById('qty-'+f.id).innerHTML) + 1);              
-
-            });
-        }
-
-       
-
+  
         //add product to cart
         addToCartBtn.on('click', function (event) {
             event.preventDefault();
@@ -102,13 +82,48 @@ jQuery(document).ready(function ($) {
 
         //delete an item from the cart
         cartList.on('click', '.cancel-btn', function (event) {
+          
             event.preventDefault();
             removeProduct($(event.target).parents('.product.product-widget'), $(this));
         });
 
-        giohang.on('click', '.main-btn.icon-btn', function (event) {
+        function removeProduct(product, trigger) {
+            clearInterval(undoTimeoutId);
+            cartList.find('.deleted').remove();
+
+            var topPosition = product.offset().top - cartBody.children('ul').offset().top,
+                    productQuantity = Number(document.getElementById('qty-' + trigger.data('id')).innerHTML),
+                    productTotPrice = Number(trigger.data('price')) * productQuantity;
+            //alert(productQuantity);
+            product.css('top', topPosition + 'px').addClass('deleted');
+
+            //update items count + total price
+            updateCartTotal(productTotPrice, false);
+            updateCartCount(true, -productQuantity);
+            cartList.find('.deleted').remove();
+
+            obj.forEach(function (f, index) {
+                if (f.id === String(trigger.data('id'))) {
+                    obj.splice(index, 1);
+                }
+            });
+            localStorage.setItem('obj', JSON.stringify(obj));
+     
+            window.location.reload();
+
+//        undo.addClass('visible');
+//        //wait 8sec before completely remove the item
+//        undoTimeoutId = setTimeout(function () {
+//            undo.removeClass('visible');
+//            cartList.find('.deleted').remove();
+//        }, 0);
+        }
+        
+        giohang.on('.delete-cart-details', function (event) {
+           
             event.preventDefault();
             removeCartDetails($(this));
+            
         });
 
         function removeCartDetails(trigger) {
@@ -123,8 +138,10 @@ jQuery(document).ready(function ($) {
                 }
             });
             localStorage.setItem('obj', JSON.stringify(obj));
+            //updateFromLocalStorage();
             window.location.reload();
         }
+
 
         giohang.on('change', '.input', function (event) {
             quickUpdateCartDetails($(this));
@@ -266,37 +283,7 @@ jQuery(document).ready(function ($) {
 
     }
 
-    function removeProduct(product, trigger) {
-        clearInterval(undoTimeoutId);
-        cartList.find('.deleted').remove();
-
-        var topPosition = product.offset().top - cartBody.children('ul').offset().top,
-                productQuantity = Number(document.getElementById('qty-' + trigger.data('id')).innerHTML),               
-                productTotPrice = Number(trigger.data('price')) * productQuantity;
-                 //alert(productQuantity);
-        product.css('top', topPosition + 'px').addClass('deleted');
-
-        //update items count + total price
-        updateCartTotal(productTotPrice, false);
-        updateCartCount(true, -productQuantity);
-        cartList.find('.deleted').remove();
-
-        obj.forEach(function (f, index) {
-            if (f.id === String(trigger.data('id'))) {
-                obj.splice(index, 1);
-            }
-        });
-        localStorage.setItem('obj', JSON.stringify(obj));
-
-        window.location.reload();
-        
-//        undo.addClass('visible');
-//        //wait 8sec before completely remove the item
-//        undoTimeoutId = setTimeout(function () {
-//            undo.removeClass('visible');
-//            cartList.find('.deleted').remove();
-//        }, 0);
-    }
+   
 
     function quickUpdateCart() {
         var quantity = 0;
@@ -352,5 +339,28 @@ jQuery(document).ready(function ($) {
 
         localStorage.setItem('cartTotal', cartTotal.text());
 
+    }
+    
+    function updateFromLocalStorage() {
+
+        //JSON: dạng object
+        //stringify: dạng chuỗi để lưu vào localStorage
+        if (localStorage.getItem('obj') !== "") {
+       
+            JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
+                
+                if(f.qty == 0) {
+                    return;
+                }
+                //giỏ hàng dropdown
+                var productAdded = $('<li class="product product-widget"><div class="product-thumb"><img src="./img/thumb-product01.jpg" alt=""></div><div class="product-body"><h3 class="product-price">' + f.price + ' x<span class="quantity" id="qty-' + f.id + '">' + f.qty + '</span></h3><h2 class="product-name"><a href="#">' + f.name + '</a></h2></div><button class="cancel-btn" data-id="' + f.id + '" data-price="' + f.price + '"><i class="fa fa-trash"></i></button></li>');
+                cartList.prepend(productAdded);
+
+                //giỏ hàng chi tiết
+                var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.name + '</a><ul><li><span>Size: XL</span></li></ul></td><td class="price text-center"><strong>' + f.price + '</strong></td><td class="qty text-center"><input class="input" id="input-' + f.id + '" data-id="' + f.id + '" type="number" value=' + f.qty + '></td><td class="total text-center"><strong class="primary-color">' + f.price * f.qty + '</strong></td><td class="text-right"><button class="main-btn icon-btn delete-cart-details" data-id="' + f.id + '"><i class="fa fa-close"></i></button></td></tr>');
+                giohang.prepend(cartDetails);
+
+            });
+        }
     }
 });

@@ -51,9 +51,11 @@ public class PhieuChiServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Connection conn = MyUtils.getStoredConnection(req);
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
 
+             
         //Lấy mã thành viên hiện đang đăng nhập
         HttpSession session = req.getSession();    
         ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
@@ -70,9 +72,9 @@ public class PhieuChiServlet extends HttpServlet {
                     int maNhaCungCap = Integer.parseInt(req.getParameter("manhacungcap"));
                     tongTien = Double.parseDouble(req.getParameter("tongtien"));
                     String ghiChu = (String) req.getParameter("ghichu");
-
-                    Connection conn = MyUtils.getStoredConnection(req);
-
+ 
+                    conn.setAutoCommit(false);
+                    
                     boolean isOk = PhieuChiModel.InsertNewPhieuChi(conn,
                             new PhieuChiModel(0, maNhaCungCap, maThanhVien, tongTien, null, ghiChu));
         
@@ -88,7 +90,7 @@ public class PhieuChiServlet extends HttpServlet {
                             boolean isOkUpdate = NhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCap);
                             if (isOkUpdate) {
                                 isFailedRequest = false;  
-                                
+                                conn.commit();
                             } else {
                                 conn.rollback();
                                 isFailedRequest = true;
@@ -99,9 +101,7 @@ public class PhieuChiServlet extends HttpServlet {
                             try {
                                 conn.rollback();
                             } catch (Exception ex1) {
-                                // errors that may have occurred
-                                // on the server that would cause the rollback to fail, such as
-                                // a closed connection.
+                           
                                 System.out.println("Rollback Failed");
                             }                
                         }              
@@ -114,6 +114,12 @@ public class PhieuChiServlet extends HttpServlet {
                 } catch (Exception ex) {
                     isFailedRequest = true;
                     Logger.getLogger(PhieuChiServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        conn.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AddPhieuNhapServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
                 isFailedRequest = true;
@@ -133,7 +139,6 @@ public class PhieuChiServlet extends HttpServlet {
 
         req.setAttribute("txtTitle", "Phiếu Chi");
 
-        Connection conn = MyUtils.getStoredConnection(req);
         List<PhieuChiModelWithTenNhaCungCap> listAllPhieuChiWithTenNhaCungCap = PhieuChiModelWithTenNhaCungCap.getAllPhieuChiWithTenNhaCungCap(conn);       
         List<NhaCungCapModel> listAllNhaCungCap = NhaCungCapModel.getAllNhaCungCap(conn);
                

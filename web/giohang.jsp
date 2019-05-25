@@ -66,7 +66,7 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-				<form id="checkout-form" class="clearfix" method="POST" action="/giohang">
+				<form id="checkout-form" class="clearfix" >
 		
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
@@ -84,12 +84,14 @@
 										<th class="text-right"></th>
 									</tr>
 								</thead>
-								<tbody class="giohang">
+								
+                                                                <tbody class="giohang">
                                                                 
 								<!--cart details here-->
                                                              
-                                                                
 								</tbody>
+                                                          
+                                                                
 								<tfoot>
 									<tr>
 										<th class="empty" colspan="3"></th>
@@ -106,7 +108,7 @@
                                                     
                                                         
 							<div class="pull-right">
-								<button class="primary-btn-dathang">ĐẶT HÀNG</button>
+                                                            <button class="primary-btn-dathang"><a href="${contextPath}/checkout">ĐẶT HÀNG</a></button>
 							</div>
 						</div>
 
