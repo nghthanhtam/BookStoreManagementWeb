@@ -130,6 +130,30 @@ public class ThanhVienModel {
 
     }
 
+     public static ThanhVienModel FindByMaThanhVien(Connection conn, int matv) throws SQLException {
+        String sql = "SELECT * FROM thanhvien WHERE mathanhvien = ?";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setInt(1, matv);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+                    rs.getString("tendangnhap"),
+                    rs.getString("matkhau"),
+                    rs.getString("hoten"),
+                    rs.getString("diachi"),
+                    rs.getString("sodienthoai"),
+                    rs.getString("email"),
+                    Integer.parseInt(rs.getString("maphanquyen"))
+            );
+            return thanhvien;
+        }
+        return null;
+
+    }
+    
     public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien)
             throws SQLException {
         int count = 0;

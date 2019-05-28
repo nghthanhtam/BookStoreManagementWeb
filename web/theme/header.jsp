@@ -295,10 +295,23 @@
 										</div>-->
                                                                             </ul>
 									</div>
-									<div class="shopping-cart-btns">
-										<button class="main-btn">View Cart</button>
-										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+                                                                    
+                      
+                                                                   <!--<form method="GET" action="/giohang">                                                                     
+<!--<script type="text/javascript">
+  <div class="form-group">
+   <input class="input" type="hidden" name="listctdonhang" id="listctdonhang">
+</div>
+    var listCTDonHang = (localStorage.getItem("obj"));
+    document.getElementById("listctdonhang").value = listCTDonHang;
+</script>
+        </form>	-->
+                                                                        <div class="shopping-cart-btns">
+                                                                            <button class="main-btn"><a href="${contextPath}/giohang">View Cart</a></button>
+
+                                                                            <button class="main-btn-checkout"> <a href="${contextPath}/checkout" >Checkout <i class="fa fa-arrow-circle-right"></i></a></button>
 									</div>
+                                                           
 								</div>
 							</div>
 						</li>
@@ -501,11 +514,3 @@
             <!-- /container -->
         </div>
         <!-- /NAVIGATION -->
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script>
-			if( !window.jQuery ) document.write('<script src="js/jquery-1.4.2.min.js"><\/script>');
-		</script>
-		<script src="js/maintest.js"></script> <!-- Resource jQuery -->
-</body>
-</html>
