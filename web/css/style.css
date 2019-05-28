@@ -116,7 +116,7 @@ hr {
 	Buttons
 \*----------------------------*/
 
-.main-btn, .primary-btn {
+.main-btn, .primary-btn, .primary-btn-dathang,.main-btn-checkout, .primary-btn-datmua {
   display: inline-block;
   padding: 10px 15px;
   text-transform: uppercase;
@@ -126,8 +126,17 @@ hr {
   transition: 0.3s all;
 }
 
-.icon-btn.main-btn, .icon-btn.primary-btn {
+.icon-btn.main-btn, .icon-btn.primary-btn .primary-btn-dathang, .main-btn-checkout, .primary-btn-datmua {
   width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0px;
+  border: none;
+}
+
+.primary-btn-datmua {
+width: 90px;
   height: 40px;
   line-height: 40px;
   text-align: center;
@@ -148,14 +157,26 @@ hr {
   box-shadow: 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A;
 }
 
-.primary-btn {
+.primary-btn-datmua:hover, primary-btn-datmua:focus {
+  color: #FFF;
+  background-color: #30323A;
+}
+
+.primary-btn:hover, .primary-btn:focus{
+    color: #FFF;
+    background-color: #30323A;
+}
+
+.primary-btn, .primary-btn-dathang, .main-btn-checkout, .primary-btn-datmua {
   color: #FFF;
   background-color: #F8694A;
 }
 
-.primary-btn:hover, .primary-btn:focus {
+.main-btn-checkout:hover, .main-btn-checkout:focus, .primary-btn-dathang:hover, .primary-btn-dathang:focus {
   color: #FFF;
-  background-color: #30323A;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px ;
+  box-shadow: 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px ;
 }
 
 /*----------------------------*\

@@ -19,11 +19,13 @@ public class DemoServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+            System.out.print("abcc");
 		request.getRequestDispatcher("/admin/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+            
 	}
 
 }

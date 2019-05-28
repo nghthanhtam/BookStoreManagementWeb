@@ -92,6 +92,17 @@ public class DonHangModel {
         this.ghiChu = ghiChu;
     }
 
+
+    public double getPhiShip() {
+        return phiShip;
+    }
+
+    public void setPhiShip(double phiShip) {
+        this.phiShip = phiShip;
+    }
+     
+    private String soDienThoai;
+    private String ghiChu;
     private int maDonHang;
     private int maThanhVien;
     private Date ngayLap;
@@ -99,10 +110,11 @@ public class DonHangModel {
     private int trangThai;
     private String diaChiGiaoHang;
     private int maPhiShip;
+    private double phiShip;
     private String soDienThoai;
     private String ghiChu;
-
-    public DonHangModel(int maDonHang, int maThanhVien, Date ngayLap, double tongTien, int trangThai, String diaChiGiaoHang, int maPhiShip, String soDienThoai, String ghiChu) {
+ 
+    public DonHangModel(int maDonHang, int maThanhVien, Date ngayLap, double tongTien, int trangThai, String diaChiGiaoHang, int maPhiShip, double phiship, String soDienThoai, String ghiChu) {
         this.maDonHang = maDonHang;
         this.maThanhVien = maThanhVien;
         this.ngayLap = ngayLap;
@@ -110,15 +122,18 @@ public class DonHangModel {
         this.trangThai = trangThai;
         this.diaChiGiaoHang = diaChiGiaoHang;
         this.maPhiShip = maPhiShip;
+        this.phiShip = phiship;
         this.soDienThoai = soDienThoai;
         this.ghiChu = ghiChu;
     }
+
 
     public static boolean InsertDonHang(Connection conn, DonHangModel donHang)
             throws SQLException {
         int count = 0;
         try {
-            String sql = "INSERT INTO donhang (mathanhvien, ngaylap, tongtien ,trangthai, diachigiaohang, maphiship, sodienthoai, ghichu) VALUES (?,?,?,?,?,?,?,?)";
+
+            String sql = "INSERT INTO donhang (mathanhvien, ngaylap, tongtien ,trangthai, diachigiaohang, maphiship, phiship, sodienthoai, ghichu) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, donHang.getMaThanhVien());
@@ -127,8 +142,9 @@ public class DonHangModel {
             pstm.setInt(4, donHang.getTrangThai());
             pstm.setString(5, donHang.getDiaChiGiaoHang());
             pstm.setInt(6, donHang.getMaPhiShip());
-            pstm.setString(7, donHang.getSoDienThoai());
-            pstm.setString(8, donHang.getGhiChu());
+            pstm.setDouble(7, donHang.getPhiShip());
+            pstm.setString(8, donHang.getSoDienThoai());
+            pstm.setString(9, donHang.getGhiChu());
 
             count = pstm.executeUpdate();
 
@@ -141,7 +157,7 @@ public class DonHangModel {
     }
 
     public static int getMaDonHangCurrent(Connection conn) throws SQLException {
-
+        
         String sql = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?";
         PreparedStatement pstm = conn.prepareStatement(sql);
 
@@ -156,6 +172,7 @@ public class DonHangModel {
         return 0;
     }
 
+  
     public static List<DonHangModel> getAllDonHang(Connection conn) {
         List<DonHangModel> list = new ArrayList<DonHangModel>();
 
@@ -173,6 +190,7 @@ public class DonHangModel {
                         rs.getInt("trangthai"),
                         rs.getString("diachigiaohang"),
                         rs.getInt("maphiship"),
+                        rs.getDouble("phiship"),
                         rs.getString("sodienthoai"),
                         rs.getString("ghichu"));
                 list.add(obj);
@@ -183,8 +201,8 @@ public class DonHangModel {
         }
 
         return list;
-    }
-
+    } 
+  
     public static boolean UpdateDonHang(Connection conn, DonHangModel donHang) throws SQLException {
 
         int count = 0;
@@ -279,4 +297,36 @@ public class DonHangModel {
         return count > 0;
     }
 
+    
+     public static List<DonHangModel> getAllDonHangByMaThanhVien(Connection conn, int maThanhVien) {
+        List<DonHangModel> list = new ArrayList<DonHangModel>();
+
+        String sql = "SELECT * FROM donhang WHERE mathanhvien = ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maThanhVien);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                DonHangModel obj = new DonHangModel(
+                        rs.getInt("madonhang"),
+                        rs.getInt("mathanhvien"),
+                        rs.getDate("ngaylap"),
+                        rs.getDouble("tongtien"),
+                        rs.getInt("trangthai"),
+                        rs.getString("diachigiaohang"),
+                        rs.getInt("maphiship"),
+                        rs.getDouble("phiship"),
+                        rs.getString("sodienthoai"),
+                        rs.getString("ghichu"));
+                list.add(obj);
+            }
+
+        } catch (SQLException e) {
+            
+        }
+
+        return list;
+    }
+  
 }

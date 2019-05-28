@@ -36,9 +36,9 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("listSachMoiNhat", listSachMoiNhat);
         req.setAttribute("sachMoiNhat", objectOne);
         List<SachModel> listSachGiamGia = SachModel.getListSachGiamGiaTop7(conn);
-        for(int i=0;i<listSachGiamGia.size();i++){
-            System.out.println(listSachGiamGia.get(i).getTenSach());
-        }
+//        for(int i=0;i<listSachGiamGia.size();i++){
+//            System.out.println(listSachGiamGia.get(i).getTenSach());
+//        }
         SachModel objectGiamGiaNhat = listSachGiamGia.get(0);
         listSachGiamGia.remove(0);
         req.setAttribute("sachGiamGiaNhat", objectGiamGiaNhat);

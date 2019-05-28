@@ -140,7 +140,20 @@
             
             
         </script>
-    
+        
+		<script src="js/maintest.js"></script> <!-- Resource jQuery -->
+        
+                <!--
+                
+                
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+		<script>
+			if( !window.jQuery ) document.write('<script src="js/jquery-1.4.2.min.js"><\/script>');
+		</script>
+                
+                -->
+        
 </body>
 
 </html>

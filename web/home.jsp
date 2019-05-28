@@ -25,7 +25,7 @@
 						<div class="banner-caption text-center">
 							<h1>${txtTitle}</h1>
 							<h3 class="white-color font-weak">Up to 50% Discount</h3>
-							<button class="primary-btn">Shop Now</button>
+                                                        <button class="primary-btn" id="abc"> Shop now!  </button>
 						</div>
 					</div>
 					<!-- /banner -->
@@ -206,7 +206,7 @@
 							<div class="product-btns">
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}" data-name="${sachMoiNhat.getTenSach()}" data-price="${sachMoiNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}" data-linkanh="${sachMoiNhat.getAnhDaiDien()}" data-name="${sachMoiNhat.getTenSach()}" data-price="${sachMoiNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 							</div>
 						</div>
 					</div>
@@ -300,7 +300,7 @@
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 									</div>
 								</div>
 							</div>
@@ -412,7 +412,7 @@
 								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 
-								<button class="primary-btn add-to-cart" data-id="${listSachMoiNhat[1].getMaSach()}" data-name="${listSachMoiNhat[1].getTenSach()}" data-price="${listSachMoiNhat[1].getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}" data-linkanh="${sachGiamGiaNhat.getAnhDaiDien()}" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()-sachGiamGiaNhat.getGiaBan()*sachGiamGiaNhat.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 
 							</div>
 						</div>
@@ -508,7 +508,7 @@
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+										<button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 									</div>
 								</div>
 							</div>
@@ -953,7 +953,3 @@
 	<!-- /section -->
 
 	<jsp:include page="theme/footer.jsp" />
-
-
-</body>
-</html>
