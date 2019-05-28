@@ -8,6 +8,7 @@ package Controller;
 import Model.MessagesModel;
 import Model.PhanQuyenModel;
 import Model.SachModel;
+import Model.SachModelWithTheLoaiAndTrangThai;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
 import java.io.FileInputStream;
@@ -57,14 +58,13 @@ public class EditSachServlet extends HttpServlet {
                 int namXuatBan = Integer.parseInt(req.getParameter("namxuatban"));
                 Double giaBan = Double.parseDouble(req.getParameter("giaban"));
                 String moTa = (String) req.getParameter("mota");
-                
+
                 String dirImage = null;
                 Part anhDaiDien = req.getPart("anhdaidien");
-                
-                if (anhDaiDien !=null && anhDaiDien.getSize()>0)
-                {
+
+                if (anhDaiDien != null && anhDaiDien.getSize() > 0) {
                     dirImage = MyUtils.uploadFile(req, "anhdaidien");
-                }   
+                }
 
                 String tenTacGia = (String) req.getParameter("tentacgia");
                 int trangThai = Integer.parseInt(req.getParameter("trangthai"));
@@ -83,7 +83,7 @@ public class EditSachServlet extends HttpServlet {
                     ngayBatDauGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(0, 10)).getTime());
                     ngayKetThucGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(13)).getTime());
                 }
-                
+
                 sach = SachModel.FindByMaSach(conn, maSach);
                 sach.setMaTheLoai(maTheLoai);
                 sach.setTenSach(tenSach);
@@ -91,15 +91,15 @@ public class EditSachServlet extends HttpServlet {
                 sach.setNamXuatBan(namXuatBan);
                 sach.setGiaBan(giaBan);
                 sach.setMoTa(moTa);
-                if (dirImage != null && !dirImage.equals(""))
+                if (dirImage != null && !dirImage.equals("")) {
                     sach.settAnhDaiDien(dirImage);
+                }
                 sach.setTenTacGia(tenTacGia);
                 sach.setPhanTramGiamGia(phanTramGiamGia);
                 sach.setNgayBatDauGiamGia(ngayBatDauGiamGia);
                 sach.setNgayKetThucGiamGia(ngayKetThucGiamGia);
                 sach.setTrangThai(trangThai);
-                
-                
+
                 boolean isOk = SachModel.UpdateSach(conn, sach);
 
                 if (isOk) {
@@ -167,7 +167,7 @@ public class EditSachServlet extends HttpServlet {
 
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được thực hiện!", MessagesModel.ATT_TYPE_ERROR));
 
-            List<SachModel> listAllSach = SachModel.getAllSach(conn);
+            List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
             req.setAttribute("listAllSach", listAllSach);
             req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);;
         }

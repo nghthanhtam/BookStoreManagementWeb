@@ -389,6 +389,30 @@ public class SachModel {
         return count > 0;
     }
 
+     public static boolean UpdateSoLuongTonSach(Connection conn, int soLuongSach, int maSach) throws SQLException {
+
+        int count = 0;
+        try {
+            String sql = "UPDATE sach SET "
+                    + "soluongton = soluongton + ?"
+                    + " WHERE masach = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            
+            pstm.setInt(1, soLuongSach);
+            pstm.setInt(2, maSach);
+
+          
+            count = pstm.executeUpdate();
+
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+        return count > 0;
+    }
+    
     public static List<AjaxModel> FindTenTacGia(Connection conn, String tenTacGia) throws SQLException {
 
         List<AjaxModel> listTenTacGia = new ArrayList<AjaxModel>();
