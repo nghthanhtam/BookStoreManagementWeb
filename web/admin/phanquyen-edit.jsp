@@ -103,7 +103,7 @@
                           </div>                            
                           <div class="checkbox">
                             <label>
-                              <input name="qlhoadon" value="1" type="checkbox" class="flat" ${phanQuyenModel.getQlHoaDon() == 1 ? "checked=\"checked\"":""}> Quản lí hóa đơn
+                              <input name="qldonhang" value="1" type="checkbox" class="flat" ${phanQuyenModel.getQlDonHang() == 1 ? "checked=\"checked\"":""}> Quản lí đơn hàng
                             </label>
                           </div>         
                             

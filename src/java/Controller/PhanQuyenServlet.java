@@ -35,8 +35,8 @@ public class PhanQuyenServlet extends HttpServlet {
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
 
-        String submitValue = req.getParameter("submit");
-        System.out.println("AAAAAAAAAAAAAA");
+        String submitValue = req.getParameter("submit"); 
+        
         if (submitValue != null && submitValue.equals("them")) {
 
             String tenPhanQuyen = (String) req.getParameter("tenphanquyen");
@@ -48,11 +48,11 @@ public class PhanQuyenServlet extends HttpServlet {
             int qlPhieuNhap = req.getParameter("qlphieunhap") == null ? 0 : 1;
             int qlPhieuChi = req.getParameter("qlphieuchi") == null ? 0 : 1;
             int qlNhaCungCap = req.getParameter("qlnhacungcap") == null ? 0 : 1;
-            int qlHoaDon = req.getParameter("qlhoadon") == null ? 0 : 1;
+            int qlDonHang = req.getParameter("qldonhang") == null ? 0 : 1;
 
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlHoaDon));
+                boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlDonHang));
                 if (isOk) {
                     isFailedRequest = false;
                     noiDungThongBao = "Đã thêm phân quyền!";

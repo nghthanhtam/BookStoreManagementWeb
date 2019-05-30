@@ -25,15 +25,7 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
+                     
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
@@ -56,7 +48,7 @@
                           <th>QL Phiếu nhập</th>
                           <th>QL Phiếu chi</th>
                           <th>QL Nhà cung cấp</th> 
-                          <th>QL Hóa đơn</th> 
+                          <th>QL Đơn hàng</th> 
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
@@ -76,7 +68,7 @@
                                     <td>${obj.getQlPhieuNhap() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td>${obj.getQlPhieuChi() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td>${obj.getQlNhaCungCap() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
-                                    <td>${obj.getQlHoaDon() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlDonHang() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td> 
                                         <a href="${contextPath}/admin/phanquyen/edit?id=${obj.getMaPhanQuyen()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
                                         <a href="${contextPath}/admin/phanquyen/delete?id=${obj.getMaPhanQuyen()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
@@ -185,7 +177,7 @@
                           </div>                            
                           <div class="checkbox">
                             <label>
-                              <input name="qlhoadon" value="1" type="checkbox" class="flat"> Quản lí hóa đơn
+                              <input name="qldonhang" value="1" type="checkbox" class="flat"> Quản lí đơn hàng
                             </label>
                           </div>         
                             

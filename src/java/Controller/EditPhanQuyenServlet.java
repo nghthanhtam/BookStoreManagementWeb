@@ -49,10 +49,10 @@ public class EditPhanQuyenServlet extends HttpServlet {
             int qlPhieuNhap = req.getParameter("qlphieunhap") == null ? 0 : 1;
             int qlPhieuChi = req.getParameter("qlphieuchi") == null ? 0 : 1;
             int qlNhaCungCap = req.getParameter("qlnhacungcap") == null ? 0 : 1;
-            int qlHoaDon = req.getParameter("qlhoadon") == null ? 0 : 1;
+            int qlDonHang = req.getParameter("qldonhang") == null ? 0 : 1;
             int maPhanQuyen = Integer.parseInt(req.getParameter("maphanquyen"));
 
-            PhanQuyenModel phanQuyenModel = new PhanQuyenModel(maPhanQuyen, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlHoaDon);
+            PhanQuyenModel phanQuyenModel = new PhanQuyenModel(maPhanQuyen, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlDonHang);
 
             try {
 
