@@ -93,7 +93,7 @@
         if (messagesModel != null) {
             out.print(" onload=\"new PNotify({"
                     + "title: '" + messagesModel.getTitle() + "',"
-                    + "text: '" + messagesModel.getText() + "',"
+                    + "text: '" + MyUtils.addSlashes(messagesModel.getText()) + "',"
                     + "type: '" + messagesModel.getType() + "',"
                     + "styling: 'bootstrap3'"
                     + "});\"");
