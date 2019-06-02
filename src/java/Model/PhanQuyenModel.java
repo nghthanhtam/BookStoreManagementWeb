@@ -146,7 +146,7 @@ public class PhanQuyenModel {
         try
         {
 
-            String sql="INSERT INTO phanquyen (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap, qlhoadon) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO phanquyen (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap, qldonhang) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             
@@ -172,7 +172,7 @@ public class PhanQuyenModel {
     {
         List<PhanQuyenModel> listPhanQuyen = new ArrayList<PhanQuyenModel>();
         
-        String sql = "SELECT * FROM phanquyen";
+        String sql = "SELECT * FROM phanquyen"; 
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
@@ -190,7 +190,7 @@ public class PhanQuyenModel {
                         Integer.parseInt(rs.getString("qlphieunhap")),
                         Integer.parseInt(rs.getString("qlphieuchi")),
                         Integer.parseInt(rs.getString("qlnhacungcap")),
-                        Integer.parseInt(rs.getString("qlhoadon")) );
+                        Integer.parseInt(rs.getString("qldonhang")) );
                 
                 listPhanQuyen.add(phanQuyenModel);
             }
@@ -246,7 +246,7 @@ public class PhanQuyenModel {
                         Integer.parseInt(rs.getString("qlphieunhap")),
                         Integer.parseInt(rs.getString("qlphieuchi")),
                         Integer.parseInt(rs.getString("qlnhacungcap")),
-                        Integer.parseInt(rs.getString("qlhoadon")) );
+                        Integer.parseInt(rs.getString("qldonhang")) );//qldonhang 
          
              return phanQuyenModel; 
         }
@@ -279,7 +279,7 @@ public class PhanQuyenModel {
                         Integer.parseInt(rs.getString("qlphieunhap")),
                         Integer.parseInt(rs.getString("qlphieuchi")),
                         Integer.parseInt(rs.getString("qlnhacungcap")),
-                        Integer.parseInt(rs.getString("qlhoadon")) );
+                        Integer.parseInt(rs.getString("qldonhang")) );
          
              return phanQuyenModel; 
         }
@@ -296,7 +296,7 @@ public class PhanQuyenModel {
         int count = 0;
         try
         {
-            String sql="UPDATE phanquyen SET tenquyen = ?, qlthanhvien = ?, qlsach = ?, qltheloai = ?, qlphiship = ?, qlphanquyen = ?, qlphieunhap = ?, qlphieuchi = ?, qlnhacungcap = ?, qlhoadon = ? WHERE maphanquyen = ?";
+            String sql="UPDATE phanquyen SET tenquyen = ?, qlthanhvien = ?, qlsach = ?, qltheloai = ?, qlphiship = ?, qlphanquyen = ?, qlphieunhap = ?, qlphieuchi = ?, qlnhacungcap = ?, qldonhang = ? WHERE maphanquyen = ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, obj.getTenQuyen());

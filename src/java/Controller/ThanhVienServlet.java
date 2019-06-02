@@ -31,22 +31,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ThanhVienServlet", urlPatterns = {"/admin/thanhvien"})
 public class ThanhVienServlet extends HttpServlet {
-   
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         boolean isFailedRequest = false; // request thất bại
-        boolean isWrongPassword = false;
-        boolean haveUsedName = false;
-        boolean haveUsedEmail = false;
-        boolean isInvalidUsername = false;
-        boolean isInvalidPassword = false;
-        boolean isInvalidNumber = false;
-        boolean isInvalidEmail = false;
+
         String noiDungThongBao = "";
         String button = req.getParameter("submit");
 
         if (button != null && button.equals("them")) {
+
             String tenDangNhap = (String) req.getParameter("tendangnhap");
             String matKhau = (String) req.getParameter("matkhau");
             String lapLaiMatKhau = (String) req.getParameter("laplaimatkhau");
@@ -57,126 +52,69 @@ public class ThanhVienServlet extends HttpServlet {
             int maPhanQuyen = Integer.parseInt(req.getParameter("phanquyen"));
 
             Connection conn = MyUtils.getStoredConnection(req);
-            //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
-            Pattern userNamePattern = Pattern.compile("^[a-zA-Z0-9_\\-]{0,25}$");
-            //Check pass
-            Pattern passwordPattern = Pattern.compile("^[a-zA-Z0-9]{6,30}$");
-            //Check sdt
-            Pattern soDienThoaiPattern = Pattern.compile(".*\\D.*");// check so dien thoai co hợp lệ hay không
-            Pattern soDienThoaiPattern2 = Pattern.compile("(\\+84|0)\\d{9,11}");
-            //Check email
 
-            Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
-
-            Matcher usernameMatch = userNamePattern.matcher(tenDangNhap);
-            Matcher passwordMatch = passwordPattern.matcher(matKhau);
-            Matcher soDienThoaiMatch = soDienThoaiPattern2.matcher(soDienThoai);
-            Matcher emailMatch = emailPattern.matcher(email);
-
-            System.out.println("ZZZZZZZZZZZZZZZZ");
-            System.out.println(usernameMatch.matches());
-            System.out.println("ZZZZZZZZZZZZZZZZ");
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");		
-            // System.out.println(passwordMatch.matches());
-            // System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");	
             try {
-
-                if (usernameMatch.matches() == true && passwordMatch.matches() == true
-                        && soDienThoaiMatch.matches() == true && emailMatch.matches() == true) {
-                    isInvalidEmail = false;
-                    isInvalidPassword = false;
-                    isInvalidNumber = false;
-                    isInvalidUsername = false;
-                    List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-                    for (int i = 0; i < listAllThanhVien.size(); i++) {
-                        if (Objects.equals(tenDangNhap, listAllThanhVien.get(i).getTenDangNhap())) {
-                            haveUsedName = true;
-                            System.out.println("Trùng tên");
-                            break;
-                        }
-                        if (Objects.equals(email, listAllThanhVien.get(i).getEmail())) {
-                            haveUsedEmail = true;
-                            System.out.println("Trùng email");
-                            break;
-                        }
-
-                    }
-                    System.out.println(haveUsedName);
-                    if (!haveUsedName && !haveUsedEmail) {
-                        if (Objects.equals(matKhau, lapLaiMatKhau))//check mat khau co khop voi nhau khong
-                        {
-                            System.out.println("Khớp mật khẩu");
-                            isWrongPassword = false;
-                        } else {
-                            isWrongPassword = true;
-                            System.out.println("Không khớp mật khẩu");
-                        }
-                        if (isWrongPassword == false) {
-                            boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maPhanQuyen));
-                            System.out.println(isOk);
-                            if (isOk) {
-                                isFailedRequest = false;
-                                noiDungThongBao = "Đã thêm thành viên mới!";
-                            } else {
-                                System.out.println("stage cuoi");
-                                isFailedRequest = true;
-                            }
-                        }
-                    }
-
-                } else {
-                    if (usernameMatch.matches() == false) {
-                        isInvalidUsername = true;
-                    } else {
-                        if (passwordMatch.matches() == false) {
-                            isInvalidPassword = true;
-                        } else {
-                            if (soDienThoaiMatch.matches() == false) {
-                                isInvalidNumber = true;
-                            } else {
-                                if (emailMatch.matches() == false) {
-                                    isInvalidEmail = true;
-                                }
-                            }
-                        }
-                    }
-
+                //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
+                if (Pattern.compile("^[a-zA-Z0-9_\\-]{0,25}$").matcher(tenDangNhap).matches() == false) {
+                    throw new Exception("Tên đăng nhập không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9 và _ !");
                 }
 
-            } catch (SQLException ex) {
+                if (Pattern.compile("^[a-zA-Z0-9]{1,30}$").matcher(matKhau).matches() == false) {
+                    throw new Exception("Mật khẩu không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9. Từ 1-30 ký tự!");
+                }
+
+                if (Pattern.compile("^[a-zA-Z0-9]{1,30}$").matcher(lapLaiMatKhau).matches() == false) {
+                    throw new Exception("Lập lại mật khẩu không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9. Từ 1-30 ký tự!");
+                }
+
+                if (Pattern.compile("(\\+84|0)\\d{9,11}").matcher(soDienThoai).matches() == false) {
+                    throw new Exception("Số điện thoại di động không hợp lệ! Phải bắt đầu bằng +84 hoặc 0 và gồm 9-11 ký tự!");
+                }
+
+                if (Pattern.compile("^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$").matcher(email).matches() == false) {
+                    throw new Exception("Email không hợp lệ!");
+                }
+
+                ThanhVienModel thanhVienTemp = null;
+                thanhVienTemp = ThanhVienModel.FindByTenDangNhap(conn, tenDangNhap);
+
+                if (thanhVienTemp != null) {
+                    throw new Exception("Tên đăng nhập đã được sử dụng. Vui lòng nhập tên đăng nhập khác!");
+                }
+
+                thanhVienTemp = null;
+                thanhVienTemp = ThanhVienModel.FindByEmail(conn, email);
+
+                if (thanhVienTemp != null) {
+                    throw new Exception("Email đã được sử dụng. Vui lòng nhập email khác!");
+                }
+
+                if (Objects.equals(matKhau, lapLaiMatKhau))//check mat khau co khop voi nhau khong
+                {
+                    boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, maPhanQuyen));
+                    if (isOk) {
+                        isFailedRequest = false;
+                        noiDungThongBao = "Đã thêm thành viên mới thành công!";
+                    } else {
+                        throw new Exception("Yêu cầu của bạn không được xử lý!");
+                    }
+                } else {
+                    throw new Exception("Mật khẩu không khớp! Vui lòng kiểm tra lại mật khẩu.");
+                }
+
+            } catch (Exception ex) {
                 isFailedRequest = true;
-                Logger.getLogger(ThanhVienServlet.class.getName()).log(Level.SEVERE, null, ex);
+                noiDungThongBao = ex.getMessage();
             }
 
         } else {
             isFailedRequest = true;
+            noiDungThongBao = "Yêu cầu của bạn không thể xử lý!";
         }
 
-        if (isFailedRequest || isWrongPassword || haveUsedName || haveUsedEmail
-                || isInvalidUsername || isInvalidPassword || isInvalidNumber || isInvalidEmail) // nếu có lỗi thì hiện thông báo
+        if (isFailedRequest) // nếu có lỗi thì hiện thông báo
         {
-            if (isFailedRequest) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
-            }
-            if (haveUsedName) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Tên đăng đã có người dùng!", MessagesModel.ATT_TYPE_ERROR));
-            }
-            
-            if (haveUsedEmail) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Email đã có người dùng!", MessagesModel.ATT_TYPE_ERROR));
-            }
-            if (isInvalidUsername) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Tên đăng nhập không hợp lệ", MessagesModel.ATT_TYPE_ERROR));
-            }
-            if (isInvalidPassword) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Mật khẩu không hợp lệ!", MessagesModel.ATT_TYPE_ERROR));
-            }
-            if (isInvalidNumber) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Số điện thoại không hợp lệ!", MessagesModel.ATT_TYPE_ERROR));
-            }
-            if (isInvalidEmail) {
-                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Email không hợp lệ!", MessagesModel.ATT_TYPE_ERROR));
-            }
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
 
         } else {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
@@ -187,7 +125,6 @@ public class ThanhVienServlet extends HttpServlet {
 
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-  
 
         req.setAttribute("listAllThanhVien", listAllThanhVien);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
@@ -203,24 +140,17 @@ public class ThanhVienServlet extends HttpServlet {
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel = ThanhVienModelWithTenQuyen.getAllThanhVienWithTenQuyen(conn);
 
-      
-      /* Conflict*/
-      
-        for(int i=0;i<listAllThanhVienWithModel.size();i++)
-        {
+        /* Conflict*/
+        for (int i = 0; i < listAllThanhVienWithModel.size(); i++) {
             System.out.println(listAllThanhVienWithModel.get(i).getTenPhanQuyen());
         }
-        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
- 
-       /*
-        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
-        */ 
-      
-            /* Conflict*/
 
-      
-      
-      
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+
+        /*
+         req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+         */
+        /* Conflict*/
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
 
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);

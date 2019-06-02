@@ -45,6 +45,7 @@ public class PhanQuyenFilter implements Filter {
         
         try {
             phanQuyen = PhanQuyenModel.FindByMaPhanQuyen(conn, thanhVien.getMaPhanQuyen());
+            System.out.println(phanQuyen.getMaPhanQuyen());
         } catch (SQLException ex) {
             Logger.getLogger(PhanQuyenFilter.class.getName()).log(Level.SEVERE, null, ex);
         }
