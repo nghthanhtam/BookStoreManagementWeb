@@ -110,12 +110,14 @@ public class CTDonHangModel {
         return count > 0;
     }
     
-    public static List<CTDonHangModel> getAllCTDonHang(Connection conn) {
+    public static List<CTDonHangModel> getAllCTDonHangByMaDonHang(Connection conn, int maDonHang) {
         List<CTDonHangModel> list = new ArrayList<CTDonHangModel>();
 
-        String sql = "SELECT * FROM ctdonhang";
+        String sql = "SELECT * FROM ctdonhang WHERE madonhang = ?";
+        
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maDonHang);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {

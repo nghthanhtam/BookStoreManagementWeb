@@ -150,8 +150,8 @@ public class PhiShipModel {
     public static PhiShipModel FindByMaPhiShip(Connection conn, int maphiship) throws SQLException
     {
         String sql="SELECT * FROM phiship WHERE maphiship = ?";
-        PreparedStatement pstm = conn.prepareStatement(sql); //cau lenh sql duoc compile va save trong 1 
-                                                             //doi tuong PreparedStatement                    
+        PreparedStatement pstm = conn.prepareStatement(sql); 
+        
         pstm.setInt(1, maphiship);
         
         ResultSet rs = pstm.executeQuery(); //thuc hien truy van

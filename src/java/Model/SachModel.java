@@ -39,6 +39,12 @@ public class SachModel {
     private Date ngayKetThucGiamGia;
     private int trangThai;
 
+    
+    public final static int TRANGTHAI_DANG_BAN = 1;
+    public final static int TRANGTHAI_NGUNG_KINH_DOANH = 3;
+    public final static int TRANGTHAI_XOA = 2;
+    
+    
     public SachModel(){
     
     }
@@ -206,40 +212,7 @@ public class SachModel {
         return null;
 
     }
-
-    public static SachModel FindFullByMaSach(Connection conn, int masach) throws SQLException {
-
-        String sql = "SELECT * FROM sach WHERE masach = ? ";
-
-        PreparedStatement pstm = conn.prepareStatement(sql);
-
-        pstm.setInt(1, masach);
-
-        ResultSet rs = pstm.executeQuery();
-
-        if (rs.next()) {
-            SachModel SachModel = new SachModel(
-                    Integer.parseInt(rs.getString("masach")),
-                    Integer.parseInt(rs.getString("matheloai")),
-                    rs.getString("tensach"),
-                    rs.getString("nhaxuatban"),
-                    Integer.parseInt(rs.getString("namxuatban")),
-                    Double.parseDouble(rs.getString("giaban")),
-                    rs.getString("mota"),
-                    rs.getString("anhdaidien"),
-                    Integer.parseInt(rs.getString("soluongton")),
-                    rs.getString("tentacgia"),
-                    Double.parseDouble(rs.getString("phantramgiamgia")),
-                    rs.getDate("ngaybatdaugiamgia"),
-                    rs.getDate("ngayketthucgiamgia"),
-                    Integer.parseInt(rs.getString("trangthai")));
-
-            return SachModel;
-        }
-        return null;
-
-    }
-
+ 
     public static boolean InsertNewSach(Connection conn, SachModel sach)
             throws SQLException {
         int count = 0;

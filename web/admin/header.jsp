@@ -82,7 +82,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="/" class="site_title"><i class="fa fa-file-text"></i> <span>Book Store</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -130,8 +130,13 @@
                       <li><a href="${contextPath}/admin/phieunhap/add">Thêm mới</a></li>
                     </ul>
                   </li> 
-                  
-                  
+                   <li><a><i class="fa fa-list"></i> Đơn hàng <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="${contextPath}/admin/donhang">Danh sách</a></li>
+                      <li><a href="${contextPath}/admin/donhang/add">Thêm mới</a></li>
+                    </ul>
+                  </li> 
+                   <!--
                   
                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -163,9 +168,11 @@
                       <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
                       <li><a href="fixed_footer.html">Fixed Footer</a></li>
                     </ul>
-                  </li>
+                  </li>-->
                 </ul>
               </div>
+                    
+                    <!--
               <div class="menu_section">
                 <h3>Live On</h3>
                 <ul class="nav side-menu">
@@ -208,7 +215,7 @@
                   <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
                 </ul>
               </div>
-
+-->
             </div>
             <!-- /sidebar menu -->
 

@@ -78,18 +78,17 @@
 
                             <c:forEach items="${listDonHang}" var="obj">
                                 <tr>
-                                    <td >${obj.getMaDonHang()}</td>
-                                    <td >${obj.getTenThanhVien()}</td>
-                                    <td >${obj.getTenDangNhap()}</td>
-                                    <td >${obj.getNgayLap()}</td>
-                                    <td >${obj.getSoDienThoai()}</td>
-                                    <td >${obj.getTongTien()}</td>
-                                    <td >
+                                    <td>${obj.getMaDonHang()}</td>
+                                    <td>${obj.getTenThanhVien()}</td>
+                                    <td>${obj.getTenDangNhap()}</td>
+                                    <td>${obj.getNgayLap()}</td>
+                                    <td>${obj.getSoDienThoai()}</td>
+                                    <td>${obj.getTongTien()}</td>
+                                    <td>
                                         <c:choose>
                                             <c:when test="${obj.getTrangThai()==-1}">
-                                                <a href="${contextPath}/admin/donhang/updatetrangthai?id=${obj.getMaDonHang()}&trangthai=1&page=<% out.print(currentPage); %>" style="height: 21px;width: 78px"  class="btn btn-success btn-xs"><i class="fa fa-check-circle-o"></i> Tiếp nhận</a>
-                                                <a href="${contextPath}/admin/donhang/updatetrangthai?id=${obj.getMaDonHang()}&trangthai=0&page=<% out.print(currentPage); %>" style="height: 21px;width: 78px" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Hủy </a>
-                                                </form>
+                                                <font color="#33ccff">
+                                                Chờ tiếp nhận
                                             </c:when> 
                                             <c:when test="${obj.getTrangThai()==1}">
                                                 <font color="blue">

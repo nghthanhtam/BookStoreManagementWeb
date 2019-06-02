@@ -3,4 +3,4 @@
 /build/
 
 #Allow
-!/build/web/Upload
+#!/build/web/Upload

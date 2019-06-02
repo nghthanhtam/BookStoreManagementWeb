@@ -101,7 +101,7 @@ public class PhanQuyenModel {
         this.qlNhaCungCap = qlNhaCungCap;
     }
 
-    public PhanQuyenModel(int maPhanQuyen, String tenQuyen, int qlThanhVien, int qlSach, int qlTheLoai, int qlPhiShip, int qlPhanQuyen, int qlPhieuNhap, int qlPhieuChi, int qlNhaCungCap, int qlHoaDon) {
+    public PhanQuyenModel(int maPhanQuyen, String tenQuyen, int qlThanhVien, int qlSach, int qlTheLoai, int qlPhiShip, int qlPhanQuyen, int qlPhieuNhap, int qlPhieuChi, int qlNhaCungCap, int qlDonHang) {
         this.maPhanQuyen = maPhanQuyen;
         this.tenQuyen = tenQuyen;
         this.qlThanhVien = qlThanhVien;
@@ -112,7 +112,7 @@ public class PhanQuyenModel {
         this.qlPhieuNhap = qlPhieuNhap;
         this.qlPhieuChi = qlPhieuChi;
         this.qlNhaCungCap = qlNhaCungCap;
-        this.qlHoaDon = qlHoaDon;
+        this.qlDonHang = qlDonHang;
     }
 
     public PhanQuyenModel() {
@@ -129,15 +129,16 @@ public class PhanQuyenModel {
     private int qlPhieuNhap;
     private int qlPhieuChi;	
     private int qlNhaCungCap;
-    private int qlHoaDon;
+    private int qlDonHang;
 
-    public int getQlHoaDon() {
-        return qlHoaDon;
+    public int getQlDonHang() {
+        return qlDonHang;
     }
 
-    public void setQlHoaDon(int qlHoaDon) {
-        this.qlHoaDon = qlHoaDon;
+    public void setQlDonHang(int qlDonHang) {
+        this.qlDonHang = qlDonHang;
     }
+  
 
     public static boolean InsertNewPhanQuyen(Connection conn, PhanQuyenModel obj) 
             throws SQLException
@@ -146,7 +147,7 @@ public class PhanQuyenModel {
         try
         {
 
-            String sql="INSERT INTO phanquyen (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap, qlhoadon) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql="INSERT INTO phanquyen (tenquyen, qlthanhvien, qlsach, qltheloai, qlphiship, qlphanquyen, qlphieunhap, qlphieuchi, qlnhacungcap, qldonhang) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             
@@ -159,7 +160,7 @@ public class PhanQuyenModel {
             pstm.setInt(7, obj.getQlPhieuNhap());
             pstm.setInt(8, obj.getQlPhieuChi());
             pstm.setInt(9, obj.getQlNhaCungCap()); 
-            pstm.setInt(10, obj.getQlHoaDon());  
+            pstm.setInt(10, obj.getQlDonHang());  
             
             count = pstm.executeUpdate(); 
         } catch (SQLException ex) {
@@ -190,7 +191,7 @@ public class PhanQuyenModel {
                         Integer.parseInt(rs.getString("qlphieunhap")),
                         Integer.parseInt(rs.getString("qlphieuchi")),
                         Integer.parseInt(rs.getString("qlnhacungcap")),
-                        Integer.parseInt(rs.getString("qlhoadon")) );
+                        Integer.parseInt(rs.getString("qldonhang")) );
                 
                 listPhanQuyen.add(phanQuyenModel);
             }
@@ -246,7 +247,7 @@ public class PhanQuyenModel {
                         Integer.parseInt(rs.getString("qlphieunhap")),
                         Integer.parseInt(rs.getString("qlphieuchi")),
                         Integer.parseInt(rs.getString("qlnhacungcap")),
-                        Integer.parseInt(rs.getString("qlhoadon")) );
+                        Integer.parseInt(rs.getString("qldonhang")) );
          
              return phanQuyenModel; 
         }
@@ -279,7 +280,7 @@ public class PhanQuyenModel {
                         Integer.parseInt(rs.getString("qlphieunhap")),
                         Integer.parseInt(rs.getString("qlphieuchi")),
                         Integer.parseInt(rs.getString("qlnhacungcap")),
-                        Integer.parseInt(rs.getString("qlhoadon")) );
+                        Integer.parseInt(rs.getString("qldonhang")) );
          
              return phanQuyenModel; 
         }
@@ -296,7 +297,7 @@ public class PhanQuyenModel {
         int count = 0;
         try
         {
-            String sql="UPDATE phanquyen SET tenquyen = ?, qlthanhvien = ?, qlsach = ?, qltheloai = ?, qlphiship = ?, qlphanquyen = ?, qlphieunhap = ?, qlphieuchi = ?, qlnhacungcap = ?, qlhoadon = ? WHERE maphanquyen = ?";
+            String sql="UPDATE phanquyen SET tenquyen = ?, qlthanhvien = ?, qlsach = ?, qltheloai = ?, qlphiship = ?, qlphanquyen = ?, qlphieunhap = ?, qlphieuchi = ?, qlnhacungcap = ?, qldonhang = ? WHERE maphanquyen = ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, obj.getTenQuyen());
@@ -308,7 +309,7 @@ public class PhanQuyenModel {
             pstm.setInt(7, obj.getQlPhieuNhap());
             pstm.setInt(8, obj.getQlPhieuChi());
             pstm.setInt(9, obj.getQlNhaCungCap()); 
-            pstm.setInt(10, obj.getQlHoaDon());  
+            pstm.setInt(10, obj.getQlDonHang());  
             pstm.setInt(11, obj.getMaPhanQuyen());  
 
             count = pstm.executeUpdate(); 

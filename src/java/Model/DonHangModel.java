@@ -20,6 +20,12 @@ import java.util.List;
  */
 public class DonHangModel {
 
+    public static final int TRANGTHAI_CHO_XAC_NHAN = -1;
+    public static final int TRANGTHAI_HUY_DON_HANG = 0;
+    public static final int TRANGTHAI_DANG_TIEP_NHAN = 1;
+    public static final int TRANGTHAI_DANG_GIAO_HANG = 2;
+    public static final int TRANGTHAI_DA_HOAN_TAT = 3;
+
     public int getMaDonHang() {
         return maDonHang;
     }
@@ -92,7 +98,6 @@ public class DonHangModel {
         this.ghiChu = ghiChu;
     }
 
-
     public double getPhiShip() {
         return phiShip;
     }
@@ -100,7 +105,7 @@ public class DonHangModel {
     public void setPhiShip(double phiShip) {
         this.phiShip = phiShip;
     }
-     
+
     private String soDienThoai;
     private String ghiChu;
     private int maDonHang;
@@ -111,9 +116,7 @@ public class DonHangModel {
     private String diaChiGiaoHang;
     private int maPhiShip;
     private double phiShip;
-    private String soDienThoai;
-    private String ghiChu;
- 
+
     public DonHangModel(int maDonHang, int maThanhVien, Date ngayLap, double tongTien, int trangThai, String diaChiGiaoHang, int maPhiShip, double phiship, String soDienThoai, String ghiChu) {
         this.maDonHang = maDonHang;
         this.maThanhVien = maThanhVien;
@@ -126,7 +129,6 @@ public class DonHangModel {
         this.soDienThoai = soDienThoai;
         this.ghiChu = ghiChu;
     }
-
 
     public static boolean InsertDonHang(Connection conn, DonHangModel donHang)
             throws SQLException {
@@ -157,7 +159,7 @@ public class DonHangModel {
     }
 
     public static int getMaDonHangCurrent(Connection conn) throws SQLException {
-        
+
         String sql = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?";
         PreparedStatement pstm = conn.prepareStatement(sql);
 
@@ -172,7 +174,6 @@ public class DonHangModel {
         return 0;
     }
 
-  
     public static List<DonHangModel> getAllDonHang(Connection conn) {
         List<DonHangModel> list = new ArrayList<DonHangModel>();
 
@@ -201,13 +202,13 @@ public class DonHangModel {
         }
 
         return list;
-    } 
-  
+    }
+
     public static boolean UpdateDonHang(Connection conn, DonHangModel donHang) throws SQLException {
 
         int count = 0;
         try {
-                  
+
             String sql = "UPDATE donhang SET "
                     + "mathanhvien = ?,"
                     + "ngaylap=?,"
@@ -215,6 +216,7 @@ public class DonHangModel {
                     + "trangthai=?, "
                     + "diachigiaohang = ?, "
                     + "maphiship = ?, "
+                    + "phiship = ?, "
                     + "sodienthoai = ?, "
                     + "ghichu =?"
                     + "WHERE madonhang = ?";
@@ -227,11 +229,11 @@ public class DonHangModel {
             pstm.setInt(4, donHang.getTrangThai());
             pstm.setString(5, donHang.getDiaChiGiaoHang());
             pstm.setInt(6, donHang.getMaPhiShip());
-            pstm.setString(7, donHang.getSoDienThoai());
-            pstm.setString(8, donHang.getGhiChu());
-            pstm.setInt(9, donHang.getMaDonHang());
+            pstm.setDouble(7, donHang.getPhiShip());
+            pstm.setString(8, donHang.getSoDienThoai());
+            pstm.setString(9, donHang.getGhiChu());
+            pstm.setInt(10, donHang.getMaDonHang());
 
-            
             count = pstm.executeUpdate();
 
         } catch (SQLException ex) {
@@ -260,6 +262,7 @@ public class DonHangModel {
                     rs.getInt("trangthai"),
                     rs.getString("diachigiaohang"),
                     rs.getInt("maphiship"),
+                    rs.getDouble("phiship"),
                     rs.getString("sodienthoai"),
                     rs.getString("ghichu"));
             return donhang;
@@ -268,37 +271,7 @@ public class DonHangModel {
 
     }
 
-    
-      public static boolean UpdateTrangThaiDonHang(Connection conn, Boolean trangThai, int maDonHang) throws SQLException {
-
-        int count = 0;
-        try {
-                  
-                String sql = "UPDATE donhang SET "
-                        + "trangthai=? "
-                        + "WHERE madonhang = ?";
-
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            int trangThaiInteger;
-            if(trangThai == true)
-                trangThaiInteger=1;
-            else
-                trangThaiInteger=0;
-            
-            pstm.setInt(1,trangThaiInteger );
-            pstm.setInt(2, maDonHang);
-            
-            count = pstm.executeUpdate();
-
-        } catch (SQLException ex) {
-            count = 0;
-            ex.printStackTrace();
-        }
-        return count > 0;
-    }
-
-    
-     public static List<DonHangModel> getAllDonHangByMaThanhVien(Connection conn, int maThanhVien) {
+    public static List<DonHangModel> getAllDonHangByMaThanhVien(Connection conn, int maThanhVien) {
         List<DonHangModel> list = new ArrayList<DonHangModel>();
 
         String sql = "SELECT * FROM donhang WHERE mathanhvien = ?";
@@ -323,10 +296,10 @@ public class DonHangModel {
             }
 
         } catch (SQLException e) {
-            
+
         }
 
         return list;
     }
-  
+
 }

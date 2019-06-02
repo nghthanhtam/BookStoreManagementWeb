@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */     
+ */
 package Controller;
 
 import Model.CTDonHangModel;
@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+
 import org.json.JSONObject;
 import org.json.*;
 
@@ -38,206 +39,202 @@ public class CheckoutServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-  
-        
-        Connection conn = MyUtils.getStoredConnection(req);
-        boolean isFailed = false; 
 
+        Connection conn = MyUtils.getStoredConnection(req);
+        boolean isFailed = false;
         String noiDungThongBao = "";
-        
+
         String button = req.getParameter("submit");
 
         List<CTDonHangModel> listCTDonHang = new ArrayList<>();
         List<SachModel> listSachHetHang = new ArrayList<>();
-        boolean isValidDonHang=true;
+        boolean isValidDonHang = true;
         HttpSession session = ((HttpServletRequest) req).getSession();
-        
-        int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();      
-     
-                
-        if (button != null && button.equals("them")) {
-            try {
-                conn.setAutoCommit(false);
-                
-                int maDonHang = DonHangModel.getMaDonHangCurrent(conn);
-                
-                String diaChi = (String) req.getParameter("address");
-                String soDienThoai = (String) req.getParameter("tel");
-                String ghiChu = (String) req.getParameter("comment");
-                Integer maPhiShip = Integer.parseInt(req.getParameter("maphiship"));               
-                PhiShipModel phishipModel = PhiShipModel.FindByMaPhiShip(conn, maPhiShip);
-                Double phiShip = phishipModel.getPhiShip();
-                        
-                String listCT = (String) req.getParameter("listctdonhang");
-                JSONArray jsonListCT =null;
-                
-             
-                Double tongTien=0.0;
-               
-                try {
-                     jsonListCT = new JSONArray(listCT);
-                    //JSONArray jsonArr = new JSONArray("[{\"id\":\"61\",\"price\":\"15700.0\",\"qty\":\"1\",\"name\":\"Kẻ may mắn\"},{\"id\":\"52\",\"price\":\"25000.0\",\"qty\":\"1\",\"name\":\"Sách số 123\"}]");
-                    
-                   if(jsonListCT.length() <= 0){
-                        req.getRequestDispatcher("giohang-empty.jsp").forward(req, resp);
-                   }
-                                         
-                    for (int i = 0; i < jsonListCT.length(); i++) {
-                        JSONObject jsonObj = jsonListCT.getJSONObject(i);
-                        
-                        SachModel sachModel = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
-                        listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),sachModel.getGiaBan(), sachModel.getPhanTramGiamGia()));                       
-                        
-                       
-                        tongTien+= ( sachModel.getGiaBan()-  sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100 )*Integer.parseInt(jsonObj.getString("qty"));
-                    }
-    
-                } catch (JSONException ex) {
-                   
-                    req.getRequestDispatcher("giohang-empty.jsp").forward(req, resp);
-                    ex.printStackTrace();
-                };
-                
-                Date date = new Date(); //lấy ngày hiện tại
-              
-                
-                boolean isOKDonHang = DonHangModel.InsertDonHang(conn, new DonHangModel(
-                        0,
-                        maThanhVien,
-                        new java.sql.Date(date.getTime()),
-                        tongTien+phiShip,
-                        1,
-                        diaChi,
-                        maPhiShip,
-                        phiShip,
-                        soDienThoai,
-                        ghiChu        
-                ));
-        
-                if (isOKDonHang == false) {
-                    throw new Exception("Thêm đơn hàng thất bại!");
-                }
 
-                /* Kiểm tra-Cập nhật số lượng tồn của sách */
-                for (int i = 0; i < jsonListCT.length(); i++) {
-                    JSONObject jsonObj = jsonListCT.getJSONObject(i);
+        try {
 
-                    SachModel sach = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
-                    if ((sach.getSoLuongTon() - Integer.parseInt(jsonObj.getString("qty"))) < 1) {
-           
-                        listSachHetHang.add(sach);
-                        isValidDonHang = false;
-                    } else {
-                        sach.setSoLuongTon(sach.getSoLuongTon() - Integer.parseInt(jsonObj.getString("qty")));
-                        SachModel.UpdateSach(conn, sach);
-                    }
-                }
-                /* Kiểm tra-Cập nhật số lượng tồn của sách */
-               
-                
-                
-                /* Xử lý đơn hàng khi sản phầm hết hàng */
-                if(isValidDonHang == false){
-                    req.setAttribute("listSachHetHang", listSachHetHang);
-                    List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
-                    req.setAttribute("listPhiShip", listPhiShip);
-        
-                    req.getRequestDispatcher("checkout.jsp").forward(req, resp);           
-                    //throw new Exception("Đơn hàng không hợp lệ!");
-                    
-                }
-                /* Xử lý đơn hàng khi sản phầm hết hàng */
-                
-             
-                boolean isOkCTDonHang = CTDonHangModel.InsertList(conn, listCTDonHang);
-                if (isOkCTDonHang == false) {
-                    throw new Exception("Thêm chi tiết đơn hàng thất bại!");
-                }
-                
-                conn.commit();
-                
-                isFailed = false;
-                noiDungThongBao = "Đã thêm đơn hàng mới!";
-                
-            } catch (Exception ex) {
-
-                try {
-                    conn.rollback();
-                } catch (SQLException ex1) {
-                    Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex1);
-                }
-
-                isFailed = true;
-                noiDungThongBao = ex.getMessage();
-            } finally {
-                try {
-                    conn.setAutoCommit(true);
-                    
-                } catch (SQLException ex) {
-                    Logger.getLogger(CheckoutServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (button != null && button.equals("them")) {
+            } else {
+                throw new Exception("Yêu cầu của bạn không được xử lí!");
             }
+
+            // conn.setAutoCommit(false);
+            if (MyUtils.getLoginedThanhVien(session) == null) {
+                throw new Exception("Vui lòng đăng nhập trước khi mua hàng!");
+            }
+            int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();
+
+            String diaChi = (String) req.getParameter("address");
+            String soDienThoai = (String) req.getParameter("tel");
+            if (MyUtils.checkSoDienThoai(soDienThoai) == false) {
+                throw new Exception("Số điện thoại không hợp lệ!");
+            }
+
+            String ghiChu = (String) req.getParameter("comment");
+            int maPhiShip = 0;
+            if (req.getParameter("maphiship") != null && !req.getParameter("maphiship").equals("")) {
+                maPhiShip = Integer.parseInt(req.getParameter("maphiship"));
+            } else {
+                throw new Exception("Bạn chưa chọn tỉnh/thành phố!");
+            }
+            PhiShipModel phishipModel = PhiShipModel.FindByMaPhiShip(conn, maPhiShip);
+            if (phishipModel == null) {
+                throw new Exception("Tỉnh/thành phố không hợp lệ!");
+            }
+
+            Double phiShip = phishipModel.getPhiShip();
+
+            String listCT = (String) req.getParameter("listctdonhang");
+            JSONArray jsonListCT = null;
+
+            Double tongTien = 0.0;
+
+            Date datenow = new Date(); //lấy ngày hiện tại
+
+            /* Thêm chi tiết đơn hàng */
+            jsonListCT = new JSONArray(listCT);
+            if (jsonListCT.length() <= 0) {
+                throw new Exception("Không có sản phẩm nào trong giỏ hàng!");
+            }
+
+            /* Kiểm tra-Cập nhật số lượng tồn của sách, trạng thái sách đang được bán */
+            for (int i = 0; i < jsonListCT.length(); i++) {
+                JSONObject jsonObj = jsonListCT.getJSONObject(i);
+
+                SachModel sach = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
+                if (sach == null) {
+                    throw new Exception("Không tìm thấy thông tin sách [MASACH] = " + jsonObj.getString("id"));
+                }
+                if ((sach.getSoLuongTon() - Integer.parseInt(jsonObj.getString("qty"))) < 0) {
+                    listSachHetHang.add(sach);
+                } else {
+                    sach.setSoLuongTon(sach.getSoLuongTon() - Integer.parseInt(jsonObj.getString("qty")));
+                    if (listSachHetHang.size() == 0) // không có sách nào hết hàng 
+                    {
+                        if (SachModel.UpdateSach(conn, sach) == false) {
+                            throw new Exception("Không thể cập nhật tồn sách!");
+                        }
+                    }
+                }
+                
+                if (sach.getTrangThai() != SachModel.TRANGTHAI_DANG_BAN)
+                {
+                    throw new Exception("Sách \"" + sach.getTenSach() + "\" đã ngưng kinh doanh!");
+                }
+
+                double TongGiaCTDonHang = 0;
+
+                if (sach.getPhanTramGiamGia() > 0
+                        && datenow.before(sach.getNgayKetThucGiamGia())
+                        && datenow.after(sach.getNgayBatDauGiamGia())) { // nếu ngày hiện tại còn trong giảm giá
+                    TongGiaCTDonHang = sach.getGiaBan() * Integer.parseInt(jsonObj.getString("qty")) * (100f - sach.getPhanTramGiamGia()) * 0.01;
+                } else {
+                    TongGiaCTDonHang = sach.getGiaBan() * Integer.parseInt(jsonObj.getString("qty"));
+                }
+                tongTien += TongGiaCTDonHang;
+            }
+
+            if (listSachHetHang.size() > 0) {
+                req.setAttribute("listSachHetHang", listSachHetHang);
+                throw new Exception("Lượng tồn sách không đủ để thực hiện đơn hàng!");
+            }
+
+            /* Kiểm tra-Cập nhật số lượng tồn của sách */
+            int maDonHang = DonHangModel.getMaDonHangCurrent(conn);
+            boolean isOk = DonHangModel.InsertDonHang(conn, new DonHangModel(
+                    0,
+                    maThanhVien,
+                    new java.sql.Date(datenow.getTime()),
+                    tongTien,
+                    DonHangModel.TRANGTHAI_CHO_XAC_NHAN,
+                    diaChi,
+                    maPhiShip,
+                    phiShip,
+                    soDienThoai,
+                    ghiChu
+            ));
+
+            if (isOk == false) {
+                throw new Exception("Thêm đơn hàng thất bại!");
+            }
+
+            /* Thêm chi tiết đơn hàng */
+            for (int i = 0; i < jsonListCT.length(); i++) {
+                JSONObject jsonObj = jsonListCT.getJSONObject(i);
+
+                SachModel sachModel = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
+                CTDonHangModel cTDonHangModel = new CTDonHangModel(0, maDonHang, Integer.parseInt(jsonObj.getString("id")), Integer.parseInt(jsonObj.getString("qty")), sachModel.getGiaBan(), 0);
+                if (sachModel.getPhanTramGiamGia() > 0
+                        && datenow.before(sachModel.getNgayKetThucGiamGia())
+                        && datenow.after(sachModel.getNgayBatDauGiamGia())) { // nếu ngày hiện tại còn trong giảm giá
+                    cTDonHangModel.setPhanTramGiamGia(sachModel.getPhanTramGiamGia());
+                }
+
+                listCTDonHang.add(cTDonHangModel);
+            }
+            if (CTDonHangModel.InsertList(conn, listCTDonHang) == false) {
+                throw new Exception("Thêm chi tiết đơn hàng thất bại!");
+            }
+            /* Thêm chi tiết đơn hàng */
+
+            isFailed = false;
+            noiDungThongBao = "Đã thêm đơn hàng mới thành công!";
+            conn.commit();
+        } catch (Exception ex) {
+
+            try {
+                conn.rollback();
+            } catch (SQLException ex1) {
+            }
+
+            isFailed = true;
+            noiDungThongBao = ex.getMessage();
+        } finally {
+//            try {
+//            //    conn.setAutoCommit(true);
+//            } catch (SQLException ex) {
+//            }
         }
+
+        List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
+        req.setAttribute("listPhiShip", listPhiShip);
+
+        ThanhVienModel thanhVienModel = MyUtils.getLoginedThanhVien(session);
+        req.setAttribute("tvModel", thanhVienModel);
 
         if (isFailed) {
-          
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
             req.getRequestDispatcher("checkout.jsp").forward(req, resp);
         } else {
- 
+
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
             req.getRequestDispatcher("trangthaisaudathang.jsp").forward(req, resp);
-            
-            req.setAttribute("txtTitle", "Trang chủ - Book Store");
-
-            List<SachModel> listSachMoiNhat = SachModel.getListSachMoiNhatTop7(conn);
-            SachModel objectOne = listSachMoiNhat.get(0);
-            listSachMoiNhat.remove(0);
-            req.setAttribute("listSachMoiNhat", listSachMoiNhat);
-            req.setAttribute("sachMoiNhat", objectOne);
-            List<SachModel> listSachGiamGia = SachModel.getListSachGiamGiaTop7(conn);
-            SachModel objectGiamGiaNhat = listSachGiamGia.get(0);
-            listSachGiamGia.remove(0);
-            req.setAttribute("sachGiamGiaNhat", objectGiamGiaNhat);
-            req.setAttribute("listSachGiamGia", listSachGiamGia);
-
-            req.getRequestDispatcher("home.jsp").forward(req, resp);
         }
-     
+
     }
 
-   @Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("txtTitle", "Checkout");
-    
+
         Connection conn = MyUtils.getStoredConnection(req);
-         
+
         List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
         req.setAttribute("listPhiShip", listPhiShip);
         HttpSession session = req.getSession();
-              
-        
-       if (MyUtils.getLoginedThanhVien(session) == null) { // chưa đăng nhập
 
-           req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để tiếp tục mua hàng!", MessagesModel.ATT_TYPE_ERROR));
-           req.getRequestDispatcher("giohang.jsp").forward(req, resp);
-       } else {
+        ThanhVienModel thanhVienModel = MyUtils.getLoginedThanhVien(session);
 
-            int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();  
-             
-            try {
-                ThanhVienModel tvModel = ThanhVienModel.FindByMaThanhVien(conn, maThanhVien);
-                req.setAttribute("tvModel", tvModel);
+        if (thanhVienModel == null) { // chưa đăng nhập
 
-            } catch (SQLException ex) {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Đăng nhập để tiếp tục mua hàng!", MessagesModel.ATT_TYPE_ERROR));
+            req.getRequestDispatcher("giohang.jsp").forward(req, resp);
+        } else {
 
-               
-            }             
-          
-            
+            req.setAttribute("tvModel", thanhVienModel);
             req.getRequestDispatcher("checkout.jsp").forward(req, resp);
-          
-       }
+
+        }
 
     }
 

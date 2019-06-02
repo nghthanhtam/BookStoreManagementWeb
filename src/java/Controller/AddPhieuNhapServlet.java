@@ -102,9 +102,8 @@ public class AddPhieuNhapServlet extends HttpServlet {
                 }.getType();
 
                 List<CTPhieuNhapModel> listCTPhieuNhap = gson.fromJson(jsonDataTable, collectionType);
-               
-                conn.setAutoCommit(false);
 
+ 
                 int maPhieuNhap = PhieuNhapModel.getMaPhieuNhapCurrent(conn);
 
                 boolean isOKPhieuNhap = PhieuNhapModel.InsertPhieuNhap(conn, new PhieuNhapModel(
@@ -129,13 +128,13 @@ public class AddPhieuNhapServlet extends HttpServlet {
                     } else {
                         tongTien += obj.getDonGia() * obj.getSoLuongNhap(); // đếm tổng tiền
                         obj.setMaPhieuNhap(maPhieuNhap); // cập nhật lại mã phiếu nhập
-                        
+
                         /* Cập nhật tồn của sách */
                         SachModel sach = SachModel.FindByMaSach(conn, obj.getMaSach());
                         sach.setSoLuongTon(sach.getSoLuongTon() + obj.getSoLuongNhap());
                         SachModel.UpdateSach(conn, sach);
                         /* Cập nhật tồn của sách */
-                        
+
                     }
                 }
                 /* cập nhật lại mã phiếu nhập và xóa các object rỗng, tính tổng tiền*/
@@ -144,15 +143,18 @@ public class AddPhieuNhapServlet extends HttpServlet {
                 if (isOkCTPhieuNhap == false) {
                     throw new Exception("Thêm chi tiết phiếu nhập thất bại!");
                 }
-                 
+
                 /* Cập nhật tiền nợ nhà cung cấp */
                 NhaCungCapModel nhaCungCapModel = NhaCungCapModel.FindByMaNhaCungCap(conn, maNhaCungCap);
                 nhaCungCapModel.setSoTienNo(nhaCungCapModel.getSoTienNo() + tongTien);
-                NhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCapModel);
+                boolean isOkUpdateNhaCungCap = NhaCungCapModel.UpdateNhaCungCap(conn, nhaCungCapModel);
                 /* Cập nhật tiền nợ nhà cung cấp */
 
-                conn.commit();
-
+                if (isOkUpdateNhaCungCap == false) {
+                    throw new Exception("Cập nhật tiền nợ nhà cung cấp thất bại!");
+                }
+                
+                conn.commit(); 
                 isFailed = false;
                 noiDungThongBao = "Đã thêm phiếu nhập mới!";
 
@@ -167,11 +169,7 @@ public class AddPhieuNhapServlet extends HttpServlet {
                 isFailed = true;
                 noiDungThongBao = ex.getMessage();
             } finally {
-                try {
-                    conn.setAutoCommit(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(AddPhieuNhapServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                 
             }
         }
 
@@ -184,7 +182,7 @@ public class AddPhieuNhapServlet extends HttpServlet {
         req.setAttribute("txtTitle", "Phiếu nhập");
         List<PhieuNhapModel> listPhieuNhap = PhieuNhapModel.getAllPhieuNhap(conn);
         req.setAttribute("listPhieuNhap", listPhieuNhap);
- 
+
         req.getRequestDispatcher("/admin/list-phieunhap.jsp").forward(req, resp);
 
         //jsonDataTable

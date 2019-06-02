@@ -24,17 +24,18 @@
         <filter-name>NhaCungCapFilter</filter-name>
         <filter-class>Filter.NhaCungCapFilter</filter-class>
     </filter>
-    
     <filter>
         <filter-name>PhieuNhapFilter</filter-name>
         <filter-class>Filter.PhieuNhapFilter</filter-class>
     </filter>
-    
     <filter>
         <filter-name>SachFilter</filter-name>
         <filter-class>Filter.SachFilter</filter-class>
     </filter>
-    
+    <filter>
+        <filter-name>DonHangFilter</filter-name>
+        <filter-class>Filter.DonHangFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -63,19 +64,18 @@
         <filter-name>NhaCungCapFilter</filter-name>
         <url-pattern>/admin/nhacungcap/*</url-pattern>
     </filter-mapping>
-    
     <filter-mapping>
         <filter-name>PhieuNhapFilter</filter-name>
         <url-pattern>/admin/phieunhap/*</url-pattern>
     </filter-mapping>
-    
     <filter-mapping>
         <filter-name>SachFilter</filter-name>
         <url-pattern>/admin/sach/*</url-pattern>
     </filter-mapping>
-    
-    
-    
+    <filter-mapping>
+        <filter-name>DonHangFilter</filter-name>
+        <url-pattern>/admin/donhang/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
