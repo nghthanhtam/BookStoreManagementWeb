@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.CTDonHangModel;
 import Model.CTDonHangModelWithTenSach;
 import Model.DonHangModel;
 import Model.DonHangModelWithTenThanhVienAndTenDangNhap;
@@ -46,60 +47,108 @@ public class EditDonHangServlet extends HttpServlet {
         //Button
         String button = req.getParameter("submit");
 
-        DonHangModelWithTenThanhVienAndTenDangNhap donHang = null;
+        int maDonHang = 0;
 
         List<PhiShipModel> listPhiShip = null;
 
         if (button != null && button.equals("sua")) {
 
-            System.out.println("AAAAAAAAAAAAAAAA");
             try {
+                maDonHang = Integer.parseInt(req.getParameter("madonhang"));
 
-                //Get MaDonHang
-                int maDonHang = Integer.parseInt(req.getParameter("madonhang"));
-                //Get DonHang
                 DonHangModel donHangTemp = DonHangModel.FindByMaDonHang(conn, maDonHang);
 
-                if (donHangTemp.getTrangThai() == 3) {
-                    throw new Exception("Không thể cập nhật đơn hàng đã xóa!");
+                int trangThaiDonHangHienTai = donHangTemp.getTrangThai();
+
+                conn.setAutoCommit(false);
+
+                /*
+                if (trangThaiDonHangHienTai == DonHangModel.TRANGTHAI_DANG_GIAO_HANG) {
+                    throw new Exception("Không thể cập nhật đơn hàng đang được giao!");
+                }
+                if (trangThaiDonHangHienTai == DonHangModel.TRANGTHAI_DA_HOAN_TAT) {
+                    throw new Exception("Không thể cập nhật đơn hàng đã hoàn tất!");
+                }
+                if (trangThaiDonHangHienTai == DonHangModel.TRANGTHAI_HUY_DON_HANG) {
+                    throw new Exception("Không thể cập nhật đơn hàng đã hủy!");
+                }
+                 */
+                if (!(trangThaiDonHangHienTai == DonHangModel.TRANGTHAI_DANG_GIAO_HANG
+                        || trangThaiDonHangHienTai == DonHangModel.TRANGTHAI_DA_HOAN_TAT
+                        || trangThaiDonHangHienTai == DonHangModel.TRANGTHAI_HUY_DON_HANG)) {
+
+                    String diaChi = (String) req.getParameter("diachigiaohang");
+
+                    int maPhiShip = Integer.parseInt(req.getParameter("maphiship"));
+
+                    String soDienThoai = (String) req.getParameter("sodienthoai");
+                    if (MyUtils.checkSoDienThoai(soDienThoai) == false) {
+                        throw new Exception("Số điện thoại không hợp lệ!");
+                    }
+
+                    PhiShipModel phiShipCu = PhiShipModel.FindByMaPhiShip(conn, donHangTemp.getMaPhiShip());
+                    PhiShipModel phiShipMoi = PhiShipModel.FindByMaPhiShip(conn, maPhiShip);
+                    if (phiShipMoi == null) {
+                        throw new Exception("Chọn tỉnh thành không hợp lệ!");
+                    }
+
+                    donHangTemp.setTongTien(donHangTemp.getTongTien() - phiShipCu.getPhiShip() + phiShipMoi.getPhiShip());
+                    donHangTemp.setDiaChiGiaoHang(diaChi);
+                    donHangTemp.setMaPhiShip(maPhiShip);
+                    donHangTemp.setSoDienThoai(soDienThoai);
                 }
 
-                String diaChi = (String) req.getParameter("diachigiaohang");
-                int maPhiShip = Integer.parseInt(req.getParameter("maphiship"));
-                int trangthai = Integer.parseInt(req.getParameter("trangthai"));
-                System.out.println("XXXXXXXXXXXXXXX");
-                System.out.println(trangthai);
-                System.out.println("XXXXXXXXXXXXXXX");
+                /* Cập nhật ghi chú */
+                String ghiChu = (String) req.getParameter("ghichu");
+                donHangTemp.setGhiChu(ghiChu);
 
-                PhiShipModel phiShipCu = PhiShipModel.FindByMaPhiShip(conn, donHangTemp.getMaPhiShip());
-                PhiShipModel phiShipMoi = PhiShipModel.FindByMaPhiShip(conn, maPhiShip);
-
-                donHangTemp.setTongTien(donHangTemp.getTongTien() - phiShipCu.getPhiShip() + phiShipMoi.getPhiShip());
-                donHangTemp.setDiaChiGiaoHang(diaChi);
-                donHangTemp.setTrangThai(trangthai);
-                donHangTemp.setMaPhiShip(maPhiShip);
-
-                boolean isOk = DonHangModel.UpdateDonHang(conn, donHangTemp);
-
-                Boolean updateSoLuongTonSach = null;
-                List<CTDonHangModelWithTenSach> listCTDHHuy = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
-                for (int i = 0; i < listCTDHHuy.size(); i++) {
-                    updateSoLuongTonSach = SachModel.UpdateSoLuongTonSach(conn, listCTDHHuy.get(i).getSoLuong(), listCTDHHuy.get(i).getMaSach());
-                    if (updateSoLuongTonSach == false) {
-                        System.out.println("Update sách: " + listCTDHHuy.get(i).getMaSach());
+                /*Cập nhật trạng thái đơn hàng và tồn kho */
+                if (req.getParameter("trangthai") != null) { // khi trạng thái khác null mới đổi trạng thái
+                    int trangThai = Integer.parseInt(req.getParameter("trangthai"));
+                    if (trangThai < DonHangModel.TRANGTHAI_CHO_XAC_NHAN || trangThai > DonHangModel.TRANGTHAI_DA_HOAN_TAT) {
+                        throw new Exception("Trạng thái đơn hàng không hợp lệ!");
+                    }
+                    donHangTemp.setTrangThai(trangThai);
+                    if (trangThai == DonHangModel.TRANGTHAI_HUY_DON_HANG) // nếu chọn hủy đơn 
+                    {
+                        List<CTDonHangModel> listCTDonHang = CTDonHangModel.getAllCTDonHangByMaDonHang(conn, maDonHang);
+                        for (CTDonHangModel cTDonHangModel : listCTDonHang) {
+                            SachModel sach = SachModel.FindByMaSach(conn, cTDonHangModel.getMaSach());
+                            if (sach == null) {
+                                throw new Exception("Không thể cập nhật tồn sách!");
+                            }
+                            sach.setSoLuongTon(sach.getSoLuongTon() + cTDonHangModel.getSoLuong());
+                            boolean isOkUpdateSach = SachModel.UpdateSach(conn, sach);
+                            if (isOkUpdateSach == false) {
+                                throw new Exception("Không thể cập nhật tồn sách!");
+                            }
+                        }
                     }
                 }
 
-                if (isOk) {
-                    isFailed = false;
-                    noiDungThongBao = "Đã cập đơn hàng!";
-                } else {
-                    throw new Exception("Yêu cầu của bạn không thể xử lý!");
+                boolean isOk = DonHangModel.UpdateDonHang(conn, donHangTemp);
+                if (isOk == false) {
+                    throw new Exception("Cập nhật đơn hàng thất bại!");
                 }
+
+                isFailed = false;
+                noiDungThongBao = "Đã cập đơn hàng thành công!";
+
+                conn.commit();
+
             } catch (Exception ex) {
-                Logger.getLogger(AddSachServlet.class.getName()).log(Level.SEVERE, null, ex);
                 isFailed = true;
                 noiDungThongBao = ex.getMessage();
+                try {
+                    conn.rollback();
+                } catch (SQLException ex1) {
+                }
+            } finally {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException ex) {
+
+                }
             }
 
         }
@@ -112,16 +161,25 @@ public class EditDonHangServlet extends HttpServlet {
         }
 
         req.setAttribute("txtTitle", "Sửa đơn hàng");
+
+        DonHangModelWithTenThanhVienAndTenDangNhap donHang = null;
         try {
-            donHang = DonHangModelWithTenThanhVienAndTenDangNhap.FindByMaDonHang(conn, Integer.parseInt(req.getParameter("madonhang")));
+            donHang = DonHangModelWithTenThanhVienAndTenDangNhap.FindByMaDonHang(conn, maDonHang);
             listPhiShip = PhiShipModel.getAllPhiShip(conn);
         } catch (SQLException ex) {
-            Logger.getLogger(EditSachServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         req.setAttribute("donHang", donHang);
         List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
         req.setAttribute("listPhiShip", listPhiShip);
 
+        List<CTDonHangModelWithTenSach> listCTDonHang = null;
+        try {
+            donHang = DonHangModelWithTenThanhVienAndTenDangNhap.FindByMaDonHang(conn, maDonHang);
+            listCTDonHang = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
+        } catch (Exception ex) {
+        }
+        req.setAttribute("listCTDonHang", listCTDonHang);
         req.getRequestDispatcher("/admin/donhang.jsp").forward(req, resp);
     }
 
@@ -130,43 +188,27 @@ public class EditDonHangServlet extends HttpServlet {
         Connection conn = MyUtils.getStoredConnection(req);
 
         req.setAttribute("txtTitle", "Sửa đơn hàng");
-        boolean result = false;
-        List<CTDonHangModelWithTenSach> listSanPham = null;
+
         DonHangModelWithTenThanhVienAndTenDangNhap donHang = null;
 
-        List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
-
-        System.out.println(listPhiShip.size());
-
+        List<CTDonHangModelWithTenSach> listCTDonHang = null;
         try {
             int maDonHang = Integer.parseInt((String) req.getParameter("id"));
             donHang = DonHangModelWithTenThanhVienAndTenDangNhap.FindByMaDonHang(conn, maDonHang);
-            //Get list san pham in don hang
-            System.out.println(maDonHang);
-            listSanPham = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            System.out.println(listSanPham.size());
-            if (donHang != null) {
-                result = true;
+            if (donHang == null)
+            {
+                resp.sendRedirect("/admin/donhang");
+                return;
             }
+            listCTDonHang = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
         } catch (Exception ex) {
-            result = false;
         }
 
-        if (result == true) {
-            req.setAttribute("donHang", donHang);
-            
-            req.setAttribute("listPhiShip", listPhiShip);
-            req.setAttribute("listSanPham", listSanPham);
-            req.getRequestDispatcher("/admin/donhang.jsp").forward(req, resp);
-        } else {
-
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được thực hiện!", MessagesModel.ATT_TYPE_ERROR));
-
-            List<DonHangModelWithTenThanhVienAndTenDangNhap> listDonHang = DonHangModelWithTenThanhVienAndTenDangNhap.getAllDonHang(conn,1,20);
-            req.setAttribute("listDonHang", listDonHang);
-            req.getRequestDispatcher("/admin/list-donhang.jsp").forward(req, resp);;
-        }
+        req.setAttribute("donHang", donHang);
+        List<PhiShipModel> listPhiShip = PhiShipModel.getAllPhiShip(conn);
+        req.setAttribute("listPhiShip", listPhiShip);
+        req.setAttribute("listCTDonHang", listCTDonHang);
+        req.getRequestDispatcher("/admin/donhang.jsp").forward(req, resp);
     }
 
 }
