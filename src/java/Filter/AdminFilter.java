@@ -56,8 +56,7 @@ public class AdminFilter implements Filter{
         
         HttpSession session = ((HttpServletRequest) request).getSession();
         
-        java.sql.Connection conn = MyUtils.getStoredConnection(request);
-        
+         
         ThanhVienModel thanhVien = MyUtils.getLoginedThanhVien(session);
         if (thanhVien != null) // đã đăng nhập
         {

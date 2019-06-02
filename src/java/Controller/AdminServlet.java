@@ -67,21 +67,18 @@ public class AdminServlet extends HttpServlet {
 
             if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau())) {
                 MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
-                
- 
+
                 //String referrer = req.getHeader("referer");
-                
-                
                 HttpSession session = ((HttpServletRequest) req).getSession();
                 String autoRedirect = (String) session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
-                if (autoRedirect!=null)
+                if (autoRedirect != null) {
+                    session.removeAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
                     resp.sendRedirect(autoRedirect);
-                else
+                } else {
                     req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
-                
-                
-                
-            } else { 
+                }
+
+            } else {
                 req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
                 req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
             }
