@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
+import java.util.regex.Pattern;
 ;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ public class MyUtils {
     private static final String ATT_NAME_USER_NAME = "ATTRIBUTE_FOR_STORE_USER_NAME_IN_COOKIE";
     private static final String ATT_NAME_UPLOAD_DIR = "Upload";
     public static final String ATT_NAME_AUTO_REDIRECT = "autoRedirect";
+    public static final String ATT_NAME_AUTO_REDIRECT_HOME = "autoRedirectHome";
 
     public static void storeConnection(ServletRequest request, Connection conn) {
         request.setAttribute(ATT_NAME_CONNECTION, conn);
@@ -69,6 +71,7 @@ public class MyUtils {
         }
         return hashtext;
     }
+
     /*
      public static void storeUserCookie(HttpServletResponse response, UserAccount user) {
      System.out.println("Store user cookie");
@@ -78,7 +81,7 @@ public class MyUtils {
      }
      */
 
-    /*
+ /*
      public static String getUserNameInCookie(HttpServletRequest request) {
      Cookie[] cookies = request.getCookies();
      if (cookies != null) {
@@ -152,12 +155,32 @@ public class MyUtils {
 
         return null;
     }
-    public  static Boolean checkFileExistence(HttpServletRequest request, String fileName){
-        
+
+    public static Boolean checkFileExistence(HttpServletRequest request, String fileName) {
+
         String applicationPath = request.getServletContext().getRealPath("");
-        String basePath = applicationPath + File.separator ;
-        File tempFile = new File(basePath+fileName);
+        String basePath = applicationPath + File.separator;
+        File tempFile = new File(basePath + fileName);
         return tempFile.exists();
     }
 
+    public static Boolean checkSoDienThoai(String soDienThoai) {
+        if (Pattern.compile("^(0|\\+84)[0-9]{3,10}$").matcher(soDienThoai).matches() == false) {
+            return false;
+        }
+        return true;
+    }
+
+    public static Boolean checkEmail(String email) {
+        if (Pattern.compile("^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$").matcher(email).matches() == false) {
+            return false;
+        }
+        return true;
+    }
+
+    public static String addSlashes(String str) {
+        str = str.replace("'", "&#180;");
+        str = str.replaceAll("\"", "&#8221;");
+        return str;
+    }
 }

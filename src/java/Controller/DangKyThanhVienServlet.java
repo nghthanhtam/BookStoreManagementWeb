@@ -34,23 +34,22 @@ public class DangKyThanhVienServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-  
+
         boolean isFailedRequest = false; // request thất bại 
-        
+
         String noiDungThongBao = "";
         String button = req.getParameter("submit");
-        Connection conn = MyUtils.getStoredConnection(req); 
-        
-        if (button != null && button.equals("dangky"))
-        {
+        Connection conn = MyUtils.getStoredConnection(req);
+
+        if (button != null && button.equals("dangky")) {
             String tenDangNhap = (String) req.getParameter("tendangnhap");
             String matKhau = (String) req.getParameter("matkhau");
             String lapLaiMatKhau = (String) req.getParameter("laplaimatkhau");
             String hoTen = (String) req.getParameter("hoten");
             String diaChi = (String) req.getParameter("diachi");
             String soDienThoai = (String) req.getParameter("sodienthoai");
-            String email = (String) req.getParameter("email"); 
-            String xacNhanDieuKhoan = (String) req.getParameter("xacnhandieukhoan"); 
+            String email = (String) req.getParameter("email");
+            String xacNhanDieuKhoan = (String) req.getParameter("xacnhandieukhoan");
 
             req.setAttribute("tendangnhap", tenDangNhap);
             req.setAttribute("hoten", hoTen);
@@ -58,85 +57,79 @@ public class DangKyThanhVienServlet extends HttpServlet {
             req.setAttribute("sodienthoai", soDienThoai);
             req.setAttribute("email", email);
             req.setAttribute("xacnhandieukhoan", xacNhanDieuKhoan);
-            
+
             try {
-                
+
                 if (Pattern.compile("^[a-zA-Z0-9_\\-]{5,50}$").matcher(tenDangNhap).matches() == false) // username k hợp lệ //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
-                    throw new Exception("Tên đăng nhập không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9 và _"); 
-                
-                if (matKhau.equals(lapLaiMatKhau)!= true)
-                    throw new Exception("Mật khẩu lặp lại của bạn không trùng khớp!");
-                
-                if (matKhau.equals("") == true)
-                    throw new Exception("Bạn chưa nhập mật khẩu!");
-                
-                if (Pattern.compile("^(0|\\+84)[0-9]{3,10}$").matcher(soDienThoai).matches() == false)
-                    throw new Exception("Số điện thoại không hợp lệ!"); 
-                
-                if (Pattern.compile("^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$").matcher(email).matches() == false)  
-                    throw new Exception("Địa chỉ email không hợp lệ!");
-                
-                if (xacNhanDieuKhoan==null || !xacNhanDieuKhoan.equals("true"))
-                    throw new Exception("Bạn chưa đồng ý điều khoản sử dụng!");
-                
-                
-                List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-                    for (int i = 0; i < listAllThanhVien.size(); i++) {
-                        if (Objects.equals(tenDangNhap, listAllThanhVien.get(i).getTenDangNhap())) {
-                             throw new Exception("Tên đăng nhập đã được sử dụng!");
-                        }
-                        if (Objects.equals(email, listAllThanhVien.get(i).getEmail())) {
-                            throw new Exception("Địa chỉ email của bạn đã được sử dụng!");
-                        }
-                    }
-                
-                
-                
-                boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, PhanQuyenModel.ATT_MAPHANQUYEN_THANHVIEN));
-                if (isOk)
                 {
+                    throw new Exception("Tên đăng nhập không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9 và _");
+                }
+
+                if (matKhau.equals(lapLaiMatKhau) != true) {
+                    throw new Exception("Mật khẩu lặp lại của bạn không trùng khớp!");
+                }
+
+                if (matKhau.equals("") == true) {
+                    throw new Exception("Bạn chưa nhập mật khẩu!");
+                }
+
+                if (MyUtils.checkSoDienThoai(soDienThoai) == false) {
+                    throw new Exception("Số điện thoại không hợp lệ!");
+                }
+                
+                if (MyUtils.checkEmail(email) == false) {
+                    throw new Exception("Địa chỉ email không hợp lệ!");
+                }
+
+                if (xacNhanDieuKhoan == null || !xacNhanDieuKhoan.equals("true")) {
+                    throw new Exception("Bạn chưa đồng ý điều khoản sử dụng!");
+                }
+
+                List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
+                for (int i = 0; i < listAllThanhVien.size(); i++) {
+                    if (Objects.equals(tenDangNhap, listAllThanhVien.get(i).getTenDangNhap())) {
+                        throw new Exception("Tên đăng nhập đã được sử dụng!");
+                    }
+                    if (Objects.equals(email, listAllThanhVien.get(i).getEmail())) {
+                        throw new Exception("Địa chỉ email của bạn đã được sử dụng!");
+                    }
+                }
+
+                boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, PhanQuyenModel.ATT_MAPHANQUYEN_THANHVIEN));
+                if (isOk) {
                     noiDungThongBao = "Đăng ký thành viên mới hoàn tất!";
                     isFailedRequest = false;
-                } 
-                else
-                {
+                } else {
                     throw new Exception("Yêu cầu của bạn không thể xử lý!");
                 }
-                     
+
             } catch (Exception ex) {
                 isFailedRequest = true;
                 noiDungThongBao = ex.getMessage();
             }
-        }
-        else
-        {
+        } else {
             isFailedRequest = true; // thất bại!
             noiDungThongBao = "Yêu cầu của bạn không thể xử lý!";
         }
-        
-      
-        if (isFailedRequest == true)
-        {
+
+        if (isFailedRequest == true) {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
-        }
-        else
-        {
+        } else {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         }
-        
-         
+
         req.setAttribute("txtTitle", "Đăng ký thành viên");
-          
+
         req.getRequestDispatcher("dangky.jsp").forward(req, resp);;
-         
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("dangky.jsp").forward(req, resp);    
+        
+        req.getRequestDispatcher("dangky.jsp").forward(req, resp);
+        
     }
 
-     
 }
