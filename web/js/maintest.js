@@ -23,10 +23,15 @@ $('#selectphiship').on('change', function (f) {
 });
     
 jQuery(document).ready(function ($) {
-    
-//        localStorage.setItem('obj', []);
-//        localStorage.setItem('cartCount', 0);
-//        localStorage.setItem('cartTotal', 0);
+ 
+    if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') == null) {
+         localStorage.setItem('obj', []);
+        localStorage.setItem('cartCount', 0);
+        localStorage.setItem('cartTotal', 0);
+    }
+
+
+
     var cartWrapper = $('.header-cart');
     var giohang = $('.giohang');
     var tableTotal = $('.shopping-cart-table.table');
