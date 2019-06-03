@@ -6,10 +6,8 @@
 package Controller;
 
 import Model.SachModel;
-import Model.SachModelWithTheLoaiAndTrangThai;
 import Utility.MyUtils;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.List;
 import javax.servlet.ServletException;

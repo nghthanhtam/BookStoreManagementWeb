@@ -7,15 +7,19 @@ function resetLocalStorage()
 
 $('#selectphiship').on('change', function (f) {
 
-
-    var options = this.getElementsByTagName('option');
-    var optionHTML = options[this.selectedIndex].innerHTML;
+    var options = this.getElementsByTagName('option'),
+        optionHTML = options[this.selectedIndex].innerHTML;
     
     if(optionHTML.split('-')[1] == null){
         document.getElementById('phiship').innerHTML = "";
     }
     else{
         document.getElementById('phiship').innerHTML = optionHTML.split('-')[1]; 
+        var phiShip = Number(document.getElementById('phiship').innerHTML);
+     
+        var tongTien = Number(localStorage.getItem('cartTotal')) + phiShip;
+        document.getElementById('tongtien').innerHTML = String(tongTien);
+        
         //dữ liệu dc lưu là tên + phí ship
         //tách chuỗi bằng dấu "-" và lấy phần tử thứ 2
     }
@@ -31,6 +35,13 @@ jQuery(document).ready(function ($) {
     var giohang = $('.giohang');
     var tableTotal = $('.shopping-cart-table.table');
 
+    if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') == null) {
+        alert('null');
+        localStorage.setItem('obj', []);
+        localStorage.setItem('cartCount', 0);
+        localStorage.setItem('cartTotal', 0);
+    }
+    
     if (localStorage.getItem('obj') !== "") {
         var obj = JSON.parse(localStorage.getItem('obj'));
     } else {
@@ -53,8 +64,9 @@ jQuery(document).ready(function ($) {
         cartTotal.text(localStorage.getItem('cartTotal'));
         tableTotal.find('.total').find('span').text(localStorage.getItem('cartTotal'));
 
-  
-        if (localStorage.getItem('obj') !== "") {
+      
+       
+            if (localStorage.getItem('obj') !== "") {
 
             JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
 
@@ -71,7 +83,7 @@ jQuery(document).ready(function ($) {
 
             });
         }
-  
+        
   
         //add product to cart
         addToCartBtn.on('click', function (event) {
@@ -134,7 +146,7 @@ jQuery(document).ready(function ($) {
         }
         
         giohang.on('click','.delete-cart-details', function (event) {
-           
+                     
             event.preventDefault();
             removeCartDetails($(this));
             

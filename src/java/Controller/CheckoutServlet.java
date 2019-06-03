@@ -88,8 +88,17 @@ public class CheckoutServlet extends HttpServlet {
                         SachModel sachModel = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
                         listCTDonHang.add(new CTDonHangModel(0,maDonHang,Integer.parseInt(jsonObj.getString("id")),Integer.parseInt(jsonObj.getString("qty")),sachModel.getGiaBan(), sachModel.getPhanTramGiamGia()));                       
                         
-                       
-                        tongTien+= ( sachModel.getGiaBan()-  sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100 )*Integer.parseInt(jsonObj.getString("qty"));
+                        Date date = new Date(); //lấy ngày hiện tại
+                        Date ngayHienTai = new java.sql.Date(date.getTime());
+                        double phanTramGiamGia=0;
+                        
+                        //kt thời hạn giảm giá
+                        if(ngayHienTai.compareTo(sachModel.getNgayBatDauGiamGia()) < 0  && ngayHienTai.compareTo(sachModel.getNgayKetThucGiamGia()) >0){
+                            
+                        }else{
+                            phanTramGiamGia = sachModel.getPhanTramGiamGia();
+                        }
+                        tongTien+= ( sachModel.getGiaBan() -  sachModel.getGiaBan()*phanTramGiamGia/100 )*Integer.parseInt(jsonObj.getString("qty"));
                     }
     
                 } catch (JSONException ex) {
