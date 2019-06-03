@@ -22,7 +22,7 @@
 
 
           <div class="pull-right">
-            Gentelella  - Bootstrap Admin Template by Trung lmao <a href="https://colorlib.com">Colorlib</a>
+            BookStore
           </div>
           <div class="clearfix"></div>
         </footer>

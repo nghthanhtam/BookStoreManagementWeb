@@ -9,6 +9,7 @@ import Model.MessagesModel;
 import Model.NhaCungCapModel;
 import Model.PhanQuyenModel;
 import Model.ThanhVienModel;
+import Model.ThanhVienModelWithTenQuyen;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,43 +28,46 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DeleteThanhVienServlet", urlPatterns = {"/admin/thanhvien/delete"})
 public class DeleteThanhVienServlet extends HttpServlet {
 
- 
-    
-   @Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(req);
-            System.out.println("XA^XAXAXAXAXAX");
-        boolean result = false;
+        boolean isOk = true;
+        String noiDungThongBao = "";
+        int maThanhVien = 0;
+
         try {
-            int maThanhVien = Integer.parseInt((String) req.getParameter("id"));
-            System.out.println("XA^XAXAXAXAXAX");
-            result = ThanhVienModel.DeleteThanhVienById(conn, maThanhVien);
-            
+
+            try {
+                maThanhVien = Integer.parseInt((String) req.getParameter("id"));
+            } catch (Exception ex) {
+                throw new Exception("Mã thành viên không hợp lệ!");
+            }
+
+            if (ThanhVienModel.DeleteThanhVienById(conn, maThanhVien) == false) {
+                throw new Exception("Yêu cầu không được thực hiện!");
+            }
+            noiDungThongBao = "Đã xóa thành công!";
         } catch (Exception ex) {
-            result = false;
+            isOk = false;
+            noiDungThongBao = ex.getMessage();
         }
-        
-        if (result == true)
-        {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!","Đã xóa thành công!",MessagesModel.ATT_TYPE_SUCCESS));         
+
+        if (isOk == true) {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         } else {
-            
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!","Yêu cầu của bạn không được thực hiện!",MessagesModel.ATT_TYPE_ERROR));         
- 
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
         }
-        
+
         /* Hiển thị view */
-        req.setAttribute("txtTitle", "Thành viên"); 
-        System.out.println("XA^xázd");
-        List<PhanQuyenModel> listAllPhanQuyen= PhanQuyenModel.getAllPhanQuyen(conn);
-        List<ThanhVienModel> listAllThanhVien= ThanhVienModel.getAllThanhVien(conn);
-        
-        req.setAttribute("listAllThanhVien", listAllThanhVien);
+        req.setAttribute("txtTitle", "Thành viên");
+        List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
+
+        List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel = ThanhVienModelWithTenQuyen.getAllThanhVienWithTenQuyen(conn);
+        req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
+
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);
 
-        
-
     }
-  
+
 }
