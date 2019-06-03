@@ -92,7 +92,7 @@
         MessagesModel messagesModel = (MessagesModel) request.getAttribute(MessagesModel.ATT_STORE);
         if (messagesModel != null) {
             out.print(" onload=\"new PNotify({"
-                    + "title: '" + messagesModel.getTitle() + "',"
+                    + "title: '" + MyUtils.addSlashes(messagesModel.getTitle()) + "',"
                     + "text: '" + MyUtils.addSlashes(messagesModel.getText()) + "',"
                     + "type: '" + messagesModel.getType() + "',"
                     + "styling: 'bootstrap3'"

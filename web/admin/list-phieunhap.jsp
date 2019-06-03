@@ -19,7 +19,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>Phiếu chi</h3>
+        <h3>Phiếu nhập</h3>
     </div>
 </div>
 
