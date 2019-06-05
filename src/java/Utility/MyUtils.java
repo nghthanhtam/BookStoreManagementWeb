@@ -31,6 +31,7 @@ import javax.servlet.http.Part;
 
 public class MyUtils {
 
+    public static final Integer soSachTrongMotTrang = 9;
     public static final String ATT_NAME_CONNECTION = "ATTRIBUTE_FOR_CONNECTION";
     private static final String ATT_NAME_USER_NAME = "ATTRIBUTE_FOR_STORE_USER_NAME_IN_COOKIE";
     private static final String ATT_NAME_UPLOAD_DIR = "Upload";
@@ -182,5 +183,12 @@ public class MyUtils {
         str = str.replace("'", "&#180;");
         str = str.replaceAll("\"", "&#8221;");
         return str;
+    }
+    
+    public static Boolean checkUsername(String username){
+        if(Pattern.compile("^[a-zA-Z0-9_\\-]{5,50}$").matcher(username).matches() == false){
+            return false;
+        }
+        return true;
     }
 }

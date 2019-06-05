@@ -280,6 +280,7 @@ public class ThanhVienModel {
         }
         return count > 0;
     }
+    
     public static boolean UpdateThanhVienWithoutPassword(Connection conn, ThanhVienModel obj)
             throws SQLException {
         int count = 0;
@@ -303,4 +304,81 @@ public class ThanhVienModel {
         }
         return count > 0;
     }
+    
+    public static ThanhVienModel FindByEmail(Connection conn, String email) throws SQLException {
+        String sql = "SELECT * FROM thanhvien WHERE email = ?";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, email);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+                    rs.getString("tendangnhap"),
+                    rs.getString("matkhau"),
+                    rs.getString("hoten"),
+                    rs.getString("diachi"),
+                    rs.getString("sodienthoai"),
+                    rs.getString("email"),
+                    Integer.parseInt(rs.getString("maphanquyen"))
+            );
+            return thanhvien;
+        }
+        return null;
+
+    }
+    
+    
+    
+    public static ThanhVienModel FindByTenDangNhapNotSameID(Connection conn, ThanhVienModel obj) throws SQLException {
+        String sql = "SELECT * FROM thanhvien WHERE tendangnhap = ? AND mathanhvien <> ?";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, obj.getTenDangNhap());
+        pstm.setInt(2, obj.getMaThanhVien());
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+                    rs.getString("tendangnhap"),
+                    rs.getString("matkhau"),
+                    rs.getString("hoten"),
+                    rs.getString("diachi"),
+                    rs.getString("sodienthoai"),
+                    rs.getString("email"),
+                    Integer.parseInt(rs.getString("maphanquyen"))
+            );
+            return thanhvien;
+        }
+        return null;
+
+    }
+
+    public static ThanhVienModel FindByEmailNotSameID(Connection conn, ThanhVienModel obj) throws SQLException {
+        String sql = "SELECT * FROM thanhvien WHERE email = ? AND mathanhvien <> ?";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+        pstm.setString(1, obj.getEmail());
+        pstm.setInt(2, obj.getMaThanhVien());
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+                    rs.getString("tendangnhap"),
+                    rs.getString("matkhau"),
+                    rs.getString("hoten"),
+                    rs.getString("diachi"),
+                    rs.getString("sodienthoai"),
+                    rs.getString("email"),
+                    Integer.parseInt(rs.getString("maphanquyen"))
+            );
+            return thanhvien;
+        }
+        return null;
+
+    }
+    
 }

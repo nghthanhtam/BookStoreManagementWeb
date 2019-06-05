@@ -37,21 +37,21 @@
                 <div id="aside" class="col-md-3">
 
 
-                    <!-- aside widget -->
-                    <div class="aside">
+                        <!-- aside widget -->
+                        <div class="aside">
 
-                        <h3 class="aside-title">Filter by Thể loại
+                            <h3 class="aside-title">Filter by Thể loại
 
 
                         </h3>
                         <ul class="list-links">
-                            <li><a href="/search?tukhoa=${tukhoa}&matheloai=0">Tất cả</a></li>
+                                <li><a href="/search?tukhoa=${tukhoa}&matheloai=0">Tất cả</a></li>
 
                             <%   Connection conn = MyUtils.getStoredConnection(request);
 
                                 List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
                                 for (TheLoaiModel obj : listAllTheLoai) {
-                                    out.print("<li><a href=\"/search?tukhoa=" + request.getAttribute("tukhoa") + "&matheloai=" + obj.getMaTheLoai() + "&page=1 \">" + obj.getTenTheLoai() + "</a></li>");
+                                    out.print("<li><a href=\"/categories?id=" + obj.getMaTheLoai() +"\">" + obj.getTenTheLoai() + "</a></li>");
                                 }
 
 
@@ -92,7 +92,7 @@
 
                                     //${page==2 ? "class=\"active\"":""}
                                     for (int i = 0; i < maTheLoai; i++) {
-                                        out.print("<li><a href=\"/search?tukhoa=" + request.getAttribute("tukhoa") + "&matheloai=" + request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
+                                        out.print("<li><a href=\"/categories?id=" +  request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
 
                                     }
 
@@ -266,8 +266,7 @@
 
                                 <%                                                                    //${page==2 ? "class=\"active\"":""}
                                     for (int i = 0; i < maTheLoai; i++) {
-                                        out.print("<li><a href=\"/search?tukhoa=" + request.getAttribute("tukhoa") + "&matheloai=" + request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
-
+                                        out.print("<li><a href=\"/categories?id=" +  request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
                                     }
 
 

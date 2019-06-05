@@ -5,8 +5,12 @@ import Utility.MyUtils;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger; 
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,12 +28,9 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        if (req.getParameter("masach") == null)
-        {
+        if (req.getParameter("masach") == null) {
             resp.sendRedirect("/");
-        } 
-        else 
-        {
+        } else {
             int masach = 0;
             try {
                 masach = Integer.parseInt((String) req.getParameter("masach"));
@@ -38,25 +39,35 @@ public class ProductServlet extends HttpServlet {
             }
 
             Connection conn = MyUtils.getStoredConnection(req);
-            
+
             try {
                 SachModel sach = SachModel.FindByMaSach(conn, masach);
                 if (sach != null && sach.getTrangThai() != SachModel.TRANGTHAI_XOA) { // tìm thấy theo mã sách
-                    req.setAttribute("sach", sach);  
+                    List<SachModel> listSach = SachModel.getSachByMaTheLoaiTop4(conn, sach.getMaTheLoai());
+
+                    Date date = new Date();
+                    long time = date.getTime();
+                    Timestamp ts = new Timestamp(time);
+                    String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
+                    System.out.println(sach.getMaTheLoai());
+                    System.out.println(listSach.size());
+                    req.setAttribute("curentTimeStamp", currentTs);
+
+                    req.setAttribute("listSach", listSach);
+                    req.setAttribute("sach", sach);
                     req.getRequestDispatcher("product-page.jsp").forward(req, resp);
 
                 } else {
 
-                    resp.sendRedirect("/"); 
-                }                               
-                
+                    resp.sendRedirect("/");
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(ProductServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
-          
     }
 
 }
-          
-}                                                                            
