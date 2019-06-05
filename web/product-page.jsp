@@ -95,7 +95,7 @@
                                         <span class="text-uppercase">QTY: </span>
                                         <input class="input" type="number" value="1">
                                     </div>
-                                    <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                    <button class="primary-btn add-to-cart" data-id="${sach.getMaSach()}" data-linkanh="${sach.getAnhDaiDien()}" data-name="${sach.getTenSach()}" data-price="${sach.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     <div class="pull-right">
                                         <button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
                                     </div>

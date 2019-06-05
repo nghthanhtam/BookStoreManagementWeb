@@ -25,7 +25,7 @@
 						<div class="banner-caption text-center">
 							<h1>Bags sale</h1>
 							<h3 class="white-color font-weak">Up to 50% Discount</h3>
-                                                        <button class="primary-btn" id="abc"> Shop now!  </button>
+                                                        <button class="primary-btn"> Shop now!  </button>
 						</div>
 					</div>
 					<!-- /banner -->

@@ -8,14 +8,19 @@ function resetLocalStorage()
 $('#selectphiship').on('change', function (f) {
 
 
-    var options = this.getElementsByTagName('option');
-    var optionHTML = options[this.selectedIndex].innerHTML;
+    var options = this.getElementsByTagName('option'),
+            optionHTML = options[this.selectedIndex].innerHTML;
     
     if(optionHTML.split('-')[1] == null){
         document.getElementById('phiship').innerHTML = "";
     }
     else{
         document.getElementById('phiship').innerHTML = optionHTML.split('-')[1]; 
+        var phiShip = Number(document.getElementById('phiship').innerHTML);
+     
+        var tongTien = Number(localStorage.getItem('cartTotal')) + phiShip;
+        document.getElementById('tongtien').innerHTML = String(tongTien);
+        
         //dữ liệu dc lưu là tên + phí ship
         //tách chuỗi bằng dấu "-" và lấy phần tử thứ 2
     }
@@ -24,13 +29,15 @@ $('#selectphiship').on('change', function (f) {
     
 jQuery(document).ready(function ($) {
  
+ //   localStorage.setItem('obj', []);
+//        localStorage.setItem('cartCount', 0);
+//        localStorage.setItem('cartTotal', 0);
+
     if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') == null) {
          localStorage.setItem('obj', []);
         localStorage.setItem('cartCount', 0);
         localStorage.setItem('cartTotal', 0);
     }
-
-
 
     var cartWrapper = $('.header-cart');
     var giohang = $('.giohang');
