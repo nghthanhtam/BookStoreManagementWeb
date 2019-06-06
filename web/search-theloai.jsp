@@ -110,7 +110,7 @@
                         <!-- row -->
                         <div class="row">
                             <tbody>
-                                ${listSach.size()==0?"Không tìm thấy sách theo yêu cầu của khách hàng!":""}  
+                                ${listSach.size()==0?"KhÃ´ng tÃ¬m tháº¥y sÃ¡ch theo yÃªu cáº§u cá»§a khÃ¡ch hÃ ng!":""}  
                                 <c:set var="currentDate" value="${curentTimeStamp}" />
                                 <c:forEach items="${listSach}" var="obj">
                                     <!-- Product Single -->
