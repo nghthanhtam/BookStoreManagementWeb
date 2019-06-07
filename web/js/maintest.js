@@ -83,9 +83,10 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
                              
                             var productAdded = $('<li class="product product-widget"><div class="product-thumb"><img src="./img/thumb-product01.jpg" alt=""></div><div class="product-body"><h3 class="product-price">' + f.giaBan + ' x<span class="quantity" id="qty-' + f.maSach + '">' + 1 + '</span></h3><h2 class="product-name"><a href="#">' + f.tenSach + '</a></h2></div><button class="cancel-btn" data-id="' + f.maSach + '" data-price="' + f.giaBan + '"><i class="fa fa-trash"></i></button></li>');
                             cartList.prepend(productAdded);
-
+                            
+                        
                             //giỏ hàng chi tiết
-                            var cartDetails = $('<tr><td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td><td class="details"><a href="#">' + f.tenSach + '</a><ul><li><span>Size: XL</span></li></ul></td><td class="price text-center"><strong>' + f.giaBan + '</strong></td><td class="qty text-center"><input class="input" id="input-' + f.maSach + '" data-id="' + f.maSach + '" type="number" value=' + 1 + '></td><td class="total text-center"><strong class="primary-color" id="total-' + f.maSach + '">' + f.giaBan * 1 + '</strong></td><td class="text-right"><a class="main-btn icon-btn delete-cart-details" data-id="' + f.maSach + '"><i class="fa fa-close"></i></a></td></tr>');
+                            var cartDetails = $('<tr><td class="thumb"><img src='+ f.anhDaiDien + ' alt=""></td><td class="details"><a href="#">' + f.tenSach + '</a><ul><li><span>Size: XL</span></li></ul></td><td class="price text-center"><strong>' + f.giaBan + '</strong></td><td class="qty text-center"><input class="input" id="input-' + f.maSach + '" data-id="' + f.maSach + '" type="number" value=' + 1 + '></td><td class="total text-center"><strong class="primary-color" id="total-' + f.maSach + '">' + f.giaBan * 1 + '</strong></td><td class="text-right"><a class="main-btn icon-btn delete-cart-details" data-id="' + f.maSach + '"><i class="fa fa-close"></i></a></td></tr>');
                             giohang.prepend(cartDetails);
                         });
                         
@@ -143,7 +144,7 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
                         success: function (data) {
                        
                             //alert(data[0]);
-                            alert(data[0].tenSach);
+                            //alert(data[0].tenSach);
                             
                             event.preventDefault();
                             addToCart($(this), data[0]);

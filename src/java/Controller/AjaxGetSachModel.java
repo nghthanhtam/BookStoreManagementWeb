@@ -8,12 +8,11 @@ package Controller;
 import Model.SachModel;
 import Utility.MyUtils;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -61,8 +60,7 @@ public class AjaxGetSachModel extends HttpServlet {
         SachModel sachModel = new SachModel();
         List<SachModel> listSach = new ArrayList<>();
 
-        //JsonArray sach = new JsonArray();
-        //JsonArray listSach = new JsonArray();    
+        
         for (int i = 0; i < jsonList.length(); i++) {
             try {
 
@@ -72,27 +70,24 @@ public class AjaxGetSachModel extends HttpServlet {
                 if (sachModel == null) {
                     throw new Exception("Không tìm thấy thông tin sách [MASACH] = " + id);
                 }
-
-                listSach.add(sachModel);
+                 
+                Date datenow = new Date();
+                if (sachModel.getPhanTramGiamGia() > 0
+                        && datenow.before(sachModel.getNgayKetThucGiamGia())
+                        && datenow.after(sachModel.getNgayBatDauGiamGia())) { 
+                    
+                    sachModel.setGiaBan(sachModel.getGiaBan()-sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100);
+                    
+                }
                 
-//                sach.add( Integer.toString(sachModel.getMaSach()));
-//                sach.add(sachModel.getTenSach());
-//                sach.add(sachModel.getAnhDaiDien());
-//                sach.add(sachModel.getGiaBan());
-//                sach.add(jsonList.getJSONObject(i).getString("qty"));
-                
+                listSach.add(sachModel);                
                                
             } catch (Exception ex) {
 
             }
         }
 
-//        List<String> list = new ArrayList<>();
-//        list.add(id);
-//        list.add(Double.toString(sach.getGiaBan()));
-//        list.add(sach.getAnhDaiDien());
-//        List<SachModel> listSach = new ArrayList<>();
-//        listSach.add(sach);
+
         String json = new Gson().toJson(listSach);
 
         response.setContentType("application/json");
