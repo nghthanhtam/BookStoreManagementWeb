@@ -12,21 +12,25 @@
     <!-- container -->
     <div class="container">
         <!-- row -->
-        <div class="row">
-            <!-- footer widget -->
+       
+        
+<!--        
+        
+         <div class="row">
+             footer widget 
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="footer">
-                    <!-- footer logo -->
+                     footer logo 
                     <div class="footer-logo">
                         <a class="logo" href="#">
                             <img src="./img/logo.png" alt="">
                         </a>
                     </div>
-                    <!-- /footer logo -->
+                     /footer logo 
 
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
 
-                    <!-- footer social -->
+                     footer social 
                     <ul class="footer-social">
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -34,12 +38,12 @@
                         <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                         <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
                     </ul>
-                    <!-- /footer social -->
+                     /footer social 
                 </div>
             </div>
-            <!-- /footer widget -->
+             /footer widget 
 
-            <!-- footer widget -->
+             footer widget 
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="footer">
                     <h3 class="footer-header">My Account</h3>
@@ -52,11 +56,11 @@
                     </ul>
                 </div>
             </div>
-            <!-- /footer widget -->
+             /footer widget 
 
             <div class="clearfix visible-sm visible-xs"></div>
 
-            <!-- footer widget -->
+             footer widget 
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="footer">
                     <h3 class="footer-header">Customer Service</h3>
@@ -68,9 +72,9 @@
                     </ul>
                 </div>
             </div>
-            <!-- /footer widget -->
+             /footer widget 
 
-            <!-- footer subscribe -->
+             footer subscribe 
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="footer">
                     <h3 class="footer-header">Stay Connected</h3>
@@ -83,10 +87,15 @@
                     </form>
                 </div>
             </div>
-            <!-- /footer subscribe -->
+             /footer subscribe 
         </div>
-        <!-- /row -->
-        <hr>
+         /row 
+        <hr>-->
+        
+        
+        
+        
+        
         <!-- row -->
         <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center">
