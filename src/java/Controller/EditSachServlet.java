@@ -167,7 +167,7 @@ public class EditSachServlet extends HttpServlet {
 
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được thực hiện!", MessagesModel.ATT_TYPE_ERROR));
 
-            List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
+            List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTrangThai(conn);
             req.setAttribute("listAllSach", listAllSach);
             req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);;
         }

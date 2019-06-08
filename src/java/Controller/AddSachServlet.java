@@ -76,12 +76,12 @@ public class AddSachServlet extends HttpServlet {
                         nhaXuatBan, namXuatBan, giaBan, moTa, dirImage, 0, tenTacGia,
                         phanTramGiamGia, ngayBatDauGiamGia, ngayKetThucGiamGia, trangThai));
 
-                if (isOk) {
-                    isFailed = false;
-                    noiDungThongBao = "Đã thêm sách mới!";
-                } else {
+                if (isOk == false) {
                     throw new Exception("Yêu cầu của bạn không thể xử lý!");
                 }
+
+                isFailed = false;
+                noiDungThongBao = "Đã thêm sách mới!";
             } catch (Exception ex) {
                 Logger.getLogger(AddSachServlet.class.getName()).log(Level.SEVERE, null, ex);
                 isFailed = true;
@@ -97,7 +97,7 @@ public class AddSachServlet extends HttpServlet {
         }
 
         req.setAttribute("txtTitle", "sách");
-        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
+        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTrangThai(conn);
         req.setAttribute("listAllSach", listAllSach);
 
         req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);

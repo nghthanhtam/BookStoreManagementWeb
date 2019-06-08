@@ -36,8 +36,7 @@ public class SachServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("txtTitle", "Sách");
         Connection conn = MyUtils.getStoredConnection(req);
-        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
-        System.out.println(listAllSach.size());
+        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTrangThai(conn);
         req.setAttribute("listAllSach", listAllSach);
 
         req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);;
