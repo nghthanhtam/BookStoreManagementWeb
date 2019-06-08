@@ -112,29 +112,7 @@
                     <div class="pull-left">
                         <span>Welcome to Book Store!</span>
                     </div>
-                    <div class="pull-right">
-                        <ul class="header-top-links">
-                            <li><a href="#">Store</a></li>
-                            <li><a href="#">Newsletter</a></li>
-                            <li><a href="#">FAQ</a></li>
-                            <li class="dropdown default-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">ENG <i class="fa fa-caret-down"></i></a>
-                                <ul class="custom-menu">
-                                    <li><a href="#">English (ENG)</a></li>
-                                    <li><a href="#">Russian (Ru)</a></li>
-                                    <li><a href="#">French (FR)</a></li>
-                                    <li><a href="#">Spanish (Es)</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown default-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
-                                <ul class="custom-menu">
-                                    <li><a href="#">USD ($)</a></li>
-                                    <li><a href="#">EUR (€)</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+                     
                 </div>
             </div>
             <!-- /top Header -->
@@ -167,10 +145,7 @@
                                         else
                                             maTheLoai=0;
                                                         
-                                                        
-                                        
-                                        
-                                        
+                                                         
                                         
                                         for (TheLoaiModel obj : listAllTheLoai) {
                                             if(obj.getMaTheLoai()== maTheLoai)
@@ -210,9 +185,7 @@
 
                                 <ul class="custom-menu">
                                     <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-                                    <li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
+                                     <li><a href="${contextPath}/checkout"><i class="fa fa-check"></i> Checkout</a></li>
                                     <li><a href="${contextPath}/logout"><i class="fa fa-sign-out"></i> Logout</a></li> 
                                 </ul>
                             </li>
@@ -342,8 +315,11 @@
                         <span class="category-header">Categories <i class="fa fa-list"></i></span>
                         <ul class="category-list">
 <%
-    for(TheLoaiModel obj : listAllTheLoai)
+    for(int i=0; i<listAllTheLoai.size(); i++)
     {
+        if (i==9)
+            break;
+        TheLoaiModel obj  = listAllTheLoai.get(i);
         out.println("<li><a href=\"/categories?id="+obj.getMaTheLoai()+"\">"+obj.getTenTheLoai()+"</a></li>");
     }
 %>   

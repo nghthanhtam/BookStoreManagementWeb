@@ -60,7 +60,6 @@ public class AjaxGetSachModel extends HttpServlet {
         SachModel sachModel = new SachModel();
         List<SachModel> listSach = new ArrayList<>();
 
-        
         for (int i = 0; i < jsonList.length(); i++) {
             try {
 
@@ -70,26 +69,27 @@ public class AjaxGetSachModel extends HttpServlet {
                 if (sachModel == null) {
                     throw new Exception("Không tìm thấy thông tin sách [MASACH] = " + id);
                 }
-                 
+
                 Date datenow = new Date();
                 if (sachModel.getPhanTramGiamGia() > 0
                         && datenow.before(sachModel.getNgayKetThucGiamGia())
-                        && datenow.after(sachModel.getNgayBatDauGiamGia())) { 
-                    
-                    sachModel.setGiaBan(sachModel.getGiaBan()-sachModel.getGiaBan()*sachModel.getPhanTramGiamGia()/100);
-                    
+                        && datenow.after(sachModel.getNgayBatDauGiamGia())) {
+
+                    sachModel.setGiaBan(sachModel.getGiaBan() - sachModel.getGiaBan() * sachModel.getPhanTramGiamGia() / 100);
+
                 }
-                
-                listSach.add(sachModel);                
-                               
+
+                listSach.add(sachModel);
+
             } catch (Exception ex) {
 
             }
         }
 
+        Gson gson = new Gson();
+        String json = gson.toJson(listSach);
 
-        String json = new Gson().toJson(listSach);
-
+        // out.print(gson.toJson(listAjaxNhaCungCapModel));
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
