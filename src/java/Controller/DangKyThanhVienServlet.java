@@ -60,7 +60,7 @@ public class DangKyThanhVienServlet extends HttpServlet {
 
             try {
 
-                if (Pattern.compile("^[a-zA-Z0-9_\\-]{5,50}$").matcher(tenDangNhap).matches() == false) // username k hợp lệ //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
+                if (MyUtils.checkUsername(tenDangNhap)==false) // username k hợp lệ //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
                 {
                     throw new Exception("Tên đăng nhập không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9 và _");
                 }

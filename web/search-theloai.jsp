@@ -16,7 +16,6 @@
 <jsp:include page="theme/header.jsp" />
 <body>
 
- 
     <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
@@ -37,20 +36,22 @@
                 <!-- ASIDE -->
                 <div id="aside" class="col-md-3">
 
-                    <!-- aside widget -->
-                    <div class="aside">
 
-                        <h3 class="aside-title">Filter by Tác giả</h3>
-                        <c:set var="currentDate" value="${curentTimeStamp}" />
+                        <!-- aside widget -->
+                        <div class="aside">
 
+                            <h3 class="aside-title">Filter by Thể loại
+
+
+                        </h3>
                         <ul class="list-links">
-                            <li><a href="/search?tukhoa= &matheloai=0">Tất cả</a></li>
+                                <li><a href="/search?tukhoa=${tukhoa}&matheloai=0">Tất cả</a></li>
 
                             <%   Connection conn = MyUtils.getStoredConnection(request);
 
-                                List<String> listTacGia = SachModel.getDistinctAllTacGia(conn);
-                                for (String obj : listTacGia) {
-                                    out.print("<li><a href=\"/tacgia?tentacgia=" + obj + "\">" + obj + "</a></li>");
+                                List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
+                                for (TheLoaiModel obj : listAllTheLoai) {
+                                    out.print("<li><a href=\"/categories?id=" + obj.getMaTheLoai() +"\">" + obj.getTenTheLoai() + "</a></li>");
                                 }
 
 
@@ -60,7 +61,6 @@
                     <!-- /aside widget -->
                 </div>
                 <!-- /ASIDE -->
-
 
                 <!-- MAIN -->
                 <div id="main" class="col-md-9">
@@ -87,12 +87,12 @@
                                 <li><span class="text-uppercase">Page:</span></li>
                                 <li class="active"></li>
 
-                                <%                                                                    String tenTacGia = (String) request.getAttribute("tentacgia");
+                                <%                                                                    String tuKhoa = (String) request.getAttribute("tukhoa");
                                     Integer maTheLoai = Integer.parseInt(request.getAttribute("numofpage").toString());
 
                                     //${page==2 ? "class=\"active\"":""}
                                     for (int i = 0; i < maTheLoai; i++) {
-                                        out.print("<li><a href=\"/tacgia?tentacgia=" + request.getAttribute("tentacgia") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
+                                        out.print("<li><a href=\"/categories?id=" +  request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
 
                                     }
 
@@ -110,15 +110,16 @@
                         <!-- row -->
                         <div class="row">
                             <tbody>
-                                ${listSachTheoTacGia.size()==0?"Không tìm thấy sách theo yêu cầu của khách hàng!":""}                         
-
-                                <c:forEach items="${listSachTheoTacGia}" var="obj">
+                                ${listSach.size()==0?"KhÃ´ng tÃ¬m tháº¥y sÃ¡ch theo yÃªu cáº§u cá»§a khÃ¡ch hÃ ng!":""}  
+                                <c:set var="currentDate" value="${curentTimeStamp}" />
+                                <c:forEach items="${listSach}" var="obj">
                                     <!-- Product Single -->
                                 <div class="col-md-4 col-sm-6 col-xs-6">
                                     <div class="product product-single">
                                         <div class="product-thumb">
                                             <div class="product-label">
                                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
+
                                                     <fmt:formatNumber var="lamtron"
                                                                       value="${obj.getPhanTramGiamGia()}"
                                                                       maxFractionDigits="0" 
@@ -155,8 +156,6 @@
 
                                                         </c:otherwise>
                                                     </c:choose>
-
-
                                                 </c:if>
 
                                             </div>
@@ -173,9 +172,6 @@
                                                                   value="${(100-obj.getPhanTramGiamGia())*0.01*obj.getGiaBan()}"
                                                                   maxFractionDigits="0" 
                                                                   groupingUsed="true"/>
-
-
-
 
 
 
@@ -219,8 +215,6 @@
                                                     </c:if>
 
                                                 </del>
-
-
                                             </h3>   
                                             <div class="product-rating">
                                                 <i class="fa fa-star"></i>
@@ -233,7 +227,7 @@
                                             <div class="product-btns">
                                                 <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                                 <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                                <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                                <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                             </div>
                                         </div>
                                     </div>
@@ -272,8 +266,7 @@
 
                                 <%                                                                    //${page==2 ? "class=\"active\"":""}
                                     for (int i = 0; i < maTheLoai; i++) {
-                                        out.print("<li><a href=\"/tacgia?tentacgia=" + request.getAttribute("tentacgia") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
-
+                                        out.print("<li><a href=\"/categories?id=" +  request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
                                     }
 
 
@@ -291,7 +284,12 @@
         </div>
         <!-- /container -->
     </div>
-    <!-- /section --> 
+    <!-- /section -->
+
+
+
+
+
 
 </body>
 <jsp:include page="theme/footer.jsp" />

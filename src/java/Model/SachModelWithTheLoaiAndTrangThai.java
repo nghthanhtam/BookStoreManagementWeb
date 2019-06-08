@@ -169,16 +169,17 @@ public class SachModelWithTheLoaiAndTrangThai {
     
     
     
-     public static List<SachModelWithTheLoaiAndTrangThai> getAllSachWithTheLoaiAndTraangThai(Connection conn) {
+     public static List<SachModelWithTheLoaiAndTrangThai> getAllSachWithTheLoaiAndTrangThai(Connection conn) {
         List<SachModelWithTheLoaiAndTrangThai> listSach = new ArrayList<SachModelWithTheLoaiAndTrangThai>();
 
-        String sql = "SELECT masach, tentheloai,tensach, nhaxuatban, namxuatban, giaban, mota, anhdaidien, soluongton, tentacgia,phantramgiamgia,ngaybatdaugiamgia,ngayketthucgiamgia,"
-                + " trangthai"
-                + " FROM sach, theloai where sach.matheloai=theloai.matheloai";
+        String sql = "SELECT masach, tentheloai,tensach, nhaxuatban, namxuatban, giaban, mota, anhdaidien, soluongton, tentacgia,phantramgiamgia,ngaybatdaugiamgia,ngayketthucgiamgia, trangthai "
+                + " FROM sach, theloai where sach.matheloai=theloai.matheloai AND trangthai<> ? "
+                + "ORDER BY masach ASC";
         
          
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, SachModel.TRANGTHAI_XOA);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {

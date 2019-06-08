@@ -6,12 +6,18 @@
 package Controller;
 
 import Database.ConnectionUtils;
+import Model.BaoCaoDoanhThuNgayModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,20 +35,68 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "AdminServlet", urlPatterns = {"/admin/"})
 public class AdminServlet extends HttpServlet {
 
+    private void LoadThongKe(HttpServletRequest req, HttpServletResponse resp) {
+        Calendar cal = Calendar.getInstance();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        Date now = new Date(cal.getTime().getTime());
+
+        SimpleDateFormat ngay = new SimpleDateFormat("dd");
+        SimpleDateFormat thang = new SimpleDateFormat("MM");
+        SimpleDateFormat nam = new SimpleDateFormat("yyyy");
+
+        Date ngayBatDau = new java.sql.Date(now.getTime() - (1000 * 60 * 60 * 24) * 7);
+        Date ngayKetThuc = now;
+
+        Connection conn = MyUtils.getStoredConnection(req);
+
+        List<BaoCaoDoanhThuNgayModel> listDoanhThuNgayDonHangChuaHoanTat = null;
+        List<BaoCaoDoanhThuNgayModel> listDoanhThuNgayDonHangHoanTat = null;
+        try {
+            listDoanhThuNgayDonHangChuaHoanTat = BaoCaoDoanhThuNgayModel.getThongKeDoanhThuDonHangChuaHoanTat(conn, ngayBatDau, ngayKetThuc);
+            listDoanhThuNgayDonHangHoanTat = BaoCaoDoanhThuNgayModel.getThongKeDoanhThuDonHangHoanTat(conn, ngayBatDau, ngayKetThuc);
+        } catch (Exception ex) {
+        }
+
+        String chartDataDonHangChuaHoanTat = "";
+
+        for (int i = 0; i < listDoanhThuNgayDonHangChuaHoanTat.size(); i++) {
+            BaoCaoDoanhThuNgayModel obj = listDoanhThuNgayDonHangChuaHoanTat.get(i);
+            chartDataDonHangChuaHoanTat += "[gd(" + nam.format(obj.getNgay()) + ", " + thang.format(obj.getNgay()) + ", " + ngay.format(obj.getNgay()) + "), " + Math.round(obj.getDoanhThu()) + "]";
+            if (i < listDoanhThuNgayDonHangChuaHoanTat.size() - 1) {
+                chartDataDonHangChuaHoanTat += ",";
+            }
+        }
+
+        String chartDataDonHangHoanTat = "";
+        for (int i = 0; i < listDoanhThuNgayDonHangHoanTat.size(); i++) {
+            BaoCaoDoanhThuNgayModel obj = listDoanhThuNgayDonHangHoanTat.get(i);
+            chartDataDonHangHoanTat += "[gd(" + nam.format(obj.getNgay()) + ", " + thang.format(obj.getNgay()) + ", " + ngay.format(obj.getNgay()) + "), " + Math.round(obj.getDoanhThu()) + "]";
+            if (i < listDoanhThuNgayDonHangHoanTat.size() - 1) {
+                chartDataDonHangHoanTat += ",";
+            }
+
+        }
+
+        req.setAttribute("chartDataDonHangChuaHoanTat", chartDataDonHangChuaHoanTat);
+        req.setAttribute("chartDataDonHangHoanTat", chartDataDonHangHoanTat);
+    }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
+        HttpSession session = req.getSession();
 
         if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
         {
-            request.getRequestDispatcher("/admin/admin-login.jsp").forward(request, response);
-        } else {
-            ThanhVienModel thanhvien = MyUtils.getLoginedThanhVien(session);
-            request.setAttribute("txtTenDangNhap", thanhvien.getTenDangNhap());
-            request.getRequestDispatcher("/admin/admin-home.jsp").forward(request, response);
+            req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
+            return;
         }
+
+        LoadThongKe(req, resp);
+        req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
 
     }
 
@@ -75,6 +129,12 @@ public class AdminServlet extends HttpServlet {
                     session.removeAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
                     resp.sendRedirect(autoRedirect);
                 } else {
+                    
+                    
+                            LoadThongKe(req, resp);
+
+                    
+                    
                     req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
                 }
 

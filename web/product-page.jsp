@@ -11,6 +11,7 @@
 
 <jsp:include page="/theme/header.jsp" />
 
+            <c:set var="currentDate" value="${curentTimeStamp}" />
 <!-- BREADCRUMB -->
 <div id="breadcrumb">
     <div class="container">
@@ -44,8 +45,7 @@
                     <div class="product-body">
                         <div class="product-label">
                             <c:if test="${sach.getPhanTramGiamGia()!=0}">
-                                <span>SALE</span>
-                                <span class="sale">
+                                
                                     <fmt:formatNumber var="lamtron"
                                                       value="${sach.getPhanTramGiamGia()}"
                                                       maxFractionDigits="0" />
@@ -54,23 +54,90 @@
                                                       value="${sach.getPhanTramGiamGia()}"
                                                       maxFractionDigits="10" />
 
-                                    <c:choose>
-                                        <c:when test="${lamtron != khonglamtron}">
+                                <c:choose>
+                                        <c:when test="${sach.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:if test="${sach.getNgayKetThucGiamGia() > currentDate}">
 
-                                            ${khonglamtron}
-                                        </c:when> 
-                                        <c:otherwise> 
-                                            ${lamtron}
+
+                                                <span class="new">SALE</span>
+
+                                                <span class="sale">
+                                                    <c:choose>
+
+                                                        <c:when test="${lamtron != khonglamtron}">
+
+                                                            ${khonglamtron}
+                                                        </c:when> 
+                                                        <c:otherwise>
+
+                                                            ${lamtron}
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    %
+                                                </span>    
+                                            </c:if>
+
+
+                                        </c:when>
+                                        <c:otherwise>
+
                                         </c:otherwise>
                                     </c:choose>
-
-                                    %
-                                </span>
                             </c:if>
 
                         </div>
                         <h2 class="product-name">${ sach.getTenSach() }</h2>
-                        <h3 class="product-price">${ sach.getGiaBan() } </h3>
+
+                        <fmt:formatNumber var="giagoc"
+                                          value="${sach.getGiaBan()}"
+                                          maxFractionDigits="0" 
+                                          groupingUsed="true" />
+                        <fmt:formatNumber var="giagocsaugiamgia"
+                                          value="${(100-sach.getPhanTramGiamGia())*0.01*sach.getGiaBan()}"
+                                          maxFractionDigits="0" 
+                                          groupingUsed="true"/>
+
+                        <c:choose>
+                            <c:when test="${sach.getPhanTramGiamGia()==0}">
+                                <h3 class="product-price">
+                                                    ${giagoc} </h3>
+                               
+                            </c:when> 
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${sach.getNgayBatDauGiamGia() < currentDate}">
+                                        <c:choose>
+                                            <c:when test="${sach.getNgayKetThucGiamGia() > currentDate}">
+                                                <h3 class="product-price">
+                                                    ${giagocsaugiamgia}
+                                                    <del class="product-old-price">
+                                                                            ${giagoc}
+                        
+                                                        
+                                                    </del>
+                                                </h3>
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                <h3 class="product-price">${giagoc}
+                                                    
+                                                </h3>
+
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h3 class="product-price">${giagoc} </h3>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
+
+                            
+                                   
+
+                        
 
                         <p> 
                             <c:choose>
@@ -103,7 +170,7 @@
                             </c:when> 
                             <c:otherwise> 
                                 <div class="primary-btn add-to-cart">Sản phẩm đã ngưng kinh doanh</div>
-                                
+
                             </c:otherwise>
                         </c:choose>
 
@@ -146,123 +213,145 @@
             </div>
             <!-- section title -->
 
-            <!-- Product Single -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="product product-single">
-                    <div class="product-thumb">
-                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-                        <img src="./img/product04.jpg" alt="">
-                    </div>
-                    <div class="product-body">
-                        <h3 class="product-price">$32.50</h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
-                        <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                        <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Product Single -->
 
-            <!-- Product Single -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="product product-single">
-                    <div class="product-thumb">
-                        <div class="product-label">
-                            <span>New</span>
-                        </div>
-                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-                        <img src="./img/product03.jpg" alt="">
-                    </div>
-                    <div class="product-body">
-                        <h3 class="product-price">$32.50</h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
-                        <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                        <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Product Single -->
 
-            <!-- Product Single -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="product product-single">
-                    <div class="product-thumb">
-                        <div class="product-label">
-                            <span class="sale">-20%</span>
-                        </div>
-                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-                        <img src="./img/product02.jpg" alt="">
-                    </div>
-                    <div class="product-body">
-                        <h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
-                        <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                        <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Product Single -->
+            <c:forEach items="${listSach}" var="obj">
+                <!-- Product Single -->
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="product product-single product-hot">
+                        <div class="product-thumb">
+                            <div class="product-label">
 
-            <!-- Product Single -->
-            <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="product product-single">
-                    <div class="product-thumb">
-                        <div class="product-label">
-                            <span>New</span>
-                            <span class="sale">-20%</span>
+
+                                <c:if test="${obj.getPhanTramGiamGia()!=0}">
+
+                                    <fmt:formatNumber var="lamtron"
+                                                      value="${obj.getPhanTramGiamGia()}"
+                                                      maxFractionDigits="0"
+                                                      groupingUsed="false"/>
+
+                                    <fmt:formatNumber var="khonglamtron"
+                                                      value="${obj.getPhanTramGiamGia()}"
+                                                      maxFractionDigits="10"
+                                                      groupingUsed="false"/>
+
+
+
+                                    <c:choose>
+                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+
+
+                                                <span class="new">SALE</span>
+
+                                                <span class="sale">
+                                                    <c:choose>
+
+                                                        <c:when test="${lamtron != khonglamtron}">
+
+                                                            ${khonglamtron}
+                                                        </c:when> 
+                                                        <c:otherwise>
+
+                                                            ${lamtron}
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    %
+                                                </span>    
+                                            </c:if>
+
+
+                                        </c:when>
+                                        <c:otherwise>
+
+                                        </c:otherwise>
+                                    </c:choose>
+
+
+                                </c:if>
+
+
+                            </div>
+                            <a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i  class="fa fa-search-plus"></i> Quick view</a>
+                            <img src="${obj.getAnhDaiDien()}" alt="">
                         </div>
-                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-                        <img src="./img/product01.jpg" alt="">
-                    </div>
-                    <div class="product-body">
-                        <h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
-                        <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-                        <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                        <div class="product-body">
+
+                            <h3 class="product-price">
+                                <fmt:formatNumber var="giagoc"
+                                                  value="${obj.getGiaBan()}"
+                                                  maxFractionDigits="0" 
+                                                  groupingUsed="true" />
+                                <fmt:formatNumber var="giagocsaugiamgia"
+                                                  value="${(100-obj.getPhanTramGiamGia())*0.01*obj.getGiaBan()}"
+                                                  maxFractionDigits="0" 
+                                                  groupingUsed="true"/>
+
+
+
+
+                                <c:choose>
+                                    <c:when test="${obj.getPhanTramGiamGia()==0}">
+                                        ${giagoc}
+                                    </c:when> 
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                <c:choose>
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                        ${giagocsaugiamgia}
+
+                                                    </c:when>
+                                                    <c:otherwise>
+
+                                                        ${giagoc}
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${giagoc}
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <del class="product-old-price">
+                                    <c:if test="${obj.getPhanTramGiamGia()!=0}">
+                                        <c:choose>
+                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+
+                                                    ${giagoc}
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:if>
+
+                                </del>
+
+
+
+                            </h3>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o empty"></i>
+                            </div>
+                            <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
+                            <div class="product-btns">
+                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- /Product Single -->
+                <!-- /Product Single -->
+
+            </c:forEach>
         </div>
         <!-- /row -->
     </div>
