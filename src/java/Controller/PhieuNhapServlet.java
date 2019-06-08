@@ -8,6 +8,7 @@ package Controller;
 import Model.MessagesModel;
 import Model.PhieuChiModelWithTenNhaCungCap;
 import Model.PhieuNhapModel;
+import Model.PhieuNhapModelWithTenNhaCungCapAndTenNhanVien;
 import Model.SachModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
@@ -45,7 +46,8 @@ public class PhieuNhapServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Connection conn = MyUtils.getStoredConnection(req);
-        List<PhieuNhapModel> listPhieuNhap = PhieuNhapModel.getAllPhieuNhap(conn);
+        List<PhieuNhapModelWithTenNhaCungCapAndTenNhanVien> listPhieuNhap = PhieuNhapModelWithTenNhaCungCapAndTenNhanVien.getAllPhieuNhap(conn);
+        System.out.println(listPhieuNhap.size());
         req.setAttribute("listPhieuNhap", listPhieuNhap);
 
         req.getRequestDispatcher("/admin/list-phieunhap.jsp").forward(req, resp);

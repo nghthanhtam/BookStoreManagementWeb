@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +33,7 @@ public class SearchSachByTacGiaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-         try {
-            Integer numberOfBookInOnePage = 9;
+        try {
 
             Integer currentPage;
             int numOfPage = 0;
@@ -42,36 +44,36 @@ public class SearchSachByTacGiaServlet extends HttpServlet {
                 currentPage = 1;
             }
 
-            System.out.println("Current page:" + currentPage);
             Connection conn = MyUtils.getStoredConnection(req);
             String tenTacGia = req.getParameter("tentacgia");
-            System.out.println("Tên của tác giả: " + tenTacGia);
 
-            List<SachModel> listSachTheoTacGia = SachModel.GetAllSachByTacGiaPerPage(conn, tenTacGia, currentPage, numberOfBookInOnePage);
-            
+            List<SachModel> listSachTheoTacGia = SachModel.GetAllSachByTacGiaPerPage(conn, tenTacGia, currentPage, MyUtils.soSachTrongMotTrang);
+
             int numOfBookFound = SachModel.CountAllByTacGia(conn, tenTacGia);
-            
-            if(numOfBookFound%numberOfBookInOnePage==0)
-                numOfPage = numOfBookFound/numberOfBookInOnePage;
-            else
-                numOfPage = numOfBookFound/numberOfBookInOnePage+1;
-            
-            
-            System.out.println(listSachTheoTacGia.size());
-            
-            System.out.println("Number of pages: "+numOfPage);
-            req.setAttribute("txtTitle", "Tìm kiếm sách theo tác giả"+ tenTacGia);
+
+            if (numOfBookFound % MyUtils.soSachTrongMotTrang == 0) {
+                numOfPage = numOfBookFound / MyUtils.soSachTrongMotTrang;
+            } else {
+                numOfPage = numOfBookFound / MyUtils.soSachTrongMotTrang + 1;
+            }
+
+            Date date = new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
+            String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
+
+            req.setAttribute("curentTimeStamp", currentTs);
+
+            req.setAttribute("txtTitle", "Tìm kiếm sách theo tác giả" + tenTacGia);
+
             req.setAttribute("numofpage", numOfPage);
             req.setAttribute("tentacgia", tenTacGia);
             req.setAttribute("listSachTheoTacGia", listSachTheoTacGia);
             req.getRequestDispatcher("search-tacgia.jsp").forward(req, resp);
-        
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
     }
-    catch (SQLException ex) {
-        System.out.println(ex);
-    }
-       
-   }
 }
-
-

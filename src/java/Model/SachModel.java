@@ -21,7 +21,6 @@ import java.util.List;
  *
  * @author MITICC06
  */
-
 public class SachModel {
 
     private int maSach;
@@ -39,15 +38,14 @@ public class SachModel {
     private Date ngayKetThucGiamGia;
     private int trangThai;
 
-    
     public final static int TRANGTHAI_DANG_BAN = 1;
     public final static int TRANGTHAI_NGUNG_KINH_DOANH = 3;
     public final static int TRANGTHAI_XOA = 2;
-    
-    
-    public SachModel(){
-    
+
+    public SachModel() {
+
     }
+
     public int getMaSach() {
         return maSach;
     }
@@ -193,26 +191,26 @@ public class SachModel {
 
         if (rs.next()) {
             SachModel sach = new SachModel(
-                        rs.getInt("masach"),
-                        rs.getInt("matheloai"),
-                        rs.getString("tensach"),
-                        rs.getString("nhaxuatban"),
-                        rs.getInt("namxuatban"),
-                        rs.getDouble("giaban"),
-                        rs.getString("mota"),
-                        rs.getString("anhdaidien"),
-                        rs.getInt("soluongton"),
-                        rs.getString("tentacgia"),
-                        rs.getDouble("phantramgiamgia"),
-                        rs.getDate("ngaybatdaugiamgia"),
-                        rs.getDate("ngayketthucgiamgia"),
-                        rs.getInt("trangthai"));
+                    rs.getInt("masach"),
+                    rs.getInt("matheloai"),
+                    rs.getString("tensach"),
+                    rs.getString("nhaxuatban"),
+                    rs.getInt("namxuatban"),
+                    rs.getDouble("giaban"),
+                    rs.getString("mota"),
+                    rs.getString("anhdaidien"),
+                    rs.getInt("soluongton"),
+                    rs.getString("tentacgia"),
+                    rs.getDouble("phantramgiamgia"),
+                    rs.getDate("ngaybatdaugiamgia"),
+                    rs.getDate("ngayketthucgiamgia"),
+                    rs.getInt("trangthai"));
             return sach;
         }
         return null;
 
     }
- 
+
     public static boolean InsertNewSach(Connection conn, SachModel sach)
             throws SQLException {
         int count = 0;
@@ -320,7 +318,6 @@ public class SachModel {
 
             PreparedStatement pstm = conn.prepareStatement(sql);
 
-            
             pstm.setInt(1, sach.getMaTheLoai());
             pstm.setString(2, sach.getTenSach());
             pstm.setString(3, sach.getNhaXuatBan());
@@ -342,16 +339,15 @@ public class SachModel {
             } else {
                 pstm.setDate(11, sach.getNgayBatDauGiamGia());
             }
-            
+
             if (sach.getNgayKetThucGiamGia() == null) {
                 pstm.setNull(12, java.sql.Types.DATE);
             } else {
                 pstm.setDate(12, sach.getNgayKetThucGiamGia());
             }
-            
+
             pstm.setInt(13, sach.getTrangThai());
             pstm.setInt(14, sach.getMaSach());
-           
 
             count = pstm.executeUpdate();
 
@@ -362,7 +358,7 @@ public class SachModel {
         return count > 0;
     }
 
-     public static boolean UpdateSoLuongTonSach(Connection conn, int soLuongSach, int maSach) throws SQLException {
+    public static boolean UpdateSoLuongTonSach(Connection conn, int soLuongSach, int maSach) throws SQLException {
 
         int count = 0;
         try {
@@ -372,11 +368,9 @@ public class SachModel {
 
             PreparedStatement pstm = conn.prepareStatement(sql);
 
-            
             pstm.setInt(1, soLuongSach);
             pstm.setInt(2, maSach);
 
-          
             count = pstm.executeUpdate();
 
         } catch (SQLException ex) {
@@ -385,7 +379,7 @@ public class SachModel {
         }
         return count > 0;
     }
-    
+
     public static List<AjaxModel> FindTenTacGia(Connection conn, String tenTacGia) throws SQLException {
 
         List<AjaxModel> listTenTacGia = new ArrayList<AjaxModel>();
@@ -437,14 +431,14 @@ public class SachModel {
         return listTenNhaXuatBan;
 
     }
- 
-  public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
+
+    public static List<SachModel> getAllSachByMaTheLoai(Connection conn, int maTheLoai) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
         String sql = "SELECT * FROM sach WHERE matheloai = ?";
         try {
-            PreparedStatement pstm = conn.prepareStatement(sql);           
-            pstm.setInt(1, maTheLoai);    
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maTheLoai);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
@@ -472,13 +466,13 @@ public class SachModel {
         }
         return listSach;
     }
-    
+
     public static List<SachModel> getListSachMoiNhatTop7(Connection conn) {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
         String sql = "SELECT * FROM sach ORDER BY masach DESC LIMIT 7";
         try {
-            PreparedStatement pstm = conn.prepareStatement(sql);              
+            PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
@@ -507,16 +501,16 @@ public class SachModel {
         }
         return listSach;
     }
-    
+
     public static List<SachModel> getListSachGiamGiaTop7(Connection conn) {
         List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
 
-
         //select top 2 sach dang giam gia (sách có hạn giảm giá gần nhất nằm trên đầu)
-        String sql = "SELECT * FROM sach WHERE ngayketthucgiamgia IS NOT NULL ORDER BY (NOW()-ngayketthucgiamgia) ASC LIMIT 7";
-   
+        String sql = "SELECT * FROM sach WHERE phantramgiamgia <> 0 AND UNIX_TIMESTAMP(ngaybatdaugiamgia) < UNIX_TIMESTAMP(CURRENT_TIMESTAMP) "
+                + "AND UNIX_TIMESTAMP(CURRENT_TIMESTAMP) < UNIX_TIMESTAMP(ngayketthucgiamgia)  ORDER BY (ngayketthucgiamgia - CURRENT_TIMESTAMP) ASC LIMIT 7";
+
         try {
-            PreparedStatement pstm = conn.prepareStatement(sql);              
+            PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
@@ -544,10 +538,9 @@ public class SachModel {
             System.out.println(e);
         }
         return listSachGiamGia;
-    }              
-              
-  
-public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) throws SQLException {
+    }
+
+    public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) throws SQLException {
 
         List<AjaxModel> listSach = new ArrayList<AjaxModel>();
 
@@ -555,16 +548,16 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
 
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
-            
-            pstm.setString(1 , tenSach); // tìm bằng Mã sách
+
+            pstm.setString(1, tenSach); // tìm bằng Mã sách
             pstm.setString(2, "%" + tenSach + "%"); // tìm bằng tên sách
-            
+
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 AjaxModel ajaxModel = new AjaxModel(
                         Integer.parseInt(rs.getString("masach")),
-                        rs.getString("masach") + " - " +rs.getString("tensach"));
+                        rs.getString("masach") + " - " + rs.getString("tensach"));
 
                 listSach.add(ajaxModel);
             }
@@ -575,41 +568,34 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
 
         return listSach;
 
-    }              
-              
-              
-              
-              
+    }
+
     public static List<SachModel> FindAllByTuKhoa(Connection conn, String tuKhoa, Integer maTheLoai, Integer page, Integer numOfBookInOnePage) throws SQLException {
 
         List<SachModel> listSach = new ArrayList<SachModel>();
-        
-            Integer x=0;
-          //  (SELECT  DISTINCT *  FROM sach WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2)
-            String sql = "SELECT DISTINCT * FROM sach "
-                    + "WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2 LIMIT ? , ?";
+
+        Integer x = 0;
+        //  (SELECT  DISTINCT *  FROM sach WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2)
+        String sql = "SELECT DISTINCT * FROM sach "
+                + "WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2 LIMIT ? , ?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
-            if(maTheLoai!=0)
-            {
+            if (maTheLoai != 0) {
                 pstm.setInt(4, maTheLoai); // tìm từ khóa
-            }
-            else
-            {
+            } else {
                 pstm.setString(4, "%%");
             }
-         
-            pstm.setInt(5, (page-1)*numOfBookInOnePage);
+
+            pstm.setInt(5, (page - 1) * numOfBookInOnePage);
             pstm.setInt(6, numOfBookInOnePage);
             ResultSet rs = pstm.executeQuery();
-            
-            while (rs.next()) {
-                 SachModel sach = new SachModel(
 
+            while (rs.next()) {
+                SachModel sach = new SachModel(
                         rs.getInt("masach"),
                         rs.getInt("matheloai"),
                         rs.getString("tensach"),
@@ -634,33 +620,30 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
         return listSach;
 
     }
-    
+
     public static int CountAllByTuKhoa(Connection conn, String tuKhoa, Integer maTheLoai) throws SQLException {
 
-        int counter=0;
-        int x=0;
-            
-            String sql ="SELECT COUNT(*) AS TOTAL FROM ((SELECT  DISTINCT *  FROM sach"
-                    + " WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2) AS T)";
+        int counter = 0;
+        int x = 0;
+
+        String sql = "SELECT COUNT(*) AS TOTAL FROM ((SELECT  DISTINCT *  FROM sach"
+                + " WHERE ( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND matheloai LIKE ? AND trangthai <> 2) AS T)";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
-            if(maTheLoai!=0)
-            {
+            if (maTheLoai != 0) {
                 pstm.setInt(4, maTheLoai); // tìm từ khóa
-            }
-            else
-            {
+            } else {
                 pstm.setString(4, "%%");
             }
-            
+
             ResultSet rs = pstm.executeQuery();
-            if(rs.next())
-                counter=rs.getInt("TOTAL");
-            
+            if (rs.next()) {
+                counter = rs.getInt("TOTAL");
+            }
 
         } catch (SQLException e) {
             System.out.println("Exception: ");
@@ -670,8 +653,7 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
         return counter;
 
     }
-  
-     
+
     public static List<AjaxModel> FindAllByTuKhoaAjax(Connection conn, String tuKhoa) throws SQLException {
 
         List<AjaxModel> listSach = new ArrayList<AjaxModel>();
@@ -684,11 +666,11 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
             pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
-            
+
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
-                 AjaxModel mode = new AjaxModel(
+                AjaxModel mode = new AjaxModel(
                         rs.getInt("masach"),
                         rs.getString("tensach") + " - " + rs.getString("tentacgia"));
                 listSach.add(mode);
@@ -701,17 +683,18 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
         return listSach;
 
     }
-     public static List<SachModel> GetAllSachByTacGiaPerPage(Connection conn, String tacGia, Integer page, Integer numOfBookInOnePage) throws SQLException{
+
+    public static List<SachModel> GetAllSachByTacGiaPerPage(Connection conn, String tacGia, Integer page, Integer numOfBookInOnePage) throws SQLException {
         List<SachModel> listSach = new ArrayList<SachModel>();
 
         String sql = "SELECT * FROM sach where tentacgia = ? LIMIT ? , ?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, tacGia);
-            pstm.setInt(2, (page-1)*numOfBookInOnePage);
+            pstm.setInt(2, (page - 1) * numOfBookInOnePage);
             pstm.setInt(3, numOfBookInOnePage);
             ResultSet rs = pstm.executeQuery();
-            
+
             while (rs.next()) {
 
                 SachModel SachModel = new SachModel(
@@ -739,20 +722,20 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
         return listSach;
     }
 
-      public static int CountAllByTacGia(Connection conn, String tacGia) throws SQLException {
+    public static int CountAllByTacGia(Connection conn, String tacGia) throws SQLException {
 
-        int counter=0;
-        int x=0;
-            
-            String sql ="SELECT COUNT(*) AS TOTAL FROM ((SELECT * FROM sach where tentacgia = ? ) AS T)";
+        int counter = 0;
+        int x = 0;
+
+        String sql = "SELECT COUNT(*) AS TOTAL FROM ((SELECT * FROM sach where tentacgia = ? ) AS T)";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setString(1, tacGia);
             ResultSet rs = pstm.executeQuery();
-            if(rs.next())
-                counter=rs.getInt("TOTAL");
-            
+            if (rs.next()) {
+                counter = rs.getInt("TOTAL");
+            }
 
         } catch (SQLException e) {
             System.out.println("Exception: ");
@@ -762,7 +745,197 @@ public static List<AjaxModel> FindAllByName(Connection conn, String tenSach) thr
         return counter;
 
     }
+
+    public static List<SachModel> getAllSachByTheLoaiPerPage(Connection conn, Integer maTheLoai, Integer page, Integer numOfBookInOnePage) throws SQLException {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach where matheloai = ? LIMIT ? , ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maTheLoai);
+            pstm.setInt(2, (page - 1) * numOfBookInOnePage);
+            pstm.setInt(3, numOfBookInOnePage);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
+
+    public static int CountAllByTheLoai(Connection conn, Integer maTheLoai) throws SQLException {
+
+        int counter = 0;
+        int x = 0;
+
+        String sql = "SELECT COUNT(*) AS TOTAL FROM ((SELECT * FROM sach where matheloai = ? ) AS T)";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setInt(1, maTheLoai);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                counter = rs.getInt("TOTAL");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Exception: ");
+            System.out.println(e.toString());
+        }
+
+        return counter;
+
+    }
+
+    public static List<String> getDistinctAllTacGia(Connection conn) {
+        List<String> listTacGia = new ArrayList<String>();
+
+        String sql = "SELECT DISTINCT tentacgia FROM sach ";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                listTacGia.add(rs.getString("tentacgia"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listTacGia;
+    }
  
-     
+    
+    
+    public static List<SachModel> getSachByMaTheLoaiTop4(Connection conn, int maTheLoai) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+
+        String sql = "SELECT * FROM sach WHERE matheloai = ? LIMIT 4";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, maTheLoai);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
+    
+    
+      public static List<SachModel> getRichOrPoorSachTop4(Connection conn, Boolean rich) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+        String sql;
+        if(rich ==true)
+            sql= "SELECT * FROM sach ORDER BY giaban DESC LIMIT 4";
+        else
+            sql= "SELECT * FROM sach ORDER BY giaban ASC LIMIT 4";
+        
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
+    
+            
+             public static List<SachModel> getOutOfStockSachTop3(Connection conn) {
+        List<SachModel> listSach = new ArrayList<SachModel>();
+        String sql="SELECT * FROM sach WHERE soluongton <>0 ORDER BY soluongton ASC LIMIT 3";
+        
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+
+                SachModel SachModel = new SachModel(
+                        rs.getInt("masach"),
+                        rs.getInt("matheloai"),
+                        rs.getString("tensach"),
+                        rs.getString("nhaxuatban"),
+                        rs.getInt("namxuatban"),
+                        rs.getDouble("giaban"),
+                        rs.getString("mota"),
+                        rs.getString("anhdaidien"),
+                        rs.getInt("soluongton"),
+                        rs.getString("tentacgia"),
+                        rs.getDouble("phantramgiamgia"),
+                        rs.getDate("ngaybatdaugiamgia"),
+                        rs.getDate("ngayketthucgiamgia"),
+                        rs.getInt("trangthai"));
+                listSach.add(SachModel);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listSach;
+    }
 }
 

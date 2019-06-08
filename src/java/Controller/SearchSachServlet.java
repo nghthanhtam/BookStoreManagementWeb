@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,46 +41,50 @@ public class SearchSachServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            
-        Integer numberOfBookInOnePage =9;
-            
+
+
         try {
             String tuKhoa = req.getParameter("tukhoa");
             Integer currentPage;
             Integer maTheLoai;
             int numOfPage;
-            String temp =req.getParameter("page");
-            if(req.getParameter("page")!=null){
+            String temp = req.getParameter("page");
+            
+            if (req.getParameter("page") != null) {
                 currentPage = Integer.parseInt(temp);
+            } else {
+                currentPage = 1;
             }
-            else
-                currentPage=1;
-            temp=req.getParameter("matheloai");
-            if(req.getParameter("matheloai")!=null){
+            temp = req.getParameter("matheloai");
+            if (req.getParameter("matheloai") != null) {
                 maTheLoai = Integer.parseInt(temp);
-            }
-            else
+            } else {
                 maTheLoai = 0;
+            }
             req.setAttribute("txtTitle", "Tìm kiếm sách");
             System.out.println(currentPage);
             Connection conn = MyUtils.getStoredConnection(req);
-            
+
             int numOfBookFound = SachModel.CountAllByTuKhoa(conn, tuKhoa, maTheLoai);
+
+            if (numOfBookFound % MyUtils.soSachTrongMotTrang == 0) {
+                numOfPage = numOfBookFound / MyUtils.soSachTrongMotTrang;
+            } else {
+                numOfPage = numOfBookFound / MyUtils.soSachTrongMotTrang + 1;
+            }
+
+            List<SachModel> listSach = SachModel.FindAllByTuKhoa(conn, tuKhoa, maTheLoai, currentPage, MyUtils.soSachTrongMotTrang);
+
+            Date date = new Date();
+            long time = date.getTime();
+            Timestamp ts = new Timestamp(time);
+            String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
             
-            if(numOfBookFound%numberOfBookInOnePage==0)
-                numOfPage = numOfBookFound/numberOfBookInOnePage;
-            else
-                numOfPage = numOfBookFound/numberOfBookInOnePage+1;
-            
-            List<SachModel> listSach = SachModel.FindAllByTuKhoa(conn, tuKhoa, maTheLoai,currentPage,numberOfBookInOnePage);
-            
-            
-            
+            req.setAttribute("curentTimeStamp", currentTs);
             req.setAttribute("numofpage", numOfPage);
             req.setAttribute("listSach", listSach);
             req.setAttribute("tukhoa", tuKhoa);
             req.setAttribute("matheloai", maTheLoai);
-            req.setAttribute("page", currentPage);
             req.getRequestDispatcher("search.jsp").forward(req, resp);
 
         } catch (SQLException ex) {
