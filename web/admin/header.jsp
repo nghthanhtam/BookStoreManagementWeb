@@ -164,7 +164,14 @@
                     </ul>
                   </li>
                   <% } %>
- 
+                  
+                    <li><a><i class="fa fa-list"></i> Báo cáo <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="${contextPath}/admin/baocao/doanhthu">Báo cáo doanh thu</a></li>
+                      <li><a href="${contextPath}/admin/baocao/ton">Báo cáo tồn</a></li>
+                    </ul>
+                  </li>
+  
                 </ul>
               </div>
  
