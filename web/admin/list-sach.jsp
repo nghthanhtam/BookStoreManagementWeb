@@ -69,7 +69,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             Bị xóa 
-                                        </c:otherwise>
+                                        </c:otherwise>  
                                     </c:choose>
 
 

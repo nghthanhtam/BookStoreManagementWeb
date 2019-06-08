@@ -11,9 +11,7 @@ import Model.SachModelWithTheLoaiAndTrangThai;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
+import java.sql.Connection; 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,8 +21,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.HttpServletResponse; 
 
 /**
  *
@@ -91,7 +88,7 @@ public class AddSachServlet extends HttpServlet {
 
         if (isFailed) // nếu có lỗi thì hiện thông báo
         {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
         } else {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         }

@@ -63,7 +63,6 @@ public class SearchSachByTacGiaServlet extends HttpServlet {
             req.setAttribute("txtTitle", "Tìm kiếm sách theo tác giả"+ tenTacGia);
             req.setAttribute("numofpage", numOfPage);
             req.setAttribute("tentacgia", tenTacGia);
-            System.out.println("Size của list: " + listSachTheoTacGia.size());
             req.setAttribute("listSachTheoTacGia", listSachTheoTacGia);
             req.getRequestDispatcher("search-tacgia.jsp").forward(req, resp);
         
