@@ -90,7 +90,7 @@ public class CheckoutServlet extends HttpServlet {
             Double tongTien = 0.0;
 
             Date datenow = new Date(); //lấy ngày hiện tại
-
+            
             /* Thêm chi tiết đơn hàng */
             jsonListCT = new JSONArray(listCT);
             if (jsonListCT.length() <= 0) {

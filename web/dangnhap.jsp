@@ -33,7 +33,7 @@
                     <div class="col-md-12 col-md-offset-3"> ${noiDungThongBao}</div>
                     <c:if test = "${urlReturn != null}"> 
                         <script>
-                            setTimeout("location.href = '${urlReturn}';", 3000);
+                            setTimeout("location.href = '${urlReturn}';", 2000);
                         </script>  
                     </c:if>
 

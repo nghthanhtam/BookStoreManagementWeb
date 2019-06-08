@@ -127,9 +127,11 @@
                                                             Đã hoàn tất<br/>
                                                         </c:when> 
                                                     </c:choose>
-
+                                                 
                                                 </td>
-
+                                                
+                                                <td><a href="${contextPath}/xemdonhang?id=${obj.getMaDonHang()}" class="primary-btn"> Xem chi tiết</a></td>
+                                                <td><a href="${contextPath}/donhang?id=${obj.getMaDonHang()}&action=cancel" class="primary-btn"> Hủy đơn hàng</a></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

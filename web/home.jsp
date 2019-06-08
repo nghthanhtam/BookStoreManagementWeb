@@ -9,7 +9,14 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<jsp:include page="theme/header.jsp" />
+<jsp:include page="theme/header.jsp" /> 
+
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+  
+</head>
 
 <!-- HOME -->
 <div id="home">
@@ -24,9 +31,9 @@
                     <img src="./img/banner01.jpg" alt="">
                     <div class="banner-caption text-center">
                         <h1>Bags sale</h1>
-                        <h3 class="white-color font-weak">Up to 50% Discount</h3>
-                        <button class="primary-btn" id="abc"> Shop now!  </button>
-                    </div>
+							<h3 class="white-color font-weak" id="somediv">Up to 50% Discount</h3>
+							<button class="primary-btn"> Shop now!  </button>
+                     </div>
                 </div>
                 <!-- /banner -->
 
@@ -248,7 +255,7 @@
                         <div class="product-btns">
                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}" data-linkanh="${sachMoiNhat.getAnhDaiDien()}" data-name="${sachMoiNhat.getTenSach()}" data-price="${sachMoiNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                            <button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -383,7 +390,7 @@
                                     <div class="product-btns">
                                         <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                         <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -537,7 +544,7 @@
                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 
-                            <button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}" data-linkanh="${sachGiamGiaNhat.getAnhDaiDien()}" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()-sachGiamGiaNhat.getGiaBan()*sachGiamGiaNhat.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                            <button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 
                         </div>
                     </div>
@@ -668,7 +675,7 @@
                                     <div class="product-btns">
                                         <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                         <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
