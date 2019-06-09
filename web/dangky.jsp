@@ -41,10 +41,10 @@
 								<input class="input" type="text" name="tendangnhap" placeholder="Tên đăng nhập" value="${tendangnhap == null ? "" : tendangnhap}">
 							</div>
 							<div class="form-group">
-								<input class="input" type="password" name="matkhau" placeholder="Mật khẩu">
+								<input class="input" autocomplete="new-password" type="password" name="matkhau" placeholder="Mật khẩu">
 							</div>
                                                         <div class="form-group">
-								<input class="input" type="password" name="laplaimatkhau" placeholder="Lặp lại mật khẩu">
+								<input class="input" autocomplete="new-password" type="password" name="laplaimatkhau" placeholder="Lặp lại mật khẩu">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="hoten" placeholder="Họ tên" value="${hoten == null ? "" : hoten}">

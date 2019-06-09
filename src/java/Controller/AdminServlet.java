@@ -102,46 +102,45 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String tendangnhap = req.getParameter("tendangnhap");
-        String matkhau = req.getParameter("matkhau");
+        String tenDangNhap = req.getParameter("tendangnhap");
+        String matKhau = req.getParameter("matkhau");
+        Connection conn = MyUtils.getStoredConnection(req);
 
         ThanhVienModel thanhvien = null;
-
-        if (tendangnhap == null || matkhau == null || tendangnhap.length() == 0 || matkhau.length() == 0) {
-            /*hasError = true;
-            errorString = "Required username and password!";*/
-
-        } else {
-            Connection conn = MyUtils.getStoredConnection(req);
-            try {
-                thanhvien = ThanhVienModel.FindByTenDangNhap(conn, tendangnhap);
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+        String noiDungThongBao = "";
+        boolean isOk = true;
+        try {
+            if (tenDangNhap == null || matKhau == null || tenDangNhap.length() == 0 || matKhau.length() == 0) {
+                throw new Exception("Bạn chưa nhập thông tin đăng nhập!");
             }
 
-            if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau())) {
-                MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
+            thanhvien = ThanhVienModel.FindByTenDangNhap(conn, tenDangNhap);
 
-                //String referrer = req.getHeader("referer");
-                HttpSession session = ((HttpServletRequest) req).getSession();
-                String autoRedirect = (String) session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
-                if (autoRedirect != null) {
-                    session.removeAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
-                    resp.sendRedirect(autoRedirect);
-                } else {
-                    
-                    
-                            LoadThongKe(req, resp);
-
-                    
-                    
-                    req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
-                }
-
-            } else {
-                req.setAttribute("txtThongBao", "Đăng nhập thất bại!");
-                req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
+            if (!(thanhvien != null && MyUtils.MD5(matKhau).equals(thanhvien.getMatKhau()))) {
+                throw new Exception("Đăng nhập thất bại!");
             }
+
+        } catch (Exception ex) {
+            isOk = false;
+            noiDungThongBao = ex.getMessage();
+
         }
+
+        if (isOk) {
+            MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
+            HttpSession session = ((HttpServletRequest) req).getSession();
+            String autoRedirect = (String) session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
+            if (autoRedirect != null) {
+                session.removeAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT);
+                resp.sendRedirect(autoRedirect);
+            } else {
+                LoadThongKe(req, resp);
+                req.getRequestDispatcher("/admin/admin-home.jsp").forward(req, resp);
+            }
+        } else {
+            req.setAttribute("txtThongBao", noiDungThongBao);
+            req.getRequestDispatcher("/admin/admin-login.jsp").forward(req, resp);
+        }
+
     }
 }

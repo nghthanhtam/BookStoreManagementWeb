@@ -51,8 +51,7 @@ public class LoginThanhVienServlet extends HttpServlet {
         String noiDungThongBao = "";
         try {
 
-            String xxxx = (String) session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT_HOME);
-            if (session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT_HOME) == null) {
+             if (session.getAttribute(MyUtils.ATT_NAME_AUTO_REDIRECT_HOME) == null) {
                 String queryString = "?" + ((HttpServletRequest) req).getQueryString();
                 if (queryString.equals("?null")) {
                     queryString = "";
@@ -67,7 +66,7 @@ public class LoginThanhVienServlet extends HttpServlet {
                 throw new Exception("Thông tin đăng nhập không được để trống!");
             }
             thanhvien = ThanhVienModel.FindByTenDangNhap(conn, tendangnhap);
-            if (thanhvien != null && matkhau.equals(thanhvien.getMatKhau())) {
+            if (thanhvien != null && MyUtils.MD5(matkhau).equals(thanhvien.getMatKhau())) {
                 MyUtils.storeLoginedThanhVien(req.getSession(), thanhvien); // Lưu user vào session
             } else {
                 throw new Exception("Tên đăng nhập hoặc mật khẩu không chính xác!");
@@ -75,8 +74,7 @@ public class LoginThanhVienServlet extends HttpServlet {
 
             noiDungThongBao = "Bạn đã đăng nhập thành công với tên: <b>" + thanhvien.getTenDangNhap() + "!</b>";
 
-//            String uri = ((HttpServletRequest) req).getRequestURI();
-        } catch (Exception ex) {
+         } catch (Exception ex) {
             noiDungThongBao = ex.getMessage();
             isOk = false;
         }
