@@ -1,8 +1,10 @@
 package Controller;
 
 import Model.CTDonHangModel;
+import Model.CTDonHangModelWithTenSachAnhDaiDien;
 import Model.DonHangModel;
 import Model.MessagesModel;
+import Model.PhiShipModel;
 import Model.ThanhVienModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -31,36 +33,72 @@ public class XemDonHangServlet extends HttpServlet {
         {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Bạn chưa đăng nhập!", MessagesModel.ATT_TYPE_ERROR));
             req.getRequestDispatcher("dangnhap.jsp").forward(req, resp);
-            
+
         } else {
+
+            int maDonHang = 0;
+            try{
+                maDonHang = Integer.parseInt(req.getParameter("id"));
+            } catch (Exception ex)
+            {
+                
+            } 
             
-            int maDonHang = Integer.parseInt(req.getParameter("id"));
-
             Connection conn = MyUtils.getStoredConnection(req);
-            List<CTDonHangModel> listCTDonHang = CTDonHangModel.getAllCTDonHangByMaDonHang(conn, maDonHang);
 
-            DonHangModel donHangModel = new DonHangModel();
-            ThanhVienModel thanhVienModel = new ThanhVienModel();
+            DonHangModel donHang = null;
+            
+            ThanhVienModel thanhVien = MyUtils.getLoginedThanhVien(session);
+            int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();
 
+            List<CTDonHangModelWithTenSachAnhDaiDien> listCTDonHang = null;
+             
+            boolean isOk = true;
+            String noiDungThongBao = "";
             try {
-                donHangModel = DonHangModel.FindByMaDonHang(conn, maDonHang);
+                donHang = DonHangModel.FindByMaDonHang(conn, maDonHang);
+                if (donHang == null) {
+                    throw new Exception("Không tìm thấy đơn hàng!");
+                }
+
+                if (donHang.getMaThanhVien() != maThanhVien) {
+                    throw new Exception("Bạn không có quyền xem đơn hàng này!");
+                }
+
+                 
+                listCTDonHang = CTDonHangModelWithTenSachAnhDaiDien.FindAllByMaDonHang(conn, maDonHang);
+
+                if (listCTDonHang == null) {
+                    throw new Exception("Không tìm thấy chi tiết đơn hàng!");
+                }
+                
+                
 
             } catch (Exception ex) {
-
+                isOk = false;
+                noiDungThongBao = ex.getMessage();
             }
 
-            try {
-                thanhVienModel = ThanhVienModel.FindByMaThanhVien(conn, donHangModel.getMaThanhVien());
+            if (isOk == false) {
+                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
 
-            } catch (Exception ex) {
+                List<DonHangModel> listDonHang = DonHangModel.getAllDonHangByMaThanhVien(conn, maThanhVien);
+                req.setAttribute("listDonHang", listDonHang);
 
+                req.getRequestDispatcher("list-donhang.jsp").forward(req, resp);
+                return;
+            } else {
+                req.setAttribute("donHang", donHang);
+
+                req.setAttribute("listCTDonHang", listCTDonHang);
+
+                req.setAttribute("thanhVien", thanhVien);
+ 
+                
+                
+                req.getRequestDispatcher("ctdonhang.jsp").forward(req, resp);
             }
 
-            req.setAttribute("donHang", donHangModel);
-            req.setAttribute("listCTDonHang", listCTDonHang);
-            req.setAttribute("thanhvien", thanhVienModel);
-
-            req.getRequestDispatcher("ctdonhang.jsp").forward(req, resp);
         }
     }
 

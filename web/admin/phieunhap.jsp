@@ -422,37 +422,37 @@
 
 
 
-
-
-    $("#load").on("click", function () {
-        $('#tblAppendGrid').appendGrid('load', [
-            {
-                masach: "57644023-cd0c-47ec-a556-fd8d4e21a4e7",
-                tensach: "Batholomew Zecchii",
-                soluongnhap: "24",
-                dongia: "25900"
-            },
-            {
-                masach: "38e08e8a-c7eb-41eb-9191-6bb2df1fd39b",
-                tensach: "Paulie Poel",
-                soluongnhap: "2",
-                dongia: "25000"
-            },
-            {
-                masach: "d7bf56d4-f955-4dca-b3db-b30eab590028",
-                tensach: "Jessica Levett",
-                soluongnhap: "2",
-                dongia: "4000"
-            },
-            {
-                masach: "b9075764-5228-4ca7-9435-7c362ce097e5",
-                tensach: "Fonsie Spring",
-                soluongnhap: "4",
-                dongia: "95000"
-            }
-        ]);
-    });
- 
+//
+//
+//    $("#load").on("click", function () {
+//        $('#tblAppendGrid').appendGrid('load', [
+//            {
+//                masach: "57644023-cd0c-47ec-a556-fd8d4e21a4e7",
+//                tensach: "Batholomew Zecchii",
+//                soluongnhap: "24",
+//                dongia: "25900"
+//            },
+//            {
+//                masach: "38e08e8a-c7eb-41eb-9191-6bb2df1fd39b",
+//                tensach: "Paulie Poel",
+//                soluongnhap: "2",
+//                dongia: "25000"
+//            },
+//            {
+//                masach: "d7bf56d4-f955-4dca-b3db-b30eab590028",
+//                tensach: "Jessica Levett",
+//                soluongnhap: "2",
+//                dongia: "4000"
+//            },
+//            {
+//                masach: "b9075764-5228-4ca7-9435-7c362ce097e5",
+//                tensach: "Fonsie Spring",
+//                soluongnhap: "4",
+//                dongia: "95000"
+//            }
+//        ]);
+//    });
+// 
 
 </script>
 

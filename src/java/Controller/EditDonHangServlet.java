@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.CTDonHangModel;
-import Model.CTDonHangModelWithTenSach;
+import Model.CTDonHangModelWithTenSachAnhDaiDien;
 import Model.DonHangModel;
 import Model.DonHangModelWithTenThanhVienAndTenDangNhap;
 import Model.MessagesModel;
@@ -173,10 +173,10 @@ public class EditDonHangServlet extends HttpServlet {
         List<TheLoaiModel> listAllTheLoai = TheLoaiModel.getAllTheLoai(conn);
         req.setAttribute("listPhiShip", listPhiShip);
 
-        List<CTDonHangModelWithTenSach> listCTDonHang = null;
+        List<CTDonHangModelWithTenSachAnhDaiDien> listCTDonHang = null;
         try {
             donHang = DonHangModelWithTenThanhVienAndTenDangNhap.FindByMaDonHang(conn, maDonHang);
-            listCTDonHang = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
+            listCTDonHang = CTDonHangModelWithTenSachAnhDaiDien.FindAllByMaDonHang(conn, maDonHang);
         } catch (Exception ex) {
         }
         req.setAttribute("listCTDonHang", listCTDonHang);
@@ -191,7 +191,7 @@ public class EditDonHangServlet extends HttpServlet {
 
         DonHangModelWithTenThanhVienAndTenDangNhap donHang = null;
 
-        List<CTDonHangModelWithTenSach> listCTDonHang = null;
+        List<CTDonHangModelWithTenSachAnhDaiDien> listCTDonHang = null;
         try {
             int maDonHang = Integer.parseInt((String) req.getParameter("id"));
             donHang = DonHangModelWithTenThanhVienAndTenDangNhap.FindByMaDonHang(conn, maDonHang);
@@ -200,7 +200,7 @@ public class EditDonHangServlet extends HttpServlet {
                 resp.sendRedirect("/admin/donhang");
                 return;
             }
-            listCTDonHang = CTDonHangModelWithTenSach.FindAllByMaDonHang(conn, maDonHang);
+            listCTDonHang = CTDonHangModelWithTenSachAnhDaiDien.FindAllByMaDonHang(conn, maDonHang);
         } catch (Exception ex) {
         }
 

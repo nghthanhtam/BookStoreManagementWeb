@@ -120,7 +120,7 @@
             <!-- section-title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h2 class="title">Sách mới nhất</h2>
+                    <h2 class="title">New Releases in Books</h2>
                     <div class="pull-right">
                         <div class="product-slick-dots-1 custom-dots"></div>
                     </div>
