@@ -69,14 +69,9 @@ public class AjaxGetSachModel extends HttpServlet {
                 if (sachModel == null) {
                     throw new Exception("Không tìm thấy thông tin sách [MASACH] = " + id);
                 }
-
-                Date datenow = new Date();
-                if (sachModel.getPhanTramGiamGia() > 0
-                        && datenow.before(sachModel.getNgayKetThucGiamGia())
-                        && datenow.after(sachModel.getNgayBatDauGiamGia())) {
-
+ 
+                if ( MyUtils.checkGiamGia(sachModel) == true) {
                     sachModel.setGiaBan(sachModel.getGiaBan() - sachModel.getGiaBan() * sachModel.getPhanTramGiamGia() / 100);
-
                 }
 
                 listSach.add(sachModel);

@@ -46,13 +46,7 @@ public class ProductServlet extends HttpServlet {
                 if (sach != null && sach.getTrangThai() != SachModel.TRANGTHAI_XOA) { // tìm thấy theo mã sách
                     List<SachModel> listSach = SachModel.getSachByMaTheLoaiTop4(conn, sach.getMaTheLoai());
 
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.HOUR_OF_DAY, 0);
-                    cal.set(Calendar.MINUTE, 0);
-                    cal.set(Calendar.SECOND, 0);
-                    cal.set(Calendar.MILLISECOND, 0); 
-
-                    Date date = new Date(cal.getTimeInMillis());
+                    Date date = new Date();
                     long time = date.getTime();
                     Timestamp ts = new Timestamp(time);
                     String currentTs = new SimpleDateFormat("yyyy-MM-dd").format(ts);

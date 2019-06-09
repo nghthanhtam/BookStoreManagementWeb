@@ -1,5 +1,6 @@
 package Utility;
 
+import Model.SachModel;
 import Model.ThanhVienModel;
 import java.io.File;
 import java.math.BigInteger;
@@ -15,6 +16,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 ;
@@ -184,11 +187,39 @@ public class MyUtils {
         str = str.replaceAll("\"", "&#8221;");
         return str;
     }
-    
-    public static Boolean checkUsername(String username){
-        if(Pattern.compile("^[a-zA-Z0-9_\\-]{5,50}$").matcher(username).matches() == false){
+
+    public static Boolean checkUsername(String username) {
+        if (Pattern.compile("^[a-zA-Z0-9_\\-]{5,50}$").matcher(username).matches() == false) {
             return false;
         }
         return true;
+    }
+
+    public static Boolean checkGiamGia(SachModel sachModel) { // kiểm tra sách có đang trong giai đoạn giảm giá ko?
+        /*
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+         */
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+          
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        
+        Date date = new Date(cal.getTime().getTime()); 
+
+                
+        if (sachModel.getPhanTramGiamGia() > 0
+                && sachModel.getNgayBatDauGiamGia().getTime() <= date.getTime()
+                && date.getTime() <= sachModel.getNgayKetThucGiamGia().getTime()) {
+            return true;
+        }
+        return false;
     }
 }

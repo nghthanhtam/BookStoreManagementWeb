@@ -136,17 +136,7 @@
                                                          <div class="form-group">
                                                             <input class="input" type="hidden" name="listctdonhang" id="listctdonhang">
 							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="register">
-									<label class="font-weak" for="register">Create Account?</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											<p>
-												<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
-								</div>
-							</div>
+							 
 						</div>
 					</div>
 <script type="text/javascript">
@@ -155,7 +145,7 @@
 					<div class="col-md-6">
 						<div class="shiping-methods">
 							<div class="section-title">
-								<h4 class="title">Phương thức ship hàng</h4>
+								<h4 class="title">Phương thức vận chuyển</h4>
 							</div>
 							 
 							<div class="input-checkbox">
@@ -216,7 +206,7 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>PHÍ SHIP</th>
-										<td id="phiship" colspan="2">Free Shipping</td>
+										<td id="phiship" colspan="2"></td>
 									</tr>
 									<tr>
 										<th class="empty" colspan="3"></th>

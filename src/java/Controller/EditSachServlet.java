@@ -82,6 +82,9 @@ public class EditSachServlet extends HttpServlet {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     ngayBatDauGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(0, 10)).getTime());
                     ngayKetThucGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(13)).getTime());
+                    if (ngayBatDauGiamGia.getTime() > ngayKetThucGiamGia.getTime()) {
+                        throw new Exception("Ngày bắt đầu giảm giá không được lớn hơn ngày kết thúc!");
+                    }
                 }
 
                 sach = SachModel.FindByMaSach(conn, maSach);

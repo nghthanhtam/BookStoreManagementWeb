@@ -50,6 +50,7 @@
 
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="icon" href="/img/icon.png" type="image/ico" />
 
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css" />
