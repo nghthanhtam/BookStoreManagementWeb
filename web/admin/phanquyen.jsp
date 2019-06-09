@@ -49,6 +49,7 @@
                           <th>QL Phiếu chi</th>
                           <th>QL Nhà cung cấp</th> 
                           <th>QL Đơn hàng</th> 
+                          <th>QL Báo cáo</th> 
                           <th style="width: 20%">Thao tác</th>
                         </tr>
                       </thead>
@@ -69,6 +70,7 @@
                                     <td>${obj.getQlPhieuChi() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td>${obj.getQlNhaCungCap() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td>${obj.getQlDonHang() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
+                                    <td>${obj.getQlBaoCao() == 1 ? "<i class=\"fa fa-check\" style=\"color:green; align-content: center;\"></i>":""}</td>
                                     <td> 
                                         <a href="${contextPath}/admin/phanquyen/edit?id=${obj.getMaPhanQuyen()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
                                         <a href="${contextPath}/admin/phanquyen/delete?id=${obj.getMaPhanQuyen()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Xóa </a>
@@ -180,7 +182,11 @@
                               <input name="qldonhang" value="1" type="checkbox" class="flat"> Quản lí đơn hàng
                             </label>
                           </div>         
-                            
+                          <div class="checkbox">
+                            <label>
+                              <input name="qlbaocao" value="1" type="checkbox" class="flat"> Quản lí báo cáo
+                            </label>
+                          </div>   
                             
                         </div>
                       </div>

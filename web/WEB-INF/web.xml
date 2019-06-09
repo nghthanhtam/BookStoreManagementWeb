@@ -36,6 +36,10 @@
         <filter-name>DonHangFilter</filter-name>
         <filter-class>Filter.DonHangFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>BaoCaoFilter</filter-name>
+        <filter-class>Filter.BaoCaoFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -75,6 +79,10 @@
     <filter-mapping>
         <filter-name>DonHangFilter</filter-name>
         <url-pattern>/admin/donhang/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>BaoCaoFilter</filter-name>
+        <url-pattern>/admin/baocao/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

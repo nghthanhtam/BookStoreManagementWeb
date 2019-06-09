@@ -216,7 +216,7 @@
             <c:forEach items="${listSach}" var="obj">
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single">
                         <div class="product-thumb">
                             <div class="product-label">
 

@@ -35,8 +35,8 @@ public class PhanQuyenServlet extends HttpServlet {
         boolean isFailedRequest = false; // request thất bại
         String noiDungThongBao = "";
 
-        String submitValue = req.getParameter("submit"); 
-        
+        String submitValue = req.getParameter("submit");
+
         if (submitValue != null && submitValue.equals("them")) {
 
             String tenPhanQuyen = (String) req.getParameter("tenphanquyen");
@@ -49,10 +49,11 @@ public class PhanQuyenServlet extends HttpServlet {
             int qlPhieuChi = req.getParameter("qlphieuchi") == null ? 0 : 1;
             int qlNhaCungCap = req.getParameter("qlnhacungcap") == null ? 0 : 1;
             int qlDonHang = req.getParameter("qldonhang") == null ? 0 : 1;
+            int qlBaoCao = req.getParameter("qlbaocao") == null ? 0 : 1;
 
             Connection conn = MyUtils.getStoredConnection(req);
             try {
-                boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlDonHang));
+                boolean isOk = PhanQuyenModel.InsertNewPhanQuyen(conn, new PhanQuyenModel(0, tenPhanQuyen, qlThanhVien, qlSach, qlTheLoai, qlPhiShip, qlPhanQuyen, qlPhieuNhap, qlPhieuChi, qlNhaCungCap, qlDonHang, qlBaoCao));
                 if (isOk) {
                     isFailedRequest = false;
                     noiDungThongBao = "Đã thêm phân quyền!";
@@ -98,4 +99,4 @@ public class PhanQuyenServlet extends HttpServlet {
 
     }
 
-} 
+}

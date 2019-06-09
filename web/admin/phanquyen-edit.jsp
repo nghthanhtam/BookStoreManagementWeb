@@ -106,7 +106,11 @@
                               <input name="qldonhang" value="1" type="checkbox" class="flat" ${phanQuyenModel.getQlDonHang() == 1 ? "checked=\"checked\"":""}> Quản lí đơn hàng
                             </label>
                           </div>         
-                            
+                          <div class="checkbox">
+                            <label>
+                              <input name="qlbaocao" value="1" type="checkbox" class="flat" ${phanQuyenModel.getQlBaoCao() == 1 ? "checked=\"checked\"":""}> Quản lí báo cáo
+                            </label>
+                          </div>       
                             
                         </div>
                       </div>
