@@ -10,7 +10,7 @@
 
  
           <!-- top tiles -->
-          <div class="row tile_count">
+<!--          <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
               <div class="count">2500</div>
@@ -41,7 +41,7 @@
               <div class="count">7,325</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
-          </div>
+          </div>-->
           <!-- /top tiles -->
  
           <div class="row">
@@ -53,10 +53,10 @@
                     <h3>Thống kê doanh thu</h3>
                   </div>
                   <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+<!--                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                       <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                       <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
 
