@@ -31,8 +31,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
-
+    <link rel="icon" href="/img/icon.png" type="image/ico" />
+  
     <title>${txtTitle == null ? "" : txtTitle.concat(" - ")}Admin Panel - Book Store</title>
 
     <!-- Bootstrap -->
@@ -164,7 +164,14 @@
                     </ul>
                   </li>
                   <% } %>
- 
+                  
+                    <li><a><i class="fa fa-list"></i> Báo cáo <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="${contextPath}/admin/baocao/doanhthu">Báo cáo doanh thu</a></li>
+                      <li><a href="${contextPath}/admin/baocao/ton">Báo cáo tồn</a></li>
+                    </ul>
+                  </li>
+  
                 </ul>
               </div>
  

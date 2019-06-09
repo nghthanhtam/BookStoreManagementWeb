@@ -102,8 +102,7 @@
 				<form id="checkout-form" class="clearfix" method="POST" action="/checkout">
 					<div class="col-md-6">
 						<div class="billing-details">
-							<p>Already a customer ? <a href="#">Login</a></p>
-							<div class="section-title">
+ 							<div class="section-title">
 								<h3 class="title">Địa chỉ giao hàng</h3>
 							</div>
 							<div class="form-group">
@@ -137,17 +136,7 @@
                                                          <div class="form-group">
                                                             <input class="input" type="hidden" name="listctdonhang" id="listctdonhang">
 							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="register">
-									<label class="font-weak" for="register">Create Account?</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											<p>
-												<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
-								</div>
-							</div>
+							 
 						</div>
 					</div>
 <script type="text/javascript">
@@ -156,15 +145,9 @@
 					<div class="col-md-6">
 						<div class="shiping-methods">
 							<div class="section-title">
-								<h4 class="title">Phương thức ship hàng</h4>
+								<h4 class="title">Phương thức vận chuyển</h4>
 							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="shipping" id="shipping-1">
-								<label for="shipping-1">Free Shiping</label>
-								<div class="caption">
-									<p>Bạn được free ship vào các ngày đặc biệt của E-shop!<p>						
-								</div>
-							</div>
+							 
 							<div class="input-checkbox">
 								<input type="radio" name="shipping" id="shipping-2" checked>
 								<label for="shipping-2">Standard</label>
@@ -223,12 +206,12 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>PHÍ SHIP</th>
-										<td id="phiship" colspan="2">Free Shipping</td>
+										<td id="phiship" colspan="2"></td>
 									</tr>
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>TỔNG TIỀN</th>
-										<th colspan="2" class="total"><span>0</span></th> 
+										<th id="total2" colspan="2" class="total"><span>0</span></th> 
 									</tr>
 								</tfoot>
                                                               

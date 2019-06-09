@@ -11,9 +11,7 @@ import Model.SachModelWithTheLoaiAndTrangThai;
 import Model.TheLoaiModel;
 import Utility.MyUtils;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.ParseException;
+import java.sql.Connection; 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,8 +21,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.HttpServletResponse; 
 
 /**
  *
@@ -70,18 +67,21 @@ public class AddSachServlet extends HttpServlet {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     ngayBatDauGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(0, 10)).getTime());
                     ngayKetThucGiamGia = new java.sql.Date(dateFormat.parse(khoangThoiGianGiamGia.substring(13)).getTime());
+                    if (ngayBatDauGiamGia.getTime() > ngayKetThucGiamGia.getTime()) {
+                        throw new Exception("Ngày bắt đầu giảm giá không được lớn hơn ngày kết thúc!");
+                    }
                 }
 
                 boolean isOk = SachModel.InsertNewSach(conn, new SachModel(0, maTheLoai, tenSach,
                         nhaXuatBan, namXuatBan, giaBan, moTa, dirImage, 0, tenTacGia,
                         phanTramGiamGia, ngayBatDauGiamGia, ngayKetThucGiamGia, trangThai));
 
-                if (isOk) {
-                    isFailed = false;
-                    noiDungThongBao = "Đã thêm sách mới!";
-                } else {
+                if (isOk == false) {
                     throw new Exception("Yêu cầu của bạn không thể xử lý!");
                 }
+
+                isFailed = false;
+                noiDungThongBao = "Đã thêm sách mới!";
             } catch (Exception ex) {
                 Logger.getLogger(AddSachServlet.class.getName()).log(Level.SEVERE, null, ex);
                 isFailed = true;
@@ -91,13 +91,13 @@ public class AddSachServlet extends HttpServlet {
 
         if (isFailed) // nếu có lỗi thì hiện thông báo
         {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", "Yêu cầu của bạn không được xử lý!", MessagesModel.ATT_TYPE_ERROR));
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
         } else {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         }
 
         req.setAttribute("txtTitle", "sách");
-        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTraangThai(conn);
+        List<SachModelWithTheLoaiAndTrangThai> listAllSach = SachModelWithTheLoaiAndTrangThai.getAllSachWithTheLoaiAndTrangThai(conn);
         req.setAttribute("listAllSach", listAllSach);
 
         req.getRequestDispatcher("/admin/list-sach.jsp").forward(req, resp);

@@ -50,7 +50,7 @@ public class HomeServlet extends HttpServlet {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-        String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
+        String currentTs = new SimpleDateFormat("yyyy-MM-dd").format(ts);
 
         req.setAttribute("curentTimeStamp", currentTs);
         req.setAttribute("listFancySach", listFancySach);
@@ -59,8 +59,7 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("listSachGiamGia", listSachGiamGia);
         req.setAttribute("listOutOfStockSach", listSachSapHet);
 
-        req.getRequestDispatcher("home.jsp").forward(req, resp);
-        //req.getRequestDispatcher("htmltest.html").forward(req, resp);
+        req.getRequestDispatcher("home.jsp").forward(req, resp); 
     }
 
 }

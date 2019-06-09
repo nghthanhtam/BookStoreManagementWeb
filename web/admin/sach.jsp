@@ -196,14 +196,14 @@
                                                     <%
                                                         String valueKhoangThoiGianGiamGia = "";
                                                         if (sach != null && sach.getPhanTramGiamGia() > 0) {
-                                                            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+                                                            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
                                                             valueKhoangThoiGianGiamGia = DATE_FORMAT.format(sach.getNgayBatDauGiamGia()) + " - " + DATE_FORMAT.format(sach.getNgayKetThucGiamGia());
                                                         }
                                                     %>
 
                                                 <input type="text" 
                                                        name="khoangthoigiangiamgia" 
-                                                       id="reservation" 
+                                                       id="khoangthoigian" 
                                                        class="form-control" 
                                                        value="<% out.print(valueKhoangThoiGianGiamGia);%>">
                                             </div>
@@ -277,3 +277,17 @@
 
 
 <%@include file="footer.jsp" %>
+
+
+<script>
+
+
+    $(function () {
+        $("#khoangthoigian").daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+    });
+
+</script>   

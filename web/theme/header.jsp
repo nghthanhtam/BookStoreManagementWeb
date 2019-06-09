@@ -50,6 +50,7 @@
 
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="icon" href="/img/icon.png" type="image/ico" />
 
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css" />
@@ -112,29 +113,7 @@
                     <div class="pull-left">
                         <span>Welcome to Book Store!</span>
                     </div>
-                    <div class="pull-right">
-                        <ul class="header-top-links">
-                            <li><a href="#">Store</a></li>
-                            <li><a href="#">Newsletter</a></li>
-                            <li><a href="#">FAQ</a></li>
-                            <li class="dropdown default-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">ENG <i class="fa fa-caret-down"></i></a>
-                                <ul class="custom-menu">
-                                    <li><a href="#">English (ENG)</a></li>
-                                    <li><a href="#">Russian (Ru)</a></li>
-                                    <li><a href="#">French (FR)</a></li>
-                                    <li><a href="#">Spanish (Es)</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown default-dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
-                                <ul class="custom-menu">
-                                    <li><a href="#">USD ($)</a></li>
-                                    <li><a href="#">EUR (€)</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+                     
                 </div>
             </div>
             <!-- /top Header -->
@@ -167,10 +146,7 @@
                                         else
                                             maTheLoai=0;
                                                         
-                                                        
-                                        
-                                        
-                                        
+                                                         
                                         
                                         for (TheLoaiModel obj : listAllTheLoai) {
                                             if(obj.getMaTheLoai()== maTheLoai)
@@ -210,9 +186,7 @@
 
                                 <ul class="custom-menu">
                                     <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-                                    <li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
+                                     <li><a href="${contextPath}/checkout"><i class="fa fa-check"></i> Checkout</a></li>
                                     <li><a href="${contextPath}/logout"><i class="fa fa-sign-out"></i> Logout</a></li> 
                                 </ul>
                             </li>
@@ -342,8 +316,11 @@
                         <span class="category-header">Categories <i class="fa fa-list"></i></span>
                         <ul class="category-list">
 <%
-    for(TheLoaiModel obj : listAllTheLoai)
+    for(int i=0; i<listAllTheLoai.size(); i++)
     {
+        if (i==9)
+            break;
+        TheLoaiModel obj  = listAllTheLoai.get(i);
         out.println("<li><a href=\"/categories?id="+obj.getMaTheLoai()+"\">"+obj.getTenTheLoai()+"</a></li>");
     }
 %>   
@@ -356,15 +333,15 @@
                     <div class="menu-nav">
                         <span class="menu-header">Menu <i class="fa fa-bars"></i></span>
                         <ul class="menu-list">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Shop</a></li>
+                            <li><a href="/">Home</a></li>
+                            
                             <li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
                                 <div class="custom-menu">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <ul class="list-links">
                                                 <li>
-                                                    <h3 class="list-links-title">Categories</h3></li>
+                                                <h3 class="list-links-title">Categories</h3></li>
                                                 <li><a href="#">Women’s Clothing</a></li>
                                                 <li><a href="#">Men’s Clothing</a></li>
                                                 <li><a href="#">Phones & Accessories</a></li>
@@ -506,6 +483,12 @@
                                     <li><a href="checkout.html">Checkout</a></li>
                                 </ul>
                             </li>
+                            
+                            
+                            <li><a href="/login">Login</a></li>
+                            
+                            
+                            
                         </ul>
                     </div>
                     <!-- menu nav -->

@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -502,7 +503,7 @@ public class SachModel {
         return listSach;
     }
 
-    public static List<SachModel> getListSachGiamGiaTop7(Connection conn) {
+    public static List<SachModel> getListSachGiamGiaTop7(Connection conn) { // sách giảm giá gần hết nhất
         List<SachModel> listSachGiamGia = new ArrayList<SachModel>();
 
         //select top 2 sach dang giam gia (sách có hạn giảm giá gần nhất nằm trên đầu)

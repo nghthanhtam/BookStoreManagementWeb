@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.sql.Timestamp;
 /**
  *
  * @author TamTorres
@@ -130,6 +130,9 @@ public class DonHangModel {
         this.ghiChu = ghiChu;
     }
 
+    public DonHangModel(){
+        
+    }
     public static boolean InsertDonHang(Connection conn, DonHangModel donHang)
             throws SQLException {
         int count = 0;
@@ -139,7 +142,7 @@ public class DonHangModel {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, donHang.getMaThanhVien());
-            pstm.setDate(2, donHang.getNgayLap());
+            pstm.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             pstm.setDouble(3, donHang.getTongTien());
             pstm.setInt(4, donHang.getTrangThai());
             pstm.setString(5, donHang.getDiaChiGiaoHang());

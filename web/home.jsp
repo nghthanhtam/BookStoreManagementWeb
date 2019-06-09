@@ -9,7 +9,14 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<jsp:include page="theme/header.jsp" />
+<jsp:include page="theme/header.jsp" /> 
+
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+  
+</head>
 
 <!-- HOME -->
 <div id="home">
@@ -21,11 +28,11 @@
             <div id="home-slick">
                 <!-- banner -->
                 <div class="banner banner-1">
-                    <img src="./img/banner01.jpg" alt="">
+                    <img src="./img/banner01.png" alt="">
                     <div class="banner-caption text-center">
-                        <h1>Bags sale</h1>
-                        <h3 class="white-color font-weak">Up to 50% Discount</h3>
-                        <button class="primary-btn" id="abc"> Shop now!  </button>
+                        <!--<h1>Bags sale</h1>-->
+                        <!--<h3 class="white-color font-weak" id="somediv">Up to 50% Discount</h3>-->
+                        <button class="primary-btn"> Shop now!  </button>
                     </div>
                 </div>
                 <!-- /banner -->
@@ -123,7 +130,7 @@
             <c:set var="currentDate" value="${curentTimeStamp}" />
             <!-- Product Single -->
             <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="product product-single product-hot">
+                <div class="product product-single">
                     <div class="product-thumb">
                         <div class="product-label">
                             <span class="new">NEW</span>
@@ -141,8 +148,8 @@
 
 
                                 <c:choose>
-                                    <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() < currentDate}">
-                                        <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() > currentDate}">
+                                    <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                        <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() >= currentDate}">
                                             <span class="sale">
                                                 <c:choose>
 
@@ -171,11 +178,7 @@
 
 
                         </div>
-                        <ul class="product-countdown">
-                            <li><span>00 H</span></li>
-                            <li><span>00 M</span></li>
-                            <li><span>00 S</span></li>
-                        </ul>
+                        
                         <a href="${contextPath}/product?masach=${sachMoiNhat.getMaSach()}" class="main-btn quick-view"><i  class="fa fa-search-plus"></i> Quick view</a>
                         <img src="${sachMoiNhat.getAnhDaiDien()}" alt="">
                     </div>
@@ -200,9 +203,9 @@
                                 </c:when> 
                                 <c:otherwise>
                                     <c:choose>
-                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() < currentDate}">
+                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() <= currentDate}">
                                             <c:choose>
-                                                <c:when test="${sachMoiNhat.getNgayKetThucGiamGia() > currentDate}">
+                                                <c:when test="${sachMoiNhat.getNgayKetThucGiamGia() >= currentDate}">
                                                     ${giagocsaugiamgia}
 
                                                 </c:when>
@@ -223,8 +226,8 @@
                             <del class="product-old-price">
                                 <c:if test="${sachMoiNhat.getPhanTramGiamGia()!=0}">
                                     <c:choose>
-                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() >= currentDate}">
 
                                                 ${giagoc}
                                             </c:if>
@@ -237,18 +240,12 @@
 
 
                         </h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
+                        
                         <h2 class="product-name"><a href="${contextPath}/product?masach=${sachMoiNhat.getMaSach()}">${sachMoiNhat.getTenSach()}</a></h2>
                         <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}" data-linkanh="${sachMoiNhat.getAnhDaiDien()}" data-name="${sachMoiNhat.getTenSach()}" data-price="${sachMoiNhat.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                            
+                            
+                            <button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -279,8 +276,8 @@
                                                                   groupingUsed="false"/>
 
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                        <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                        <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                             <span class="sale">
                                                                 <c:choose>
 
@@ -305,11 +302,7 @@
                                                 </c:choose>
                                             </c:if>
                                     </div>
-                                    <ul class="product-countdown">
-                                        <li><span>00 H</span></li>
-                                        <li><span>00 M</span></li>
-                                        <li><span>00 S</span></li>
-                                    </ul>
+                                     
                                     <a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                                     <img src="${obj.getAnhDaiDien()}" alt="">
                                 </div>
@@ -331,9 +324,9 @@
                                             </c:when> 
                                             <c:otherwise>
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                         <c:choose>
-                                                            <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                            <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                                 ${giagocsaugiamgia}
 
                                                             </c:when>
@@ -354,8 +347,8 @@
                                         <del class="product-old-price">
                                             <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                        <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                        <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                             ${giagoc}
                                                         </c:if>
@@ -372,18 +365,12 @@
 
 
                                     </h3>
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o empty"></i>
-                                    </div>
+                                
                                     <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                                     <div class="product-btns">
-                                        <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                        <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                        
+                                        
+                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -429,8 +416,8 @@
                                                   groupingUsed="false"/>
 
                                 <c:choose>
-                                    <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() < currentDate}">
-                                        <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() > currentDate}">
+                                    <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                        <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() >= currentDate}">
 
                                             <span class="new">SALE</span>
                                             <span class="sale">
@@ -461,11 +448,7 @@
 
                             </c:if>
                         </div>
-                        <ul class="product-countdown">
-                            <li><span>00 H</span></li>
-                            <li><span>00 M</span></li>
-                            <li><span>00 S</span></li>
-                        </ul>
+                       
                         <a href="${contextPath}/product?masach=${sachGiamGiaNhat.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                         <img src="${sachGiamGiaNhat.getAnhDaiDien()}" alt="">
                     </div>
@@ -487,9 +470,9 @@
                                 </c:when> 
                                 <c:otherwise>
                                     <c:choose>
-                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() < currentDate}">
+                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() <= currentDate}">
                                             <c:choose>
-                                                <c:when test="${sachGiamGiaNhat.getNgayKetThucGiamGia() > currentDate}">
+                                                <c:when test="${sachGiamGiaNhat.getNgayKetThucGiamGia() >= currentDate}">
                                                     ${giagocsaugiamgia}
 
                                                 </c:when>
@@ -510,8 +493,8 @@
                             <del class="product-old-price">
                                 <c:if test="${sachGiamGiaNhat.getPhanTramGiamGia()!=0}">
                                     <c:choose>
-                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() >= currentDate}">
 
                                                 ${giagoc}
                                             </c:if>
@@ -525,19 +508,13 @@
 
 
                         </h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
+                       
                         <h2 class="product-name"><a href="${contextPath}/product?masach=${sachGiamGiaNhat.getMaSach()}">${sachGiamGiaNhat.getTenSach()}</a></h2>
                         <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                            
+                            
 
-                            <button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}" data-linkanh="${sachGiamGiaNhat.getAnhDaiDien()}" data-name="${sachGiamGiaNhat.getTenSach()}" data-price="${sachGiamGiaNhat.getGiaBan()-sachGiamGiaNhat.getGiaBan()*sachGiamGiaNhat.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                            <button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 
                         </div>
                     </div>
@@ -568,8 +545,8 @@
                                                               groupingUsed="false"/>
 
                                             <c:choose>
-                                                <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                    <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                    <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                         <span class="new">SALE</span>
                                                         <span class="sale">
@@ -596,11 +573,7 @@
                                             </c:choose>
                                         </c:if>
                                     </div>
-                                    <ul class="product-countdown">
-                                        <li><span>00 H</span></li>
-                                        <li><span>00 M</span></li>
-                                        <li><span>00 S</span></li>
-                                    </ul>
+                                    
                                     <a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                                     <img src="${obj.getAnhDaiDien()}" alt="">
                                 </div>
@@ -623,9 +596,9 @@
                                             </c:when> 
                                             <c:otherwise>
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                         <c:choose>
-                                                            <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                            <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                                 ${giagocsaugiamgia}
 
                                                             </c:when>
@@ -646,8 +619,8 @@
                                         <del class="product-old-price">
                                             <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                        <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                        <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                             ${giagoc}
                                                         </c:if>
@@ -657,18 +630,12 @@
 
                                         </del>
                                     </h3>
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o empty"></i>
-                                    </div>
+                                     
                                     <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                                     <div class="product-btns">
-                                        <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                        <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()-obj.getGiaBan()*obj.getPhanTramGiamGia()/100}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                        
+                                        
+                                        <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -746,11 +713,13 @@
                 </div>
             </div>
             <!-- section title -->
-
+            <c:set var="dem" value="0"></c:set> 
+             
             <c:forEach items="${listTrashSach}" var="obj">
+                <c:set var="dem" value="${dem + 1}"></c:set>
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single ${dem==1 ?"product-hot":""}">
                         <div class="product-thumb">
                             <div class="product-label">
                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
@@ -767,8 +736,8 @@
 
 
                                     <c:choose>
-                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                 <span class="new">SALE</span>
                                                 <span class="sale">
                                                     <c:choose>
@@ -822,9 +791,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                         ${giagocsaugiamgia}
 
                                                     </c:when>
@@ -845,8 +814,8 @@
                                 <del class="product-old-price">
                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                     ${giagoc}
                                                 </c:if>
@@ -859,17 +828,11 @@
 
 
                             </h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
+                           
                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                             <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                
+                                
                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                             </div>
                         </div>
@@ -898,7 +861,7 @@
             <c:forEach items="${listOutOfStockSach}" var="obj">
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single">
                         <div class="product-thumb">
                             <div class="product-label">
                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
@@ -915,8 +878,8 @@
 
 
                                     <c:choose>
-                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                 <span class="new">SALE</span>
                                                 <span class="sale">
                                                     <c:choose>
@@ -970,9 +933,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                         ${giagocsaugiamgia}
 
                                                     </c:when>
@@ -993,8 +956,8 @@
                                 <del class="product-old-price">
                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                     ${giagoc}
                                                 </c:if>
@@ -1007,17 +970,11 @@
 
 
                             </h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
+                           
                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                             <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                
+                                
                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                             </div>
                         </div>
@@ -1040,7 +997,7 @@
             <c:forEach items="${listFancySach}" var="obj">
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single">
                         <div class="product-thumb">
                             <div class="product-label">
                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
@@ -1057,8 +1014,8 @@
 
 
                                     <c:choose>
-                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                 <span class="new">SALE</span>
                                                 <span class="sale">
                                                     <c:choose>
@@ -1112,9 +1069,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                         ${giagocsaugiamgia}
 
                                                     </c:when>
@@ -1135,8 +1092,8 @@
                                 <del class="product-old-price">
                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                     ${giagoc}
                                                 </c:if>
@@ -1149,17 +1106,11 @@
 
 
                             </h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
+                           
                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                             <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                
+                                
                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                             </div>
                         </div>

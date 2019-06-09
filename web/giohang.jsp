@@ -54,7 +54,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li class="active">Checkout</li>
+				<li class="active">Giỏ hàng</li>
 			</ul>
 		</div>
 	</div>
@@ -93,15 +93,11 @@
                                                           
                                                                 
 								<tfoot>
+									 
 									<tr>
 										<th class="empty" colspan="3"></th>
-										<th>PHÍ SHIP</th>
-										<td colspan="2">Free Shipping</td>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>TỔNG TIỀN</th>
-                                                                                <th colspan="2" class="total"><span>0</span></th>
+										<th>Thành tiền</th>
+                                                                                <th id="total2" colspan="2" class="total"><span>0</span></th>
 									</tr>
 								</tfoot>
 							</table>                                        
