@@ -55,7 +55,7 @@
             <div class="container">
                 <ul class="breadcrumb">
                     <li><a href="/">Home</a></li>
-                    <li class="active">Đơn hàng của tôi</li>
+                    <li class="active"><a href="/donhang">Đơn hàng của tôi</a></li>
                 </ul>
             </div>
         </div>
@@ -77,13 +77,44 @@
                                 
                                 <div class="shiping-methods">
                                     <div class="section-title">
-                                        <h4>${thanhvien.getHoTen()}</h4>
+                                        <h4>${thanhVien.getHoTen()}</h4>
                                          <div class="caption">
-                                            <p>Địa chỉ: ${thanhvien.getDiaChi()}<p>					
+                                            <p>Địa chỉ: ${thanhVien.getDiaChi()}<p>					
                                         </div>
                                          <div class="caption">
-                                            <p>Điện thoại: ${thanhvien.getSoDienThoai()}<p>					
+                                            <p>Điện thoại: ${thanhVien.getSoDienThoai()}<p>					
                                         </div>
+                                        <div class="caption">
+                                            <p>Trạng thái đơn hàng:  <c:choose>
+                                            <c:when test="${obj.getTrangThai()==-1}">
+                                                <font color="#33ccff">
+                                                Chờ tiếp nhận
+                                                </font>
+                                            </c:when> 
+                                            <c:when test="${obj.getTrangThai()==1}">
+                                                <font color="blue">
+                                                Đã tiếp nhận
+                                                </font>
+                                            </c:when> 
+                                            <c:when test="${obj.getTrangThai()==2}">
+                                                <font color="grey">
+                                                Đang giao hàng
+                                                </font>
+                                            </c:when> 
+                                            <c:when test="${obj.getTrangThai()==3}">
+                                                <font color="green">
+                                                Đã hoàn tất
+                                                </font>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <font color="red">
+                                                Bị hủy
+                                                </font>
+                                                
+                                            </c:otherwise>
+                                        </c:choose><p>					
+                                        </div>
+                                        
                                     </div>
                                       
                                 </div>
@@ -105,8 +136,8 @@
                                     <tbody class="donhang">
                                         <c:forEach items="${listCTDonHang}" var="obj">
                                             <tr>
-                                                <td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td>
-                                                <td class="details text-left">Listen!</td>
+                                                <td class="thumb"><img src="${obj.getAnhDaiDien()}" alt=""></td>
+                                                <td class="details text-left"><a href="/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></td>
                                                 <td class="price text-left">${obj.getDonGia()}</td>
                                                 <td class="qty text-center">${obj.getSoLuong()}</td>
                                                 <td class="total text-center"><strong class="primary-color">${obj.getDonGia()*obj.getSoLuong()}</strong></td>
@@ -120,7 +151,7 @@
                                         <div>
                                            
                                             <div class="caption">
-                                                <p class="text-right">Phí vận chuyển: 25000</p>					
+                                                <p class="text-right">Phí vận chuyển: ${donHang.getPhiShip()}</p>					
                                             </div>
                                             <div>
                                                 <p class="text-right">Tổng tiền:  <span style="font-size:20px;color:red;">${donHang.getTongTien()}</span></p> 					

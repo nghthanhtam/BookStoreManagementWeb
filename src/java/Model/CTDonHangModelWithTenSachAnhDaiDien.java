@@ -17,24 +17,34 @@ import java.util.List;
  *
  * @author Dell
  */
-public class CTDonHangModelWithTenSach {
+public class CTDonHangModelWithTenSachAnhDaiDien {
 
     private int maCTDonHang;
     private int maDonHang;
     private int maSach;
     private String tenSach;
+    private String anhDaiDien;
     private int soLuong;
     private Double donGia;
     private Double phanTramGiamGia;
 
-    public CTDonHangModelWithTenSach(int maCTDonHang, int maDonHang, int maSach, String tenSach, int soLuong, Double donGia, Double phanTramGiamGia) {
+    public CTDonHangModelWithTenSachAnhDaiDien(int maCTDonHang, int maDonHang, int maSach, String tenSach, String anhDaiDien, int soLuong, Double donGia, Double phanTramGiamGia) {
         this.maCTDonHang = maCTDonHang;
         this.maDonHang = maDonHang;
         this.maSach = maSach;
         this.tenSach = tenSach;
+        this.anhDaiDien = anhDaiDien;
         this.soLuong = soLuong;
         this.donGia = donGia;
         this.phanTramGiamGia = phanTramGiamGia;
+    }
+
+    public String getAnhDaiDien() {
+        return anhDaiDien;
+    }
+
+    public void setAnhDaiDien(String anhDaiDien) {
+        this.anhDaiDien = anhDaiDien;
     }
 
     public int getMaCTDonHang() {
@@ -93,11 +103,11 @@ public class CTDonHangModelWithTenSach {
         this.phanTramGiamGia = phanTramGiamGia;
     }
 
-    public static List<CTDonHangModelWithTenSach> FindAllByMaDonHang(Connection conn, int madonhang) throws SQLException {
+    public static List<CTDonHangModelWithTenSachAnhDaiDien> FindAllByMaDonHang(Connection conn, int madonhang) throws SQLException {
 
-        List<CTDonHangModelWithTenSach> list = new ArrayList<CTDonHangModelWithTenSach>();
+        List<CTDonHangModelWithTenSachAnhDaiDien> list = new ArrayList<CTDonHangModelWithTenSachAnhDaiDien>();
 
-        String sql = "SELECT mactdonhang, madonhang, ctdonhang.masach, sach.tensach, soluong, dongia, ctdonhang.phantramgiamgia  FROM ctdonhang,sach WHERE madonhang = ? AND sach.masach=ctdonhang.masach";
+        String sql = "SELECT mactdonhang, madonhang, ctdonhang.masach, sach.tensach, sach.anhdaidien, soluong, dongia, ctdonhang.phantramgiamgia  FROM ctdonhang,sach WHERE madonhang = ? AND sach.masach=ctdonhang.masach";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
@@ -106,11 +116,12 @@ public class CTDonHangModelWithTenSach {
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
-                CTDonHangModelWithTenSach ctdonhang = new CTDonHangModelWithTenSach(
+                CTDonHangModelWithTenSachAnhDaiDien ctdonhang = new CTDonHangModelWithTenSachAnhDaiDien(
                         rs.getInt("mactdonhang"),
                         rs.getInt("madonhang"),
                         rs.getInt("masach"),
                         rs.getString("tensach"),
+                        rs.getString("anhdaidien"),
                         rs.getInt("soluong"),
                         rs.getDouble("dongia"),
                         rs.getDouble("phantramgiamgia"));

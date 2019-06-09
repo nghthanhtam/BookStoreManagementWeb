@@ -78,11 +78,11 @@
                                     <thead>
                                         <tr>
                                             <th class="text-left">Mã đơn hàng</th>
-                                            <th class="text-left">Ngày mua</th>
-                                            <th class="text-center">Sản phẩm</th>
-                                            <th></th>
+                                            <th class="text-left">Ngày mua</th> 
                                             <th class="text-center">Tổng tiền</th>
                                             <th class="text-center">Trạng thái đơn hàng</th>
+                                            <th class="text-center"></th> 
+                                            <th class="text-center"></th> 
 
                                         </tr>
                                     </thead>
@@ -90,48 +90,49 @@
                                     <tbody class="donhang">
                                         <c:forEach items="${listDonHang}" var="obj">
                                             <tr>
-                                                <td class="text-left">${obj.getMaDonHang()}</td>
+                                                <td class="text-left">#${obj.getMaDonHang()}</td>
                                                 <td class="details">${obj.getNgayLap()}</td>
-                                                <td class="text-center">
-                                                    <ul>
-                                                        <c:forEach items="${listCTDonHang}" var="objdh">
-                                                            <c:if test="${obj.getMaDonHang()== objdh.getMaDonHang()}">
-
-                                                                <c:forEach items="${listSach}" var="sach">
-                                                                    <c:if test="${objdh.getMaSach()== sach.getMaSach()}">
-                                                                        <li><span>${sach.getTenSach()}</span></li>
-                                                                            </c:if>
-                                                                        </c:forEach>
-
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </td>
-                                                <td></th>
+                                               
                                                 <td class="text-center">${obj.getTongTien()}</td>
                                                 <td class="text-center">
                                                     <c:choose>
-                                                        <c:when test="${obj.getTrangThai() eq -1}">
-                                                            Chờ tiếp nhận<br/>
-                                                        </c:when>
-                                                        <c:when test="${obj.getTrangThai() eq 0}">
-                                                            Đã hủy<br/>
-                                                        </c:when>
-                                                        <c:when test="${obj.getTrangThai() eq -1}">
-                                                            Đang tiếp nhận<br/>
-                                                        </c:when>
-                                                        <c:when test="${obj.getTrangThai() eq 2}">
-                                                            Đang giao hàng<br/>
-                                                        </c:when>
-                                                        <c:when test="${obj.getTrangThai() eq 3}">
-                                                            Đã hoàn tất<br/>
+                                                        <c:when test="${obj.getTrangThai()==-1}">
+                                                            <font color="#33ccff">
+                                                            Chờ tiếp nhận
+                                                            </font>
                                                         </c:when> 
+                                                        <c:when test="${obj.getTrangThai()==1}">
+                                                            <font color="blue">
+                                                            Đã tiếp nhận
+                                                            </font>
+                                                        </c:when> 
+                                                        <c:when test="${obj.getTrangThai()==2}">
+                                                            <font color="grey">
+                                                            Đang giao hàng
+                                                            </font>
+                                                        </c:when> 
+                                                        <c:when test="${obj.getTrangThai()==3}">
+                                                            <font color="green">
+                                                            Đã hoàn tất
+                                                            </font>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <font color="red">
+                                                            Bị hủy
+                                                            </font>
+
+                                                        </c:otherwise>
                                                     </c:choose>
                                                  
                                                 </td>
                                                 
-                                                <td><a href="${contextPath}/xemdonhang?id=${obj.getMaDonHang()}" class="primary-btn"> Xem chi tiết</a></td>
-                                                <td><a href="${contextPath}/donhang?id=${obj.getMaDonHang()}&action=cancel" class="primary-btn"> Hủy đơn hàng</a></td>
+                                                <td><a href="${contextPath}/xemdonhang?id=${obj.getMaDonHang()}" class="main-btn"> Xem chi tiết</a>&nbsp;</td>
+                                                <td>
+
+                                                    <c:if test="${obj.getTrangThai()==-1}">
+                                                        <a href="${contextPath}/donhang?id=${obj.getMaDonHang()}&action=cancel" class="primary-btn"> Hủy đơn hàng</a>
+                                                    </c:if>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
