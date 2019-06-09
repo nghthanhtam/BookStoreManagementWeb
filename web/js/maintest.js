@@ -61,8 +61,9 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
         var cartCount = cartTrigger.children('.qty');
         var undo = cartWrapper.find('.undo');
         var undoTimeoutId;
+        var count = 0;
         
-        cartCount.find('li').text(localStorage.getItem('cartCount'));
+        //cartCount.find('li').text(localStorage.getItem('cartCount'));
 //        cartTotal.text(localStorage.getItem('cartTotal'));
 //        tableTotal.find('.total').find('span').text(localStorage.getItem('cartTotal'));
 
@@ -89,7 +90,9 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
                             var cartDetails = $('<tr id="' + f.maSach + '"><td class="thumb"><img src='+ f.anhDaiDien + ' alt=""></td><td class="details"><a href="#">' + f.tenSach + '</a><ul><li><span>Size: XL</span></li></ul></td><td class="price text-center" id="price-' + f.maSach + '"><strong>' + f.giaBan + '</strong></td><td class="qty text-center"><input class="input" id="input-' + f.maSach + '" data-id="' + f.maSach + '" type="number" value=' + 1 + '></td><td class="total text-center"><strong class="primary-color" id="total-' + f.maSach + '">' + f.giaBan * 1 + '</strong></td><td class="text-right"><a class="main-btn icon-btn delete-cart-details" data-id="' + f.maSach + '"><i class="fa fa-close"></i></a></td></tr>');
                             giohang.prepend(cartDetails);
                           
+                            count++;
                         });
+                        cartCount.find('li').text(String(count));
                         
                         var tongTien = 0;
                         JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
