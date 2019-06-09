@@ -59,14 +59,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Mật khẩu<span class="required">*</span>
                         </label>
                         <div class="col-md-3 col-sm-9 col-xs-12">
-                            <input type="password" name="matkhau"  placeholder="Bỏ trống nếu không thay đổi mật khẩu" class="form-control col-md-7 col-xs-12">
+                            <input type="password" autocomplete="new-password" name="matkhau"  placeholder="Bỏ trống nếu không thay đổi mật khẩu" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" >Lập lại mật khẩu<span class="required">*</span>
                         </label>
                         <div class="col-md-3 col-sm-9 col-xs-12">
-                            <input type="password" name="laplaimatkhau"  placeholder="Bỏ trống nếu không thay đổi mật khẩu" value="" class="form-control col-md-7 col-xs-12">
+                            <input type="password" autocomplete="new-password" name="laplaimatkhau"  placeholder="Bỏ trống nếu không thay đổi mật khẩu" value="" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                         <div class="form-group">

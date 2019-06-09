@@ -41,7 +41,11 @@ public class DangKyThanhVienServlet extends HttpServlet {
         String button = req.getParameter("submit");
         Connection conn = MyUtils.getStoredConnection(req);
 
-        if (button != null && button.equals("dangky")) {
+        try {
+            if (!(button != null && button.equals("dangky"))) {
+                throw new Exception("Yêu cầu của bạn không thể xử lý!");
+            }
+
             String tenDangNhap = (String) req.getParameter("tendangnhap");
             String matKhau = (String) req.getParameter("matkhau");
             String lapLaiMatKhau = (String) req.getParameter("laplaimatkhau");
@@ -58,58 +62,51 @@ public class DangKyThanhVienServlet extends HttpServlet {
             req.setAttribute("email", email);
             req.setAttribute("xacnhandieukhoan", xacNhanDieuKhoan);
 
-            try {
+            ThanhVienModel thanhVienModel = new ThanhVienModel(0, tenDangNhap, MyUtils.MD5(matKhau), hoTen, diaChi, soDienThoai, email, PhanQuyenModel.ATT_MAPHANQUYEN_THANHVIEN);
 
-                if (MyUtils.checkUsername(tenDangNhap)==false) // username k hợp lệ //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
-                {
-                    throw new Exception("Tên đăng nhập không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9 và _");
-                }
-
-                if (matKhau.equals(lapLaiMatKhau) != true) {
-                    throw new Exception("Mật khẩu lặp lại của bạn không trùng khớp!");
-                }
-
-                if (matKhau.equals("") == true) {
-                    throw new Exception("Bạn chưa nhập mật khẩu!");
-                }
-
-                if (MyUtils.checkSoDienThoai(soDienThoai) == false) {
-                    throw new Exception("Số điện thoại không hợp lệ!");
-                }
-                
-                if (MyUtils.checkEmail(email) == false) {
-                    throw new Exception("Địa chỉ email không hợp lệ!");
-                }
-
-                if (xacNhanDieuKhoan == null || !xacNhanDieuKhoan.equals("true")) {
-                    throw new Exception("Bạn chưa đồng ý điều khoản sử dụng!");
-                }
-
-                List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-                for (int i = 0; i < listAllThanhVien.size(); i++) {
-                    if (Objects.equals(tenDangNhap, listAllThanhVien.get(i).getTenDangNhap())) {
-                        throw new Exception("Tên đăng nhập đã được sử dụng!");
-                    }
-                    if (Objects.equals(email, listAllThanhVien.get(i).getEmail())) {
-                        throw new Exception("Địa chỉ email của bạn đã được sử dụng!");
-                    }
-                }
-
-                boolean isOk = ThanhVienModel.InsertNewThanhVien(conn, new ThanhVienModel(0, tenDangNhap, matKhau, hoTen, diaChi, soDienThoai, email, PhanQuyenModel.ATT_MAPHANQUYEN_THANHVIEN));
-                if (isOk) {
-                    noiDungThongBao = "Đăng ký thành viên mới hoàn tất!";
-                    isFailedRequest = false;
-                } else {
-                    throw new Exception("Yêu cầu của bạn không thể xử lý!");
-                }
-
-            } catch (Exception ex) {
-                isFailedRequest = true;
-                noiDungThongBao = ex.getMessage();
+            if (MyUtils.checkUsername(tenDangNhap) == false) // username k hợp lệ //Check username gồm 6-14 kí tự từ a-z 0-9 và "_" "-"
+            {
+                throw new Exception("Tên đăng nhập không hợp lệ! Chỉ bao gồm a-z, A-Z, 0-9 và _");
             }
-        } else {
-            isFailedRequest = true; // thất bại!
-            noiDungThongBao = "Yêu cầu của bạn không thể xử lý!";
+
+            if (ThanhVienModel.isExistTenDangNhap(conn, tenDangNhap) == true) {
+                throw new Exception("Tên đăng nhập này đã được sử dụng!");
+            }
+
+            if (MyUtils.checkSoDienThoai(soDienThoai) == false) {
+                throw new Exception("Số điện thoại di động không hợp lệ! Phải bắt đầu bằng +84 hoặc 0 và gồm 9-11 ký tự!");
+            }
+
+            if (MyUtils.checkEmail(email) == false) {
+                throw new Exception("Email không hợp lệ!");
+            }
+
+            if (ThanhVienModel.isExistEmail(conn, email, 0)) {
+                throw new Exception("Email đã được sử dụng. Vui lòng nhập email khác!");
+            }
+
+            if (matKhau.length() == 0 || lapLaiMatKhau.length() == 0) {
+                throw new Exception("Bạn chưa nhập đủ mật khẩu!");
+            }
+
+            if (matKhau.equals(lapLaiMatKhau) == false) {
+                throw new Exception("Mật khẩu không khớp! Vui lòng kiểm tra lại mật khẩu.");
+            }
+
+            if (xacNhanDieuKhoan == null || !xacNhanDieuKhoan.equals("true")) {
+                throw new Exception("Bạn chưa đồng ý điều khoản sử dụng!");
+            }
+
+            if (ThanhVienModel.InsertNewThanhVien(conn, thanhVienModel) == false) {
+                throw new Exception("Thêm thành viên mới thất bại!");
+            }
+
+            noiDungThongBao = "Đăng ký thành viên mới hoàn tất!";
+            isFailedRequest = false;
+
+        } catch (Exception ex) {
+            isFailedRequest = true;
+            noiDungThongBao = ex.getMessage();
         }
 
         if (isFailedRequest == true) {
@@ -127,9 +124,8 @@ public class DangKyThanhVienServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        
         req.getRequestDispatcher("dangky.jsp").forward(req, resp);
-        
+
     }
 
 }

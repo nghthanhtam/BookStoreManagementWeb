@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author MITICC06
  */
 public class ThanhVienModel {
@@ -130,7 +130,7 @@ public class ThanhVienModel {
 
     }
 
-     public static ThanhVienModel FindByMaThanhVien(Connection conn, int matv) throws SQLException {
+    public static ThanhVienModel FindByMaThanhVien(Connection conn, int matv) throws SQLException {
         String sql = "SELECT * FROM thanhvien WHERE mathanhvien = ?";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
@@ -153,9 +153,8 @@ public class ThanhVienModel {
         return null;
 
     }
-    
-    public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien)
-            throws SQLException {
+
+    public static boolean InsertNewThanhVien(Connection conn, ThanhVienModel thanhvien) throws SQLException {
         int count = 0;
         try {
             String sql = "INSERT INTO thanhvien ( tendangnhap, matkhau, hoten, diachi, sodienthoai, email, maphanquyen) VALUES (?,?,?,?,?,?,?)";
@@ -167,14 +166,7 @@ public class ThanhVienModel {
             pstm.setString(5, thanhvien.getSoDienThoai());
             pstm.setString(6, thanhvien.getEmail());
             pstm.setInt(7, thanhvien.getMaPhanQuyen());
-
-            System.out.println(thanhvien.getTenDangNhap());
-            System.out.println(thanhvien.getMatKhau());
-            System.out.println(thanhvien.getHoTen());
-            System.out.println(thanhvien.getDiaChi());
-            System.out.println(thanhvien.getSoDienThoai());
-            System.out.println(thanhvien.getEmail());
-            System.out.println(thanhvien.getMaPhanQuyen());
+ 
             count = pstm.executeUpdate();
         } catch (SQLException ex) {
 
@@ -230,33 +222,33 @@ public class ThanhVienModel {
         return count > 0;
     }
 
-    public static ThanhVienModel FindByMaNhaCungCap(Connection conn, int maThanhVien) throws SQLException {
+//    public static ThanhVienModel FindByMaNhaCungCap(Connection conn, int maThanhVien) throws SQLException {
+//
+//        String sql = "SELECT * FROM thanhvien WHERE mathanhvien = ? ";
+//
+//        PreparedStatement pstm = conn.prepareStatement(sql);
+//
+//        pstm.setInt(1, maThanhVien);
+//
+//        ResultSet rs = pstm.executeQuery();
+//
+//        if (rs.next()) {
+//            ThanhVienModel thanhVienModel = new ThanhVienModel(
+//                    Integer.parseInt(rs.getString("mathanhvien")),
+//                    rs.getString("tendangnhap"),
+//                    rs.getString("matkhau"),
+//                    rs.getString("hoten"),
+//                    rs.getString("diachi"),
+//                    rs.getString("sodienthoai"),
+//                    rs.getString("email"),
+//                    Integer.parseInt(rs.getString("maphanquyen")));
+//
+//            return thanhVienModel;
+//        }
+//        return null;
+//
+//    }
 
-        String sql = "SELECT * FROM thanhvien WHERE mathanhvien = ? ";
-
-        PreparedStatement pstm = conn.prepareStatement(sql);
-
-        pstm.setInt(1, maThanhVien);
-
-        ResultSet rs = pstm.executeQuery();
-
-        if (rs.next()) {
-            ThanhVienModel thanhVienModel = new ThanhVienModel(
-                    Integer.parseInt(rs.getString("mathanhvien")),
-                    rs.getString("tendangnhap"),
-                    rs.getString("matkhau"),
-                    rs.getString("hoten"),
-                    rs.getString("diachi"),
-                    rs.getString("sodienthoai"),
-                    rs.getString("email"),
-                    Integer.parseInt(rs.getString("maphanquyen")));
-
-            return thanhVienModel;
-        }
-        return null;
-
-    }
- 
     public static boolean UpdateThanhVien(Connection conn, ThanhVienModel obj)
             throws SQLException {
         int count = 0;
@@ -280,7 +272,7 @@ public class ThanhVienModel {
         }
         return count > 0;
     }
-    
+
     public static boolean UpdateThanhVienWithoutPassword(Connection conn, ThanhVienModel obj)
             throws SQLException {
         int count = 0;
@@ -304,81 +296,58 @@ public class ThanhVienModel {
         }
         return count > 0;
     }
-    
-    public static ThanhVienModel FindByEmail(Connection conn, String email) throws SQLException {
-        String sql = "SELECT * FROM thanhvien WHERE email = ?";
+//
+//    public static ThanhVienModel FindByEmail(Connection conn, String email) throws SQLException {
+//        String sql = "SELECT * FROM thanhvien WHERE email = ?";
+//
+//        PreparedStatement pstm = conn.prepareStatement(sql);
+//        pstm.setString(1, email);
+//
+//        ResultSet rs = pstm.executeQuery();
+//
+//        if (rs.next()) {
+//            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
+//                    rs.getString("tendangnhap"),
+//                    rs.getString("matkhau"),
+//                    rs.getString("hoten"),
+//                    rs.getString("diachi"),
+//                    rs.getString("sodienthoai"),
+//                    rs.getString("email"),
+//                    Integer.parseInt(rs.getString("maphanquyen"))
+//            );
+//            return thanhvien;
+//        }
+//        return null;
+//
+//    }
+
+    public static boolean isExistEmail(Connection conn, String email, int maThanhVien) throws SQLException {
+        String sql = "SELECT * FROM thanhvien WHERE email = ? AND mathanhvien <> ? ";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setString(1, email);
+        pstm.setInt(2, maThanhVien);
 
         ResultSet rs = pstm.executeQuery();
 
         if (rs.next()) {
-            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
-                    rs.getString("tendangnhap"),
-                    rs.getString("matkhau"),
-                    rs.getString("hoten"),
-                    rs.getString("diachi"),
-                    rs.getString("sodienthoai"),
-                    rs.getString("email"),
-                    Integer.parseInt(rs.getString("maphanquyen"))
-            );
-            return thanhvien;
+            return true; // có tồn tại email
         }
-        return null;
-
+        return false;
     }
     
     
-    
-    public static ThanhVienModel FindByTenDangNhapNotSameID(Connection conn, ThanhVienModel obj) throws SQLException {
-        String sql = "SELECT * FROM thanhvien WHERE tendangnhap = ? AND mathanhvien <> ?";
+        public static boolean isExistTenDangNhap(Connection conn, String tenDangNhap) throws SQLException {
+        String sql = "SELECT * FROM thanhvien WHERE tendangnhap = ?";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, obj.getTenDangNhap());
-        pstm.setInt(2, obj.getMaThanhVien());
+        pstm.setString(1, tenDangNhap); 
 
         ResultSet rs = pstm.executeQuery();
 
         if (rs.next()) {
-            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
-                    rs.getString("tendangnhap"),
-                    rs.getString("matkhau"),
-                    rs.getString("hoten"),
-                    rs.getString("diachi"),
-                    rs.getString("sodienthoai"),
-                    rs.getString("email"),
-                    Integer.parseInt(rs.getString("maphanquyen"))
-            );
-            return thanhvien;
+            return true; // có tồn tại tenDangNhap
         }
-        return null;
-
+        return false;
     }
-
-    public static ThanhVienModel FindByEmailNotSameID(Connection conn, ThanhVienModel obj) throws SQLException {
-        String sql = "SELECT * FROM thanhvien WHERE email = ? AND mathanhvien <> ?";
-
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, obj.getEmail());
-        pstm.setInt(2, obj.getMaThanhVien());
-
-        ResultSet rs = pstm.executeQuery();
-
-        if (rs.next()) {
-            ThanhVienModel thanhvien = new ThanhVienModel(Integer.parseInt(rs.getString("mathanhvien")),
-                    rs.getString("tendangnhap"),
-                    rs.getString("matkhau"),
-                    rs.getString("hoten"),
-                    rs.getString("diachi"),
-                    rs.getString("sodienthoai"),
-                    rs.getString("email"),
-                    Integer.parseInt(rs.getString("maphanquyen"))
-            );
-            return thanhvien;
-        }
-        return null;
-
-    }
-    
 }
