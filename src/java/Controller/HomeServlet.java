@@ -59,8 +59,7 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("listSachGiamGia", listSachGiamGia);
         req.setAttribute("listOutOfStockSach", listSachSapHet);
 
-        req.getRequestDispatcher("home.jsp").forward(req, resp);
-        //req.getRequestDispatcher("htmltest.html").forward(req, resp);
+        req.getRequestDispatcher("home.jsp").forward(req, resp); 
     }
 
 }

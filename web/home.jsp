@@ -28,12 +28,12 @@
             <div id="home-slick">
                 <!-- banner -->
                 <div class="banner banner-1">
-                    <img src="./img/banner01.jpg" alt="">
+                    <img src="./img/banner01.png" alt="">
                     <div class="banner-caption text-center">
-                        <h1>Bags sale</h1>
-							<h3 class="white-color font-weak" id="somediv">Up to 50% Discount</h3>
-							<button class="primary-btn"> Shop now!  </button>
-                     </div>
+                        <!--<h1>Bags sale</h1>-->
+                        <!--<h3 class="white-color font-weak" id="somediv">Up to 50% Discount</h3>-->
+                        <button class="primary-btn"> Shop now!  </button>
+                    </div>
                 </div>
                 <!-- /banner -->
 
@@ -130,7 +130,7 @@
             <c:set var="currentDate" value="${curentTimeStamp}" />
             <!-- Product Single -->
             <div class="col-md-3 col-sm-6 col-xs-6">
-                <div class="product product-single product-hot">
+                <div class="product product-single">
                     <div class="product-thumb">
                         <div class="product-label">
                             <span class="new">NEW</span>
@@ -178,11 +178,7 @@
 
 
                         </div>
-                        <ul class="product-countdown">
-                            <li><span>00 H</span></li>
-                            <li><span>00 M</span></li>
-                            <li><span>00 S</span></li>
-                        </ul>
+                        
                         <a href="${contextPath}/product?masach=${sachMoiNhat.getMaSach()}" class="main-btn quick-view"><i  class="fa fa-search-plus"></i> Quick view</a>
                         <img src="${sachMoiNhat.getAnhDaiDien()}" alt="">
                     </div>
@@ -244,17 +240,11 @@
 
 
                         </h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
+                        
                         <h2 class="product-name"><a href="${contextPath}/product?masach=${sachMoiNhat.getMaSach()}">${sachMoiNhat.getTenSach()}</a></h2>
                         <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                            
+                            
                             <button class="primary-btn add-to-cart" data-id="${sachMoiNhat.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                         </div>
                     </div>
@@ -312,11 +302,7 @@
                                                 </c:choose>
                                             </c:if>
                                     </div>
-                                    <ul class="product-countdown">
-                                        <li><span>00 H</span></li>
-                                        <li><span>00 M</span></li>
-                                        <li><span>00 S</span></li>
-                                    </ul>
+                                     
                                     <a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                                     <img src="${obj.getAnhDaiDien()}" alt="">
                                 </div>
@@ -379,17 +365,11 @@
 
 
                                     </h3>
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o empty"></i>
-                                    </div>
+                                
                                     <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                                     <div class="product-btns">
-                                        <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                        <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                        
+                                        
                                         <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     </div>
                                 </div>
@@ -468,11 +448,7 @@
 
                             </c:if>
                         </div>
-                        <ul class="product-countdown">
-                            <li><span>00 H</span></li>
-                            <li><span>00 M</span></li>
-                            <li><span>00 S</span></li>
-                        </ul>
+                       
                         <a href="${contextPath}/product?masach=${sachGiamGiaNhat.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                         <img src="${sachGiamGiaNhat.getAnhDaiDien()}" alt="">
                     </div>
@@ -532,17 +508,11 @@
 
 
                         </h3>
-                        <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
-                        </div>
+                       
                         <h2 class="product-name"><a href="${contextPath}/product?masach=${sachGiamGiaNhat.getMaSach()}">${sachGiamGiaNhat.getTenSach()}</a></h2>
                         <div class="product-btns">
-                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                            
+                            
 
                             <button class="primary-btn add-to-cart" data-id="${sachGiamGiaNhat.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
 
@@ -603,11 +573,7 @@
                                             </c:choose>
                                         </c:if>
                                     </div>
-                                    <ul class="product-countdown">
-                                        <li><span>00 H</span></li>
-                                        <li><span>00 M</span></li>
-                                        <li><span>00 S</span></li>
-                                    </ul>
+                                    
                                     <a href="${contextPath}/product?masach=${obj.getMaSach()}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                                     <img src="${obj.getAnhDaiDien()}" alt="">
                                 </div>
@@ -664,17 +630,11 @@
 
                                         </del>
                                     </h3>
-                                    <div class="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o empty"></i>
-                                    </div>
+                                     
                                     <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                                     <div class="product-btns">
-                                        <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                        <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                        
+                                        
                                         <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     </div>
                                 </div>
@@ -753,11 +713,13 @@
                 </div>
             </div>
             <!-- section title -->
-
+            <c:set var="dem" value="0"></c:set> 
+             
             <c:forEach items="${listTrashSach}" var="obj">
+                <c:set var="dem" value="${dem + 1}"></c:set>
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single ${dem==1 ?"product-hot":""}">
                         <div class="product-thumb">
                             <div class="product-label">
                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
@@ -866,17 +828,11 @@
 
 
                             </h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
+                           
                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                             <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                
+                                
                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                             </div>
                         </div>
@@ -905,7 +861,7 @@
             <c:forEach items="${listOutOfStockSach}" var="obj">
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single">
                         <div class="product-thumb">
                             <div class="product-label">
                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
@@ -1014,17 +970,11 @@
 
 
                             </h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
+                           
                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                             <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                
+                                
                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                             </div>
                         </div>
@@ -1047,7 +997,7 @@
             <c:forEach items="${listFancySach}" var="obj">
                 <!-- Product Single -->
                 <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single product-hot">
+                    <div class="product product-single">
                         <div class="product-thumb">
                             <div class="product-label">
                                 <c:if test="${obj.getPhanTramGiamGia()!=0}">
@@ -1156,17 +1106,11 @@
 
 
                             </h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
+                           
                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
                             <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                
+                                
                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}" data-linkanh="${obj.getAnhDaiDien()}" data-name="${obj.getTenSach()}" data-price="${obj.getGiaBan()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                             </div>
                         </div>
