@@ -105,7 +105,7 @@
                                     <tbody class="donhang">
                                         <c:forEach items="${listCTDonHang}" var="obj">
                                             <tr>
-                                                <td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td>
+                                                <td class="thumb"><img src="Upload\1560077895123_tu-duy-nhanh-va-cham_1.jpg" alt=""></td>
                                                 <td class="details text-left">Listen!</td>
                                                 <td class="price text-left">${obj.getDonGia()}</td>
                                                 <td class="qty text-center">${obj.getSoLuong()}</td>

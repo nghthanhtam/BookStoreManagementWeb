@@ -7,12 +7,12 @@ import java.sql.SQLException;
 public class MySQLConnUtils {
 
     public static String dbName = "nhasach";
-//    private static String hostName = "27.78.25.175";
-//    private static String userName = "nhasach";
-//    private static String password = "nhasachnhasach";
-private static String hostName = "localhost";
-    private static String userName = "root";
-    private static String password = "";
+    private static String hostName = "27.78.25.175";
+    private static String userName = "nhasach";
+    private static String password = "nhasachnhasach";
+//private static String hostName = "localhost";
+//    private static String userName = "root";
+//    private static String password = "";
     public static Connection getMySQLConnection()
             throws ClassNotFoundException, SQLException {
         return getMySQLConnection(hostName, dbName, userName, password);

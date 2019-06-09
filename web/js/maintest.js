@@ -69,7 +69,7 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
 
         
         if (localStorage.getItem('obj') !== "") {
-            
+         
             $.ajax
             (
                 {

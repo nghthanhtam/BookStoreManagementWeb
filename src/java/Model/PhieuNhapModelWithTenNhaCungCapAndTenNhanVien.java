@@ -100,5 +100,34 @@ public class PhieuNhapModelWithTenNhaCungCapAndTenNhanVien {
         return list;
     }
 
+    public static PhieuNhapModelWithTenNhaCungCapAndTenNhanVien FindByMaPhieuNhap(Connection conn, int maphieunhap) throws SQLException {
+
+          try {
+              
+        String sql = "SELECT maphieunhap, ngaynhap,tennhacungcap,hoten,ghichu "
+                + " FROM phieunhap, thanhvien, nhacungcap WHERE thanhvien.mathanhvien = phieunhap.mathanhvien AND nhacungcap.manhacungcap = phieunhap.manhacungcap AND maphieunhap = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+
+        pstm.setInt(1, maphieunhap);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            PhieuNhapModelWithTenNhaCungCapAndTenNhanVien phieuNhap = new PhieuNhapModelWithTenNhaCungCapAndTenNhanVien(
+                     rs.getInt("maphieunhap"),
+                        rs.getDate("ngaynhap"),
+                        rs.getString("tennhacungcap"),
+                        rs.getString("hoten"),
+                        rs.getString("ghichu"));
+            return phieuNhap;
+        }
+
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          
+        return null;
+    }
 }
 

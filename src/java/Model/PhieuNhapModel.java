@@ -140,4 +140,58 @@ public class PhieuNhapModel {
 
         return list;
     }
+    
+    public static PhieuNhapModel FindByMaPhieuNhap(Connection conn, int maphieunhap) throws SQLException {
+
+        String sql = "SELECT * FROM phieunhap WHERE maphieunhap = ? ";
+
+        PreparedStatement pstm = conn.prepareStatement(sql);
+
+        pstm.setInt(1, maphieunhap);
+
+        ResultSet rs = pstm.executeQuery();
+
+        if (rs.next()) {
+            PhieuNhapModel obj = new PhieuNhapModel(
+                        rs.getInt("maphieunhap"),
+                        rs.getDate("ngaynhap"),
+                        rs.getInt("manhacungcap"),
+                        rs.getInt("mathanhvien"),
+                        rs.getString("ghichu")); 
+            return obj;
+        }
+        return null;
+
+    }
+
+    
+    
+    public static boolean UpdatePhieuNhap(Connection conn, PhieuNhapModel phieuNhap) throws SQLException {
+
+        int count = 0;
+        try {
+
+            String sql = "UPDATE phieunhap SET "
+                    + "ngaynhap=?,"
+                    + "manhacungcap=?,"
+                    + "mathanhvien=?, "
+                    + "ghichu =?"
+                    + "WHERE maphieunhap = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setDate(1, phieuNhap.getNgayNhap());
+            pstm.setInt(2, phieuNhap.getMaNhaCungCap());
+            pstm.setInt(3, phieuNhap.getMaThanhVien());
+            pstm.setString(4, phieuNhap.getGhiChu());
+            pstm.setInt(5, phieuNhap.getMaPhieuNhap());
+
+            count = pstm.executeUpdate();
+
+        } catch (SQLException ex) {
+            count = 0;
+            ex.printStackTrace();
+        }
+        return count > 0;
+    }
 }

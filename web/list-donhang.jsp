@@ -79,7 +79,7 @@
                                         <tr>
                                             <th class="text-left">Mã đơn hàng</th>
                                             <th class="text-left">Ngày mua</th>
-                                            <th class="text-center">Sản phẩm</th>
+                                            <th></th>
                                             <th></th>
                                             <th class="text-center">Tổng tiền</th>
                                             <th class="text-center">Trạng thái đơn hàng</th>

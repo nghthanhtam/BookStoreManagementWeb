@@ -74,9 +74,9 @@
             <!-- banner -->
             <div class="col-md-4 col-sm-6">
                 <a class="banner banner-1" href="#">
-                    <img src="./img/banner10.jpg" alt="">
+                    <img src="./img/banner06.jpg" alt="">
                     <div class="banner-caption text-center">
-                        <h2 class="white-color">NEW COLLECTION  </h2>
+                        <h2 class="white-color">TÂM LÝ  </h2>
                     </div>
                 </a>
             </div>
@@ -85,9 +85,9 @@
             <!-- banner -->
             <div class="col-md-4 col-sm-6">
                 <a class="banner banner-1" href="#">
-                    <img src="./img/banner11.jpg" alt="">
+                    <img src="./img/banner07.jpg" alt="">
                     <div class="banner-caption text-center">
-                        <h2 class="white-color">NEW COLLECTION</h2>
+                        <h2 class="white-color">KHOA HỌC</h2>
                     </div>
                 </a>
             </div>
@@ -96,9 +96,9 @@
             <!-- banner -->
             <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
                 <a class="banner banner-1" href="#">
-                    <img src="./img/banner12.jpg" alt="">
+                    <img src="./img/banner08.jpg" alt="">
                     <div class="banner-caption text-center">
-                        <h2 class="white-color">NEW COLLECTION</h2>
+                        <h2 class="white-color">LỊCH SỬ</h2>
                     </div>
                 </a>
             </div>
