@@ -68,19 +68,7 @@
                     <!-- store top filter -->
                     <div class="store-filter clearfix">
                         <div class="pull-left">
-                            <div class="row-filter">
-                                <a href="#"><i class="fa fa-th-large"></i></a>
-                                <a href="#" class="active"><i class="fa fa-bars"></i></a>
-                            </div>
-                            <div class="sort-filter">
-                                <span class="text-uppercase">Sort By:</span>
-                                <select class="input">
-                                    <option value="0">Position</option>
-                                    <option value="0">Price</option>
-                                    <option value="0">Rating</option>
-                                </select>
-                                <a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-                            </div>
+                         Kết quả tìm kiếm
                         </div>
                         <div class="pull-right">
 
@@ -88,15 +76,17 @@
                                 <li><span class="text-uppercase">Page:</span></li>
                                 <li class="active"></li>
 
-                                <%                                                                    String tuKhoa = (String) request.getAttribute("tukhoa");
+                                <%                                                                    
+                                    String tuKhoa = (String) request.getAttribute("tukhoa");
                                     Integer maTheLoai = Integer.parseInt(request.getAttribute("numofpage").toString());
-
-                                    //${page==2 ? "class=\"active\"":""}
+ 
                                     for (int i = 0; i < maTheLoai; i++) {
                                         out.print("<li><a href=\"/search?tukhoa=" + request.getAttribute("tukhoa") + "&matheloai=" + request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
 
                                     }
-
+                                    if (maTheLoai == 0) {
+                                        out.print("<li><a href=\"#\">1</a></li>");
+                                    }
 
                                 %>
 
@@ -111,7 +101,7 @@
                         <!-- row -->
                         <div class="row">
                             <tbody>
-                                ${listSach.size()==0?"Không tìm thấy sách theo yêu cầu của khách hàng!":""}  
+                                ${listSach.size()==0?"Không tìm thấy sách!":""}  
                                 <c:set var="currentDate" value="${curentTimeStamp}" />
                                 <c:forEach items="${listSach}" var="obj">
                                     <!-- Product Single -->
@@ -132,8 +122,8 @@
                                                                       groupingUsed="false" />
 
                                                     <c:choose>
-                                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                                 <span>SALE</span>
                                                                 <span class="sale">
                                                                     <c:choose>
@@ -183,9 +173,9 @@
                                                     </c:when> 
                                                     <c:otherwise>
                                                         <c:choose>
-                                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                                 <c:choose>
-                                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                                         ${giagocsaugiamgia}
 
                                                                     </c:when>
@@ -206,8 +196,8 @@
                                                 <del class="product-old-price">
                                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                                         <c:choose>
-                                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                                     ${giagoc}
                                                                 </c:if>
@@ -217,17 +207,9 @@
 
                                                 </del>
                                             </h3>   
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o empty"></i>
-                                            </div>
+                                       
                                             <h2 class="product-name"><a href="${contextPath}/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></h2>
-                                            <div class="product-btns">
-                                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                            <div class="product-btns"> 
                                                 <button class="primary-btn add-to-cart" data-id="${obj.getMaSach()}"></i> Add to Cart</button>
                                             </div>
                                         </div>
@@ -245,19 +227,7 @@
                     <!-- store bottom filter -->
                     <div class="store-filter clearfix">
                         <div class="pull-left">
-                            <div class="row-filter">
-                                <a href="#"><i class="fa fa-th-large"></i></a>
-                                <a href="#" class="active"><i class="fa fa-bars"></i></a>
-                            </div>
-                            <div class="sort-filter">
-                                <span class="text-uppercase">Sort By:</span>
-                                <select class="input">
-                                    <option value="0">Position</option>
-                                    <option value="0">Price</option>
-                                    <option value="0">Rating</option>
-                                </select>
-                                <a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-                            </div>
+                             
                         </div>
                         <div class="pull-right">
 
@@ -265,12 +235,14 @@
                                 <li><span class="text-uppercase">Page:</span></li>
                                 <li class="active"></li>
 
-                                <%                                                                    //${page==2 ? "class=\"active\"":""}
+                                <%                                                                   
                                     for (int i = 0; i < maTheLoai; i++) {
                                         out.print("<li><a href=\"/search?tukhoa=" + request.getAttribute("tukhoa") + "&matheloai=" + request.getAttribute("matheloai") + "&page=" + (i + 1) + "\">" + (i + 1) + "</a></li>");
 
                                     }
-
+                                    if (maTheLoai == 0) {
+                                        out.print("<li><a href=\"#\">1</a></li>");
+                                    }
 
                                 %>
 

@@ -148,8 +148,8 @@
 
 
                                 <c:choose>
-                                    <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() < currentDate}">
-                                        <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() > currentDate}">
+                                    <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                        <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() >= currentDate}">
                                             <span class="sale">
                                                 <c:choose>
 
@@ -203,9 +203,9 @@
                                 </c:when> 
                                 <c:otherwise>
                                     <c:choose>
-                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() < currentDate}">
+                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() <= currentDate}">
                                             <c:choose>
-                                                <c:when test="${sachMoiNhat.getNgayKetThucGiamGia() > currentDate}">
+                                                <c:when test="${sachMoiNhat.getNgayKetThucGiamGia() >= currentDate}">
                                                     ${giagocsaugiamgia}
 
                                                 </c:when>
@@ -226,8 +226,8 @@
                             <del class="product-old-price">
                                 <c:if test="${sachMoiNhat.getPhanTramGiamGia()!=0}">
                                     <c:choose>
-                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${sachMoiNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${sachMoiNhat.getNgayKetThucGiamGia() >= currentDate}">
 
                                                 ${giagoc}
                                             </c:if>
@@ -276,8 +276,8 @@
                                                                   groupingUsed="false"/>
 
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                        <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                        <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                             <span class="sale">
                                                                 <c:choose>
 
@@ -324,9 +324,9 @@
                                             </c:when> 
                                             <c:otherwise>
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                         <c:choose>
-                                                            <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                            <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                                 ${giagocsaugiamgia}
 
                                                             </c:when>
@@ -347,8 +347,8 @@
                                         <del class="product-old-price">
                                             <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                        <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                        <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                             ${giagoc}
                                                         </c:if>
@@ -416,8 +416,8 @@
                                                   groupingUsed="false"/>
 
                                 <c:choose>
-                                    <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() < currentDate}">
-                                        <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() > currentDate}">
+                                    <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                        <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() >= currentDate}">
 
                                             <span class="new">SALE</span>
                                             <span class="sale">
@@ -470,9 +470,9 @@
                                 </c:when> 
                                 <c:otherwise>
                                     <c:choose>
-                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() < currentDate}">
+                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() <= currentDate}">
                                             <c:choose>
-                                                <c:when test="${sachGiamGiaNhat.getNgayKetThucGiamGia() > currentDate}">
+                                                <c:when test="${sachGiamGiaNhat.getNgayKetThucGiamGia() >= currentDate}">
                                                     ${giagocsaugiamgia}
 
                                                 </c:when>
@@ -493,8 +493,8 @@
                             <del class="product-old-price">
                                 <c:if test="${sachGiamGiaNhat.getPhanTramGiamGia()!=0}">
                                     <c:choose>
-                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${sachGiamGiaNhat.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${sachGiamGiaNhat.getNgayKetThucGiamGia() >= currentDate}">
 
                                                 ${giagoc}
                                             </c:if>
@@ -545,8 +545,8 @@
                                                               groupingUsed="false"/>
 
                                             <c:choose>
-                                                <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                    <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                    <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                         <span class="new">SALE</span>
                                                         <span class="sale">
@@ -596,9 +596,9 @@
                                             </c:when> 
                                             <c:otherwise>
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                         <c:choose>
-                                                            <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                            <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                                 ${giagocsaugiamgia}
 
                                                             </c:when>
@@ -619,8 +619,8 @@
                                         <del class="product-old-price">
                                             <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                        <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                        <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                             ${giagoc}
                                                         </c:if>
@@ -736,8 +736,8 @@
 
 
                                     <c:choose>
-                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                 <span class="new">SALE</span>
                                                 <span class="sale">
                                                     <c:choose>
@@ -791,9 +791,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                         ${giagocsaugiamgia}
 
                                                     </c:when>
@@ -814,8 +814,8 @@
                                 <del class="product-old-price">
                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                     ${giagoc}
                                                 </c:if>
@@ -878,8 +878,8 @@
 
 
                                     <c:choose>
-                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                 <span class="new">SALE</span>
                                                 <span class="sale">
                                                     <c:choose>
@@ -933,9 +933,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                         ${giagocsaugiamgia}
 
                                                     </c:when>
@@ -956,8 +956,8 @@
                                 <del class="product-old-price">
                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                     ${giagoc}
                                                 </c:if>
@@ -1014,8 +1014,8 @@
 
 
                                     <c:choose>
-                                        <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                            <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                        <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                            <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                 <span class="new">SALE</span>
                                                 <span class="sale">
                                                     <c:choose>
@@ -1069,9 +1069,9 @@
                                     </c:when> 
                                     <c:otherwise>
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
                                                 <c:choose>
-                                                    <c:when test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                                    <c:when test="${obj.getNgayKetThucGiamGia() >= currentDate}">
                                                         ${giagocsaugiamgia}
 
                                                     </c:when>
@@ -1092,8 +1092,8 @@
                                 <del class="product-old-price">
                                     <c:if test="${obj.getPhanTramGiamGia()!=0}">
                                         <c:choose>
-                                            <c:when test="${obj.getNgayBatDauGiamGia() < currentDate}">
-                                                <c:if test="${obj.getNgayKetThucGiamGia() > currentDate}">
+                                            <c:when test="${obj.getNgayBatDauGiamGia() <= currentDate}">
+                                                <c:if test="${obj.getNgayKetThucGiamGia() >= currentDate}">
 
                                                     ${giagoc}
                                                 </c:if>

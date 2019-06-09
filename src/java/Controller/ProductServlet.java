@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,12 +46,17 @@ public class ProductServlet extends HttpServlet {
                 if (sach != null && sach.getTrangThai() != SachModel.TRANGTHAI_XOA) { // tìm thấy theo mã sách
                     List<SachModel> listSach = SachModel.getSachByMaTheLoaiTop4(conn, sach.getMaTheLoai());
 
-                    Date date = new Date();
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0); 
+
+                    Date date = new Date(cal.getTimeInMillis());
                     long time = date.getTime();
                     Timestamp ts = new Timestamp(time);
-                    String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
-                    System.out.println(sach.getMaTheLoai());
-                    System.out.println(listSach.size());
+                    String currentTs = new SimpleDateFormat("yyyy-MM-dd").format(ts);
+
                     req.setAttribute("curentTimeStamp", currentTs);
 
                     req.setAttribute("listSach", listSach);

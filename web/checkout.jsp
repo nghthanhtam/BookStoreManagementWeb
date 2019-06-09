@@ -102,8 +102,7 @@
 				<form id="checkout-form" class="clearfix" method="POST" action="/checkout">
 					<div class="col-md-6">
 						<div class="billing-details">
-							<p>Already a customer ? <a href="#">Login</a></p>
-							<div class="section-title">
+ 							<div class="section-title">
 								<h3 class="title">Địa chỉ giao hàng</h3>
 							</div>
 							<div class="form-group">
@@ -158,13 +157,7 @@
 							<div class="section-title">
 								<h4 class="title">Phương thức ship hàng</h4>
 							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="shipping" id="shipping-1">
-								<label for="shipping-1">Free Shiping</label>
-								<div class="caption">
-									<p>Bạn được free ship vào các ngày đặc biệt của E-shop!<p>						
-								</div>
-							</div>
+							 
 							<div class="input-checkbox">
 								<input type="radio" name="shipping" id="shipping-2" checked>
 								<label for="shipping-2">Standard</label>
