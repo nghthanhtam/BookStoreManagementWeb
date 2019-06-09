@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,9 +49,8 @@ public class ProductServlet extends HttpServlet {
                     Date date = new Date();
                     long time = date.getTime();
                     Timestamp ts = new Timestamp(time);
-                    String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
-                    System.out.println(sach.getMaTheLoai());
-                    System.out.println(listSach.size());
+                    String currentTs = new SimpleDateFormat("yyyy-MM-dd").format(ts);
+
                     req.setAttribute("curentTimeStamp", currentTs);
 
                     req.setAttribute("listSach", listSach);

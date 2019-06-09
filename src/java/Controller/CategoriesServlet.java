@@ -69,7 +69,7 @@ public class CategoriesServlet extends HttpServlet {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-        String currentTs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(ts);
+        String currentTs = new SimpleDateFormat("yyyy-MM-dd").format(ts);
 
         request.setAttribute("listSach", listSach);
         request.setAttribute("curentTimeStamp", currentTs);

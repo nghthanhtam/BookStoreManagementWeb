@@ -124,9 +124,7 @@ public class CheckoutServlet extends HttpServlet {
 
                 double TongGiaCTDonHang = 0;
 
-                if (sach.getPhanTramGiamGia() > 0
-                        && datenow.before(sach.getNgayKetThucGiamGia())
-                        && datenow.after(sach.getNgayBatDauGiamGia())) { // nếu ngày hiện tại còn trong giảm giá
+                if (MyUtils.checkGiamGia(sach) == true) { // nếu ngày hiện tại còn trong giảm giá
                     TongGiaCTDonHang = sach.getGiaBan() * Integer.parseInt(jsonObj.getString("qty")) * (100f - sach.getPhanTramGiamGia()) * 0.01;
                 } else {
                     TongGiaCTDonHang = sach.getGiaBan() * Integer.parseInt(jsonObj.getString("qty"));
@@ -164,9 +162,7 @@ public class CheckoutServlet extends HttpServlet {
 
                 SachModel sachModel = SachModel.FindByMaSach(conn, Integer.parseInt(jsonObj.getString("id")));
                 CTDonHangModel cTDonHangModel = new CTDonHangModel(0, maDonHang, Integer.parseInt(jsonObj.getString("id")), Integer.parseInt(jsonObj.getString("qty")), sachModel.getGiaBan(), 0);
-                if (sachModel.getPhanTramGiamGia() > 0
-                        && datenow.before(sachModel.getNgayKetThucGiamGia())
-                        && datenow.after(sachModel.getNgayBatDauGiamGia())) { // nếu ngày hiện tại còn trong giảm giá
+                if (MyUtils.checkGiamGia(sachModel) == true) { // nếu ngày hiện tại còn trong giảm giá
                     cTDonHangModel.setPhanTramGiamGia(sachModel.getPhanTramGiamGia());
                 }
 

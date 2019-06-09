@@ -38,7 +38,6 @@ public class EditThanhVienServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("txtTitle", "Thành viên");
         boolean isFailedRequest = false; // request thất bại
-        boolean isWrongPassword = false;
         boolean isOk;
         
         String noiDungThongBao = "";
@@ -139,16 +138,11 @@ public class EditThanhVienServlet extends HttpServlet {
 
         List<PhanQuyenModel> listAllPhanQuyen = PhanQuyenModel.getAllPhanQuyen(conn);
 
-        /* Conflict*/
+      
         List<ThanhVienModelWithTenQuyen> listAllThanhVienWithModel = ThanhVienModelWithTenQuyen.getAllThanhVienWithTenQuyen(conn);
         req.setAttribute("listAllThanhVienWithModel", listAllThanhVienWithModel);
 
-        /*
-         List<ThanhVienModel> listAllThanhVien = ThanhVienModel.getAllThanhVien(conn);
-         req.setAttribute("listAllThanhVien", listAllThanhVien);
-        
-         */
-        /* Conflict*/
+       
         req.setAttribute("listAllPhanQuyen", listAllPhanQuyen);
 
         req.getRequestDispatcher("/admin/thanhvien.jsp").forward(req, resp);;
