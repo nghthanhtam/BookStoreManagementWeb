@@ -228,7 +228,7 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>TỔNG TIỀN</th>
-										<th id="tongtien" colspan="2" class="total"><span>0</span></th> 
+										<th id="total2" colspan="2" class="total"><span>0</span></th> 
 									</tr>
 								</tfoot>
                                                               

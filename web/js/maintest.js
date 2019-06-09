@@ -19,7 +19,7 @@ $('#selectphiship').on('change', function (f) {
         var phiShip = Number(document.getElementById('phiship').innerHTML);
      
         var tongTien = Number(localStorage.getItem('cartTotal')) + phiShip;
-        document.getElementById('total').innerHTML = String(tongTien);
+        document.getElementById('total2').innerHTML = String(tongTien);
         
         //dữ liệu dc lưu là tên + phí ship
         //tách chuỗi bằng dấu "-" và lấy phần tử thứ 2
@@ -63,12 +63,12 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
         var undoTimeoutId;
         
         cartCount.find('li').text(localStorage.getItem('cartCount'));
-        cartTotal.text(localStorage.getItem('cartTotal'));
-        tableTotal.find('.total').find('span').text(localStorage.getItem('cartTotal'));
+//        cartTotal.text(localStorage.getItem('cartTotal'));
+//        tableTotal.find('.total').find('span').text(localStorage.getItem('cartTotal'));
 
         
         if (localStorage.getItem('obj') !== "") {
-    
+            
             $.ajax
             (
                 {
@@ -91,16 +91,23 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
                           
                         });
                         
+                        var tongTien = 0;
                         JSON.parse(localStorage.getItem('obj')).forEach(function (f) {
                             if (f.qty == 0) {
                                 f.qty = 1;
-                            }
-                           
+                            }                          
                            document.getElementById('qty-' + f.id).innerHTML = String(f.qty);
-                           document.getElementById('input-' + f.id).value = String(f.qty);
-                           document.getElementById('total-' + f.id).innerHTML *= f.qty;
+                           if(document.getElementById('total-' + f.id)) document.getElementById('total-' + f.id).innerHTML *= f.qty;                     
+                           if(document.getElementById('input-' + f.id)) document.getElementById('input-' + f.id).value = String(f.qty);
                            
+                           var price = document.getElementById('price-' + f.id).innerHTML.split(' ')[0];  
+                           tongTien += Number(price)*Number(f.qty);
+                       
                         });
+                        if(document.getElementById('total')) document.getElementById('total').innerHTML = String(tongTien);
+                        if(document.getElementById('total2')) document.getElementById('total2').innerHTML = String(tongTien);
+               
+                        cartTotal.text(String(tongTien));
                     },
                     error: function () {
                         var json = $.parseJSON(data);
@@ -429,12 +436,12 @@ if (localStorage.getItem('obj') == 'undefined' || localStorage.getItem('obj') ==
 
     function updateCartTotal(price, bool) {
 
-        bool ? cartTotal.text((Number(cartTotal.text()) + Number(price)).toFixed(0)) : cartTotal.text((Number(cartTotal.text()) - Number(price)).toFixed(2));
-        
-        //alert(cartTotal.text());
+        bool ? cartTotal.text((Number(cartTotal.text()) + Number(price)).toFixed(0)) : cartTotal.text((Number(cartTotal.text()) - Number(price)).toFixed(0));
         
         localStorage.setItem('cartTotal', cartTotal.text());
-        document.getElementById('total').innerHTML = localStorage.getItem('cartTotal');
+        if(document.getElementById('total')) document.getElementById('total').innerHTML = cartTotal.text();
+        if(document.getElementById('total2')) document.getElementById('total2').innerHTML = cartTotal.text();
+        
     }
     
 //    function updateFromLocalStorage() {
