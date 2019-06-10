@@ -136,9 +136,10 @@
                                     <tbody class="donhang">
                                         <c:forEach items="${listCTDonHang}" var="obj">
                                             <tr>
+ 
                                                 <td class="thumb"><img src="${obj.getAnhDaiDien()}" alt=""></td>
                                                 <td class="details text-left"><a href="/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></td>
-                                                <td class="price text-left">${obj.getDonGia()}</td>
+                                                 <td class="price text-left">${obj.getDonGia()}</td>
                                                 <td class="qty text-center">${obj.getSoLuong()}</td>
                                                 <td class="total text-center"><strong class="primary-color">${obj.getDonGia()*obj.getSoLuong()}</strong></td>
 
