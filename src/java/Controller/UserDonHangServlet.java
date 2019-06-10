@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.CTDonHangModel;
 import Model.DonHangModel;
 import Model.MessagesModel;
 import Model.SachModel;
@@ -12,7 +13,10 @@ import Utility.MyUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,52 +39,95 @@ public class UserDonHangServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("txtTitle", "Đơn hàng của tôi");
-
-        String action = req.getParameter("action");
-
-        if (action != null && action.equals("cancel")) {
-
-            int maDonHang = Integer.parseInt(req.getParameter("id"));
-
-            Connection conn = MyUtils.getStoredConnection(req);
-
-            DonHangModel donHangModel = new DonHangModel();
-
-            try {
-                donHangModel = DonHangModel.FindByMaDonHang(conn, maDonHang);
-
-                donHangModel.setTrangThai(DonHangModel.TRANGTHAI_HUY_DON_HANG);
-
-                boolean isOkUpdateDonHang = DonHangModel.UpdateDonHang(conn, donHangModel);
-                if (isOkUpdateDonHang == false) {
-                    throw new Exception("Không thể hủy đơn hàng!");
-                }
-            } catch (Exception ex) {
-
-            }
-        }
-
         HttpSession session = req.getSession();
+
         if (MyUtils.getLoginedThanhVien(session) == null) // chưa đăng nhập
         {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Oops!", "Bạn chưa đăng nhập!", MessagesModel.ATT_TYPE_ERROR));
             req.getRequestDispatcher("dangnhap.jsp").forward(req, resp);
-        } else {
+            return;
+        }
 
-            Connection conn = MyUtils.getStoredConnection(req);
+        req.setAttribute("txtTitle", "Đơn hàng của tôi");
+        Connection conn = MyUtils.getStoredConnection(req);
 
-            int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();
+        String action = req.getParameter("action");
+        boolean isFailed = false;
 
-            List<DonHangModel> listDonHang = DonHangModel.getAllDonHangByMaThanhVien(conn, maThanhVien);
-            req.setAttribute("listDonHang", listDonHang);
+        int maThanhVien = MyUtils.getLoginedThanhVien(session).getMaThanhVien();
 
-            List<SachModel> listSach = SachModel.getAllSach(conn);
-            req.setAttribute("listSach", listSach);
+        DonHangModel donHang;
+        String noiDungThongBao = "";
 
-            req.getRequestDispatcher("list-donhang.jsp").forward(req, resp);
+        if (action != null && action.equals("cancel")) {
+
+            try {
+                int maDonHang = Integer.parseInt(req.getParameter("id"));
+                donHang = DonHangModel.FindByMaDonHang(conn, maDonHang);
+
+                if (donHang == null) {
+                    throw new Exception("Không thể tìm thấy đơn hàng!");
+                }
+
+                if (donHang.getMaThanhVien() != maThanhVien) {
+                    throw new Exception("Bạn không có quyền thực hiện yêu cầu này!");
+                }
+
+                int trangThaiHienTai = donHang.getTrangThai();
+
+                if (trangThaiHienTai == DonHangModel.TRANGTHAI_CHO_XAC_NHAN) // đang chờ xác nhận
+                {
+                    List<CTDonHangModel> listCTDonHang = CTDonHangModel.getAllCTDonHangByMaDonHang(conn, maDonHang);
+                    for (CTDonHangModel cTDonHangModel : listCTDonHang) {
+                        SachModel sach = SachModel.FindByMaSach(conn, cTDonHangModel.getMaSach());
+                        if (sach == null) {
+                            throw new Exception("Không thể cập nhật tồn sách!");
+                        }
+                        sach.setSoLuongTon(sach.getSoLuongTon() + cTDonHangModel.getSoLuong());
+                        boolean isOkUpdateSach = SachModel.UpdateSach(conn, sach);
+                        if (isOkUpdateSach == false) {
+                            throw new Exception("Không thể cập nhật tồn sách!");
+                        }
+                    }
+
+                } else {
+                    throw new Exception("Không thể hủy đơn hàng!");
+                }
+
+                donHang.setTrangThai(DonHangModel.TRANGTHAI_HUY_DON_HANG);
+
+                if (DonHangModel.UpdateDonHang(conn, donHang) == false) {
+                    throw new Exception("Cập nhật trạng thái đơn hàng thất bại!");
+                }
+
+                isFailed = false;
+                noiDungThongBao = "Đã cập nhật trạng thái của đơn hàng!";
+                req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
+
+                conn.commit();
+
+            } catch (Exception ex) {
+
+                try {
+                    conn.rollback();
+                } catch (SQLException ex1) {
+                }
+
+                isFailed = true;
+                noiDungThongBao = ex.getMessage();
+
+            }
 
         }
+
+        if (isFailed) {
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
+        }
+
+        List<DonHangModel> listDonHang = DonHangModel.getAllDonHangByMaThanhVien(conn, maThanhVien);
+        req.setAttribute("listDonHang", listDonHang);
+
+        req.getRequestDispatcher("list-donhang.jsp").forward(req, resp);
 
     }
 }

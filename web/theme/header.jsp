@@ -185,8 +185,9 @@
 
 
                                 <ul class="custom-menu">
-                                    <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-                                     <li><a href="${contextPath}/checkout"><i class="fa fa-check"></i> Checkout</a></li>
+                                    <li><a href="${contextPath}/account"><i class="fa fa-user-o"></i> My Account</a></li>
+                                    <li><a href="${contextPath}/donhang"><i class="fa fa fa-ticket"></i> My Orders</a></li>
+                                    <li><a href="${contextPath}/checkout"><i class="fa fa-check"></i> Checkout</a></li>
                                     <li><a href="${contextPath}/logout"><i class="fa fa-sign-out"></i> Logout</a></li> 
                                 </ul>
                             </li>
@@ -247,39 +248,12 @@
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
                                                                             <ul>
-										<!--<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>-->
+								 
                                                                             </ul>
 									</div>
                                                                     
                       
-                                                                   <!--<form method="GET" action="/giohang">                                                                     
-<!--<script type="text/javascript">
-  <div class="form-group">
-   <input class="input" type="hidden" name="listctdonhang" id="listctdonhang">
-</div>
-    var listCTDonHang = (localStorage.getItem("obj"));
-    document.getElementById("listctdonhang").value = listCTDonHang;
-</script>
-        </form>	-->
+                                                                   
                                                                         <div class="shopping-cart-btns">
                                                                             <button class="main-btn"><a href="${contextPath}/giohang">View Cart</a></button>
 

@@ -143,7 +143,7 @@ public class CheckoutServlet extends HttpServlet {
                     0,
                     maThanhVien,
                     new java.sql.Date(datenow.getTime()),
-                    tongTien,
+                    tongTien + phiShip,
                     DonHangModel.TRANGTHAI_CHO_XAC_NHAN,
                     diaChi,
                     maPhiShip,

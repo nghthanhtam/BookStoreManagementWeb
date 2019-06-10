@@ -89,23 +89,28 @@
                                             <c:when test="${obj.getTrangThai()==-1}">
                                                 <font color="#33ccff">
                                                 Chờ tiếp nhận
+                                                </font>
                                             </c:when> 
                                             <c:when test="${obj.getTrangThai()==1}">
                                                 <font color="blue">
                                                 Đã tiếp nhận
+                                                </font>
                                             </c:when> 
                                             <c:when test="${obj.getTrangThai()==2}">
                                                 <font color="grey">
                                                 Đang giao hàng
+                                                </font>
                                             </c:when> 
                                             <c:when test="${obj.getTrangThai()==3}">
                                                 <font color="green">
                                                 Đã hoàn tất
+                                                </font>
                                             </c:when>
                                             <c:otherwise>
                                                 <font color="red">
                                                 Bị hủy
-
+                                                </font>
+                                                
                                             </c:otherwise>
                                         </c:choose>
 
