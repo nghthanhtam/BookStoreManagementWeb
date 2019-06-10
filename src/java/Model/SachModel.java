@@ -660,13 +660,14 @@ public class SachModel {
         List<AjaxModel> listSach = new ArrayList<AjaxModel>();
 
         String sql = "SELECT DISTINCT * FROM sach WHERE "
-                + "( tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND trangthai <> 2";
+                + "( masach= ? OR tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND trangthai <> 2";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 
-            pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(1, tuKhoa); // tìm từ khóa
             pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
             pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(4, "%" + tuKhoa + "%"); // tìm từ khóa
 
             ResultSet rs = pstm.executeQuery();
 

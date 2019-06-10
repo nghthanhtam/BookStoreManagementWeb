@@ -47,8 +47,7 @@
                             <th style="width: 10%">Mã phiếu nhập</th>                     
                             <th style="width: 10%">Ngày nhập</th>                    
                             <th style="width: 15%">Tên nhà cung cấp</th>                     
-                            <th style="width: 10%">Người thực hiện</th>
-                            <th style="width: 10%">Tổng tiền</th>
+                            <th style="width: 10%">Người thực hiện</th> 
                             <th style="width: 10%">Ghi chú</th>
                             <th style="width: 10%">Thao tác</th>
                         </tr>
@@ -63,12 +62,11 @@
                                     <td >${obj.getNgayNhap()}</td>
                                     <td >${obj.getTenNhaCungCap()}</td> 
                                     <td>${obj.getTenThanhVien()}</td>
-                                    <td></td>
-                                    <td>${obj.getGhiChu()}</td>
+                                     <td>${obj.getGhiChu()}</td>
                                     <td> 
                                         <a href="${contextPath}/admin/phieunhap/edit?id=${obj.getMaPhieuNhap()}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                                      <!--   <a href="${contextPath}/admin/phieunhap/delete?id=${obj.getMaPhieuNhap()}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>-->
-                                         <a href="${contextPath}/admin/phieunhap" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xem </a>
+                                         <!--<a href="${contextPath}/admin/phieunhap" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Xem </a>-->
                                      
                                     </td>
                                    

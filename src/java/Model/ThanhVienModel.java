@@ -350,4 +350,48 @@ public class ThanhVienModel {
         }
         return false;
     }
+        
+        
+        public static List<AjaxModel> FindAllByTuKhoaAjax(Connection conn, String tuKhoa) throws SQLException {
+
+        List<AjaxModel> listSach = new ArrayList<AjaxModel>();
+
+        String sql = "SELECT DISTINCT * FROM thanhvien WHERE "
+                + "( hoten LIKE ? OR tendangnhap LIKE ? OR  mathanhvien LIKE ? OR  email LIKE ? OR  sodienthoai LIKE ?)";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(2, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(3, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(4, "%" + tuKhoa + "%"); // tìm từ khóa
+            pstm.setString(5, "%" + tuKhoa + "%"); // tìm từ khóa
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                AjaxModel mode = new AjaxModel(
+                        rs.getInt("mathanhvien"),
+                        rs.getInt("mathanhvien")+ " - " + rs.getString("tendangnhap") + " - " + rs.getString("hoten"));
+                listSach.add(mode);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+
+        return listSach;
+
+    }
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 }

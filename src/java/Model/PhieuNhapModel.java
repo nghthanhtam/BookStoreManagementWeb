@@ -119,7 +119,7 @@ public class PhieuNhapModel {
     public static List<PhieuNhapModel> getAllPhieuNhap(Connection conn) {
         List<PhieuNhapModel> list = new ArrayList<PhieuNhapModel>();
 
-        String sql = "SELECT * FROM phieunhap";
+        String sql = "SELECT * FROM phieunhap ORDER BY maphieunhap ASC";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();

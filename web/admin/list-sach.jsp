@@ -6,6 +6,26 @@
 
 <%@include file="header.jsp" %>
 
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>     
+<script type="text/javascript">
+	$(document).ready(function() {
+
+            $('#search').autocomplete({
+		source: '/ajax/sach',
+                select: function(event, ui){
+                        this.value = ui.item.label;
+                        window.location.href = '/admin/sach/edit?id='+ui.item.value;
+                        return false;
+                    }
+            });
+
+	});
+</script>
+
+
+
 <div class="page-title">
     <div class="title_left">
         <h3>Sách</h3>
@@ -23,11 +43,7 @@
                 <h2>Danh sách các sách</h2>
                 <a class="btn btn-primary"  href="${contextPath}/admin/sach/add"  type="cancel">Thêm sách</a>
                 <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
+                    <input id="search" class="form-control col-md-7 col-xs-12 ui-autocomplete-input" style="width:400px" required="required" name="tukhoa" type="text" placeholder="Search..." autocomplete="off">
                 </ul>
                 <div class="clearfix"></div>
             </div>

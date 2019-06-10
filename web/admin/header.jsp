@@ -140,11 +140,15 @@
                   
                   <% if (phanQuyen.getQlSach()== 1){ %> 
                   <li><a><i class="fa fa-book"></i> Sách <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="${contextPath}/admin/sach">Danh sách</a></li>
-                      <li><a href="${contextPath}/admin/sach/add">Thêm mới</a></li>
-                    </ul>
+                      <ul class="nav child_menu">
+                          <li><a href="${contextPath}/admin/sach">Danh sách</a></li>
+                          <li><a href="${contextPath}/admin/sach/add">Thêm mới</a></li>
+                          <li><a href="${contextPath}/admin/theloai">Thể loại</a></li>
+                      </ul>
                   </li> 
+                   
+                  
+                  
                   <% } %>
                   
                   <% if (phanQuyen.getQlPhieuNhap()== 1){ %> 

@@ -93,7 +93,7 @@ public class PhieuChiModelWithTenNhaCungCap {
         List<PhieuChiModelWithTenNhaCungCap> listPhieuChi = new ArrayList<PhieuChiModelWithTenNhaCungCap>();
 
         String sql = "SELECT maphieuchi, nhacungcap.tennhacungcap, thanhvien.hoten, tongtien, ngaylapphieu, ghichu  "
-                + "FROM phieuchi, nhacungcap, thanhvien WHERE nhacungcap.manhacungcap = phieuchi.manhacungcap AND thanhvien.mathanhvien = phieuchi.mathanhvien";
+                + "FROM phieuchi, nhacungcap, thanhvien WHERE nhacungcap.manhacungcap = phieuchi.manhacungcap AND thanhvien.mathanhvien = phieuchi.mathanhvien ORDER BY maphieuchi ASC";
         
         // String sql = "SELECT maphieuchi, nhacungcap.tennhacungcap, thanhvien.hoten, tongtien, ngaylapphieu, ghichu  "
                 //+ "FROM phieuchi, nhacungcap, thanhvien WHERE nhacungcap.manhacungcap = phieuchi.manhacungcap AND thanhvien.mathanhvien = phieuchi.mathanhvien"

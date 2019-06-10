@@ -18,7 +18,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>Phi?u nh?p</h3>
+        <h3>Phiếu nhập</h3>
     </div>
 
 </div>
@@ -52,7 +52,7 @@
                         <c:if test = "${phieuNhap != null}">
 
                             <div class="form-group">
-                                <label class= " control-label col-md-3 col-sm-3 col-xs-12">Mã phi?u nh?p</label>
+                                <label class= " control-label col-md-3 col-sm-3 col-xs-12">Mã phiếu nhập</label>
                                 <div class=" col-md-3 col-sm-9 col-xs-12">
                                     <input type="text" name="maphieunhap" value="${phieuNhap == null ? "":phieuNhap.getMaPhieuNhap()}" class="form-control col-md-7 col-xs-12" readonly>
                                 </div>
@@ -61,14 +61,14 @@
 
 
                         <div class="form-group">
-                            <label class= " control-label col-md-3 col-sm-3 col-xs-12" >Nhà cung c?p<span class="required">*</span>
+                            <label class= " control-label col-md-3 col-sm-3 col-xs-12" >Nhà cung cấp<span class="required">*</span>
                             </label>
                             <div class="col-md-3 col-sm-9 col-xs-12">
                                 <input type="text" name="tennhacungcap" readonly value="${phieuNhap == null ? "":phieuNhap.getTenNhaCungCap()}" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Tên ngu?i t?o<span class="required">*</span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Tên người tạo<span class="required">*</span>
                             </label>
                             <div class="col-md-3 col-sm-9 col-xs-12">
                                 <input  type="text" name="tenthanhvien" readonly required="" value="${phieuNhap == null ? "":phieuNhap.getTenThanhVien()}" class="form-control col-md-7 col-xs-12">
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày nh?p sách</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày nhập sách</label>
                             <div class="col-md-3 col-sm-9 col-xs-12">
                                 <input type="text" name="ngaynhap" readonly  class="form-control col-md-7 col-xs-12" value="${phieuNhap == null ? "":phieuNhap.getNgayNhap()}">
                             </div>
@@ -96,15 +96,15 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 10%">Mã s?n ph?m</th>
-                                    <th style="width: 25%">Tên s?n ph?m</th>
-                                    <th style="width: 15%">S? lu?ng</th>
-                                    <th style="width: 15%">Ðon giá</th>
+                                    <th style="width: 10%">Mã sách</th>
+                                    <th style="width: 25%">Tên sách</th>
+                                    <th style="width: 15%">Số lượng</th>
+                                    <th style="width: 15%">Ðơn giá</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                ${listCTPhieuNhap.size()==0?"<tr>Chua có s?n ph?m nào trong hóa don!</tr>":""}
+                                ${listCTPhieuNhap.size()==0?"<tr>chưa có sản phẩm nào!</tr>":""}
                                 <c:forEach items="${listCTPhieuNhap}" var="obj">
                                     <tr>
                                         <td>${obj.getMaSach()}</td>

@@ -78,7 +78,7 @@ public class PhieuNhapModelWithTenNhaCungCapAndTenNhanVien {
         List<PhieuNhapModelWithTenNhaCungCapAndTenNhanVien> list = new ArrayList<PhieuNhapModelWithTenNhaCungCapAndTenNhanVien>();
 
         String sql = "SELECT maphieunhap, ngaynhap, tennhacungcap, hoten, ghichu FROM phieunhap, thanhvien, nhacungcap where nhacungcap.manhacungcap = phieunhap.manhacungcap AND "
-                + "thanhvien.mathanhvien = phieunhap.mathanhvien";
+                + "thanhvien.mathanhvien = phieunhap.mathanhvien ORDER BY maphieunhap ASC";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();

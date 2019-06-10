@@ -156,10 +156,11 @@
                         <c:choose>
                             <c:when test="${sach.getTrangThai() == 1}">
                                 <div class="product-btns">
-                                    <div class="qty-input">
+<!--                                    <div class="qty-input">
+                                        
                                         <span class="text-uppercase">QTY: </span>
                                         <input class="input" type="number" value="1">
-                                    </div>
+                                    </div>-->
                                     <button class="primary-btn add-to-cart" data-id="${sach.getMaSach()}"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                                     <div class="pull-right">
                                         <button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>

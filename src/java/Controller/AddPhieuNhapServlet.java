@@ -9,6 +9,7 @@ import Model.CTPhieuNhapModel;
 import Model.MessagesModel;
 import Model.NhaCungCapModel;
 import Model.PhieuNhapModel;
+import Model.PhieuNhapModelWithTenNhaCungCapAndTenNhanVien;
 import Model.SachModel;
 import Utility.MyUtils;
 import java.io.IOException;
@@ -32,8 +33,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.Iterator; 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -180,7 +180,7 @@ public class AddPhieuNhapServlet extends HttpServlet {
         }
 
         req.setAttribute("txtTitle", "Phiếu nhập");
-        List<PhieuNhapModel> listPhieuNhap = PhieuNhapModel.getAllPhieuNhap(conn);
+        List<PhieuNhapModelWithTenNhaCungCapAndTenNhanVien> listPhieuNhap = PhieuNhapModelWithTenNhaCungCapAndTenNhanVien.getAllPhieuNhap(conn);
         req.setAttribute("listPhieuNhap", listPhieuNhap);
 
         req.getRequestDispatcher("/admin/list-phieunhap.jsp").forward(req, resp);

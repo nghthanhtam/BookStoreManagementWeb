@@ -86,22 +86,22 @@
                                         </div>
                                         <div class="caption">
                                             <p>Trạng thái đơn hàng:  <c:choose>
-                                            <c:when test="${obj.getTrangThai()==-1}">
+                                            <c:when test="${donHang.getTrangThai()==-1}">
                                                 <font color="#33ccff">
                                                 Chờ tiếp nhận
                                                 </font>
                                             </c:when> 
-                                            <c:when test="${obj.getTrangThai()==1}">
+                                            <c:when test="${donHang.getTrangThai()==1}">
                                                 <font color="blue">
                                                 Đã tiếp nhận
                                                 </font>
                                             </c:when> 
-                                            <c:when test="${obj.getTrangThai()==2}">
+                                            <c:when test="${donHang.getTrangThai()==2}">
                                                 <font color="grey">
                                                 Đang giao hàng
                                                 </font>
                                             </c:when> 
-                                            <c:when test="${obj.getTrangThai()==3}">
+                                            <c:when test="${donHang.getTrangThai()==3}">
                                                 <font color="green">
                                                 Đã hoàn tất
                                                 </font>
@@ -139,9 +139,12 @@
  
                                                 <td class="thumb"><img src="${obj.getAnhDaiDien()}" alt=""></td>
                                                 <td class="details text-left"><a href="/product?masach=${obj.getMaSach()}">${obj.getTenSach()}</a></td>
-                                                 <td class="price text-left">${obj.getDonGia()}</td>
+                                                
+                                                <c:set var = "gia" value="${obj.getDonGia() * (100-obj.getPhanTramGiamGia())*0.01}"></c:set>
+                                                
+                                                <td class="price text-left">${gia}</td>
                                                 <td class="qty text-center">${obj.getSoLuong()}</td>
-                                                <td class="total text-center"><strong class="primary-color">${obj.getDonGia()*obj.getSoLuong()}</strong></td>
+                                                <td class="total text-center"><strong class="primary-color">${gia*obj.getSoLuong()}</strong></td>
 
                                             </tr>
                                         </c:forEach>

@@ -115,7 +115,7 @@ public class PhieuChiModel {
     public static List<PhieuChiModel> getAllPhieuChi(Connection conn) {
         List<PhieuChiModel> listPhieuChi = new ArrayList<PhieuChiModel>();
 
-        String sql = "SELECT * FROM phieuchi";
+        String sql = "SELECT * FROM phieuchi ORDER BY maphieuchi ASC";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();

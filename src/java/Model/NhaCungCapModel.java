@@ -95,7 +95,7 @@ public class NhaCungCapModel {
     public static List<NhaCungCapModel> getAllNhaCungCap(Connection conn) {
         List<NhaCungCapModel> listNhaCungCap = new ArrayList<NhaCungCapModel>();
 
-        String sql = "SELECT * FROM nhacungcap";
+        String sql = "SELECT * FROM nhacungcap ORDER BY manhacungcap ASC";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
