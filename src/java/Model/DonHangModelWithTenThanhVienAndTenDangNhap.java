@@ -129,7 +129,7 @@ public class DonHangModelWithTenThanhVienAndTenDangNhap {
         List<DonHangModelWithTenThanhVienAndTenDangNhap> list = new ArrayList<DonHangModelWithTenThanhVienAndTenDangNhap>();
 
         String sql = "SELECT madonhang, hoten,tendangnhap, ngaylap,tongtien,trangthai,diachigiaohang, maphiship,donhang.sodienthoai,ghichu "
-                + "FROM donhang, thanhvien WHERE thanhvien.mathanhvien = donhang.mathanhvien LIMIT ?,?";
+                + "FROM donhang, thanhvien WHERE thanhvien.mathanhvien = donhang.mathanhvien ORDER BY madonhang DESC LIMIT ?,?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             

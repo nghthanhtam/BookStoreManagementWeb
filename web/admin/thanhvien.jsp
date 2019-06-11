@@ -12,6 +12,25 @@
 
 <%@include file="header.jsp" %>
 
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>     
+<script type="text/javascript">
+	$(document).ready(function() {
+
+            $('#search').autocomplete({
+		source: '/admin/thanhvien/ajax/thanhvien',
+                select: function(event, ui){
+                        this.value = ui.item.label;
+                        window.location.href = '/admin/thanhvien/edit?id='+ui.item.value;
+                        return false;
+                    }
+            });
+
+	});
+</script>
+
+
 <div class="page-title">
     <div class="title_left">
         <h3>Thành viên</h3>
@@ -134,19 +153,13 @@
                 <div class="x_title">
                     <h2>Danh sách thành viên</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a>
-                                </li>
-                                <li><a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
+                        
+                        
+                        
+                        
+                        <input id="search" class="form-control col-md-7 col-xs-12 ui-autocomplete-input" required="required" name="tukhoa" type="text" placeholder="Search..." autocomplete="off">
+                        
+                         
                     </ul>
                     <div class="clearfix"></div>
                 </div>

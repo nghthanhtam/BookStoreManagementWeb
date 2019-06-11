@@ -4,18 +4,13 @@
  * and open the template in the editor.
  */
 package Controller;
-
-import Model.CTDonHangModelWithTenSach;
-import Model.CTPhieuNhapModel;
-import Model.CTPhieuNhapModelWithTenSach;
-import Model.DonHangModelWithTenThanhVienAndTenDangNhap;
-import Model.MessagesModel;
-import Model.PhiShipModel;
+  
+import Model.CTPhieuNhapModelWithTenSach; 
+import Model.MessagesModel; 
 import Model.PhieuNhapModel;
 import Model.PhieuNhapModelWithTenNhaCungCapAndTenNhanVien;
 import Utility.MyUtils;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.IOException; 
 import java.sql.Connection;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -34,7 +29,7 @@ public class EditPhieuNhapServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(req);
-        boolean isFailed = false; // request th?t b?i
+        boolean isFailed = false;
         String noiDungThongBao = "";
 
         String button = req.getParameter("submit");
@@ -52,11 +47,11 @@ public class EditPhieuNhapServlet extends HttpServlet {
                 boolean isOk = PhieuNhapModel.UpdatePhieuNhap(conn, phieuNhapTemp);
 
                 if (isOk == false) {
-                    throw new Exception("C?p nh?t phi?u nh?p th?t b?i!");
+                    throw new Exception("Cập nhật phiếu nhập thất bại!");
                 }
 
                 isFailed = false;
-                noiDungThongBao = "Ðã c?p nh?t phi?u nh?p thành công!";
+                noiDungThongBao = "Ðã cập nhật phiếu nhập thành công!";
 
             } catch (Exception ex) {
                 isFailed = true;
@@ -64,16 +59,16 @@ public class EditPhieuNhapServlet extends HttpServlet {
             }
 
         }
-        if (isFailed) // n?u có l?i thì hi?n thông báo
+        if (isFailed) 
         {
-            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có l?i x?y ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
+            req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Có lỗi xảy ra!", noiDungThongBao, MessagesModel.ATT_TYPE_ERROR));
         } else {
             req.setAttribute(MessagesModel.ATT_STORE, new MessagesModel("Thông báo!", noiDungThongBao, MessagesModel.ATT_TYPE_SUCCESS));
         }
         
         
         
-        req.setAttribute("txtTitle", "S?a phi?u nh?p");
+        req.setAttribute("txtTitle", "Sửa phiếu nhập");
 
         PhieuNhapModelWithTenNhaCungCapAndTenNhanVien phieuNhap = null;
         try {
@@ -91,16 +86,15 @@ public class EditPhieuNhapServlet extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        req.setAttribute("listCTPhieuNhap", listCTPhieuNhap);
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXX");
-        req.getRequestDispatcher("/admin/phieunhap.jsp").forward(req, resp);
+        req.setAttribute("listCTPhieuNhap", listCTPhieuNhap); 
+        req.getRequestDispatcher("/admin/phieunhap-edit.jsp").forward(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(req);
 
-        req.setAttribute("txtTitle", "S?a phi?u nh?p");
+        req.setAttribute("txtTitle", "Sửa phiếu nhập");
 
         PhieuNhapModelWithTenNhaCungCapAndTenNhanVien phieuNhap = null;
 
