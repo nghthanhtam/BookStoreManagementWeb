@@ -660,7 +660,7 @@ public class SachModel {
         List<AjaxModel> listSach = new ArrayList<AjaxModel>();
 
         String sql = "SELECT DISTINCT * FROM sach WHERE "
-                + "( masach= ? OR tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND trangthai <> 2";
+                + "( masach= ? OR tensach LIKE ? OR tentacgia LIKE ? OR  mota LIKE ?) AND trangthai <> 2 LIMIT 0,10";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 

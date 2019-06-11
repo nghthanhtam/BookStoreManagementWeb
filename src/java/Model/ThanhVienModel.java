@@ -357,7 +357,7 @@ public class ThanhVienModel {
         List<AjaxModel> listSach = new ArrayList<AjaxModel>();
 
         String sql = "SELECT DISTINCT * FROM thanhvien WHERE "
-                + "( hoten LIKE ? OR tendangnhap LIKE ? OR  mathanhvien LIKE ? OR  email LIKE ? OR  sodienthoai LIKE ?)";
+                + "( hoten LIKE ? OR tendangnhap LIKE ? OR  mathanhvien LIKE ? OR  email LIKE ? OR  sodienthoai LIKE ?)  LIMIT 0,10";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
 

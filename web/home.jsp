@@ -73,8 +73,8 @@
         <div class="row">
             <!-- banner -->
             <div class="col-md-4 col-sm-6">
-                <a class="banner banner-1" href="#">
-                    <img src="./img/banner06.jpg" alt="">
+                <a class="banner banner-1" href="/categories?id=8">
+                    <img src="./img/b1.png" alt="">
                     <div class="banner-caption text-center">
                         <h2 class="white-color">TÂM LÝ  </h2>
                     </div>
@@ -85,7 +85,7 @@
             <!-- banner -->
             <div class="col-md-4 col-sm-6">
                 <a class="banner banner-1" href="#">
-                    <img src="./img/banner07.jpg" alt="">
+                    <img src="./img/b2.png" alt="">
                     <div class="banner-caption text-center">
                         <h2 class="white-color">KHOA HỌC</h2>
                     </div>
@@ -95,10 +95,10 @@
 
             <!-- banner -->
             <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
-                <a class="banner banner-1" href="#">
-                    <img src="./img/banner08.jpg" alt="">
+                <a class="banner banner-1" href="/categories?id=5">
+                    <img src="./img/b3.png" alt="">
                     <div class="banner-caption text-center">
-                        <h2 class="white-color">LỊCH SỬ</h2>
+                        <h2 class="white-color">VĂN HỌC</h2>
                     </div>
                 </a>
             </div>
